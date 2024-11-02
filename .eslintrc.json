@@ -3,10 +3,15 @@
     "next/core-web-vitals",
     "next/typescript",
     "eslint:recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:tailwindcss/recommended"
   ],
-  "plugins": ["prettier"],
+  "plugins": [
+    "prettier",
+    "tailwindcss"
+  ],
   "rules": {
-    "prettier/prettier": "error"
+    "prettier/prettier": "off",
+    "tailwindcss/classnames-order": "off"
   }
 }
