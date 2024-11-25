@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen bg-black px-[80px]">
-    <AppHeader/>
-    <NuxtPage/>
+    <AppHeader />
+    <NuxtPage />
   </div>
 </template>
