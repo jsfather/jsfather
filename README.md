@@ -5,6 +5,7 @@ Welcome to my GitHub profile! I am a passionate developer who loves building int
 ---
 
 ## 🚀 About Me
+
 - 🔭 I’m currently working on **[Folded](https://github.com/jsfather/folded)** — a financial management app to help users stay on top of their debts and checkouts.
 - 🌱 I’m exploring **advanced MongoDB integrations** and diving deeper into **Next.js 15**.
 - 💬 Ask me about **React**, **Next.js**, **Tailwind CSS**, or **full-stack development**.
@@ -14,7 +15,9 @@ Welcome to my GitHub profile! I am a passionate developer who loves building int
 ---
 
 ## 🛠️ My Tech Stack
+
 Here are some of the tools and technologies I work with regularly:
+
 - **Frontend**: React, Next.js, Vue.js
 - **Styling**: Tailwind CSS, SCSS, CSS Modules
 - **Backend**: Node.js, Express, MongoDB (Mongoose)
@@ -26,14 +29,18 @@ Here are some of the tools and technologies I work with regularly:
 ## 📌 Featured Projects
 
 ### 🌟 [Folded](https://github.com/jsfather/folded)
+
 _A Next.js app to manage financial problems effectively._  
 **Highlights**:
+
 - Built with **Next.js 15**, **Tailwind CSS**, and **Mongoose**.
 - A seamless experience for tracking debts and payments.
 
 ### 🌟 [OL-Chat](https://github.com/jsfather/ol-chat)
+
 _An intuitive UI for Ollama applications, which serve as a wrapper for LLMs and SLM AIs._  
 **Highlights**:
+
 - Simplifies interactions with AI-powered models.
 - Features a clean, user-friendly design for maximum accessibility.
 
@@ -42,6 +49,7 @@ _An intuitive UI for Ollama applications, which serve as a wrapper for LLMs and 
 ## 🌍 Let's Connect!
 
 You can find me on:
+
 - 💼 [LinkedIn](https://www.linkedin.com/in/keyvanmatinrad)
 - 🌐 [Portfolio](https://jsfather.com)
 - 🐦 [Twitter](https://twitter.com/jupiters_father)
