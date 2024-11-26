@@ -1,5 +1,24 @@
 <script lang="ts" setup>
 const themeStore = useThemeStore();
+
+const menuItems = ref([
+  {
+    title: 'design',
+    path: '/design',
+  },
+  {
+    title: 'development',
+    path: '/development',
+  },
+  {
+    title: 'blog',
+    path: '/blog',
+  },
+  {
+    title: 'cv',
+    path: '/cv',
+  },
+]);
 </script>
 
 <template>
@@ -25,13 +44,23 @@ const themeStore = useThemeStore();
         }}
       </h1></NuxtLink
     >
-    <NuxtLink
-      href="https://github.com/jsfather"
-      target="_blank"
-      class="ml-auto"
-    >
-      <Icon class="h-[40px] w-[40px]" name="mdi-github" />
-    </NuxtLink>
+    <div class="ml-auto flex flex-row items-center">
+      <NuxtLink
+        v-for="menuItem in menuItems"
+        :key="menuItem.path"
+        :to="menuItem.path"
+        :active-class="`line-through text-white decoration-${themeStore.selectedTheme?.color}`"
+        class="mx-4 text-xl font-thin text-gray-200"
+        >{{ menuItem.title }}
+      </NuxtLink>
+      <NuxtLink href="https://github.com/jsfather" target="_blank" class="ml-4">
+        <Icon
+          class="h-[40px] w-[40px]"
+          :class="`hover:text-${themeStore.selectedTheme?.color}`"
+          name="mdi-github"
+        />
+      </NuxtLink>
+    </div>
   </nav>
 </template>
 
