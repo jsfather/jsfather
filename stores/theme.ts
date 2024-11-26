@@ -6,7 +6,9 @@ export const useThemeStore = defineStore('themeStore', {
       { name: 'jupiter', color: 'amber-800' },
       { name: 'javascript', color: 'yellow-300' },
     ] as Theme[],
-    selectedTheme: { name: 'jupiter', color: 'amber-800' } as Theme | undefined,
+    selectedTheme: { name: 'javascript', color: 'yellow-300' } as
+      | Theme
+      | undefined,
   }),
   actions: {
     setSelectedTheme(name: string) {
