@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  jsfather:
+    build: .
+    ports:
+      - "8000:3000"
+    restart: always
+    environment:
+      - NODE_ENV=production
