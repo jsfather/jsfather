@@ -4,7 +4,7 @@ A full-stack personal LMS for developers, built for **https://jsfather.ir**. Nex
 
 ## What is implemented
 
-- Rename the university directly in the wordmark without signing in. Focus starts editing with the caret at the end. The browser stores the name locally and synchronizes it across tabs, including the browser tab title while preserving each page’s title. Enter or blur saves; Escape cancels; an empty name restores `jsfather`.
+- Rename the university directly in the wordmark without signing in. Focus starts editing with the caret at the end. The browser stores the name locally and synchronizes it across tabs, including the browser tab title while preserving each page’s title. The initial page reserves space until the saved name is available, and the tab title is personalized before React loads. Enter or blur saves; Escape or an empty name keeps the latest saved name.
 
 - Google sign-in, sign-out, persistent sessions, and private-by-default profiles.
 - User-owned course creation, editing, archiving, and confirmed deletion.

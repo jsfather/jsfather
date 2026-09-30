@@ -63,7 +63,7 @@ test('first click places a blinking caret at the end and the pencil starts editi
   await page.screenshot({ path: '/tmp/jsfather-brand-editing.png', animations: 'disabled' });
 });
 
-test('save on blur, cancel with Escape, handle Persian names, and reset empty names', async ({
+test('save on blur, cancel with Escape, handle Persian names, and keep the last name for empty drafts', async ({
   page,
 }) => {
   await page.goto('/');
@@ -84,11 +84,80 @@ test('save on blur, cancel with Escape, handle Persian names, and reset empty na
   await expect(name).toHaveValue('دانشگاه من');
   await replaceName(name, '');
   await name.press('Enter');
-  await expect(name).toHaveValue('jsfather');
-  await expect(page).toHaveTitle('jsfather Personal University — Build your own university');
+  await expect(name).toHaveValue('دانشگاه من');
+  await expect(page).toHaveTitle('دانشگاه من Personal University — Build your own university');
+  expect(await page.evaluate((key) => localStorage.getItem(key), storageKey)).toBe('دانشگاه من');
+  await replaceName(name, '   ');
+  await page.getByRole('heading', { name: 'Build your own university.' }).click();
+  await expect(name).toHaveValue('دانشگاه من');
+  await page.reload();
+  await expect(name).toHaveValue('دانشگاه من');
   await replaceName(name, 'JSFather');
   await name.press('Enter');
   await expect(name).toHaveValue('jsfather');
+});
+
+test('saved branding never renders the default name while hydration is delayed', async ({
+  page,
+}) => {
+  await page.addInitScript((key) => {
+    localStorage.setItem(key, 'دانشگاه اکبر');
+  }, storageKey);
+  const errors: string[] = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  page.on('console', (message) => {
+    if (message.type() === 'error') errors.push(message.text());
+  });
+  let release!: () => void;
+  const gate = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  await page.route('**/_next/**/*.js*', async (route) => {
+    await gate;
+    await route.continue();
+  });
+  try {
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await expect(page).toHaveTitle('دانشگاه اکبر Personal University — Build your own university');
+    // Only the placeholder exists at this point; no React bundle has loaded.
+    await expect(page.locator('.brand-name-input')).toHaveValue('');
+    await expect(page.locator('.brand-name-input')).toBeHidden();
+    await expect(page.locator('.landing-footer')).not.toContainText('jsfather');
+    release();
+    const name = page.getByRole('textbox', { name: 'University name' });
+    await expect(name).toHaveValue('دانشگاه اکبر');
+    await expect(name).toBeVisible();
+    await expect(page).toHaveTitle('دانشگاه اکبر Personal University — Build your own university');
+    await replaceName(name, 'Nahid');
+    await name.press('Enter');
+    await expect(page).toHaveTitle('Nahid Personal University — Build your own university');
+    await page.goto('/login');
+    await expect(page).toHaveTitle('Welcome back — Nahid Personal University');
+    expect(errors).toEqual([]);
+  } finally {
+    release();
+  }
+});
+
+test('blocked storage reads still resolve the name and title without hydration errors', async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    Storage.prototype.getItem = () => {
+      throw new DOMException('Blocked', 'SecurityError');
+    };
+  });
+  const errors: string[] = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  await page.goto('/');
+  const name = page.getByRole('textbox', { name: 'University name' });
+  await expect(name).toHaveValue('jsfather');
+  await expect(name).toBeVisible();
+  await replaceName(name, '');
+  await name.press('Enter');
+  await expect(name).toHaveValue('jsfather');
+  await expect(page).toHaveTitle('jsfather Personal University — Build your own university');
+  expect(errors).toEqual([]);
 });
 
 test('synchronize tabs while keeping the name private to each browser', async ({

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { UniversityTitle } from '@/components/brand';
+import { universityTitleBootstrap } from '@/lib/university-title-bootstrap';
 import './globals.css';
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'https://jsfather.ir'),
@@ -14,6 +15,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          id="university-title-bootstrap"
+          dangerouslySetInnerHTML={{ __html: universityTitleBootstrap }}
+        />
+      </head>
       <body>
         <UniversityTitle />
         {children}

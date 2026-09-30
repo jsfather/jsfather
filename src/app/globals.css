@@ -2300,6 +2300,23 @@ tbody tr:last-child td {
 }
 
 /* The wordmark is also the first step in creating a personal campus. */
+.university-name-loading {
+  display: inline-block;
+  width: 8ch;
+  height: 0.8em;
+  vertical-align: baseline;
+  border-radius: 3px;
+  background: var(--border);
+}
+.brand-name-row[data-name-ready='false'] .brand-name-field {
+  border-radius: 3px;
+  background: var(--border);
+}
+.brand-name-row[data-name-ready='false'] .brand-name-input,
+.brand-name-row[data-name-ready='false'] .brand-dot,
+.brand-name-row[data-name-ready='false'] .brand-edit-button {
+  visibility: hidden;
+}
 .editable-brand {
   max-width: 330px;
   min-width: 0;

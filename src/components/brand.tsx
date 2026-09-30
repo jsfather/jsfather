@@ -42,7 +42,8 @@ function getName() {
 }
 
 function useUniversityName() {
-  return useSyncExternalStore(subscribe, getName, () => defaultName);
+  // The server cannot read localStorage. Reserve space until the browser knows the name.
+  return useSyncExternalStore<string | null>(subscribe, getName, () => null);
 }
 
 function saveName(value: string) {
@@ -61,7 +62,7 @@ function saveName(value: string) {
 
 export function UniversityName() {
   const name = useUniversityName();
-  return <span>{name}</span>;
+  return <span className={name === null ? 'university-name-loading' : undefined}>{name}</span>;
 }
 
 export function UniversityTitle() {
@@ -70,6 +71,16 @@ export function UniversityTitle() {
   const appliedTitle = useRef<string | null>(null);
 
   useEffect(() => {
+    if (name === null) return;
+    const bootstrap = window.__jsfatherUniversityTitle;
+    if (bootstrap) {
+      bootstrap.disconnect();
+      if (!sourceTitle.current) {
+        sourceTitle.current = bootstrap.sourceTitle;
+        appliedTitle.current = bootstrap.appliedTitle;
+      }
+      delete window.__jsfatherUniversityTitle;
+    }
     function syncTitle() {
       // Keep Next's page title, including titles arriving after client navigation.
       if (document.title !== appliedTitle.current) sourceTitle.current = document.title;
@@ -98,7 +109,7 @@ export function UniversityTitle() {
 export function Brand() {
   const name = useUniversityName();
   const [editing, setEditing] = useState(false);
-  const [draft, setDraft] = useState(name);
+  const [draft, setDraft] = useState('');
   const [feedback, setFeedback] = useState('');
   const cancelled = useRef(false);
   const input = useRef<HTMLInputElement>(null);
@@ -116,6 +127,8 @@ export function Brand() {
       cancelled.current = false;
       return;
     }
+    // Empty (or whitespace-only) drafts cancel the edit and keep the latest saved name.
+    if (name === null || !draft.replace(/[\u0000-\u001f\u007f]/g, '').trim()) return;
     const next = normalizeName(draft);
     if (next === name) return;
     const persisted = saveName(next);
@@ -132,10 +145,10 @@ export function Brand() {
         <GraduationCap size={25} />
       </Link>
       <div className="brand-wordmark">
-        <div className="brand-name-row">
+        <div className="brand-name-row" data-name-ready={name !== null}>
           <div className="brand-name-field">
             <span className="brand-name-measure" aria-hidden="true" dir="auto">
-              {(editing ? draft : name) || ' '}
+              {name === null ? '\u00a0'.repeat(8) : (editing ? draft : name) || ' '}
             </span>
             <input
               ref={input}
@@ -147,11 +160,12 @@ export function Brand() {
               maxLength={maxLength}
               autoComplete="off"
               spellCheck={false}
-              value={editing ? draft : name}
+              disabled={name === null}
+              value={editing ? draft : (name ?? '')}
               onFocus={(event) => {
                 cancelled.current = false;
                 setFeedback('');
-                setDraft(name);
+                setDraft(name ?? '');
                 setEditing(true);
                 const end = event.currentTarget.value.length;
                 event.currentTarget.setSelectionRange(end, end);
@@ -185,6 +199,7 @@ export function Brand() {
             type="button"
             className="brand-edit-button"
             aria-label="Rename university"
+            disabled={name === null}
             onClick={() => input.current?.focus()}
           >
             <Pencil className="brand-pencil" size={12} aria-hidden="true" />
