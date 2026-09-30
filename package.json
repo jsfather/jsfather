@@ -1,32 +1,60 @@
 {
-  "name": "nuxt-app",
+  "name": "jsfather-personal-university",
+  "version": "1.0.0",
   "private": true,
-  "type": "module",
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "format": "prettier --write ."
+    "dev": "next dev --hostname 0.0.0.0",
+    "build": "next build",
+    "start": "node scripts/start.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx scripts/migrate.ts",
+    "db:seed": "tsx scripts/seed.ts",
+    "db:studio": "drizzle-kit studio",
+    "test:integration": "tsx scripts/integration.ts",
+    "build:migrate": "esbuild scripts/migrate.ts --bundle --platform=node --format=cjs --outfile=dist/migrate.cjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test:e2e": "playwright test",
+    "db:dev": "node --import tsx scripts/dev-db.ts"
   },
   "dependencies": {
-    "@nuxt/icon": "^1.7.2",
-    "@nuxtjs/tailwindcss": "^6.12.2",
-    "@pinia/nuxt": "^0.7.0",
-    "@vueuse/nuxt": "^12.0.0",
-    "nuxt": "^3.14.159",
-    "vue": "latest",
-    "vue-router": "latest"
-  },
-  "overrides": {
-    "vue": "latest"
+    "@auth/drizzle-adapter": "^1.11.3",
+    "date-fns": "^4.4.0",
+    "date-fns-tz": "^3.2.0",
+    "dotenv": "^18.0.4",
+    "drizzle-orm": "^0.45.3",
+    "lucide-react": "^1.49.0",
+    "next": "^16.3.7",
+    "next-auth": "^5.0.0-beta.32",
+    "postgres": "^3.4.9",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "server-only": "^0.0.1",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
-    "eslint": "^9.15.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-tailwindcss": "^3.17.5",
-    "prettier": "^3.3.3",
-    "prettier-plugin-tailwindcss": "^0.6.9"
+    "@playwright/test": "^1.63.0",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^26.6.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "drizzle-kit": "^0.31.11",
+    "embedded-postgres": "^18.4.0-beta.17",
+    "esbuild": "^0.28.2",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.3.7",
+    "prettier": "^3.9.9",
+    "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.2"
+  },
+  "overrides": {
+    "@esbuild-kit/core-utils": {
+      "esbuild": "$esbuild"
+    }
   }
 }

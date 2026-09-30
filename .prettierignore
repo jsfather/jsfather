@@ -1,0 +1,11 @@
+node_modules
+.next
+drizzle/meta
+package-lock.json
+dist
+.env*
+*.tsbuildinfo
+test-results
+playwright-report
+
+next-env.d.ts

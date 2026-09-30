@@ -1,0 +1,36 @@
+services:
+  web:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-https://jsfather.ir}
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://jsfather:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}@postgres:5432/jsfather
+      AUTH_SECRET: ${AUTH_SECRET:?Set AUTH_SECRET}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:?Set GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:?Set GOOGLE_CLIENT_SECRET}
+      AUTH_URL: ${AUTH_URL:-https://jsfather.ir}
+      AUTH_TRUST_HOST: 'true'
+      NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-https://jsfather.ir}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - '127.0.0.1:3000:3000'
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: jsfather
+      POSTGRES_DB: jsfather
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U jsfather -d jsfather']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+volumes:
+  postgres-data:
