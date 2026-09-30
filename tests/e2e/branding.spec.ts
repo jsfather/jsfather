@@ -101,7 +101,7 @@ test('saved branding never renders the default name while hydration is delayed',
   page,
 }) => {
   await page.addInitScript((key) => {
-    localStorage.setItem(key, 'دانشگاه اکبر');
+    if (localStorage.getItem(key) === null) localStorage.setItem(key, 'دانشگاه اکبر');
   }, storageKey);
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
