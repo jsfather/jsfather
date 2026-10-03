@@ -573,6 +573,26 @@ h4 {
   background: #f098b00c;
   border-color: #f098b026;
 }
+.badge-sky {
+  color: #71d8ee;
+  background: #71d8ee0c;
+  border-color: #71d8ee26;
+}
+.badge-indigo {
+  color: #a7adff;
+  background: #a7adff0c;
+  border-color: #a7adff26;
+}
+.badge-orange {
+  color: #f4a66b;
+  background: #f4a66b0c;
+  border-color: #f4a66b26;
+}
+.badge-fuchsia {
+  color: #eaa1e8;
+  background: #eaa1e80c;
+  border-color: #eaa1e826;
+}
 [data-theme='light'] .badge-teal {
   color: #12794f;
 }
@@ -588,6 +608,18 @@ h4 {
 [data-theme='light'] .badge-rose {
   color: #ae3557;
 }
+[data-theme='light'] .badge-sky {
+  color: #14718b;
+}
+[data-theme='light'] .badge-indigo {
+  color: #4e55ac;
+}
+[data-theme='light'] .badge-orange {
+  color: #a64d1a;
+}
+[data-theme='light'] .badge-fuchsia {
+  color: #a23d98;
+}
 .color-teal {
   --course-color: #78dfbd;
 }
@@ -602,6 +634,18 @@ h4 {
 }
 .color-rose {
   --course-color: #f098b0;
+}
+.color-sky {
+  --course-color: #71d8ee;
+}
+.color-indigo {
+  --course-color: #a7adff;
+}
+.color-orange {
+  --course-color: #f4a66b;
+}
+.color-fuchsia {
+  --course-color: #eaa1e8;
 }
 .course-grid {
   display: grid;
@@ -706,6 +750,18 @@ h4 {
 }
 .progress-rose > div {
   background: #f098b0;
+}
+.progress-sky > div {
+  background: #71d8ee;
+}
+.progress-indigo > div {
+  background: #a7adff;
+}
+.progress-orange > div {
+  background: #f4a66b;
+}
+.progress-fuchsia > div {
+  background: #eaa1e8;
 }
 .course-bottom {
   display: flex;
@@ -948,6 +1004,18 @@ textarea {
   border-radius: 6px;
   padding: 11px 12px;
   color: var(--text);
+}
+input:not([type='checkbox'], [type='radio']),
+select {
+  min-height: 44px;
+}
+select {
+  appearance: none;
+  padding: 10px 42px 10px 12px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 16 16'%3E%3Cpath stroke='%238d98a8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.7' d='m4 6 4 4 4-4'/%3E%3C/svg%3E");
+  background-position: right 14px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
 }
 textarea {
   resize: vertical;

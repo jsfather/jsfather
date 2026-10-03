@@ -21,7 +21,7 @@ export const courseSchema = z.object({
   description: z.string().trim().max(5000),
   category: z.string().trim().min(1).max(80),
   difficulty: z.enum(['beginner', 'intermediate', 'advanced']),
-  color: z.enum(['teal', 'blue', 'violet', 'amber', 'rose']),
+  color: z.enum(['teal', 'blue', 'violet', 'amber', 'rose', 'sky', 'indigo', 'orange', 'fuchsia']),
   totalSessions: z.coerce.number().int().min(1).max(1000),
   startDate: localDate,
   scheduledTime: localTime,

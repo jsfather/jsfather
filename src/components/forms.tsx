@@ -62,6 +62,23 @@ export function CourseForm({
   timezone?: string;
   today: string;
 }) {
+  const schedule = course
+    ? {
+        totalSessions: course.totalSessions,
+        duration: course.duration,
+        startDate: course.startDate,
+        scheduledTime: course.scheduledTime,
+        timezone: course.timezone,
+        weekdays: course.weekdays,
+      }
+    : {
+        totalSessions: 24,
+        duration: 60,
+        startDate: today,
+        scheduledTime: '18:00',
+        timezone,
+        weekdays: [0, 1, 2, 3, 4, 5, 6],
+      };
   const [state, action] = useActionState(
     course ? editCourse.bind(null, course.id) : createCourse,
     {},
@@ -120,55 +137,68 @@ export function CourseForm({
           <option value="violet">Violet</option>
           <option value="amber">Amber</option>
           <option value="rose">Rose</option>
+          <option value="sky">Sky</option>
+          <option value="indigo">Indigo</option>
+          <option value="orange">Orange</option>
+          <option value="fuchsia">Fuchsia</option>
         </select>
       </Field>
-      {!course && (
-        <>
-          <div className="form-section-heading">
-            <span className="step-number">02</span>
-            <div>
-              <h3>Build your schedule</h3>
-              <p>Your sessions will be scheduled automatically.</p>
-            </div>
-          </div>
-          <div className="form-grid">
-            <Field label="Number of sessions">
-              <input
-                name="totalSessions"
-                type="number"
-                min={1}
-                max={1000}
-                required
-                defaultValue={24}
-              />
-            </Field>
-            <Field label="Session duration (minutes)">
-              <input name="duration" type="number" min={5} max={480} required defaultValue={60} />
-            </Field>
-            <Field label="Start date">
-              <input name="startDate" type="date" required defaultValue={today} />
-            </Field>
-            <Field label="Class time">
-              <input name="scheduledTime" type="time" required defaultValue="18:00" />
-            </Field>
-          </div>
-          <Field
-            label="Timezone"
-            hint="Use an IANA timezone, such as Asia/Tehran or Europe/London."
-          >
-            <input name="timezone" required defaultValue={timezone} />
-          </Field>
-          <fieldset className="weekdays">
-            <legend>Class days</legend>
-            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, i) => (
-              <label key={day}>
-                <input type="checkbox" name="weekdays" value={i} defaultChecked />
-                <span>{day}</span>
-              </label>
-            ))}
-          </fieldset>
-        </>
-      )}
+      <div className="form-section-heading">
+        <span className="step-number">02</span>
+        <div>
+          <h3>{course ? 'Course schedule' : 'Build your schedule'}</h3>
+          <p>
+            {course
+              ? 'Update the class count, start date, or timetable before any class is underway.'
+              : 'Your sessions will be scheduled automatically.'}
+          </p>
+        </div>
+      </div>
+      <div className="form-grid">
+        <Field label="Number of sessions">
+          <input
+            name="totalSessions"
+            type="number"
+            min={1}
+            max={1000}
+            required
+            defaultValue={schedule.totalSessions}
+          />
+        </Field>
+        <Field label="Session duration (minutes)">
+          <input
+            name="duration"
+            type="number"
+            min={5}
+            max={480}
+            required
+            defaultValue={schedule.duration}
+          />
+        </Field>
+        <Field label="Start date">
+          <input name="startDate" type="date" required defaultValue={schedule.startDate} />
+        </Field>
+        <Field label="Class time">
+          <input name="scheduledTime" type="time" required defaultValue={schedule.scheduledTime} />
+        </Field>
+      </div>
+      <Field label="Timezone" hint="Use an IANA timezone, such as Asia/Tehran or Europe/London.">
+        <input name="timezone" required defaultValue={schedule.timezone} />
+      </Field>
+      <fieldset className="weekdays">
+        <legend>Class days</legend>
+        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, i) => (
+          <label key={day}>
+            <input
+              type="checkbox"
+              name="weekdays"
+              value={i}
+              defaultChecked={schedule.weekdays.includes(i)}
+            />
+            <span>{day}</span>
+          </label>
+        ))}
+      </fieldset>
       {course && (
         <Field label="Course status">
           <select name="status" defaultValue={course.status}>

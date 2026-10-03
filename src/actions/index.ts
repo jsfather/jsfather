@@ -104,23 +104,59 @@ export async function editCourse(
   form: FormData,
 ): Promise<ActionState> {
   const user = await requireUser();
-  await ownedCourse(user.id, id);
+  const course = await ownedCourse(user.id, id);
   try {
-    const input = courseSchema
-      .pick({
-        title: true,
-        description: true,
-        category: true,
-        difficulty: true,
-        color: true,
-        isPublic: true,
-      })
-      .extend({ status: z.enum(['active', 'archived']) })
-      .parse({ ...formObject(form), isPublic: form.get('isPublic') === 'on' });
-    await db
-      .update(courses)
-      .set({ ...input, updatedAt: new Date() })
-      .where(and(eq(courses.id, id), eq(courses.ownerId, user.id)));
+    const input = courseSchema.extend({ status: z.enum(['active', 'archived']) }).parse({
+      ...formObject(form),
+      weekdays: form.getAll('weekdays'),
+      isPublic: form.get('isPublic') === 'on',
+    });
+    const scheduleChanged =
+      input.totalSessions !== course.totalSessions ||
+      input.startDate !== course.startDate ||
+      input.scheduledTime !== course.scheduledTime ||
+      input.duration !== course.duration ||
+      input.timezone !== course.timezone ||
+      JSON.stringify([...input.weekdays].sort()) !== JSON.stringify([...course.weekdays].sort());
+    const dates = scheduleChanged ? generateSchedule(input) : null;
+    const updated = await db.transaction(async (tx) => {
+      await tx.execute(sql`select id from courses where id=${id} for update`);
+      if (scheduleChanged) {
+        const sessions = await tx
+          .select({ status: courseSessions.status, notes: courseSessions.notes })
+          .from(courseSessions)
+          .where(eq(courseSessions.courseId, id));
+        if (sessions.some((session) => session.status !== 'upcoming' || session.notes))
+          return false;
+        await tx.delete(courseSessions).where(eq(courseSessions.courseId, id));
+      }
+      await tx
+        .update(courses)
+        .set({
+          ...input,
+          endDate: dates
+            ? formatInTimeZone(dates.at(-1)!, input.timezone, 'yyyy-MM-dd')
+            : course.endDate,
+          updatedAt: new Date(),
+        })
+        .where(and(eq(courses.id, id), eq(courses.ownerId, user.id)));
+      if (dates)
+        await tx.insert(courseSessions).values(
+          dates.map((scheduledDate, index) => ({
+            courseId: id,
+            title: `Session ${index + 1}`,
+            sessionNumber: index + 1,
+            scheduledDate,
+            duration: input.duration,
+          })),
+        );
+      return true;
+    });
+    if (!updated)
+      return {
+        error:
+          'The course schedule can only be changed before classes begin or notes are added. Update individual sessions instead.',
+      };
   } catch (e) {
     return failure(e);
   }
