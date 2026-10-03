@@ -206,4 +206,27 @@ describe('Input validation', () => {
     };
     expect(examSchema.safeParse(exam).success).toBe(false);
   });
+  it('allows long question content, including fenced code', () => {
+    const question = `Explain this code:\n\`\`\`ts\n${'const total = 42;\n'.repeat(700)}\`\`\``;
+    const input = {
+      title: 'Long form exam',
+      description: '',
+      passingScore: 70,
+      timeLimit: 30,
+      published: false,
+      questions: [
+        {
+          question,
+          type: 'multiple_choice',
+          points: 1,
+          explanation: '',
+          options: [
+            { text: 'A', isCorrect: true },
+            { text: 'B', isCorrect: false },
+          ],
+        },
+      ],
+    };
+    expect(examSchema.safeParse(input).success).toBe(true);
+  });
 });

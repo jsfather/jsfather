@@ -299,6 +299,26 @@ export async function saveExam(
   revalidatePath('/exams/' + id);
   redirect('/exams/' + id);
 }
+export async function deleteExam(
+  examId: string,
+  _state: ActionState,
+  form: FormData,
+): Promise<ActionState> {
+  const user = await requireUser();
+  const { exam } = await ownedExam(user.id, examId);
+  if (form.get('confirmation') !== exam.title)
+    return { error: 'Type the exam title to confirm deletion.' };
+  try {
+    await db.transaction(async (tx) => {
+      await tx.execute(sql`select id from exams where id=${examId} for update`);
+      await tx.delete(exams).where(eq(exams.id, examId));
+    });
+  } catch (e) {
+    return failure(e);
+  }
+  refresh(exam.courseId);
+  redirect('/exams');
+}
 export async function startAttempt(examId: string) {
   const user = await requireUser();
   await ownedExam(user.id, examId);

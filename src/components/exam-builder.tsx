@@ -139,13 +139,19 @@ export function ExamBuilder({
           <label className="field">
             <span>Question text</span>
             <textarea
-              rows={2}
+              rows={5}
               required
               minLength={2}
-              maxLength={160}
+              placeholder={
+                'Write the question. Add code with fenced blocks, for example:\n```ts\nconst answer = 42;\n```'
+              }
               value={q.question}
               onChange={(e) => update(i, { question: e.target.value })}
             />
+            <small className="field-hint">
+              Questions can be as long as needed. Wrap code in triple backticks with an optional
+              language such as <code>ts</code>, <code>js</code>, or <code>json</code>.
+            </small>
           </label>
           <div className="form-grid">
             <label className="field">

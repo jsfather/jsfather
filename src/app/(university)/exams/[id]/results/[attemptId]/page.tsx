@@ -7,6 +7,7 @@ import { examAttempts, certificates } from '@/db/schema';
 import { eq, and } from 'drizzle-orm';
 import { notFound, redirect } from 'next/navigation';
 import { PageTitle, Badge } from '@/components/ui';
+import { QuestionContent } from '@/components/question-content';
 export const metadata = { title: 'Exam results' };
 export default async function ExamResults({
   params,
@@ -78,9 +79,7 @@ export default async function ExamResults({
               {r.isCorrect ? <CheckCircle2 size={12} /> : null}
               {r.isCorrect ? 'Correct' : 'Incorrect'} · {r.earned}/{r.points} points
             </Badge>
-            <h3>
-              {i + 1}. {r.question}
-            </h3>
+            <QuestionContent className="review-question">{`${i + 1}. ${r.question}`}</QuestionContent>
             <p>Your answer: {r.selected ?? 'Unanswered'}</p>
             {!r.isCorrect && <p style={{ color: 'var(--accent)' }}>Correct answer: {r.correct}</p>}
             {r.explanation && <p>{r.explanation}</p>}

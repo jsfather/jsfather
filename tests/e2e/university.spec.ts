@@ -83,7 +83,10 @@ test('complete learning workflow, privacy, and authorization', async ({ page, br
   await page
     .getByLabel('Question text')
     .first()
-    .fill('Which keyword declares a block scoped variable?');
+    .fill(
+      'Which keyword declares a block scoped variable?\n```ts\nconst answer: number = 42;\nconsole.log(answer);\n```',
+    );
+  await expect(page.getByLabel('Question text').first()).not.toHaveAttribute('maxlength');
   for (const [i, text] of ['let', 'var', 'function', 'with'].entries())
     await page.getByLabel(`Question 1, option ${i + 1}`, { exact: true }).fill(text);
   await page
@@ -100,9 +103,15 @@ test('complete learning workflow, privacy, and authorization', async ({ page, br
   await page.getByRole('button', { name: 'Save exam' }).click();
   await expect(page).toHaveURL(/\/exams\/[0-9a-f-]{36}$/);
   examId = page.url().split('/').at(-1)!;
+  await page.getByRole('link', { name: 'Edit exam', exact: true }).click();
+  await expect(page.getByLabel('Question text').first()).toHaveValue(/const answer: number = 42/);
+  await page.getByRole('button', { name: 'Save exam', exact: true }).click();
+  await expect(page).toHaveURL(new RegExp(`/exams/${examId}$`));
   await page.getByRole('button', { name: 'Start exam', exact: true }).click();
   await expect(page).toHaveURL(/\/take\//);
   attemptId = page.url().split('/').at(-1)!;
+  await expect(page.locator('.question-code')).toContainText('const answer: number = 42;');
+  await expect(page.locator('.question-code .token-keyword')).toContainText('const');
   expect(await page.content()).not.toContain('PRIVATE_ANSWER_KEY_123');
   expect(await page.content()).not.toContain('isCorrect');
   await page.getByRole('radio').first().check();
@@ -114,6 +123,9 @@ test('complete learning workflow, privacy, and authorization', async ({ page, br
   await page.getByRole('button', { name: 'Submit answers', exact: true }).click();
   await expect(page).toHaveURL(/\/results\//);
   await expect(page.getByText('100%', { exact: true })).toBeVisible();
+  await expect(page.locator('.review-question .question-code')).toContainText(
+    'console.log(answer);',
+  );
   await expect(page.getByText('PRIVATE_ANSWER_KEY_123: let is block scoped.')).toBeVisible();
   await page.getByRole('link', { name: 'View certificate' }).click();
   await expect(page).toHaveURL(/\/certificates\/[0-9a-f-]{36}$/);
@@ -313,6 +325,54 @@ test('complete learning workflow, privacy, and authorization', async ({ page, br
   ).toBe(0);
   await anonymous.close();
   await other.close();
+});
+
+test('deletes a draft exam after an exact-title confirmation', async ({ page }) => {
+  await page
+    .context()
+    .addCookies([
+      { name: 'authjs.session-token', value: token, url: base, httpOnly: true, sameSite: 'Lax' },
+    ]);
+  const draftCourseId = randomUUID();
+  const draftExamId = randomUUID();
+  await db.insert(schema.courses).values({
+    id: draftCourseId,
+    ownerId: userId,
+    title: 'Draft Exam Course',
+    slug: `draft-exam-${draftCourseId.slice(0, 8)}`,
+    description: '',
+    category: 'Testing',
+    difficulty: 'beginner',
+    totalSessions: 1,
+    scheduledTime: '09:00',
+    duration: 30,
+    timezone: 'Asia/Tehran',
+    weekdays: [1],
+    startDate: '2026-10-01',
+  });
+  await db.insert(schema.exams).values({
+    id: draftExamId,
+    courseId: draftCourseId,
+    title: 'Disposable Draft Exam',
+    description: '',
+  });
+  await db.insert(schema.examQuestions).values({
+    examId: draftExamId,
+    question: 'Long questions stay supported.\n```js\nconst value = 1;\n```',
+    type: 'multiple_choice',
+    points: 1,
+    order: 0,
+  });
+  await page.goto(`/exams/${draftExamId}`);
+  await expect(page.getByRole('heading', { name: 'Delete exam' })).toBeVisible();
+  await page.getByRole('button', { name: 'Delete exam', exact: true }).click();
+  await expect(page.getByRole('alert')).toContainText('Type the exam title');
+  await page.getByPlaceholder('Disposable Draft Exam').fill('Disposable Draft Exam');
+  await page.getByRole('button', { name: 'Delete exam', exact: true }).click();
+  await expect(page).toHaveURL(/\/exams$/);
+  expect(
+    (await db.select().from(schema.exams).where(eq(schema.exams.id, draftExamId))).length,
+  ).toBe(0);
 });
 test('anonymous health, landing, missing Google configuration, and expired sessions', async ({
   page,

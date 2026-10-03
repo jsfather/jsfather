@@ -7,7 +7,7 @@ import { examAttempts, examQuestions } from '@/db/schema';
 import { eq, and, desc, sql } from 'drizzle-orm';
 import { startAttempt } from '@/actions';
 import { PageTitle, Badge, Pagination } from '@/components/ui';
-import { Submit } from '@/components/forms';
+import { Submit, DeleteExamForm } from '@/components/forms';
 import { formatInTimeZone } from 'date-fns-tz';
 export const metadata = { title: 'Exam details' };
 export default async function ExamDetail({
@@ -171,6 +171,9 @@ export default async function ExamDetail({
         ) : (
           <p className="muted">You haven’t taken this exam yet.</p>
         )}
+      </section>
+      <section style={{ marginTop: 26 }}>
+        <DeleteExamForm exam={exam} />
       </section>
     </>
   );

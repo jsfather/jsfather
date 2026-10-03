@@ -261,4 +261,5 @@ export const certificates = pgTable(
 );
 export type User = typeof users.$inferSelect;
 export type Course = typeof courses.$inferSelect;
+export type Exam = typeof exams.$inferSelect;
 export type CourseSession = typeof courseSessions.$inferSelect;

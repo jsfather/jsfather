@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useActionState } from 'react';
 import { Clock, ChevronLeft, ChevronRight, Send } from 'lucide-react';
 import { submitAttempt } from '@/actions';
 import { Feedback, Submit } from './forms';
+import { QuestionContent } from './question-content';
 type SafeQuestion = {
   id: string;
   question: string;
@@ -91,7 +92,7 @@ export function ExamRunner({
         ))}
       </div>
       <section className="panel">
-        <h2 className="exam-question-title">{q.question}</h2>
+        <QuestionContent className="exam-question-title">{q.question}</QuestionContent>
         <div className="exam-options">
           {q.options.map((option, i) => (
             <label key={option.id} className="exam-option">

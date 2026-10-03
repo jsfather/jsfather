@@ -12,7 +12,7 @@ A full-stack personal LMS for developers, built for **https://jsfather.ir**. Nex
 - Session rescheduling, private notes, completed/skipped/in-progress states, and one-click completion.
 - Dashboard with today's classes, overdue/upcoming sessions, course progress, study time, and university-wide statistics.
 - Day, week, and month timetables linking to session details.
-- Exam authoring with multiple-choice/true-false questions, weighted points, question ordering, configurable pass threshold, drafts, and publication.
+- Exam authoring with multiple-choice/true-false questions, weighted points, question ordering, configurable pass threshold, drafts, publication, safe fenced-code highlighting, and long-form question content.
 - Timed attempts, previous/next navigation, device-local answer recovery, automatic submission, server-side scoring, immutable result reviews, and multiple attempts.
 - Transactionally issued achievement certificates after each passing attempt, with a printable certificate page. Browser printing can save a PDF; dedicated PDF generation is intentionally deferred.
 - Public profiles at `/u/username`, public courses, and independently controlled learning progress, exam scores, and certificate visibility.
@@ -99,7 +99,7 @@ The initial migration is committed under `drizzle/`. Migration startup takes a P
 
 The optional seed creates a user, 25 scheduled Advanced JavaScript sessions, and a published final exam with two questions. Defaults to `keyvan@example.test`, which cannot authenticate through Google. For a usable development seed, set `SEED_EMAIL` to your Google address. Seeding an existing owner with courses changes nothing. The seed and integration scripts refuse `NODE_ENV=production`.
 
-Session status, notes, and completion time are the normalized session-progress record. A separate progress table is unnecessary for a single-owner course; percentages, completed courses, and aggregates are derived from sessions and attempts. Course `totalSessions` is the creation configuration; actual progress counts stored sessions. Attempt reviews and certificate names/titles are intentional immutable snapshots. Exams cannot be edited after any attempt starts, keeping timed attempts and grades consistent.
+Session status, notes, and completion time are the normalized session-progress record. A separate progress table is unnecessary for a single-owner course; percentages, completed courses, and aggregates are derived from sessions and attempts. Course `totalSessions` is the creation configuration; actual progress counts stored sessions. Attempt reviews and certificate names/titles are intentional immutable snapshots. Exams cannot be edited after any attempt starts, keeping timed attempts and grades consistent. Deleting an exam requires its exact title and removes its questions, attempts, and related certificates through database cascades.
 
 All exam question/option writes and generated sessions are transactional. Passing an attempt and issuing its certificate happen in a single transaction. A partial unique index permits only one unfinished attempt per user and exam. Repeated submission of an already-submitted attempt does not grade again or issue another certificate. The server enforces the time limit; submissions beyond a 15-second network grace window receive no answer credit. Passing uses the exact weighted ratio rather than a rounded display percentage.
 

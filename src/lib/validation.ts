@@ -73,7 +73,8 @@ export const profileSchema = z.object({
 });
 export const questionSchema = z
   .object({
-    question: title,
+    // Questions may include long, fenced code examples. PostgreSQL text has no practical UI limit.
+    question: z.string().trim().min(2),
     type: z.enum(['multiple_choice', 'true_false']),
     points: z.coerce.number().int().min(1).max(100),
     explanation: z.string().max(3000),

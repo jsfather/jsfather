@@ -1252,6 +1252,19 @@ input[type='radio'] {
 .question-editor .field {
   margin-top: 15px;
 }
+.field-hint {
+  display: block;
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+.field-hint code {
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: var(--surface-2);
+  color: var(--accent);
+}
 .question-editor input:not([type='radio']),
 .question-editor textarea,
 .question-editor select {
@@ -1317,11 +1330,46 @@ input[type='radio'] {
   line-height: 1.5;
   letter-spacing: -0.5px;
 }
+.question-prose {
+  display: block;
+  white-space: pre-wrap;
+}
+.question-code {
+  overflow-x: auto;
+  margin: 18px 0;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #0a0f14;
+  color: #d8e4ef;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.65;
+  letter-spacing: 0;
+  text-align: left;
+  tab-size: 2;
+}
+.question-code code {
+  font: inherit;
+}
+.token-comment {
+  color: #7e98a8;
+}
+.token-string {
+  color: #b8df8f;
+}
+.token-number {
+  color: #f0b37e;
+}
+.token-keyword {
+  color: #8eb8ff;
+}
 .review-row {
   padding: 24px 0;
   border-bottom: 1px solid var(--border);
 }
-.review-row h3 {
+.review-row h3,
+.review-question {
   margin: 10px 0;
   font-size: 16px;
 }

@@ -6,11 +6,12 @@ import {
   createCourse,
   editCourse,
   deleteCourse,
+  deleteExam,
   updateProfile,
   updateSession,
   type ActionState,
 } from '@/actions';
-import type { Course, CourseSession, User } from '@/db/schema';
+import type { Course, CourseSession, User, Exam } from '@/db/schema';
 import { formatInTimeZone } from 'date-fns-tz';
 import { Plus, Save, Trash2, Lock, Globe } from 'lucide-react';
 export function Submit({
@@ -221,6 +222,24 @@ export function DeleteCourseForm({ course }: { course: Course }) {
       <Submit danger>
         <Trash2 size={16} />
         Delete course
+      </Submit>
+    </form>
+  );
+}
+export function DeleteExamForm({ exam }: { exam: Exam }) {
+  const [state, action] = useActionState(deleteExam.bind(null, exam.id), {});
+  return (
+    <form action={action} className="panel danger-panel">
+      <h3>Delete exam</h3>
+      <p className="muted">
+        This permanently removes this exam, its questions, all attempts, and related certificates.
+        Type “{exam.title}” to confirm.
+      </p>
+      <Feedback state={state} />
+      <input name="confirmation" required placeholder={exam.title} />
+      <Submit danger>
+        <Trash2 size={16} />
+        Delete exam
       </Submit>
     </form>
   );
