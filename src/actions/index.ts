@@ -28,6 +28,11 @@ import { z } from 'zod';
 import { selectFinalQuestions } from '@/lib/final-selection';
 import { assessmentDefaults } from '@/lib/assessment';
 import { openGuestExam } from '@/lib/guest-exam';
+import {
+  addCourseSession,
+  removeCourseSession,
+  syncCourseSessions,
+} from '@/lib/session-management';
 export type ActionState = {
   error?: string;
   success?: string;
@@ -113,21 +118,32 @@ export async function editCourse(
   const user = await requireUser();
   const course = await ownedCourse(user.id, id);
   try {
-    const input = courseSchema.extend({ status: z.enum(['active', 'archived']) }).parse({
-      ...formObject(form),
-      weekdays: form.getAll('weekdays'),
-      isPublic: form.get('isPublic') === 'on',
-    });
+    const input = courseSchema
+      .extend({
+        status: z.enum(['active', 'archived']),
+        totalSessions: z.coerce.number().int().min(0),
+      })
+      .parse({
+        ...formObject(form),
+        weekdays: form.getAll('weekdays'),
+        isPublic: form.get('isPublic') === 'on',
+      });
+    if (input.totalSessions !== course.totalSessions)
+      return { error: 'Add or remove sessions from the course page to change its total.' };
     const scheduleChanged =
-      input.totalSessions !== course.totalSessions ||
       input.startDate !== course.startDate ||
       input.scheduledTime !== course.scheduledTime ||
       input.duration !== course.duration ||
       input.timezone !== course.timezone ||
       JSON.stringify([...input.weekdays].sort()) !== JSON.stringify([...course.weekdays].sort());
-    const dates = scheduleChanged ? generateSchedule(input) : null;
+    const dates = scheduleChanged ? (input.totalSessions ? generateSchedule(input) : []) : null;
     const updated = await db.transaction(async (tx) => {
-      await tx.execute(sql`select id from courses where id=${id} for update`);
+      const [currentCourse] = await tx
+        .select()
+        .from(courses)
+        .where(eq(courses.id, id))
+        .for('update');
+      if (!currentCourse || currentCourse.totalSessions !== input.totalSessions) return false;
       if (scheduleChanged) {
         const [bank] = await tx
           .select({ id: exams.id })
@@ -148,12 +164,14 @@ export async function editCourse(
         .set({
           ...input,
           endDate: dates
-            ? formatInTimeZone(dates.at(-1)!, input.timezone, 'yyyy-MM-dd')
+            ? dates.length
+              ? formatInTimeZone(dates.at(-1)!, input.timezone, 'yyyy-MM-dd')
+              : null
             : course.endDate,
           updatedAt: new Date(),
         })
         .where(and(eq(courses.id, id), eq(courses.ownerId, user.id)));
-      if (dates)
+      if (dates?.length)
         await tx.insert(courseSessions).values(
           dates.map((scheduledDate, index) => ({
             courseId: id,
@@ -193,6 +211,64 @@ export async function deleteCourse(
   refresh();
   redirect('/courses');
 }
+export async function createSession(
+  courseId: string,
+  _state: ActionState,
+  form: FormData,
+): Promise<ActionState> {
+  const user = await requireUser();
+  const course = await ownedCourse(user.id, courseId);
+  let id = '';
+  let completed = false;
+  try {
+    const input = sessionSchema.parse(formObject(form));
+    const scheduledDate = fromZonedTime(`${input.date}T${input.time}:00`, course.timezone);
+    if (
+      formatInTimeZone(scheduledDate, course.timezone, "yyyy-MM-dd'T'HH:mm:ss") !==
+      `${input.date}T${input.time}:00`
+    )
+      return {
+        error: 'This class time does not exist due to daylight saving. Choose another time.',
+      };
+    const { date, time, ...fields } = input;
+    void date;
+    void time;
+    const session = await db.transaction((tx) =>
+      addCourseSession(tx, course, {
+        ...fields,
+        scheduledDate,
+        completedAt: input.status === 'completed' ? new Date() : null,
+      }),
+    );
+    id = session.id;
+    completed = input.status === 'completed';
+  } catch (e) {
+    return failure(e);
+  }
+  refresh(courseId);
+  if (completed) {
+    await buildFinal(courseId, user.id, true);
+    await issueEligibleCertificate(courseId, user.id);
+  }
+  redirect('/sessions/' + id);
+}
+
+export async function deleteSession(id: string, _state: ActionState): Promise<ActionState> {
+  void _state;
+  const user = await requireUser();
+  const { course } = await ownedSession(user.id, id);
+  try {
+    await db.transaction((tx) => removeCourseSession(tx, course, id));
+  } catch (e) {
+    return failure(e);
+  }
+  refresh(course.id);
+  revalidatePath('/sessions/' + id);
+  await buildFinal(course.id, user.id, true);
+  await issueEligibleCertificate(course.id, user.id);
+  redirect('/courses/' + course.id);
+}
+
 export async function updateSession(
   id: string,
   _state: ActionState,
@@ -213,15 +289,27 @@ export async function updateSession(
     const { date, time, ...fields } = input;
     void date;
     void time;
-    await db
-      .update(courseSessions)
-      .set({
-        ...fields,
-        scheduledDate,
-        completedAt: input.status === 'completed' ? (session.completedAt ?? new Date()) : null,
-        updatedAt: new Date(),
-      })
-      .where(eq(courseSessions.id, id));
+    await db.transaction(async (tx) => {
+      await tx
+        .select({ id: courses.id })
+        .from(courses)
+        .where(eq(courses.id, course.id))
+        .for('update');
+      await tx
+        .update(courseSessions)
+        .set({
+          ...fields,
+          scheduledDate,
+          completedAt: input.status === 'completed' ? (session.completedAt ?? new Date()) : null,
+          updatedAt: new Date(),
+        })
+        .where(eq(courseSessions.id, id));
+      await tx
+        .update(exams)
+        .set({ title: input.title.slice(0, 140) + ' · Questions', updatedAt: new Date() })
+        .where(eq(exams.sessionId, id));
+      await syncCourseSessions(tx, course);
+    });
   } catch (e) {
     return failure(e);
   }
@@ -423,6 +511,8 @@ export async function deleteExam(
   }
   refresh(exam.courseId);
   if (exam.sessionId) revalidatePath('/sessions/' + exam.sessionId);
+  if (form.get('returnToSession') === 'on' && exam.sessionId)
+    redirect('/sessions/' + exam.sessionId);
   redirect('/exams');
 }
 export async function startAttempt(examId: string) {

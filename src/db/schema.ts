@@ -132,7 +132,7 @@ export const courses = pgTable(
   (t) => [
     uniqueIndex('courses_owner_slug_idx').on(t.ownerId, t.slug),
     index('courses_owner_idx').on(t.ownerId),
-    check('course_count_positive', sql`${t.totalSessions}>0`),
+    check('course_count_nonnegative', sql`${t.totalSessions}>=0`),
     check('course_duration_positive', sql`${t.duration}>0`),
   ],
 );

@@ -57,6 +57,13 @@
       "when": 1791660000000,
       "tag": "0007_single_session_exam",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1791661834610,
+      "tag": "0008_manage_course_sessions",
+      "breakpoints": true
     }
   ]
 }

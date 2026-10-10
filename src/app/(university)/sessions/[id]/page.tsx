@@ -4,7 +4,7 @@ import { requireUser } from '@/lib/auth';
 import { ownedSession } from '@/lib/data';
 import { setSessionStatus } from '@/actions';
 import { PageTitle, Badge } from '@/components/ui';
-import { SessionForm } from '@/components/forms';
+import { SessionForm, DeleteSessionForm, RemoveSessionExamForm } from '@/components/forms';
 import { formatInTimeZone } from 'date-fns-tz';
 import { db } from '@/db';
 import { exams } from '@/db/schema';
@@ -13,7 +13,7 @@ export const metadata = { title: 'Study session' };
 export default async function SessionDetail({ params }: { params: Promise<{ id: string }> }) {
   const user = await requireUser();
   const { session, course } = await ownedSession(user.id, (await params).id);
-  const [bank] = await db.select().from(exams).where(eq(exams.sessionId, session.id)).limit(1);
+  const [exam] = await db.select().from(exams).where(eq(exams.sessionId, session.id)).limit(1);
   return (
     <>
       <Link className="text-link" href={'/courses/' + course.id} style={{ marginBottom: 22 }}>
@@ -58,29 +58,38 @@ export default async function SessionDetail({ params }: { params: Promise<{ id: 
           </form>
         )}
       </div>
-      <SessionForm session={session} timezone={course.timezone} />
+      <SessionForm session={session} course={course} />
       <section className="panel" style={{ marginTop: 24 }}>
         <div className="section-header">
-          <h2>Class question bank</h2>
-          <Link
-            className="button primary"
-            href={bank ? '/exams/' + bank.id + '/edit' : '/exams/new?session=' + session.id}
-          >
-            Add questions
-          </Link>
+          <h2>Session exam</h2>
         </div>
-        <p className="muted">
-          Add easy, medium, and hard questions. Your final assessment draws from every class after
-          you complete the course.
-        </p>
-        {bank && (
-          <p style={{ marginTop: 16 }}>
-            <Link className="text-link" href={'/exams/' + bank.id}>
-              {bank.title}
+        {exam ? (
+          <>
+            <Link className="text-link" href={'/exams/' + exam.id}>
+              {exam.title}
             </Link>
-          </p>
+            <p className="muted" style={{ marginTop: 12 }}>
+              {exam.timeLimit} minutes · Pass at {exam.passingScore}%
+            </p>
+            <div className="actions-row" style={{ marginTop: 20 }}>
+              <Link className="button secondary" href={'/exams/' + exam.id + '/edit'}>
+                Edit exam
+              </Link>
+              <RemoveSessionExamForm exam={exam} />
+            </div>
+          </>
+        ) : (
+          <>
+            <p className="muted" style={{ marginBottom: 16 }}>
+              No exam attached to this session.
+            </p>
+            <Link className="button primary" href={'/exams/new?session=' + session.id}>
+              Add exam
+            </Link>
+          </>
         )}
       </section>
+      <DeleteSessionForm session={session} />
     </>
   );
 }

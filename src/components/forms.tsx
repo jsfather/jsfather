@@ -9,6 +9,8 @@ import {
   deleteExam,
   updateProfile,
   updateSession,
+  createSession,
+  deleteSession,
   type ActionState,
 } from '@/actions';
 import type { Course, CourseSession, User, Exam } from '@/db/schema';
@@ -155,7 +157,7 @@ export function CourseForm({
           <h3>{course ? 'Course schedule' : 'Build your schedule'}</h3>
           <p>
             {course
-              ? 'Update the class count, start date, or timetable before any class is underway.'
+              ? 'Add or remove sessions on the course page. Update the timetable before classes begin.'
               : 'Your sessions will be scheduled automatically.'}
           </p>
         </div>
@@ -165,9 +167,10 @@ export function CourseForm({
           <input
             name="totalSessions"
             type="number"
-            min={1}
-            max={1000}
+            min={course ? 0 : 1}
+            max={course ? undefined : 1000}
             required
+            readOnly={!!course}
             defaultValue={schedule.totalSessions}
           />
         </Field>
@@ -280,16 +283,31 @@ export function DeleteExamForm({ exam }: { exam: Exam }) {
     </form>
   );
 }
-export function SessionForm({ session, timezone }: { session: CourseSession; timezone: string }) {
-  const [state, action] = useActionState(updateSession.bind(null, session.id), {});
+export function SessionForm({ session, course }: { session?: CourseSession; course: Course }) {
+  const timezone = course.timezone;
+  const [state, action] = useActionState(
+    session ? updateSession.bind(null, session.id) : createSession.bind(null, course.id),
+    {},
+  );
   return (
     <form action={action} className="form-panel">
       <Feedback state={state} />
       <Field label="Session title">
-        <input name="title" required minLength={2} maxLength={160} defaultValue={session.title} />
+        <input
+          name="title"
+          required
+          minLength={2}
+          maxLength={160}
+          defaultValue={session?.title ?? ''}
+        />
       </Field>
       <Field label="Description">
-        <textarea name="description" rows={3} defaultValue={session.description} maxLength={5000} />
+        <textarea
+          name="description"
+          rows={3}
+          defaultValue={session?.description ?? ''}
+          maxLength={5000}
+        />
       </Field>
       <div className="form-grid">
         <Field label={`Scheduled date · ${timezone}`}>
@@ -297,7 +315,11 @@ export function SessionForm({ session, timezone }: { session: CourseSession; tim
             name="date"
             type="date"
             required
-            defaultValue={formatInTimeZone(session.scheduledDate, timezone, 'yyyy-MM-dd')}
+            defaultValue={formatInTimeZone(
+              session?.scheduledDate ?? new Date(),
+              timezone,
+              'yyyy-MM-dd',
+            )}
           />
         </Field>
         <Field label="Class time">
@@ -305,7 +327,11 @@ export function SessionForm({ session, timezone }: { session: CourseSession; tim
             name="time"
             type="time"
             required
-            defaultValue={formatInTimeZone(session.scheduledDate, timezone, 'HH:mm')}
+            defaultValue={
+              session
+                ? formatInTimeZone(session.scheduledDate, timezone, 'HH:mm')
+                : course.scheduledTime
+            }
           />
         </Field>
         <Field label="Duration (minutes)">
@@ -315,11 +341,11 @@ export function SessionForm({ session, timezone }: { session: CourseSession; tim
             min={5}
             max={480}
             required
-            defaultValue={session.duration}
+            defaultValue={session?.duration ?? course.duration}
           />
         </Field>
         <Field label="Status">
-          <select name="status" defaultValue={session.status}>
+          <select name="status" defaultValue={session?.status ?? 'upcoming'}>
             <option value="upcoming">Upcoming</option>
             <option value="in_progress">In progress</option>
             <option value="completed">Completed</option>
@@ -336,14 +362,14 @@ export function SessionForm({ session, timezone }: { session: CourseSession; tim
           rows={9}
           maxLength={20000}
           placeholder="Today I learned…"
-          defaultValue={session.notes}
+          defaultValue={session?.notes ?? ''}
         />
       </Field>
       <div className="form-footer">
         <span className="muted">Notes are always private.</span>
         <Submit>
           <Save size={16} />
-          Save session
+          {session ? 'Save session' : 'Add session'}
         </Submit>
       </div>
     </form>
@@ -465,6 +491,56 @@ export function ProfileForm({ user }: { user: User }) {
           Save settings
         </Submit>
       </div>
+    </form>
+  );
+}
+
+export function RemoveSessionExamForm({ exam }: { exam: Exam }) {
+  const [state, action] = useActionState(deleteExam.bind(null, exam.id), {});
+  return (
+    <form
+      action={action}
+      onSubmit={(event) => {
+        if (
+          !window.confirm('Remove this exam and its questions, attempts, and related certificates?')
+        )
+          event.preventDefault();
+      }}
+    >
+      <input type="hidden" name="confirmation" value={exam.title} />
+      <input type="hidden" name="returnToSession" value="on" />
+      <Feedback state={state} />
+      <Submit danger>
+        <Trash2 size={16} />
+        Remove exam
+      </Submit>
+    </form>
+  );
+}
+export function DeleteSessionForm({ session }: { session: CourseSession }) {
+  const [state, action] = useActionState(deleteSession.bind(null, session.id), {});
+  return (
+    <form
+      action={action}
+      className="panel danger-panel"
+      onSubmit={(event) => {
+        if (
+          !window.confirm(
+            'Remove this session and its attached exam, questions, attempts, and related certificates?',
+          )
+        )
+          event.preventDefault();
+      }}
+    >
+      <h3>Remove session</h3>
+      <p className="muted">
+        This also removes the attached exam and its results. The course total updates automatically.
+      </p>
+      <Feedback state={state} />
+      <Submit danger>
+        <Trash2 size={16} />
+        Remove session
+      </Submit>
     </form>
   );
 }

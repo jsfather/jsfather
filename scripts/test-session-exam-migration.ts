@@ -4,6 +4,14 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import EmbeddedPostgres from 'embedded-postgres';
 import postgres from 'postgres';
+import { drizzle } from 'drizzle-orm/postgres-js';
+import { eq } from 'drizzle-orm';
+import * as schema from '../src/db/schema';
+import {
+  addCourseSession,
+  removeCourseSession,
+  syncCourseSessions,
+} from '../src/lib/session-management';
 
 async function main() {
   // Always provisions its own disposable database; never reads DATABASE_URL.
@@ -24,7 +32,7 @@ async function main() {
     await pg.start();
     await pg.createDatabase('exam_migration');
     client = postgres(`postgresql://tester:disposable-test@127.0.0.1:${port}/exam_migration`, {
-      max: 1,
+      max: 4,
     });
     const db = client;
     const journal = JSON.parse(await readFile('drizzle/meta/_journal.json', 'utf8'));
@@ -87,6 +95,63 @@ async function main() {
     );
     await db`insert into exams (id, course_id, title, is_final) values ('f1', 'c', 'Final 1', true), ('f2', 'c', 'Final 2', true)`;
     await assert.rejects(() => db`update exams set session_id = 's' where id = 'f1'`);
+    for (const entry of journal.entries.filter((e: { idx: number }) => e.idx > 7))
+      await apply(entry.tag);
+    const orm = drizzle(db, { schema });
+    const [course] = await orm.select().from(schema.courses).where(eq(schema.courses.id, 'c'));
+    const fields = {
+      title: 'Added session',
+      scheduledDate: new Date('2026-11-01T12:00:00Z'),
+      duration: 60,
+    };
+    const added = await Promise.all([
+      orm.transaction((tx) => addCourseSession(tx, course, fields)),
+      orm.transaction((tx) => addCourseSession(tx, course, fields)),
+    ]);
+    assert.deepEqual(added.map((s) => s.sessionNumber).sort(), [2, 3]);
+    assert.equal(
+      (await db`select total_sessions from courses where id = 'c'`)[0].total_sessions,
+      3,
+    );
+    const middle = added.find((s) => s.sessionNumber === 2)!;
+    const last = added.find((s) => s.sessionNumber === 3)!;
+    await orm.transaction((tx) => removeCourseSession(tx, course, middle.id));
+    assert.deepEqual(
+      (await db`select session_number from course_sessions order by session_number`).map(
+        (s) => s.session_number,
+      ),
+      [1, 2],
+    );
+    assert.equal(
+      (await db`select total_sessions from courses where id = 'c'`)[0].total_sessions,
+      2,
+    );
+    await orm.transaction(async (tx) => {
+      await tx.select().from(schema.courses).where(eq(schema.courses.id, 'c')).for('update');
+      await tx
+        .update(schema.courseSessions)
+        .set({ scheduledDate: new Date('2026-12-01T12:00:00Z') })
+        .where(eq(schema.courseSessions.id, last.id));
+      await syncCourseSessions(tx, course);
+    });
+    assert.equal((await db`select end_date from courses where id = 'c'`)[0].end_date, '2026-12-01');
+    await orm.transaction((tx) => removeCourseSession(tx, course, 's'));
+    assert.equal((await db`select * from exams where session_id is not null`).length, 0);
+    assert.equal((await db`select * from exam_attempts`).length, 0);
+    assert.equal((await db`select * from exam_questions`).length, 0);
+    await orm.transaction((tx) => removeCourseSession(tx, course, last.id));
+    const [empty] = await db`select total_sessions, end_date from courses where id = 'c'`;
+    assert.equal(empty.total_sessions, 0);
+    assert.equal(empty.end_date, null);
+    const restarted = await orm.transaction((tx) => addCourseSession(tx, course, fields));
+    assert.equal(restarted.sessionNumber, 1);
+    assert.equal(
+      (await db`select total_sessions from courses where id = 'c'`)[0].total_sessions,
+      1,
+    );
+    console.log(
+      'PASS: Session add/remove, concurrent numbering, date changes, exam cascade cleanup, empty courses, and restoring the first session.',
+    );
     console.log(
       'PASS: Migration preserves questions, options, results and active snapshots; blocks overlapping attempts; enforces one exam per session while allowing course finals.',
     );

@@ -186,7 +186,7 @@ Use a disposable test database. Integration tests create only uniquely identifie
 
 For a restricted environment, set `PLAYWRIGHT_BROWSERS_PATH` to a writable temporary directory for both installation and tests. The test suite's no-Google-credentials case assumes the local test server has no provider credentials; it does not exercise the real Google service.
 
-Each session has one exam with no fixed question-count cap. Adding questions reopens its existing question bank. Migration `0007_single_session_exam` merges older duplicate banks, retaining questions, options, results, and active attempt snapshots. If the same learner has multiple active attempts for a session, finish the overlapping attempts before applying that migration. Course finals remain separate assessments.
+Each session has one exam with no fixed question-count cap. Adding questions reopens its existing question bank. Migration `0007_single_session_exam` merges older duplicate banks, retaining questions, options, results, and active attempt snapshots. If the same learner has multiple active attempts for a session, finish the overlapping attempts before applying that migration. Course finals remain separate assessments. From the course page, add sessions; from each session, edit its details or remove it and manage its attached exam. The course count and end date update automatically, including when the last session is removed.
 
 ## Architecture
 

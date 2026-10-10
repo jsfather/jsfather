@@ -102,8 +102,14 @@ export default async function CourseDetail({
             </div>
             <div className="section-header">
               <h2>Course sessions</h2>
-              <Badge color={course.color}>{course.difficulty}</Badge>
+              <Link className="button secondary" href={'/sessions/new?course=' + course.id}>
+                <Plus size={16} />
+                Add session
+              </Link>
             </div>
+            {!total && (
+              <p className="muted">No sessions yet. Add a session to continue your course.</p>
+            )}
             {sessions.map((session) => (
               <SessionRow
                 key={session.id}
