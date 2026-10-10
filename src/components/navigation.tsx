@@ -25,7 +25,7 @@ const nav = [
   { href: '/dashboard', name: 'Overview', icon: LayoutDashboard },
   { href: '/courses', name: 'My courses', icon: BookOpen },
   { href: '/calendar', name: 'Timetable', icon: CalendarDays },
-  { href: '/exams', name: 'Exams', icon: ClipboardList },
+  { href: '/practice', name: 'Explore exams', icon: ClipboardList },
   { href: '/certificates', name: 'Certificates', icon: Award },
 ];
 export { Brand } from './brand';

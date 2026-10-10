@@ -170,6 +170,7 @@ export const exams = pgTable(
       .references(() => courses.id, { onDelete: 'cascade' }),
     sessionId: text('session_id').references(() => courseSessions.id, { onDelete: 'cascade' }),
     isFinal: boolean('is_final').default(false).notNull(),
+    isPractice: boolean('is_practice').default(false).notNull(),
     isPublic: boolean('is_public').default(false).notNull(),
     title: text('title').notNull(),
     description: text('description').default('').notNull(),
@@ -183,6 +184,10 @@ export const exams = pgTable(
   (t) => [
     index('exams_course_idx').on(t.courseId),
     uniqueIndex('exams_session_unique').on(t.sessionId),
+    check(
+      'course_practice_scope',
+      sql`not ${t.isPractice} or (${t.sessionId} is null and not ${t.isFinal})`,
+    ),
     check('passing_score_range', sql`${t.passingScore} BETWEEN 0 AND 100`),
   ],
 );

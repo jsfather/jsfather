@@ -1,11 +1,12 @@
 import { requireUser } from '@/lib/auth';
-import { ownedExam } from '@/lib/data';
+import { accessibleExam } from '@/lib/data';
 import { db } from '@/db';
 import { examQuestions, examOptions, examAttempts } from '@/db/schema';
 import { eq, asc, inArray, and } from 'drizzle-orm';
 import { redirect, notFound } from 'next/navigation';
 import { PageTitle } from '@/components/ui';
 import { ExamRunner } from '@/components/exam-runner';
+import { examScopeLabel, assessmentLabel } from '@/lib/exam-labels';
 import { safeQuestion } from '@/lib/safe-questions';
 export const metadata = { title: 'Take exam' };
 export default async function TakeExam({
@@ -15,7 +16,7 @@ export default async function TakeExam({
 }) {
   const user = await requireUser();
   const { id, attemptId } = await params;
-  const { exam, course } = await ownedExam(user.id, id);
+  const { exam } = await accessibleExam(user.id, id, true);
   const [attempt] = await db
     .select({
       id: examAttempts.id,
@@ -63,7 +64,7 @@ export default async function TakeExam({
   return (
     <>
       <PageTitle
-        eyebrow={course.title.toUpperCase()}
+        eyebrow={`${examScopeLabel(exam)} · ${assessmentLabel(exam)}`.toUpperCase()}
         title={exam.title}
         description="Take your time. Trust what you’ve learned."
       />

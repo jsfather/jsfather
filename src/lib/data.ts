@@ -1,5 +1,5 @@
 import 'server-only';
-import { and, asc, desc, eq, sql, inArray, gte, lt } from 'drizzle-orm';
+import { and, or, asc, desc, eq, sql, inArray, gte, lt } from 'drizzle-orm';
 import { db } from '@/db';
 import { courses, courseSessions, exams, examAttempts, certificates, users } from '@/db/schema';
 import { notFound } from 'next/navigation';
@@ -27,6 +27,27 @@ export async function ownedExam(userId: string, id: string) {
     .from(exams)
     .innerJoin(courses, eq(exams.courseId, courses.id))
     .where(and(eq(exams.id, id), eq(courses.ownerId, userId)));
+  if (!row) notFound();
+  return row;
+}
+// Saved attempts remain readable by their learner if an exam is later made private.
+export async function accessibleExam(userId: string, id: string, allowPreviousAttempt = false) {
+  const [row] = await db
+    .select({ exam: exams, course: courses })
+    .from(exams)
+    .innerJoin(courses, eq(exams.courseId, courses.id))
+    .where(
+      and(
+        eq(exams.id, id),
+        or(
+          eq(courses.ownerId, userId),
+          eq(exams.isPublic, true),
+          allowPreviousAttempt
+            ? sql`exists (select 1 from ${examAttempts} where ${examAttempts.examId} = ${exams.id} and ${examAttempts.userId} = ${userId})`
+            : undefined,
+        ),
+      ),
+    );
   if (!row) notFound();
   return row;
 }

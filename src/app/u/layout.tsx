@@ -8,6 +8,9 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       <header className="public-header">
         <Brand />
         <div className="actions-row" style={{ margin: 0 }}>
+          <Link className="text-link" href="/practice">
+            Explore exams
+          </Link>
           <ThemeToggle />
           <Link className="button secondary" href="/dashboard">
             My university

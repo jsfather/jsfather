@@ -11,6 +11,7 @@ export default function Landing() {
         <Brand />
         <nav>
           <a href="#how-it-works">How it works</a>
+          <Link href="/practice">Explore exams</Link>
           <ThemeToggle />
           <Link className="button secondary" href="/dashboard">
             My university

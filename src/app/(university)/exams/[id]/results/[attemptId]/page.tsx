@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Award, CheckCircle2, BookOpen } from 'lucide-react';
 import { requireUser } from '@/lib/auth';
-import { ownedExam } from '@/lib/data';
+import { accessibleExam } from '@/lib/data';
 import { db } from '@/db';
 import { examAttempts, certificates } from '@/db/schema';
 import { eq, and } from 'drizzle-orm';
@@ -16,7 +16,7 @@ export default async function ExamResults({
 }) {
   const user = await requireUser();
   const { id, attemptId } = await params;
-  const { exam } = await ownedExam(user.id, id);
+  const { exam, course } = await accessibleExam(user.id, id, true);
   const [attempt] = await db
     .select()
     .from(examAttempts)
@@ -37,7 +37,18 @@ export default async function ExamResults({
   const elapsed = Math.round((attempt.submittedAt.getTime() - attempt.startedAt.getTime()) / 1000);
   return (
     <>
-      <PageTitle eyebrow="YOUR RESULTS" title={exam.title} />
+      <PageTitle
+        eyebrow="YOUR RESULTS"
+        title={exam.title}
+        action={
+          <Link
+            className="button secondary"
+            href={course.ownerId === user.id ? '/courses/' + course.id : '/practice'}
+          >
+            {course.ownerId === user.id ? 'Back to course' : 'Explore exams'}
+          </Link>
+        }
+      />
       <section className="panel result-summary">
         {attempt.passed ? <Award size={42} /> : <BookOpen size={42} />}
         <h2>

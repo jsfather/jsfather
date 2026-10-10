@@ -1,25 +1,46 @@
 'use client';
 import { useActionState, useState } from 'react';
-import { generateFinal, setExamPublic, assignExamClass, updateAssessmentSettings } from '@/actions';
+import {
+  generateAssessment,
+  setExamPublic,
+  assignExamClass,
+  updateAssessmentSettings,
+} from '@/actions';
 import { Feedback, Submit } from './forms';
 
-export function FinalControls({ courseId }: { courseId: string }) {
-  const [state, action] = useActionState(generateFinal.bind(null, courseId), {});
+export function AssessmentControls({
+  courseId,
+  children,
+}: {
+  courseId: string;
+  children?: React.ReactNode;
+}) {
+  const [practiceState, practiceAction] = useActionState(
+    generateAssessment.bind(null, courseId, 'practice'),
+    {},
+  );
+  const [finalState, finalAction] = useActionState(
+    generateAssessment.bind(null, courseId, 'final'),
+    {},
+  );
   return (
-    <section className="panel">
-      <h2>Final assessment</h2>
+    <section className="panel" style={{ marginTop: 24 }}>
+      <h2>Assessment</h2>
       <p className="muted" style={{ margin: '12px 0 20px' }}>
-        Generate an assessment anytime from the classes that have questions, even before studying
-        them. It selects up to 30 questions (at least one per participating class), balancing
-        classes and easy / medium / hard levels where available. Classes without questions are
-        excluded. Time and passing score are suggested from the selected questions and can be
-        changed for future attempts. To earn your certificate, pass and complete every class in the
-        course.
+        Practice with all questions from your sessions. Both options save your result. Pass the
+        final assessment and complete every session to earn your course certificate.
       </p>
-      <form action={action}>
-        <Feedback state={state} />
-        <Submit>Generate final assessment</Submit>
-      </form>
+      <div className="actions-row">
+        <form action={practiceAction}>
+          <Feedback state={practiceState} />
+          <Submit>Practice</Submit>
+        </form>
+        <form action={finalAction}>
+          <Feedback state={finalState} />
+          <Submit>Final assessment</Submit>
+        </form>
+      </div>
+      {children}
     </section>
   );
 }

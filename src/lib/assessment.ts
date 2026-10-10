@@ -25,6 +25,7 @@ export type SnapshotQuestion = {
   options: { id: string; text: string; isCorrect: boolean }[];
 };
 export type AttemptSnapshot = {
+  practiceOnly?: boolean;
   questions: SnapshotQuestion[];
   timeLimit: number;
   passingScore: number;

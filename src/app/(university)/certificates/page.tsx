@@ -52,9 +52,9 @@ export default async function Certificates({
       ) : (
         <Empty
           title="Your first achievement is ahead."
-          description="Pass a course exam to earn a personal achievement certificate. Your effort deserves a record."
-          href="/exams"
-          label="Explore your exams"
+          description="Pass a final assessment and complete every session to earn your course certificate."
+          href="/courses"
+          label="View courses"
         />
       )}
       <p className="muted" style={{ fontSize: 11, marginTop: 25 }}>

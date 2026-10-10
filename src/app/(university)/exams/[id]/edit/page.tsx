@@ -10,11 +10,11 @@ export const metadata = { title: 'Edit class questions' };
 export default async function EditExam({ params }: { params: Promise<{ id: string }> }) {
   const user = await requireUser();
   const { exam, course } = await ownedExam(user.id, (await params).id);
-  if (exam.isFinal)
+  if (exam.isFinal || exam.isPractice)
     return (
       <PageTitle
         title="This assessment is a fixed snapshot"
-        description="Edit the question bank on each class and generate another final."
+        description="Edit a session exam, then start another practice or final assessment from the course."
       />
     );
   const sessions = await db

@@ -1,0 +1,2 @@
+ALTER TABLE "exams" ADD COLUMN "is_practice" boolean DEFAULT false NOT NULL;--> statement-breakpoint
+ALTER TABLE "exams" ADD CONSTRAINT "course_practice_scope" CHECK (not "exams"."is_practice" or ("exams"."session_id" is null and not "exams"."is_final"));

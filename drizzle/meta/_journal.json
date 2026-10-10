@@ -64,6 +64,13 @@
       "when": 1791661834610,
       "tag": "0008_manage_course_sessions",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1791663078086,
+      "tag": "0009_course_practice",
+      "breakpoints": true
     }
   ]
 }

@@ -11,7 +11,7 @@ import {
   certificates,
 } from '@/db/schema';
 import { requireUser, signIn, signOut } from '@/lib/auth';
-import { ownedCourse, ownedSession, ownedExam } from '@/lib/data';
+import { ownedCourse, ownedSession, ownedExam, accessibleExam } from '@/lib/data';
 import {
   courseSchema,
   sessionSchema,
@@ -25,7 +25,6 @@ import { and, eq, asc, desc, inArray, sql } from 'drizzle-orm';
 import { redirect, unstable_rethrow } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
-import { selectFinalQuestions } from '@/lib/final-selection';
 import { assessmentDefaults } from '@/lib/assessment';
 import { openGuestExam } from '@/lib/guest-exam';
 import {
@@ -57,9 +56,15 @@ function failure(error: unknown): ActionState {
   return { error: 'We could not save this change. Please try again.' };
 }
 function refresh(courseId?: string) {
-  ['/dashboard', '/courses', '/calendar', '/exams', '/certificates', '/profile'].forEach((p) =>
-    revalidatePath(p),
-  );
+  [
+    '/dashboard',
+    '/courses',
+    '/calendar',
+    '/exams',
+    '/certificates',
+    '/profile',
+    '/practice',
+  ].forEach((p) => revalidatePath(p));
   if (courseId) revalidatePath('/courses/' + courseId);
   revalidatePath('/u', 'layout');
 }
@@ -247,7 +252,6 @@ export async function createSession(
   }
   refresh(courseId);
   if (completed) {
-    await buildFinal(courseId, user.id, true);
     await issueEligibleCertificate(courseId, user.id);
   }
   redirect('/sessions/' + id);
@@ -264,7 +268,6 @@ export async function deleteSession(id: string, _state: ActionState): Promise<Ac
   }
   refresh(course.id);
   revalidatePath('/sessions/' + id);
-  await buildFinal(course.id, user.id, true);
   await issueEligibleCertificate(course.id, user.id);
   redirect('/courses/' + course.id);
 }
@@ -316,7 +319,6 @@ export async function updateSession(
   refresh(course.id);
   revalidatePath('/sessions/' + id);
   if (form.get('status') === 'completed') {
-    await buildFinal(course.id, user.id, true);
     await issueEligibleCertificate(course.id, user.id);
   }
   return { success: 'Session saved.' };
@@ -336,7 +338,6 @@ export async function setSessionStatus(id: string, status: 'completed' | 'skippe
   refresh(course.id);
   revalidatePath('/sessions/' + id);
   if (valid === 'completed') {
-    await buildFinal(course.id, user.id, true);
     await issueEligibleCertificate(course.id, user.id);
   }
 }
@@ -381,8 +382,8 @@ export async function saveExam(
   if (examId) {
     const { exam } = await ownedExam(user.id, examId);
     previousSessionId = exam.sessionId;
-    if (exam.courseId !== courseId || exam.isFinal)
-      return { error: 'Generated finals cannot be edited.' };
+    if (exam.courseId !== courseId || exam.isFinal || exam.isPractice)
+      return { error: 'Generated assessments cannot be edited.' };
   }
   const id = examId ?? crypto.randomUUID();
   try {
@@ -489,7 +490,6 @@ export async function saveExam(
   revalidatePath('/sessions/' + sessionId);
   if (previousSessionId && previousSessionId !== sessionId)
     revalidatePath('/sessions/' + previousSessionId);
-  await buildFinal(courseId, user.id, true);
   redirect('/exams/' + id);
 }
 export async function deleteExam(
@@ -513,13 +513,16 @@ export async function deleteExam(
   if (exam.sessionId) revalidatePath('/sessions/' + exam.sessionId);
   if (form.get('returnToSession') === 'on' && exam.sessionId)
     redirect('/sessions/' + exam.sessionId);
-  redirect('/exams');
+  redirect('/courses/' + exam.courseId);
 }
-export async function startAttempt(examId: string) {
+export async function startAttempt(examId: string, practiceOnly = false) {
+  const requestedPractice = z.boolean().parse(practiceOnly);
   const user = await requireUser();
-  await ownedExam(user.id, examId);
+  const { course } = await accessibleExam(user.id, examId);
   const id = await db.transaction(async (tx) => {
     const [exam] = await tx.select().from(exams).where(eq(exams.id, examId)).for('update');
+    if (!exam || (course.ownerId !== user.id && !exam.isPublic))
+      throw new Error('This exam is no longer available for practice.');
     const [active] = await tx
       .select()
       .from(examAttempts)
@@ -553,6 +556,7 @@ export async function startAttempt(examId: string) {
         examId,
         userId: user.id,
         snapshot: {
+          practiceOnly: requestedPractice || exam.isPractice || course.ownerId !== user.id,
           timeLimit: exam.timeLimit,
           passingScore: exam.passingScore,
           questions: questions.map((q) => ({
@@ -580,6 +584,7 @@ export async function setExamPublic(
     .where(eq(exams.id, examId));
   revalidatePath('/exams/' + examId);
   revalidatePath('/practice/' + examId);
+  revalidatePath('/practice');
   return { success: published ? 'Public link enabled.' : 'Public link disabled.' };
 }
 export async function submitGuestExam(
@@ -647,13 +652,19 @@ export async function updateAssessmentSettings(
   revalidatePath('/practice/' + examId);
   return { success: 'Assessment settings saved.' };
 }
-export async function generateFinal(courseId: string, _state: ActionState): Promise<ActionState> {
+export async function generateAssessment(
+  courseId: string,
+  mode: 'practice' | 'final',
+  _state: ActionState,
+): Promise<ActionState> {
   void _state;
   const user = await requireUser();
-  const result = await buildFinal(courseId, user.id);
+  const parsed = z.enum(['practice', 'final']).safeParse(mode);
+  if (!parsed.success) return { error: 'Choose practice or final assessment.' };
+  const result = await buildCourseAssessment(courseId, user.id, parsed.data);
   if (result.error) return { error: result.error };
-  refresh(courseId);
-  redirect('/exams/' + result.id);
+  await startAttempt(result.id!);
+  return {};
 }
 export async function assignExamClass(
   examId: string,
@@ -666,7 +677,7 @@ export async function assignExamClass(
   const sessionId = String(form.get('sessionId') ?? '');
   if (!sessionId) return { error: 'Choose a class.' };
   const { session } = await ownedSession(user.id, sessionId);
-  if (exam.isFinal || session.courseId !== exam.courseId)
+  if (exam.isFinal || exam.isPractice || session.courseId !== exam.courseId)
     return { error: 'Choose a class in this course.' };
   try {
     const error = await db.transaction(async (tx) => {
@@ -698,99 +709,87 @@ export async function assignExamClass(
   }
   revalidatePath('/sessions/' + sessionId);
   if (exam.sessionId && exam.sessionId !== sessionId) revalidatePath('/sessions/' + exam.sessionId);
-  await buildFinal(exam.courseId, user.id, true);
   refresh(exam.courseId);
   revalidatePath('/exams/' + examId);
   return { success: 'Questions assigned to this class. Existing attempts are preserved.' };
 }
-async function buildFinal(
+async function buildCourseAssessment(
   courseId: string,
   userId: string,
-  onlyIfMissing = false,
+  mode: 'practice' | 'final',
 ): Promise<{ id?: string; error?: string }> {
   const course = await ownedCourse(userId, courseId);
   const id = crypto.randomUUID();
   try {
     const error = await db.transaction(async (tx) => {
       await tx.select().from(courses).where(eq(courses.id, courseId)).for('update');
-      if (onlyIfMissing) {
-        const [existing] = await tx
-          .select({ id: exams.id })
-          .from(exams)
-          .where(and(eq(exams.courseId, courseId), eq(exams.isFinal, true)))
-          .limit(1);
-        if (existing) return 'A final already exists.';
-      }
-      const sessions = await tx
-        .select()
-        .from(courseSessions)
-        .where(eq(courseSessions.courseId, courseId))
-        .for('update');
-      if (onlyIfMissing && (!sessions.length || sessions.some((s) => s.status !== 'completed')))
-        return 'Complete every class before generating your final.';
       await tx
         .select({ id: exams.id })
         .from(exams)
-        .where(and(eq(exams.courseId, courseId), eq(exams.isFinal, false)))
+        .where(and(eq(exams.courseId, courseId), sql`${exams.sessionId} is not null`))
         .for('share');
       const pool = await tx
         .select({ question: examQuestions, sessionId: exams.sessionId })
         .from(examQuestions)
         .innerJoin(exams, eq(examQuestions.examId, exams.id))
-        .where(and(eq(exams.courseId, courseId), eq(exams.isFinal, false)));
+        .innerJoin(courseSessions, eq(exams.sessionId, courseSessions.id))
+        .where(and(eq(exams.courseId, courseId), sql`${exams.sessionId} is not null`))
+        .orderBy(asc(courseSessions.sessionNumber), asc(examQuestions.order));
       const candidates = pool
         .filter((q) => q.sessionId !== null)
         .map((q) => ({ ...q.question, sessionId: q.sessionId! }));
       if (!candidates.length)
         return 'Add at least one question to any class before generating an assessment.';
-      const selected = selectFinalQuestions(
-        candidates,
-        Math.max(30, new Set(candidates.map((q) => q.sessionId)).size),
-      );
+      const selected = candidates;
       const defaults = assessmentDefaults(selected);
-      // The answer validator supports up to 1000 classes/questions in a final.
       await tx.insert(exams).values({
         id,
         courseId,
-        isFinal: true,
-        title: course.title.slice(0, 140) + ' · Final assessment',
+        isFinal: mode === 'final',
+        isPractice: mode === 'practice',
+        title:
+          course.title.slice(0, 140) + (mode === 'final' ? ' · Final assessment' : ' · Practice'),
         published: false,
         ...defaults,
         autoTimeLimit: true,
         autoPassingScore: true,
       });
-      for (const [order, question] of selected.entries()) {
-        const questionId = crypto.randomUUID();
-        await tx.insert(examQuestions).values({
-          id: questionId,
-          examId: id,
-          question: question.question,
-          difficulty: question.difficulty,
-          type: question.type,
-          points: question.points,
-          timeSeconds: question.timeSeconds,
-          acceptedAnswers: question.acceptedAnswers,
-          caseSensitive: question.caseSensitive,
-          tolerance: question.tolerance,
-          pairs: question.pairs,
-          order,
-          explanation: question.explanation,
-        });
-        const options = await tx
-          .select()
-          .from(examOptions)
-          .where(eq(examOptions.questionId, question.id))
-          .orderBy(asc(examOptions.order));
-        if (options.length)
-          await tx.insert(examOptions).values(
-            options.map((o) => ({
-              questionId,
-              text: o.text,
-              isCorrect: o.isCorrect,
-              order: o.order,
-            })),
-          );
-      }
+      const sourceOptions = await tx
+        .select()
+        .from(examOptions)
+        .where(
+          inArray(
+            examOptions.questionId,
+            selected.map((q) => q.id),
+          ),
+        )
+        .orderBy(asc(examOptions.order));
+      const copiedQuestions = selected.map((question, order) => ({
+        id: crypto.randomUUID(),
+        examId: id,
+        question: question.question,
+        difficulty: question.difficulty,
+        type: question.type,
+        points: question.points,
+        timeSeconds: question.timeSeconds,
+        acceptedAnswers: question.acceptedAnswers,
+        caseSensitive: question.caseSensitive,
+        tolerance: question.tolerance,
+        pairs: question.pairs,
+        order,
+        explanation: question.explanation,
+      }));
+      const copiedIds = new Map(selected.map((q, i) => [q.id, copiedQuestions[i].id]));
+      const copiedOptions = sourceOptions.map((o) => ({
+        questionId: copiedIds.get(o.questionId)!,
+        text: o.text,
+        isCorrect: o.isCorrect,
+        order: o.order,
+      }));
+      for (let offset = 0; offset < copiedQuestions.length; offset += 1000)
+        await tx.insert(examQuestions).values(copiedQuestions.slice(offset, offset + 1000));
+      for (let offset = 0; offset < copiedOptions.length; offset += 1000)
+        await tx.insert(examOptions).values(copiedOptions.slice(offset, offset + 1000));
       return null;
     });
     if (error) return { error };
@@ -824,6 +823,7 @@ async function issueEligibleCertificate(courseId: string, userId: string) {
           eq(exams.isFinal, true),
           eq(examAttempts.userId, userId),
           eq(examAttempts.passed, true),
+          sql`coalesce((${examAttempts.snapshot}->>'practiceOnly')::boolean, false) = false`,
         ),
       )
       .orderBy(desc(examAttempts.submittedAt))
@@ -869,7 +869,7 @@ export async function submitAttempt(
         .select({ exam: exams, course: courses })
         .from(exams)
         .innerJoin(courses, eq(exams.courseId, courses.id))
-        .where(and(eq(exams.id, attempt.examId), eq(courses.ownerId, user.id)));
+        .where(eq(exams.id, attempt.examId));
       if (!row) throw new Error('Exam not found.');
       // Serialize certificate eligibility with completion-triggered issuance.
       await tx
@@ -917,6 +917,8 @@ export async function submitAttempt(
       if (
         result.passed &&
         row.exam.isFinal &&
+        !attempt.snapshot?.practiceOnly &&
+        row.course.ownerId === user.id &&
         sessions.length > 0 &&
         sessions.every((s) => s.status === 'completed')
       )

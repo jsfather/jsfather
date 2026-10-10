@@ -1,14 +1,15 @@
 import Link from 'next/link';
-import { Pencil, ClipboardList, Plus, CalendarDays, Clock, Globe, Lock } from 'lucide-react';
+import { Pencil, Plus, CalendarDays, Clock, Globe, Lock } from 'lucide-react';
 import { grade } from '@/lib/learning';
 import { requireUser } from '@/lib/auth';
 import { ownedCourse, pageNumber } from '@/lib/data';
 import { db } from '@/db';
 import { courseSessions, exams, examAttempts } from '@/db/schema';
-import { eq, asc, sql, and } from 'drizzle-orm';
-import { PageTitle, Progress, SessionRow, Badge, Pagination } from '@/components/ui';
+import { eq, asc, sql, and, or, desc } from 'drizzle-orm';
+import { PageTitle, Progress, SessionRow, Pagination } from '@/components/ui';
 import { formatInTimeZone } from 'date-fns-tz';
-import { FinalControls } from '@/components/final-controls';
+import { AssessmentControls } from '@/components/final-controls';
+import { assessmentLabel } from '@/lib/exam-labels';
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const user = await requireUser();
   return { title: (await ownedCourse(user.id, (await params).id)).title };
@@ -49,8 +50,11 @@ export default async function CourseDetail({
         examAttempts,
         and(eq(exams.id, examAttempts.examId), eq(examAttempts.userId, user.id)),
       )
-      .where(eq(exams.courseId, course.id))
-      .groupBy(exams.id),
+      .where(
+        and(eq(exams.courseId, course.id), or(eq(exams.isFinal, true), eq(exams.isPractice, true))),
+      )
+      .groupBy(exams.id)
+      .orderBy(desc(exams.createdAt)),
     db
       .select()
       .from(courseSessions)
@@ -74,7 +78,6 @@ export default async function CourseDetail({
           </Link>
         }
       />
-      <FinalControls courseId={course.id} />
       <div className="detail-layout">
         <div>
           <section className="panel detail-panel">
@@ -123,39 +126,6 @@ export default async function CourseDetail({
               hasMore={sessions.length === 50}
               base={'/courses/' + course.id}
             />
-          </section>
-          <section className="panel">
-            <div className="section-header">
-              <h2>Course exams</h2>
-              <Link href={`/exams/new?course=${course.id}`} className="text-link">
-                <Plus size={14} />
-                Add class questions
-              </Link>
-            </div>
-            {examList.length ? (
-              examList.map(({ exam, best, passed }) => (
-                <Link className="session-row" key={exam.id} href={'/exams/' + exam.id}>
-                  <ClipboardList size={23} className="muted" />
-                  <div className="session-info">
-                    <h4>{exam.title}</h4>
-                    <span>
-                      {exam.timeLimit} minutes · Pass at {exam.passingScore}% ·{' '}
-                      {exam.isFinal ? 'Course final' : 'Class questions'} ·{' '}
-                      {exam.isPublic ? 'Public' : 'Private'}
-                    </span>
-                  </div>
-                  <Badge color={passed ? 'teal' : 'neutral'}>
-                    {best === null
-                      ? 'Not taken'
-                      : `Best: ${best}% · ${passed ? 'Passed' : 'Not passed'}`}
-                  </Badge>
-                </Link>
-              ))
-            ) : (
-              <p className="muted" style={{ fontSize: 13 }}>
-                Create an exam to check what you’ve learned.
-              </p>
-            )}
           </section>
         </div>
         <aside>
@@ -232,6 +202,28 @@ export default async function CourseDetail({
           </section>
         </aside>
       </div>
+      <AssessmentControls courseId={course.id}>
+        {!!examList.length && (
+          <div style={{ marginTop: 24 }}>
+            <h3>Your assessment history</h3>
+            {examList.slice(0, 20).map(({ exam, best, passed }) => (
+              <div className="session-row" key={exam.id}>
+                <div className="session-info">
+                  <h4>{assessmentLabel(exam)}</h4>
+                  <span>
+                    {best === null
+                      ? 'In progress'
+                      : `Best: ${best}% · ${passed ? 'Passed' : 'Not passed'}`}
+                  </span>
+                </div>
+                <Link className="text-link" href={'/exams/' + exam.id}>
+                  Results & sharing
+                </Link>
+              </div>
+            ))}
+          </div>
+        )}
+      </AssessmentControls>
     </>
   );
 }
