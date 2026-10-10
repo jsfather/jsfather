@@ -90,12 +90,10 @@ export default async function SessionDetail({ params }: { params: Promise<{ id: 
           </>
         )}
       </section>
-      {exam && (
-        <div style={{ marginTop: 24 }}>
-          <DeleteExamForm exam={exam} returnToSession />
-        </div>
-      )}
-      <DeleteSessionForm session={session} />
+      <div className="destructive-actions">
+        {exam && <DeleteExamForm exam={exam} returnToSession />}
+        <DeleteSessionForm session={session} />
+      </div>
     </>
   );
 }

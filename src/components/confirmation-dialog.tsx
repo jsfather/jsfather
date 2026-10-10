@@ -1,7 +1,7 @@
 'use client';
 import { useActionState, useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import { createPortal, useFormStatus } from 'react-dom';
-import { Copy, X, Trash2 } from 'lucide-react';
+import { Check, Copy, X, Trash2 } from 'lucide-react';
 import type { ActionState } from '@/actions';
 
 type Props = {
@@ -101,8 +101,14 @@ function ConfirmationBody({
 }) {
   const { pending } = useFormStatus();
   const [value, setValue] = useState(''),
+    [copied, setCopied] = useState(false),
     [copyMessage, setCopyMessage] = useState('');
   const text = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (!copied) return;
+    const timeout = window.setTimeout(() => setCopied(false), 2000);
+    return () => window.clearTimeout(timeout);
+  }, [copied]);
   useEffect(() => {
     const element = dialog.current;
     const cancel = (event: Event) => {
@@ -114,7 +120,8 @@ function ConfirmationBody({
   async function copy() {
     try {
       await navigator.clipboard.writeText(props.confirmation);
-      setCopyMessage('Copied');
+      setCopied(true);
+      setCopyMessage('');
     } catch {
       if (text.current) {
         const range = document.createRange();
@@ -149,18 +156,20 @@ function ConfirmationBody({
           </code>
           <button
             type="button"
-            className="icon-button"
-            aria-label="Copy confirmation text"
+            className={`icon-button confirmation-copy-button${copied ? ' is-copied' : ''}`}
+            aria-label={copied ? 'Confirmation text copied' : 'Copy confirmation text'}
             onClick={copy}
           >
-            <Copy size={18} />
+            {copied ? <Check size={18} key="check" /> : <Copy size={18} key="copy" />}
           </button>
         </div>
         <span>in the box below:</span>
       </div>
-      <span className="field-hint" role="status">
-        {copyMessage}
-      </span>
+      {copyMessage && (
+        <span className="field-hint" role="status">
+          {copyMessage}
+        </span>
+      )}
       <label className="field">
         <span>{props.inputLabel ?? 'Confirmation text'}</span>
         {props.confirmation.includes('\n') ? (

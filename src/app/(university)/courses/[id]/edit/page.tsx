@@ -18,7 +18,9 @@ export default async function EditCourse({ params }: { params: Promise<{ id: str
       ) : (
         <CourseForm course={course} today={course.startDate} />
       )}
-      <DeleteCourseForm course={course} />
+      <div className="destructive-actions">
+        <DeleteCourseForm course={course} />
+      </div>
     </>
   );
 }

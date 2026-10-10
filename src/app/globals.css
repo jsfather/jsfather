@@ -2818,6 +2818,14 @@ tbody tr:last-child td {
   }
 }
 
+.destructive-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
 .confirmation-dialog {
   width: min(620px, calc(100vw - 32px));
   max-height: calc(100dvh - 32px);
@@ -2873,6 +2881,25 @@ tbody tr:last-child td {
 }
 .confirmation-copy button {
   flex-shrink: 0;
+}
+.confirmation-copy-button.is-copied {
+  color: var(--accent);
+}
+.confirmation-copy-button svg {
+  animation: confirmation-copy-feedback 160ms ease-out;
+}
+@keyframes confirmation-copy-feedback {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .confirmation-copy-button svg {
+    animation: none;
+  }
 }
 .confirmation-actions {
   display: flex;

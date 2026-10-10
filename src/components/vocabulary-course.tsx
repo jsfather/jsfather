@@ -193,7 +193,9 @@ export async function VocabularyCourseDetail({
                 <details>
                   <summary className="text-link">Edit or delete word</summary>
                   <VocabularyWordForm word={word} courseId={course.id} today={today} />
-                  <DeleteVocabularyWordForm word={word} />
+                  <div className="destructive-actions">
+                    <DeleteVocabularyWordForm word={word} />
+                  </div>
                 </details>
               )}
             </article>
@@ -214,7 +216,9 @@ export async function VocabularyCourseDetail({
               <summary>
                 {member.name || member.username} · @{member.username}
               </summary>
-              <RemoveVocabularyCollaboratorForm courseId={course.id} member={member} />
+              <div className="destructive-actions">
+                <RemoveVocabularyCollaboratorForm courseId={course.id} member={member} />
+              </div>
             </details>
           ))}
         </section>
@@ -234,7 +238,11 @@ export async function VocabularyCourseDetail({
           </div>
         ))}
       </section>
-      {!owner && <LeaveVocabularyCourseForm course={course} />}
+      {!owner && (
+        <div className="destructive-actions">
+          <LeaveVocabularyCourseForm course={course} />
+        </div>
+      )}
     </>
   );
 }

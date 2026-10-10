@@ -234,7 +234,7 @@ export default async function ExamDetail({
         )}
       </section>
       {owner && (
-        <section style={{ marginTop: 26 }}>
+        <section className="destructive-actions">
           <DeleteExamForm exam={exam} />
         </section>
       )}
