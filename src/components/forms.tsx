@@ -257,7 +257,9 @@ export function DeleteCourseForm({ course }: { course: Course }) {
         Type “{course.title}” to confirm.
       </p>
       <Feedback state={state} />
-      <input name="confirmation" required placeholder={course.title} />
+      <Field label="Course title to confirm deletion">
+        <input name="confirmation" required autoComplete="off" placeholder={course.title} />
+      </Field>
       <Submit danger>
         <Trash2 size={16} />
         Delete course
@@ -265,7 +267,13 @@ export function DeleteCourseForm({ course }: { course: Course }) {
     </form>
   );
 }
-export function DeleteExamForm({ exam }: { exam: Exam }) {
+export function DeleteExamForm({
+  exam,
+  returnToSession = false,
+}: {
+  exam: Exam;
+  returnToSession?: boolean;
+}) {
   const [state, action] = useActionState(deleteExam.bind(null, exam.id), {});
   return (
     <form action={action} className="panel danger-panel">
@@ -275,7 +283,10 @@ export function DeleteExamForm({ exam }: { exam: Exam }) {
         Type “{exam.title}” to confirm.
       </p>
       <Feedback state={state} />
-      <input name="confirmation" required placeholder={exam.title} />
+      <Field label="Exam title to confirm deletion">
+        <input name="confirmation" required autoComplete="off" placeholder={exam.title} />
+      </Field>
+      {returnToSession && <input type="hidden" name="returnToSession" value="on" />}
       <Submit danger>
         <Trash2 size={16} />
         Delete exam
@@ -495,48 +506,19 @@ export function ProfileForm({ user }: { user: User }) {
   );
 }
 
-export function RemoveSessionExamForm({ exam }: { exam: Exam }) {
-  const [state, action] = useActionState(deleteExam.bind(null, exam.id), {});
-  return (
-    <form
-      action={action}
-      onSubmit={(event) => {
-        if (
-          !window.confirm('Remove this exam and its questions, attempts, and related certificates?')
-        )
-          event.preventDefault();
-      }}
-    >
-      <input type="hidden" name="confirmation" value={exam.title} />
-      <input type="hidden" name="returnToSession" value="on" />
-      <Feedback state={state} />
-      <Submit danger>
-        <Trash2 size={16} />
-        Remove exam
-      </Submit>
-    </form>
-  );
-}
 export function DeleteSessionForm({ session }: { session: CourseSession }) {
   const [state, action] = useActionState(deleteSession.bind(null, session.id), {});
   return (
-    <form
-      action={action}
-      className="panel danger-panel"
-      onSubmit={(event) => {
-        if (
-          !window.confirm(
-            'Remove this session and its attached exam, questions, attempts, and related certificates?',
-          )
-        )
-          event.preventDefault();
-      }}
-    >
+    <form action={action} className="panel danger-panel">
       <h3>Remove session</h3>
       <p className="muted">
-        This also removes the attached exam and its results. The course total updates automatically.
+        This permanently removes the session, its attached exam, questions, attempts, and related
+        certificates. The course total updates automatically. Type “{session.title}” to confirm.
       </p>
       <Feedback state={state} />
+      <Field label="Session title to confirm deletion">
+        <input name="confirmation" required autoComplete="off" placeholder={session.title} />
+      </Field>
       <Submit danger>
         <Trash2 size={16} />
         Remove session

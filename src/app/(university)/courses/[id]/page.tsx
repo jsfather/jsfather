@@ -2,10 +2,10 @@ import Link from 'next/link';
 import { Pencil, Plus, CalendarDays, Clock, Globe, Lock } from 'lucide-react';
 import { grade } from '@/lib/learning';
 import { requireUser } from '@/lib/auth';
-import { ownedCourse, pageNumber } from '@/lib/data';
+import { ownedCourse, pageNumber, sessionQuestionCount } from '@/lib/data';
 import { db } from '@/db';
 import { courseSessions, exams, examAttempts } from '@/db/schema';
-import { eq, asc, sql, and, or, desc } from 'drizzle-orm';
+import { eq, asc, sql, and, or, desc, getTableColumns } from 'drizzle-orm';
 import { PageTitle, Progress, SessionRow, Pagination } from '@/components/ui';
 import { formatInTimeZone } from 'date-fns-tz';
 import { AssessmentControls } from '@/components/final-controls';
@@ -26,7 +26,7 @@ export default async function CourseDetail({
   const page = pageNumber((await searchParams).page);
   const [sessions, counts, examList, next] = await Promise.all([
     db
-      .select()
+      .select({ ...getTableColumns(courseSessions), questionCount: sessionQuestionCount })
       .from(courseSessions)
       .where(eq(courseSessions.courseId, course.id))
       .orderBy(asc(courseSessions.sessionNumber))
@@ -117,6 +117,7 @@ export default async function CourseDetail({
               <SessionRow
                 key={session.id}
                 session={session}
+                questionCount={session.questionCount}
                 course={course}
                 timezone={course.timezone}
               />

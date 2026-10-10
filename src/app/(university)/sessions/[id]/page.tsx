@@ -2,9 +2,9 @@ import Link from 'next/link';
 import { Check, SkipForward, RotateCcw } from 'lucide-react';
 import { requireUser } from '@/lib/auth';
 import { ownedSession } from '@/lib/data';
-import { setSessionStatus } from '@/actions';
+import { setSessionStatus, startAttempt } from '@/actions';
 import { PageTitle, Badge } from '@/components/ui';
-import { SessionForm, DeleteSessionForm, RemoveSessionExamForm } from '@/components/forms';
+import { SessionForm, DeleteSessionForm, DeleteExamForm, Submit } from '@/components/forms';
 import { formatInTimeZone } from 'date-fns-tz';
 import { db } from '@/db';
 import { exams } from '@/db/schema';
@@ -60,23 +60,24 @@ export default async function SessionDetail({ params }: { params: Promise<{ id: 
       </div>
       <SessionForm session={session} course={course} />
       <section className="panel" style={{ marginTop: 24 }}>
-        <div className="section-header">
-          <h2>Session exam</h2>
-        </div>
+        <h2>Assessment</h2>
         {exam ? (
           <>
-            <Link className="text-link" href={'/exams/' + exam.id}>
-              {exam.title}
-            </Link>
-            <p className="muted" style={{ marginTop: 12 }}>
+            <p className="muted" style={{ margin: '12px 0 20px' }}>
+              Practice with all questions from this session. Your result is saved.
+            </p>
+            <div className="actions-row">
+              <form action={startAttempt.bind(null, exam.id, true)}>
+                <Submit>Practice</Submit>
+              </form>
+            </div>
+            <h3 style={{ marginTop: 24 }}>{exam.title}</h3>
+            <p className="muted" style={{ margin: '12px 0' }}>
               {exam.timeLimit} minutes · Pass at {exam.passingScore}%
             </p>
-            <div className="actions-row" style={{ marginTop: 20 }}>
-              <Link className="button secondary" href={'/exams/' + exam.id + '/edit'}>
-                Edit exam
-              </Link>
-              <RemoveSessionExamForm exam={exam} />
-            </div>
+            <Link className="text-link" href={'/exams/' + exam.id}>
+              Results, sharing &amp; edit exam
+            </Link>
           </>
         ) : (
           <>
@@ -89,6 +90,12 @@ export default async function SessionDetail({ params }: { params: Promise<{ id: 
           </>
         )}
       </section>
+      {exam && (
+        <details style={{ marginTop: 24 }}>
+          <summary className="text-link">Remove attached exam</summary>
+          <DeleteExamForm exam={exam} returnToSession />
+        </details>
+      )}
       <DeleteSessionForm session={session} />
     </>
   );

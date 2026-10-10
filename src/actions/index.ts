@@ -257,10 +257,16 @@ export async function createSession(
   redirect('/sessions/' + id);
 }
 
-export async function deleteSession(id: string, _state: ActionState): Promise<ActionState> {
+export async function deleteSession(
+  id: string,
+  _state: ActionState,
+  form: FormData,
+): Promise<ActionState> {
   void _state;
   const user = await requireUser();
-  const { course } = await ownedSession(user.id, id);
+  const { course, session } = await ownedSession(user.id, id);
+  if (form.get('confirmation') !== session.title)
+    return { error: 'Type the session title to confirm deletion.' };
   try {
     await db.transaction((tx) => removeCourseSession(tx, course, id));
   } catch (e) {

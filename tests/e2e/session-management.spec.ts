@@ -74,20 +74,45 @@ test('manage the attached exam and add, edit, remove, and restore sessions', asy
     .addCookies([
       { name: 'authjs.session-token', value: token, url: base, httpOnly: true, sameSite: 'Lax' },
     ]);
+  await page.goto(`/courses/${courseId}`);
+  await expect(page.locator('.sidebar').getByRole('link', { name: 'Explore exams' })).toHaveCount(
+    0,
+  );
+  await expect(page.locator('.session-row').filter({ hasText: 'First session' })).toContainText(
+    '1 question',
+  );
+  await expect(page.locator('.session-row').filter({ hasText: 'Second session' })).toContainText(
+    '0 questions',
+  );
   await page.goto(`/sessions/${firstId}`);
   const examPanel = page
     .locator('section')
-    .filter({ has: page.getByRole('heading', { name: 'Session exam', exact: true }) });
-  await expect(examPanel.getByRole('link', { name: 'Edit exam' })).toBeVisible();
+    .filter({ has: page.getByRole('heading', { name: 'Assessment', exact: true }) });
+  await expect(examPanel.getByRole('button', { name: 'Practice', exact: true })).toBeVisible();
+  await expect(examPanel.getByRole('button')).toHaveCount(1);
   await expect(examPanel.getByText('Add questions', { exact: true })).toHaveCount(0);
-  await examPanel.getByRole('link', { name: 'Edit exam' }).click();
+  await examPanel.getByRole('button', { name: 'Practice', exact: true }).click();
+  await expect(page).toHaveURL(new RegExp(`/exams/${examId}/take/`));
+  const attempts = await db
+    .select()
+    .from(schema.examAttempts)
+    .where(eq(schema.examAttempts.examId, examId));
+  expect(attempts).toHaveLength(1);
+  expect(attempts[0].snapshot?.practiceOnly).toBe(true);
+  await page.goto(`/sessions/${firstId}`);
+  await examPanel.getByRole('link', { name: 'Results, sharing & edit exam' }).click();
+  await page.getByRole('link', { name: 'Edit questions' }).click();
   await expect(page).toHaveURL(`/exams/${examId}/edit`);
   await page.goto(`/sessions/${firstId}`);
-  page.once('dialog', (dialog) => dialog.accept());
-  await page.getByRole('button', { name: 'Remove exam', exact: true }).click();
+  await page.getByText('Remove attached exam', { exact: true }).click();
+  await page.getByLabel('Exam title to confirm deletion').fill('wrong title');
+  await page.getByRole('button', { name: 'Delete exam', exact: true }).click();
+  await expect(page.locator('.alert.error')).toContainText('Type the exam title');
+  await page.getByLabel('Exam title to confirm deletion').fill('First session · Questions');
+  await page.getByRole('button', { name: 'Delete exam', exact: true }).click();
   await expect(page.getByRole('link', { name: 'Add exam', exact: true })).toBeVisible();
   expect((await db.select().from(schema.exams).where(eq(schema.exams.id, examId))).length).toBe(0);
-  await page.getByLabel('Session title').fill('Updated session');
+  await page.getByLabel('Session title', { exact: true }).fill('Updated session');
   await page.getByLabel('Scheduled date · UTC').fill('2026-12-15');
   await page.getByRole('button', { name: 'Save session', exact: true }).click();
   await expect(page.getByRole('status')).toContainText('Session saved');
@@ -97,7 +122,7 @@ test('manage the attached exam and add, edit, remove, and restore sessions', asy
   expect((await currentCourse()).totalSessions).toBe(2);
   await page.goto(`/courses/${courseId}`);
   await page.getByRole('link', { name: 'Add session', exact: true }).click();
-  await page.getByLabel('Session title').fill('Third session');
+  await page.getByLabel('Session title', { exact: true }).fill('Third session');
   await page.getByLabel('Scheduled date · UTC').fill('2026-12-31');
   await page.getByRole('button', { name: 'Add session', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Third session', exact: true })).toBeVisible();
@@ -110,7 +135,12 @@ test('manage the attached exam and add, edit, remove, and restore sessions', asy
     [thirdId, 0],
   ] as const) {
     await page.goto(`/sessions/${id}`);
-    page.once('dialog', (dialog) => dialog.accept());
+    await page.getByLabel('Session title to confirm deletion').fill('wrong title');
+    await page.getByRole('button', { name: 'Remove session', exact: true }).click();
+    await expect(page.locator('.alert.error')).toContainText('Type the session title');
+    expect((await currentCourse()).totalSessions).toBe(remaining + 1);
+    const sessionTitle = await page.getByLabel('Session title', { exact: true }).inputValue();
+    await page.getByLabel('Session title to confirm deletion').fill(sessionTitle);
     await page.getByRole('button', { name: 'Remove session', exact: true }).click();
     await expect(page).toHaveURL(`/courses/${courseId}`);
     expect((await currentCourse()).totalSessions).toBe(remaining);
@@ -125,7 +155,7 @@ test('manage the attached exam and add, edit, remove, and restore sessions', asy
   await expect(page.getByRole('status')).toContainText('Course updated');
   await page.goto(`/courses/${courseId}`);
   await page.getByRole('link', { name: 'Add session', exact: true }).click();
-  await page.getByLabel('Session title').fill('Fresh session');
+  await page.getByLabel('Session title', { exact: true }).fill('Fresh session');
   await page.getByRole('button', { name: 'Add session', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Fresh session', exact: true })).toBeVisible();
   expect((await currentCourse()).totalSessions).toBe(1);

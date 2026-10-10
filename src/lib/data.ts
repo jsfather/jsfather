@@ -4,6 +4,10 @@ import { db } from '@/db';
 import { courses, courseSessions, exams, examAttempts, certificates, users } from '@/db/schema';
 import { notFound } from 'next/navigation';
 import { canSeeCourse, canSeeProgress, canSeeScores } from './learning';
+// Count the attached question bank, excluding generated course assessment copies.
+export const sessionQuestionCount = sql<number>`(select count(*)::int from exam_questions q
+  inner join exams e on q.exam_id = e.id
+  where e.session_id = course_sessions.id)`;
 export async function ownedCourse(userId: string, id: string) {
   const [course] = await db
     .select()
@@ -131,7 +135,7 @@ export async function universityStats(userId: string, onlyPublic = false) {
 }
 export async function upcomingSessions(userId: string, limit = 5) {
   return db
-    .select({ session: courseSessions, course: courses })
+    .select({ session: courseSessions, course: courses, questionCount: sessionQuestionCount })
     .from(courseSessions)
     .innerJoin(courses, eq(courseSessions.courseId, courses.id))
     .where(
@@ -146,7 +150,7 @@ export async function upcomingSessions(userId: string, limit = 5) {
 }
 export async function sessionsBetween(userId: string, start: Date, end: Date) {
   return db
-    .select({ session: courseSessions, course: courses })
+    .select({ session: courseSessions, course: courses, questionCount: sessionQuestionCount })
     .from(courseSessions)
     .innerJoin(courses, eq(courseSessions.courseId, courses.id))
     .where(

@@ -136,11 +136,13 @@ export function CourseCard({
   );
 }
 export function SessionRow({
+  questionCount,
   session,
   course,
   timezone,
 }: {
   session: CourseSession;
+  questionCount: number;
   course: Course;
   timezone: string;
 }) {
@@ -158,7 +160,7 @@ export function SessionRow({
         <h4>{course.title}</h4>
         <span>
           Session {String(session.sessionNumber).padStart(2, '0')} · {session.title} ·{' '}
-          {session.duration} min
+          {session.duration} min · {questionCount} {questionCount === 1 ? 'question' : 'questions'}
         </span>
       </div>
       <Badge color={session.status === 'completed' ? 'teal' : overdue ? 'amber' : 'neutral'}>

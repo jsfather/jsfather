@@ -6,7 +6,6 @@ import {
   LayoutDashboard,
   BookOpen,
   CalendarDays,
-  ClipboardList,
   Award,
   UserRound,
   Settings,
@@ -25,7 +24,6 @@ const nav = [
   { href: '/dashboard', name: 'Overview', icon: LayoutDashboard },
   { href: '/courses', name: 'My courses', icon: BookOpen },
   { href: '/calendar', name: 'Timetable', icon: CalendarDays },
-  { href: '/practice', name: 'Explore exams', icon: ClipboardList },
   { href: '/certificates', name: 'Certificates', icon: Award },
 ];
 export { Brand } from './brand';
