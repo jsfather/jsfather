@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { requireUser } from '@/lib/auth';
 import { ownedExam } from '@/lib/data';
 import { db } from '@/db';
-import { examQuestions, examOptions, examAttempts, courseSessions } from '@/db/schema';
+import { examQuestions, examOptions, examAttempts, courseSessions, exams } from '@/db/schema';
 import { eq, asc, inArray, and, sql } from 'drizzle-orm';
 import { PageTitle } from '@/components/ui';
 import { ExamBuilder } from '@/components/exam-builder';
@@ -20,7 +20,12 @@ export default async function EditExam({ params }: { params: Promise<{ id: strin
   const sessions = await db
     .select({ id: courseSessions.id, title: courseSessions.title })
     .from(courseSessions)
-    .where(eq(courseSessions.courseId, course.id))
+    .where(
+      and(
+        eq(courseSessions.courseId, course.id),
+        sql`not exists (select 1 from ${exams} where ${exams.sessionId} = ${courseSessions.id} and ${exams.id} <> ${exam.id})`,
+      ),
+    )
     .orderBy(asc(courseSessions.sessionNumber));
   const [attempt] = await db
     .select({ id: examAttempts.id })
@@ -40,8 +45,8 @@ export default async function EditExam({ params }: { params: Promise<{ id: strin
           title="This exam is locked"
           description="Finish the older active attempt before editing. New attempts keep their own question snapshots."
         />
-        <Link className="button primary" href={'/exams/new?course=' + course.id}>
-          Add class questions
+        <Link className="button primary" href={'/exams/' + exam.id}>
+          Resume exam
         </Link>
       </>
     );

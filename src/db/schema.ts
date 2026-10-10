@@ -182,6 +182,7 @@ export const exams = pgTable(
   },
   (t) => [
     index('exams_course_idx').on(t.courseId),
+    uniqueIndex('exams_session_unique').on(t.sessionId),
     check('passing_score_range', sql`${t.passingScore} BETWEEN 0 AND 100`),
   ],
 );

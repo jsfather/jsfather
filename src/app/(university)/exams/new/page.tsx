@@ -2,10 +2,11 @@ import Link from 'next/link';
 import { requireUser } from '@/lib/auth';
 import { ownedCourse, ownedSession, pageNumber } from '@/lib/data';
 import { db } from '@/db';
-import { courses, courseSessions } from '@/db/schema';
+import { courses, courseSessions, exams } from '@/db/schema';
 import { eq, desc, asc } from 'drizzle-orm';
 import { PageTitle, Empty, Pagination } from '@/components/ui';
 import { ExamBuilder } from '@/components/exam-builder';
+import { redirect } from 'next/navigation';
 export const metadata = { title: 'Add class questions' };
 export default async function NewExam({
   searchParams,
@@ -16,6 +17,12 @@ export default async function NewExam({
   const query = await searchParams;
   if (query.session) {
     const { session, course } = await ownedSession(user.id, query.session);
+    const [existing] = await db
+      .select({ id: exams.id })
+      .from(exams)
+      .where(eq(exams.sessionId, session.id))
+      .limit(1);
+    if (existing) redirect('/exams/' + existing.id + '/edit');
     return (
       <>
         <PageTitle

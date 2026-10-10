@@ -289,8 +289,10 @@ export async function saveExam(
   if (!sessionId) return { error: 'Choose a class for these questions.' };
   const { session } = await ownedSession(user.id, sessionId);
   if (session.courseId !== courseId) return { error: 'Choose a class in this course.' };
+  let previousSessionId: string | null = null;
   if (examId) {
     const { exam } = await ownedExam(user.id, examId);
+    previousSessionId = exam.sessionId;
     if (exam.courseId !== courseId || exam.isFinal)
       return { error: 'Generated finals cannot be edited.' };
   }
@@ -307,6 +309,19 @@ export async function saveExam(
       autoPassingScore: input.passingScore === null,
     };
     const result = await db.transaction(async (tx) => {
+      // Serialize creation and assignment for this session, including concurrent form submissions.
+      await tx
+        .select({ id: courseSessions.id })
+        .from(courseSessions)
+        .where(eq(courseSessions.id, sessionId))
+        .for('update');
+      const [existing] = await tx
+        .select({ id: exams.id })
+        .from(exams)
+        .where(eq(exams.sessionId, sessionId))
+        .limit(1);
+      if (existing && existing.id !== examId)
+        return 'This session already has an exam. Open its question bank to add more questions.';
       if (examId) {
         await tx.execute(sql`select id from exams where id=${examId} for update`);
         const [attempt] = await tx
@@ -320,7 +335,8 @@ export async function saveExam(
             ),
           )
           .limit(1);
-        if (attempt) return false;
+        if (attempt)
+          return 'Finish the older active attempt before editing these questions. New attempts keep independent snapshots.';
         await tx
           .update(exams)
           .set({
@@ -374,18 +390,17 @@ export async function saveExam(
             })),
           );
       }
-      return true;
+      return null;
     });
-    if (!result)
-      return {
-        error:
-          'Finish the older active attempt before editing these questions. New attempts keep independent snapshots.',
-      };
+    if (result) return { error: result };
   } catch (e) {
     return failure(e);
   }
   refresh(courseId);
   revalidatePath('/exams/' + id);
+  revalidatePath('/sessions/' + sessionId);
+  if (previousSessionId && previousSessionId !== sessionId)
+    revalidatePath('/sessions/' + previousSessionId);
   await buildFinal(courseId, user.id, true);
   redirect('/exams/' + id);
 }
@@ -407,6 +422,7 @@ export async function deleteExam(
     return failure(e);
   }
   refresh(exam.courseId);
+  if (exam.sessionId) revalidatePath('/sessions/' + exam.sessionId);
   redirect('/exams');
 }
 export async function startAttempt(examId: string) {
@@ -562,7 +578,36 @@ export async function assignExamClass(
   const { session } = await ownedSession(user.id, sessionId);
   if (exam.isFinal || session.courseId !== exam.courseId)
     return { error: 'Choose a class in this course.' };
-  await db.update(exams).set({ sessionId, updatedAt: new Date() }).where(eq(exams.id, examId));
+  try {
+    const error = await db.transaction(async (tx) => {
+      await tx
+        .select({ id: courseSessions.id })
+        .from(courseSessions)
+        .where(eq(courseSessions.id, sessionId))
+        .for('update');
+      const [existing] = await tx
+        .select({ id: exams.id })
+        .from(exams)
+        .where(eq(exams.sessionId, sessionId))
+        .limit(1);
+      if (existing && existing.id !== examId)
+        return 'This session already has an exam. Open its question bank to add more questions.';
+      await tx
+        .update(exams)
+        .set({
+          sessionId,
+          title: session.title.slice(0, 140) + ' · Questions',
+          updatedAt: new Date(),
+        })
+        .where(eq(exams.id, examId));
+      return null;
+    });
+    if (error) return { error };
+  } catch (e) {
+    return failure(e);
+  }
+  revalidatePath('/sessions/' + sessionId);
+  if (exam.sessionId && exam.sessionId !== sessionId) revalidatePath('/sessions/' + exam.sessionId);
   await buildFinal(exam.courseId, user.id, true);
   refresh(exam.courseId);
   revalidatePath('/exams/' + examId);

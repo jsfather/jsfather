@@ -14,6 +14,7 @@
     "db:seed": "tsx scripts/seed.ts",
     "db:studio": "drizzle-kit studio",
     "test:integration": "tsx scripts/integration.ts",
+    "test:session-exam-migration": "tsx scripts/test-session-exam-migration.ts",
     "build:migrate": "esbuild scripts/migrate.ts --bundle --platform=node --format=cjs --outfile=dist/migrate.cjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

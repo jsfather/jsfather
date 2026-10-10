@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { assessmentDefaults, questionDefaults, type QuestionType } from '../src/lib/assessment';
 import { scoreExam, type ScoringQuestion } from '../src/lib/learning';
-import { questionSchema, classBankSchema } from '../src/lib/validation';
+import { questionSchema, classBankSchema, answersSchema } from '../src/lib/validation';
 const options = [
   { id: 'a', text: 'Alpha', isCorrect: true },
   { id: 'b', text: 'Beta', isCorrect: false },
@@ -61,6 +61,28 @@ describe('assessment settings', () => {
       }).success,
     ).toBe(true);
   });
+});
+it('supports more than 100 questions and accepts answers for large session exams', () => {
+  const q = {
+    question: 'True?',
+    type: 'true_false',
+    points: 1,
+    explanation: '',
+    options: [
+      { text: 'True', isCorrect: true },
+      { text: 'False', isCorrect: false },
+    ],
+  };
+  const bank = {
+    questions: Array.from({ length: 1001 }, () => q),
+    published: false,
+    timeLimit: null,
+    passingScore: null,
+  };
+  expect(classBankSchema.safeParse(bank).success).toBe(true);
+  const answers = Object.fromEntries(bank.questions.map(() => [crypto.randomUUID(), 'True']));
+  expect(answersSchema.safeParse(answers).success).toBe(true);
+  expect(classBankSchema.safeParse({ ...bank, questions: [] }).success).toBe(false);
 });
 describe('question grading', () => {
   it('grades single choice and true/false using the owned option key', () => {

@@ -174,6 +174,7 @@ Official references: [database connections](https://docs.dokploy.com/docs/core/d
 npm run typecheck
 npm run lint
 npm test
+npm run test:session-exam-migration # Disposable PostgreSQL; verifies duplicate consolidation.
 npm run test:integration   # Real PostgreSQL, existing migrated test DB; never production.
 npm run build
 PORT=3100 npm run start    # Keep this running in another terminal.
@@ -184,6 +185,8 @@ npm run test:e2e
 Use a disposable test database. Integration tests create only uniquely identified fixture users and remove them with cascading cleanup. Browser tests create real database sessions through test setup; the application has no endpoint to create them without OAuth. They verify course creation, session notes/completion, progress, exam authoring and taking, result reviews, certificates, deletion, logout, responsive navigation, theme persistence, anonymous restrictions, second-user ownership, and independent public/privacy settings. OAuth itself requires the manual Google round trip described above.
 
 For a restricted environment, set `PLAYWRIGHT_BROWSERS_PATH` to a writable temporary directory for both installation and tests. The test suite's no-Google-credentials case assumes the local test server has no provider credentials; it does not exercise the real Google service.
+
+Each session has one exam with no fixed question-count cap. Adding questions reopens its existing question bank. Migration `0007_single_session_exam` merges older duplicate banks, retaining questions, options, results, and active attempt snapshots. If the same learner has multiple active attempts for a session, finish the overlapping attempts before applying that migration. Course finals remain separate assessments.
 
 ## Architecture
 

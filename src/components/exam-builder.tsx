@@ -501,7 +501,6 @@ export function ExamBuilder({
       <button
         type="button"
         className="button secondary"
-        disabled={bank.questions.length >= 100}
         onClick={() => setBank({ ...bank, questions: [...bank.questions, blank()] })}
       >
         <Plus size={16} />

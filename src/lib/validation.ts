@@ -148,20 +148,18 @@ export const examSchema = z.object({
   passingScore: z.coerce.number().int().min(1).max(100),
   timeLimit: z.coerce.number().int().min(1).max(240),
   published: z.boolean(),
-  questions: z.array(questionSchema).min(1).max(100),
+  questions: z.array(questionSchema).min(1),
 });
-export const answersSchema = z
-  .record(
-    z.string().uuid(),
-    z.union([z.string().max(20000), z.array(z.string().max(1000)).max(12)]),
-  )
-  .refine((v) => Object.keys(v).length <= 1000, 'Too many answers.');
+export const answersSchema = z.record(
+  z.string().uuid(),
+  z.union([z.string().max(20000), z.array(z.string().max(1000)).max(12)]),
+);
 export type CourseInput = z.infer<typeof courseSchema>;
 export type ExamInput = z.infer<typeof examSchema>;
 export const classBankSchema = z.object({
   published: z.boolean(),
   passingScore: z.coerce.number().int().min(1).max(100).nullable(),
   timeLimit: z.coerce.number().int().min(1).max(60000).nullable(),
-  questions: z.array(questionSchema).min(1).max(100),
+  questions: z.array(questionSchema).min(1),
 });
 export type ClassBankInput = z.infer<typeof classBankSchema>;

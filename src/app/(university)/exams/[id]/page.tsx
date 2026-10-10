@@ -3,7 +3,7 @@ import { Pencil, Play, Lock, ClipboardList } from 'lucide-react';
 import { requireUser } from '@/lib/auth';
 import { ownedExam, pageNumber } from '@/lib/data';
 import { db } from '@/db';
-import { examAttempts, examQuestions, courseSessions } from '@/db/schema';
+import { examAttempts, examQuestions, courseSessions, exams } from '@/db/schema';
 import { eq, and, desc, sql } from 'drizzle-orm';
 import { startAttempt } from '@/actions';
 import { PageTitle, Badge, Pagination } from '@/components/ui';
@@ -67,7 +67,12 @@ export default async function ExamDetail({
       ? await db
           .select({ id: courseSessions.id, title: courseSessions.title })
           .from(courseSessions)
-          .where(eq(courseSessions.courseId, course.id))
+          .where(
+            and(
+              eq(courseSessions.courseId, course.id),
+              sql`not exists (select 1 from ${exams} where ${exams.sessionId} = ${courseSessions.id})`,
+            ),
+          )
       : [];
   return (
     <>

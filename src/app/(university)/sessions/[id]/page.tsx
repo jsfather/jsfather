@@ -13,7 +13,7 @@ export const metadata = { title: 'Study session' };
 export default async function SessionDetail({ params }: { params: Promise<{ id: string }> }) {
   const user = await requireUser();
   const { session, course } = await ownedSession(user.id, (await params).id);
-  const banks = await db.select().from(exams).where(eq(exams.sessionId, session.id));
+  const [bank] = await db.select().from(exams).where(eq(exams.sessionId, session.id)).limit(1);
   return (
     <>
       <Link className="text-link" href={'/courses/' + course.id} style={{ marginBottom: 22 }}>
@@ -62,7 +62,10 @@ export default async function SessionDetail({ params }: { params: Promise<{ id: 
       <section className="panel" style={{ marginTop: 24 }}>
         <div className="section-header">
           <h2>Class question bank</h2>
-          <Link className="button primary" href={'/exams/new?session=' + session.id}>
+          <Link
+            className="button primary"
+            href={bank ? '/exams/' + bank.id + '/edit' : '/exams/new?session=' + session.id}
+          >
             Add questions
           </Link>
         </div>
@@ -70,13 +73,13 @@ export default async function SessionDetail({ params }: { params: Promise<{ id: 
           Add easy, medium, and hard questions. Your final assessment draws from every class after
           you complete the course.
         </p>
-        {banks.map((bank) => (
-          <p key={bank.id} style={{ marginTop: 16 }}>
+        {bank && (
+          <p style={{ marginTop: 16 }}>
             <Link className="text-link" href={'/exams/' + bank.id}>
               {bank.title}
             </Link>
           </p>
-        ))}
+        )}
       </section>
     </>
   );

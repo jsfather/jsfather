@@ -50,6 +50,13 @@
       "when": 1791628647078,
       "tag": "0006_third_shooting_star",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1791660000000,
+      "tag": "0007_single_session_exam",
+      "breakpoints": true
     }
   ]
 }

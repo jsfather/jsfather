@@ -82,6 +82,44 @@ async function main() {
       .where(eq(schema.courseSessions.courseId, courseId));
     assert.equal(sessions.filter((s) => s.status === 'completed').length, 1);
     console.log('PASS: Course CRUD, real generated sessions, and completion persistence.');
+    const bankId = crypto.randomUUID();
+    await db.insert(schema.exams).values({
+      id: bankId,
+      courseId,
+      sessionId: sessions[0].id,
+      title: 'Session questions',
+    });
+    await assert.rejects(() =>
+      db.insert(schema.exams).values({
+        courseId,
+        sessionId: sessions[0].id,
+        title: 'Duplicate session exam',
+      }),
+    );
+    const unassignedId = crypto.randomUUID();
+    await db.insert(schema.exams).values({ id: unassignedId, courseId, title: 'Unassigned exam' });
+    await assert.rejects(() =>
+      db
+        .update(schema.exams)
+        .set({ sessionId: sessions[0].id })
+        .where(eq(schema.exams.id, unassignedId)),
+    );
+    await db.insert(schema.examQuestions).values(
+      Array.from({ length: 101 }, (_, order) => ({
+        examId: bankId,
+        question: 'Question ' + order,
+        type: 'true_false' as const,
+        order,
+      })),
+    );
+    assert.equal(
+      (await db.select().from(schema.examQuestions).where(eq(schema.examQuestions.examId, bankId)))
+        .length,
+      101,
+    );
+    console.log(
+      'PASS: One exam per session, duplicate assignment rejected, and 101 questions retained.',
+    );
     const examId = crypto.randomUUID(),
       questionId = crypto.randomUUID(),
       optionId = crypto.randomUUID();
