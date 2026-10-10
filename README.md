@@ -188,6 +188,16 @@ For a restricted environment, set `PLAYWRIGHT_BROWSERS_PATH` to a writable tempo
 
 Each session has one exam with no fixed question-count cap. Adding questions reopens its existing question bank. Migration `0007_single_session_exam` merges older duplicate banks, retaining questions, options, results, and active attempt snapshots. If the same learner has multiple active attempts for a session, finish the overlapping attempts before applying that migration. Course finals remain separate assessments. From the course page, add sessions; from each session, edit its details or remove it and manage its attached exam. The course count and end date update automatically, including when the last session is removed.
 
+## Vocabulary courses
+
+Choose **Create course → Language vocabulary** to create a word-based course without scheduled sessions. Add each word or phrase with its explanation, an optional example, entry date, and easy/medium/hard difficulty. The daily word list groups entries by date.
+
+Practice shuffles due words and randomly asks you to recall either the word or its meaning. Reveal the answer, then choose **Remembered** or **Review again**. Mastery requires 5/10/15 successful recalls for easy/medium/hard words. Successful recalls increase the spacing (easy starts at 2 days, medium at 1 day, hard at 12 hours), up to 30 days. Forgotten words return after 10 minutes and do not earn a successful repetition. Mastered words leave the due queue. These are transparent study defaults, not a standardized or validated learning algorithm.
+
+Add an existing account by its exact username under **Collaborators**. The course appears in that learner’s My courses, with separate progress and saved reviews. Collaborators cannot change the word list or course settings and can leave the course themselves. Removing access takes effect on server reads and review submissions; completed review records are preserved if the learner is added again. Changing a word or its meaning resets mastery for everyone while preserving completed review history. Removing a word permanently removes its review records, with typed confirmation.
+
+Apply migration `0010_vocabulary_courses` with `npm run db:migrate` before running this version against an existing database. Existing courses remain scheduled courses.
+
 ## Architecture
 
 - `src/app`: Server Components, route layouts, metadata, and useful API endpoints (Auth.js and health).
@@ -201,6 +211,6 @@ Each session has one exam with no fixed question-count cap. Adding questions reo
 - `drizzle`: Committed SQL migrations and snapshots.
 - `scripts`, `tests`: Deployment utilities, optional development seed, and critical verification.
 
-Every private read and mutation checks the current session and resource ownership on the server. Private resources are unavailable to other users. Public profiles require `publicProfile`; public courses require `showCourses` and individual `isPublic`; progress requires `publicProgress`; exam scores and public certificates additionally require `showExamScores`. Public statistics cover only public courses. Session descriptions/notes, schedules, email, OAuth tokens, and exam answer keys are never part of public views. The take-exam component receives only question text, point values, and answer options, without correctness/explanations. Private routes are dynamic and not indexed by search engines.
+Every private read and mutation checks the current session and resource ownership or vocabulary membership on the server. Private resources are unavailable to other users. Vocabulary collaborators can read and review their shared courses; only the owner can manage words, settings, or collaborators. Public profiles require `publicProfile`; public courses require `showCourses` and individual `isPublic`; progress requires `publicProgress`; exam scores and public certificates additionally require `showExamScores`. Public statistics cover only public courses. Session descriptions/notes, schedules, email, OAuth tokens, and exam answer keys are never part of public views. The take-exam component receives only question text, point values, and answer options, without correctness/explanations. Private routes are dynamic and not indexed by search engines.
 
 The MVP intentionally omits social feeds, subscriptions, reminders, attachments, advanced question types, and official academic certification. Those can be added without weakening the existing ownership boundary.

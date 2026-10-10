@@ -16,6 +16,22 @@ export async function ownedCourse(userId: string, id: string) {
   if (!course) notFound();
   return course;
 }
+export async function accessibleCourse(userId: string, id: string) {
+  const [course] = await db
+    .select()
+    .from(courses)
+    .where(
+      and(
+        eq(courses.id, id),
+        or(
+          eq(courses.ownerId, userId),
+          sql`${courses.kind} = 'vocabulary' and exists (select 1 from vocabulary_members m where m.course_id = courses.id and m.user_id = ${userId})`,
+        ),
+      ),
+    );
+  if (!course) notFound();
+  return course;
+}
 export async function ownedSession(userId: string, id: string) {
   const [row] = await db
     .select({ session: courseSessions, course: courses })
@@ -64,11 +80,17 @@ export async function courseSummaries(
   return db
     .select({
       course: courses,
-      total: sql<number>`count(${courseSessions.id})::int`,
-      completed: sql<number>`count(${courseSessions.id}) filter (where ${courseSessions.status}='completed')::int`,
+      total: sql<number>`case when ${courses.kind} = 'vocabulary' then
+        (select count(*)::int from vocabulary_words w where w.course_id = courses.id)
+        else count(${courseSessions.id})::int end`,
+      completed: sql<number>`case when ${courses.kind} = 'vocabulary' then
+        (select count(*)::int from vocabulary_words w join vocabulary_progress p on p.word_id = w.id and p.user_id = ${userId}
+        where w.course_id = courses.id and p.successful_reviews >= case w.difficulty when 'easy' then 5 when 'hard' then 15 else 10 end)
+        else count(${courseSessions.id}) filter (where ${courseSessions.status}='completed')::int end`,
       examStatus: onlyPublic
         ? sql<string>`''`
         : sql<string>`case
+        when ${courses.kind} = 'vocabulary' then 'Vocabulary'
         when exists (select 1 from exams e join exam_attempts a on a.exam_id=e.id where e.course_id=${courses.id} and e.is_final=true and a.user_id=${userId} and a.passed=true) then 'Final passed'
         when exists (select 1 from exams e where e.course_id=${courses.id} and e.is_final=true) then 'Final ready'
         when exists (select 1 from exams e where e.course_id=${courses.id}) then 'Exam draft'
@@ -79,8 +101,13 @@ export async function courseSummaries(
     .leftJoin(courseSessions, eq(courseSessions.courseId, courses.id))
     .where(
       and(
-        eq(courses.ownerId, userId),
-        onlyPublic ? eq(courses.isPublic, true) : undefined,
+        onlyPublic
+          ? eq(courses.ownerId, userId)
+          : or(
+              eq(courses.ownerId, userId),
+              sql`${courses.kind} = 'vocabulary' and exists (select 1 from vocabulary_members m where m.course_id = courses.id and m.user_id = ${userId})`,
+            ),
+        onlyPublic ? and(eq(courses.isPublic, true), eq(courses.kind, 'standard')) : undefined,
         activeOnly ? eq(courses.status, 'active') : undefined,
       ),
     )
@@ -107,10 +134,21 @@ export async function universityStats(userId: string, onlyPublic = false) {
     db
       .select({
         total: sql<number>`count(*)::int`,
-        completed: sql<number>`count(*) filter (where not exists (select 1 from course_sessions s where s.course_id = "courses"."id" and s.status != 'completed'))::int`,
+        completed: sql<number>`count(*) filter (where case when courses.kind = 'vocabulary' then
+          exists (select 1 from vocabulary_words w where w.course_id = courses.id) and
+          not exists (select 1 from vocabulary_words w left join vocabulary_progress p on p.word_id = w.id and p.user_id = ${userId}
+            where w.course_id = courses.id and coalesce(p.successful_reviews, 0) < case w.difficulty when 'easy' then 5 when 'hard' then 15 else 10 end)
+          else not exists (select 1 from course_sessions s where s.course_id = courses.id and s.status != 'completed') end)::int`,
       })
       .from(courses)
-      .where(scope),
+      .where(
+        onlyPublic
+          ? scope
+          : or(
+              eq(courses.ownerId, userId),
+              sql`courses.kind = 'vocabulary' and exists (select 1 from vocabulary_members m where m.course_id = courses.id and m.user_id = ${userId})`,
+            ),
+      ),
     db
       .select({
         passed: sql<number>`count(distinct ${examAttempts.examId}) filter (where ${examAttempts.passed}=true)::int`,

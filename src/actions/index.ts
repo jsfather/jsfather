@@ -122,6 +122,8 @@ export async function editCourse(
 ): Promise<ActionState> {
   const user = await requireUser();
   const course = await ownedCourse(user.id, id);
+  if (course.kind !== 'standard')
+    return { error: 'Use the vocabulary course settings to edit this course.' };
   try {
     const input = courseSchema
       .extend({
@@ -223,6 +225,8 @@ export async function createSession(
 ): Promise<ActionState> {
   const user = await requireUser();
   const course = await ownedCourse(user.id, courseId);
+  if (course.kind !== 'standard')
+    return { error: 'Vocabulary courses use daily words instead of sessions.' };
   let id = '';
   let completed = false;
   try {
@@ -725,6 +729,8 @@ async function buildCourseAssessment(
   mode: 'practice' | 'final',
 ): Promise<{ id?: string; error?: string }> {
   const course = await ownedCourse(userId, courseId);
+  if (course.kind !== 'standard')
+    return { error: 'Vocabulary courses use word reviews instead of exams.' };
   const id = crypto.randomUUID();
   try {
     const error = await db.transaction(async (tx) => {

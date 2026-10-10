@@ -81,7 +81,10 @@ export function CourseCard({
 }: {
   course:
     | Course
-    | Pick<Course, 'id' | 'title' | 'category' | 'difficulty' | 'color' | 'status' | 'description'>;
+    | Pick<
+        Course,
+        'id' | 'title' | 'category' | 'difficulty' | 'color' | 'status' | 'description' | 'kind'
+      >;
   total: number;
   completed: number;
   nextDate?: Date | string | null;
@@ -108,7 +111,7 @@ export function CourseCard({
         <>
           <div className="progress-label">
             <span>
-              {completed} of {total} sessions
+              {completed} of {total} {course.kind === 'vocabulary' ? 'words mastered' : 'sessions'}
             </span>
             <strong>{percentage}%</strong>
           </div>

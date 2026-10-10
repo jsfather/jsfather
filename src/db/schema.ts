@@ -112,6 +112,7 @@ export const courses = pgTable(
     ownerId: text('owner_id')
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
+    kind: text('kind').$type<'standard' | 'vocabulary'>().default('standard').notNull(),
     title: text('title').notNull(),
     slug: text('slug').notNull(),
     description: text('description').default('').notNull(),
@@ -132,6 +133,7 @@ export const courses = pgTable(
   (t) => [
     uniqueIndex('courses_owner_slug_idx').on(t.ownerId, t.slug),
     index('courses_owner_idx').on(t.ownerId),
+    check('course_kind_valid', sql`${t.kind} in ('standard', 'vocabulary')`),
     check('course_count_nonnegative', sql`${t.totalSessions}>=0`),
     check('course_duration_positive', sql`${t.duration}>0`),
   ],
@@ -291,3 +293,104 @@ export type User = typeof users.$inferSelect;
 export type Course = typeof courses.$inferSelect;
 export type Exam = typeof exams.$inferSelect;
 export type CourseSession = typeof courseSessions.$inferSelect;
+
+// Vocabulary membership grants learning access, never course management access.
+export const vocabularyMembers = pgTable(
+  'vocabulary_members',
+  {
+    courseId: text('course_id')
+      .notNull()
+      .references(() => courses.id, { onDelete: 'cascade' }),
+    userId: text('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    joinedAt: timestamp('joined_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (t) => [
+    primaryKey({ columns: [t.courseId, t.userId] }),
+    index('vocabulary_members_user_idx').on(t.userId),
+  ],
+);
+export const vocabularyWords = pgTable(
+  'vocabulary_words',
+  {
+    id: id(),
+    courseId: text('course_id')
+      .notNull()
+      .references(() => courses.id, { onDelete: 'cascade' }),
+    word: text('word').notNull(),
+    explanation: text('explanation').notNull(),
+    example: text('example').default('').notNull(),
+    difficulty: text('difficulty').$type<'easy' | 'medium' | 'hard'>().default('medium').notNull(),
+    addedOn: text('added_on').notNull(),
+    version: integer('version').default(1).notNull(),
+    ...dates,
+  },
+  (t) => [
+    index('vocabulary_words_course_idx').on(t.courseId, t.addedOn),
+    uniqueIndex('vocabulary_word_unique').on(t.courseId, sql`lower(trim(${t.word}))`),
+    check('vocabulary_difficulty_valid', sql`${t.difficulty} in ('easy', 'medium', 'hard')`),
+    check('vocabulary_version_positive', sql`${t.version} > 0`),
+  ],
+);
+export const vocabularyProgress = pgTable(
+  'vocabulary_progress',
+  {
+    wordId: text('word_id')
+      .notNull()
+      .references(() => vocabularyWords.id, { onDelete: 'cascade' }),
+    userId: text('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    successfulReviews: integer('successful_reviews').default(0).notNull(),
+    totalReviews: integer('total_reviews').default(0).notNull(),
+    dueAt: timestamp('due_at', { withTimezone: true }).defaultNow().notNull(),
+    lastReviewedAt: timestamp('last_reviewed_at', { withTimezone: true }),
+  },
+  (t) => [
+    primaryKey({ columns: [t.wordId, t.userId] }),
+    index('vocabulary_progress_user_due_idx').on(t.userId, t.dueAt),
+    check(
+      'vocabulary_progress_counts',
+      sql`${t.successfulReviews} >= 0 and ${t.totalReviews} >= ${t.successfulReviews}`,
+    ),
+  ],
+);
+// A single pending card per course/learner makes multi-tab reviews and retries idempotent.
+export const vocabularyReviews = pgTable(
+  'vocabulary_reviews',
+  {
+    id: id(),
+    courseId: text('course_id')
+      .notNull()
+      .references(() => courses.id, { onDelete: 'cascade' }),
+    wordId: text('word_id')
+      .notNull()
+      .references(() => vocabularyWords.id, { onDelete: 'cascade' }),
+    userId: text('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    wordVersion: integer('word_version').notNull(),
+    wordSnapshot: jsonb('word_snapshot')
+      .$type<{
+        word: string;
+        explanation: string;
+        example: string;
+        difficulty: 'easy' | 'medium' | 'hard';
+      }>()
+      .notNull(),
+    direction: text('direction').$type<'word' | 'meaning'>().notNull(),
+    revealedAt: timestamp('revealed_at', { withTimezone: true }),
+    remembered: boolean('remembered'),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    submittedAt: timestamp('submitted_at', { withTimezone: true }),
+  },
+  (t) => [
+    uniqueIndex('vocabulary_review_pending')
+      .on(t.courseId, t.userId)
+      .where(sql`${t.submittedAt} is null`),
+    index('vocabulary_reviews_user_idx').on(t.userId, t.createdAt),
+    check('vocabulary_review_direction', sql`${t.direction} in ('word', 'meaning')`),
+  ],
+);
+export type VocabularyWord = typeof vocabularyWords.$inferSelect;

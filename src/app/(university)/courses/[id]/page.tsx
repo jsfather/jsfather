@@ -1,8 +1,10 @@
+import { accessibleCourse } from '@/lib/data';
+import { VocabularyCourseDetail } from '@/components/vocabulary-course';
 import Link from 'next/link';
 import { Pencil, Plus, CalendarDays, Clock, Globe, Lock } from 'lucide-react';
 import { grade } from '@/lib/learning';
 import { requireUser } from '@/lib/auth';
-import { ownedCourse, pageNumber, sessionQuestionCount } from '@/lib/data';
+import { pageNumber, sessionQuestionCount } from '@/lib/data';
 import { db } from '@/db';
 import { courseSessions, exams, examAttempts } from '@/db/schema';
 import { eq, asc, sql, and, or, desc, getTableColumns } from 'drizzle-orm';
@@ -12,7 +14,7 @@ import { AssessmentControls } from '@/components/final-controls';
 import { assessmentLabel } from '@/lib/exam-labels';
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const user = await requireUser();
-  return { title: (await ownedCourse(user.id, (await params).id)).title };
+  return { title: (await accessibleCourse(user.id, (await params).id)).title };
 }
 export default async function CourseDetail({
   params,
@@ -22,8 +24,10 @@ export default async function CourseDetail({
   searchParams: Promise<{ page?: string }>;
 }) {
   const user = await requireUser();
-  const course = await ownedCourse(user.id, (await params).id);
+  const course = await accessibleCourse(user.id, (await params).id);
   const page = pageNumber((await searchParams).page);
+  if (course.kind === 'vocabulary')
+    return <VocabularyCourseDetail course={course} user={user} page={page} />;
   const [sessions, counts, examList, next] = await Promise.all([
     db
       .select({ ...getTableColumns(courseSessions), questionCount: sessionQuestionCount })
