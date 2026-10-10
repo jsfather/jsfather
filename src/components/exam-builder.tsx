@@ -10,6 +10,7 @@ import {
   type QuestionType,
 } from '@/lib/assessment';
 import type { ClassBankInput } from '@/lib/validation';
+import { QuestionTextEditor } from './question-text-editor';
 type Question = ClassBankInput['questions'][number];
 const blank = (): Question => ({
   question: '',
@@ -159,21 +160,11 @@ export function ExamBuilder({
               </button>
             </div>
           </header>
-          <label className="field">
-            <span>Question text</span>
-            <textarea
-              rows={4}
-              required
-              minLength={2}
-              placeholder="Write your question. Use ___ for a blank or fenced code blocks for code."
-              value={q.question}
-              onChange={(e) => update(i, { question: e.target.value })}
-            />
-            <small className="field-hint">
-              No character limit. Code: triple backticks with an optional language such as js, ts,
-              or json.
-            </small>
-          </label>
+          <QuestionTextEditor
+            type={q.type}
+            value={q.question}
+            onChange={(question) => update(i, { question })}
+          />
           <div className="form-grid">
             <label className="field">
               <span>Question type</span>
@@ -281,6 +272,7 @@ export function ExamBuilder({
                     type="button"
                     className="button secondary"
                     disabled={q.acceptedAnswers.length >= 20}
+                    style={{ marginTop: 16 }}
                     onClick={() => update(i, { acceptedAnswers: [...q.acceptedAnswers, ''] })}
                   >
                     <Plus size={14} />
@@ -345,6 +337,7 @@ export function ExamBuilder({
                 type="button"
                 className="button secondary"
                 disabled={q.pairs.length >= 12}
+                style={{ marginTop: 16 }}
                 onClick={() => update(i, { pairs: [...q.pairs, { left: '', right: '' }] })}
               >
                 <Plus size={14} />
@@ -433,6 +426,7 @@ export function ExamBuilder({
                   type="button"
                   className="button secondary"
                   disabled={q.options.length >= 12}
+                  style={{ marginTop: 16 }}
                   onClick={() =>
                     update(i, { options: [...q.options, { text: '', isCorrect: false }] })
                   }

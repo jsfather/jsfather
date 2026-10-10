@@ -22,7 +22,7 @@ export default async function Calendar({
 }) {
   const user = await requireUser();
   const query = await searchParams;
-  const view = ['day', 'week', 'month'].includes(query.view ?? '') ? query.view! : 'week';
+  const view = ['day', 'week', 'month'].includes(query.view ?? '') ? query.view! : 'day';
   const today = formatInTimeZone(new Date(), user.timezone, 'yyyy-MM-dd');
   const anchor = parseISO(localDate.safeParse(query.date).success ? query.date! : today);
   const start =
