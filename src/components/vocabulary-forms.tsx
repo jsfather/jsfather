@@ -98,7 +98,9 @@ export function VocabularyCourseForm({ course, timezone }: { course?: Course; ti
         Easy: 5 successful reviews · Medium: 10 · Hard: 15. Words are shuffled when due.
         Collaborators can practice; only you can manage the word list.
       </p>
-      <Submit>{course ? 'Save course' : 'Create vocabulary course'}</Submit>
+      <div className="vocabulary-form-actions">
+        <Submit>{course ? 'Save course' : 'Create vocabulary course'}</Submit>
+      </div>
     </form>
   );
 }
@@ -159,7 +161,10 @@ export function VocabularyWordForm({
           is kept.
         </p>
       )}
-      <Submit>{word ? 'Save word' : 'Add word'}</Submit>
+      <div className="vocabulary-form-actions">
+        <Submit>{word ? 'Save word' : 'Add word'}</Submit>
+        {word && <DeleteVocabularyWordForm word={word} />}
+      </div>
     </form>
   );
 }

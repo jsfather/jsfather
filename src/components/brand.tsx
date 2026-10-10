@@ -1,8 +1,19 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useId, useRef, useState, useSyncExternalStore } from 'react';
-import { Check, GraduationCap, Pencil } from 'lucide-react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from 'react';
+import { Check, Pencil } from 'lucide-react';
+import { UniversityLogo } from './university-logo';
+import { updateUniversityName } from '@/actions/branding';
+import { normalizeUniversityName } from '@/lib/university-name';
 
 const defaultName = 'jsfather';
 const storageKey = 'jsfather-university-name';
@@ -11,13 +22,42 @@ const maxLength = 40;
 let tabName = defaultName;
 let transientName: string | null = null;
 
-function normalizeName(value: string) {
-  const name = value
-    .replace(/[\u0000-\u001f\u007f]/g, '')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .slice(0, maxLength);
-  return !name || name.toLowerCase() === defaultName ? defaultName : name;
+const normalizeName = normalizeUniversityName;
+const NameContext = createContext<{
+  name: string;
+  save: (value: string) => Promise<{ error?: string }>;
+} | null>(null);
+
+export function UniversityBrandProvider({
+  accountName,
+  children,
+}: {
+  accountName: string | null;
+  children: React.ReactNode;
+}) {
+  const [saved, setSaved] = useState({ source: accountName, name: accountName ?? defaultName });
+  if (saved.source !== accountName) {
+    setSaved({ source: accountName, name: accountName ?? defaultName });
+  }
+  const name = saved.source === accountName ? saved.name : (accountName ?? defaultName);
+  return (
+    <NameContext.Provider
+      value={
+        accountName === null
+          ? null
+          : {
+              name,
+              save: async (value) => {
+                const result = await updateUniversityName(value);
+                if (result.name) setSaved({ source: accountName, name: result.name });
+                return result;
+              },
+            }
+      }
+    >
+      {children}
+    </NameContext.Provider>
+  );
 }
 
 function subscribe(callback: () => void) {
@@ -43,7 +83,9 @@ function getName() {
 
 function useUniversityName() {
   // The server cannot read localStorage. Reserve space until the browser knows the name.
-  return useSyncExternalStore<string | null>(subscribe, getName, () => null);
+  const account = useContext(NameContext);
+  const guest = useSyncExternalStore<string | null>(subscribe, getName, () => null);
+  return account?.name ?? guest;
 }
 
 function saveName(value: string) {
@@ -107,6 +149,8 @@ export function UniversityTitle() {
 }
 
 export function Brand() {
+  const account = useContext(NameContext);
+  const [saving, setSaving] = useState(false);
   const name = useUniversityName();
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState('');
@@ -121,7 +165,7 @@ export function Brand() {
     return () => clearTimeout(timer);
   }, [feedback]);
 
-  function finishEditing() {
+  async function finishEditing() {
     setEditing(false);
     if (cancelled.current) {
       cancelled.current = false;
@@ -131,6 +175,18 @@ export function Brand() {
     if (name === null || !draft.replace(/[\u0000-\u001f\u007f]/g, '').trim()) return;
     const next = normalizeName(draft);
     if (next === name) return;
+    if (account) {
+      setSaving(true);
+      try {
+        const result = await account.save(next);
+        setFeedback(result.error ?? 'Made it yours.');
+      } catch {
+        setFeedback('Could not save your name. Please try again.');
+      } finally {
+        setSaving(false);
+      }
+      return;
+    }
     const persisted = saveName(next);
     setFeedback(
       persisted
@@ -141,8 +197,8 @@ export function Brand() {
 
   return (
     <div className={`brand editable-brand ${editing ? 'is-editing' : ''}`}>
-      <Link href="/" className="brand-icon" aria-label="Home">
-        <GraduationCap size={25} />
+      <Link href="/" className="brand-icon brand-home-link" aria-label="Home">
+        <UniversityLogo />
       </Link>
       <div className="brand-wordmark">
         <div className="brand-name-row" data-name-ready={name !== null}>
@@ -160,7 +216,7 @@ export function Brand() {
               maxLength={maxLength}
               autoComplete="off"
               spellCheck={false}
-              disabled={name === null}
+              disabled={name === null || saving}
               value={editing ? draft : (name ?? '')}
               onFocus={(event) => {
                 cancelled.current = false;
@@ -192,14 +248,12 @@ export function Brand() {
               }}
             />
           </div>
-          <span className="brand-dot" aria-hidden="true">
-            .
-          </span>
+          <span className="brand-dot" aria-hidden="true" />
           <button
             type="button"
             className="brand-edit-button"
             aria-label="Rename university"
-            disabled={name === null}
+            disabled={name === null || saving}
             onClick={() => input.current?.focus()}
           >
             <Pencil className="brand-pencil" size={12} aria-hidden="true" />

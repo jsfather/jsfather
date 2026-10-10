@@ -1,0 +1,1 @@
+ALTER TABLE "users" ADD COLUMN "university_name" text DEFAULT 'jsfather' NOT NULL;

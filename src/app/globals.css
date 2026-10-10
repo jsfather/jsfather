@@ -186,15 +186,23 @@ h4 {
   font-weight: 700;
 }
 .brand-dot {
-  color: var(--accent);
+  width: 5px;
+  height: 5px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  align-self: center;
+  margin: 9px 4px 0;
 }
 .brand small {
   display: block;
+  white-space: nowrap;
   font-size: 8px;
   font-weight: 600;
   letter-spacing: 1.7px;
   color: var(--muted);
-  margin-top: 7px;
+  margin-top: 0;
+  line-height: 1.5;
 }
 .sidebar {
   width: 244px;
@@ -2541,8 +2549,27 @@ tbody tr:last-child td {
   visibility: hidden;
 }
 .editable-brand {
+  position: relative;
   max-width: 330px;
   min-width: 0;
+  cursor: pointer;
+  padding: 4px 0;
+}
+.brand-home-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+}
+.brand-home-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+.editable-brand .brand-icon {
+  background: transparent;
+  color: var(--accent);
+  width: 40px;
+  height: 40px;
 }
 .editable-brand .brand-icon {
   flex-shrink: 0;
@@ -2550,43 +2577,25 @@ tbody tr:last-child td {
 .brand-wordmark {
   position: relative;
   min-width: 0;
-}
-.editable-brand .brand-wordmark::before {
-  content: '';
-  position: absolute;
-  inset: -7px -8px;
-  border: 1px solid transparent;
-  border-radius: 9px;
   pointer-events: none;
-  transition:
-    background 0.2s,
-    border-color 0.2s,
-    box-shadow 0.2s;
-}
-.editable-brand:hover .brand-wordmark::before {
-  background: color-mix(in srgb, var(--accent) 4%, transparent);
-}
-.editable-brand.is-editing .brand-wordmark::before {
-  background: color-mix(in srgb, var(--accent) 6%, transparent);
-  border-color: color-mix(in srgb, var(--accent) 28%, transparent);
-  box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 8%, transparent);
 }
 .brand-name-row {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   min-width: 0;
 }
 .brand .brand-name-input {
   min-width: 2ch;
   max-width: 100%;
-  padding: 2px 3px 2px 0;
+  padding: 3px 0;
   border: 0;
   border-radius: 3px;
   background: transparent;
   color: var(--text);
   font: inherit;
   letter-spacing: inherit;
-  line-height: 1.1;
+  line-height: 1.45;
+  pointer-events: auto;
   text-overflow: ellipsis;
   cursor: text;
   caret-color: var(--accent);
@@ -2604,6 +2613,9 @@ tbody tr:last-child td {
 }
 .brand-edit-button {
   position: relative;
+  pointer-events: auto;
+  width: 24px;
+  height: 28px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2697,6 +2709,10 @@ tbody tr:last-child td {
   max-width: min(330px, 46vw);
 }
 @media (max-width: 460px) {
+  .brand small {
+    font-size: 7px;
+    letter-spacing: 1.2px;
+  }
   .brand-wordmark {
     font-size: 21px;
   }
@@ -2715,14 +2731,14 @@ tbody tr:last-child td {
 .brand-name-field {
   position: relative;
   min-width: 2ch;
-  overflow: hidden;
+  flex: 0 1 auto;
 }
 .brand-name-measure {
   display: block;
   visibility: hidden;
   white-space: pre;
-  padding: 2px 3px 2px 0;
-  line-height: 1.1;
+  padding: 3px 0;
+  line-height: 1.45;
 }
 .brand .brand-name-input {
   position: absolute;
@@ -2734,24 +2750,111 @@ tbody tr:last-child td {
 .vocabulary-stats {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
-.vocabulary-word {
-  padding: 20px 0;
-  border-bottom: 1px solid var(--border);
-}
-.vocabulary-word:last-of-type {
-  border-bottom: 0;
-}
-.vocabulary-day {
+.vocabulary-day-group {
   margin-top: 28px;
+}
+.vocabulary-day-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.vocabulary-day-heading h3 {
+  font-size: 14px;
+  font-weight: 600;
+}
+.vocabulary-day-heading > span {
+  color: var(--muted);
+  font-size: 12px;
+}
+.vocabulary-word-grid {
+  display: grid;
+  gap: 12px;
+}
+.vocabulary-word {
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+}
+.vocabulary-word-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.vocabulary-word-heading h3 {
+  font-size: 20px;
+  overflow-wrap: anywhere;
+}
+.vocabulary-word-heading .badge {
+  flex-shrink: 0;
+}
+.vocabulary-meaning {
+  line-height: 1.7;
+}
+.vocabulary-example {
+  margin-top: 16px;
+  padding-left: 14px;
+  border-left: 2px solid var(--accent);
+  color: var(--muted);
+  line-height: 1.65;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.vocabulary-word-progress {
+  margin-top: 22px;
+}
+.vocabulary-word-progress > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.vocabulary-word-editor {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.vocabulary-word-editor summary {
+  cursor: pointer;
+}
+.vocabulary-form-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+.vocabulary-word-form .field-hint {
+  margin: 0;
+  line-height: 1.65;
+}
+.vocabulary-word-form .form-grid {
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 0 16px;
+}
+.vocabulary-word-editor .vocabulary-word-form {
+  padding-top: 4px;
+}
+@media (max-width: 640px) {
+  .vocabulary-word {
+    padding: 18px;
+  }
+  .vocabulary-word-form .form-grid {
+    grid-template-columns: 1fr;
+  }
 }
 .vocabulary-meaning,
 .vocabulary-prompt,
 .vocabulary-answer {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-}
-.vocabulary-word p {
-  margin-top: 12px;
 }
 .vocabulary-word-form {
   margin-top: 20px;

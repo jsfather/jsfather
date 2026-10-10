@@ -51,6 +51,7 @@ export const users = pgTable('users', {
     .notNull()
     .unique()
     .$defaultFn(() => 'student-' + crypto.randomUUID().slice(0, 8)),
+  universityName: text('university_name').default('jsfather').notNull(),
   bio: text('bio').default('').notNull(),
   location: text('location').default('').notNull(),
   website: text('website').default('').notNull(),

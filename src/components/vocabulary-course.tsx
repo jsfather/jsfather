@@ -19,7 +19,6 @@ import { Submit } from './forms';
 import {
   LeaveVocabularyCourseForm,
   VocabularyWordForm,
-  DeleteVocabularyWordForm,
   AddVocabularyCollaboratorForm,
   RemoveVocabularyCollaboratorForm,
 } from './vocabulary-forms';
@@ -159,49 +158,72 @@ export async function VocabularyCourseDetail({
         {!words.length && (
           <p className="muted">{page > 1 ? 'No more words on this page.' : 'No words yet.'}</p>
         )}
-        {words.map(({ word, progress }, index) => (
-          <div key={word.id}>
-            {(index === 0 || words[index - 1].word.addedOn !== word.addedOn) && (
-              <h3 className="vocabulary-day">{word.addedOn}</h3>
-            )}
-            <article className="vocabulary-word">
-              <div className="section-header">
-                <h3 dir="auto">{word.word}</h3>
-                <Badge color={word.difficulty === 'hard' ? 'amber' : 'neutral'}>
-                  {word.difficulty}
-                </Badge>
+        {Array.from(new Set(words.map(({ word }) => word.addedOn))).map((day) => {
+          const dailyWords = words.filter(({ word }) => word.addedOn === day);
+          return (
+            <section className="vocabulary-day-group" key={day}>
+              <header className="vocabulary-day-heading">
+                <h3>{formatInTimeZone(new Date(`${day}T12:00:00Z`), 'UTC', 'EEEE, MMM d')}</h3>
+                <span>
+                  {dailyWords.length} {dailyWords.length === 1 ? 'word' : 'words'}
+                </span>
+              </header>
+              <div className="vocabulary-word-grid">
+                {dailyWords.map(({ word, progress }) => {
+                  const target = reviewTargets[word.difficulty];
+                  const completed = Math.min(progress?.successfulReviews ?? 0, target);
+                  const mastered = completed >= target;
+                  const due = !progress || progress.dueAt <= new Date();
+                  return (
+                    <article className="vocabulary-word" key={word.id}>
+                      <header className="vocabulary-word-heading">
+                        <h3 dir="auto">{word.word}</h3>
+                        <Badge color={word.difficulty === 'hard' ? 'amber' : 'neutral'}>
+                          {word.difficulty}
+                        </Badge>
+                      </header>
+                      <p dir="auto" className="vocabulary-meaning">
+                        {word.explanation}
+                      </p>
+                      {word.example && (
+                        <blockquote dir="auto" className="vocabulary-example">
+                          {word.example}
+                        </blockquote>
+                      )}
+                      <div className="vocabulary-word-progress">
+                        <div>
+                          <span>
+                            {mastered
+                              ? 'Mastered'
+                              : due
+                                ? 'Ready to review'
+                                : `Next: ${formatInTimeZone(progress!.dueAt, user.timezone, 'MMM d, HH:mm')}`}
+                          </span>
+                          <span>
+                            {completed} / {target} reviews
+                          </span>
+                        </div>
+                        <Progress
+                          value={Math.round((completed / target) * 100)}
+                          color={course.color}
+                        />
+                      </div>
+                      {owner && (
+                        <details className="vocabulary-word-editor">
+                          <summary className="text-link">Edit or delete word</summary>
+                          <VocabularyWordForm word={word} courseId={course.id} today={today} />
+                        </details>
+                      )}
+                    </article>
+                  );
+                })}
               </div>
-              <p dir="auto" className="vocabulary-meaning">
-                {word.explanation}
-              </p>
-              {word.example && (
-                <p dir="auto" className="muted">
-                  {word.example}
-                </p>
-              )}
-              <p className="field-hint">
-                Your reviews:{' '}
-                {Math.min(progress?.successfulReviews ?? 0, reviewTargets[word.difficulty])} /{' '}
-                {reviewTargets[word.difficulty]} ·{' '}
-                {(progress?.successfulReviews ?? 0) >= reviewTargets[word.difficulty]
-                  ? 'Mastered'
-                  : !progress || progress.dueAt <= new Date()
-                    ? 'Ready to review'
-                    : `Next: ${formatInTimeZone(progress.dueAt, user.timezone, 'MMM d, HH:mm')}`}
-              </p>
-              {owner && (
-                <details>
-                  <summary className="text-link">Edit or delete word</summary>
-                  <VocabularyWordForm word={word} courseId={course.id} today={today} />
-                  <div className="destructive-actions">
-                    <DeleteVocabularyWordForm word={word} />
-                  </div>
-                </details>
-              )}
-            </article>
-          </div>
-        ))}
-        <Pagination page={page} hasMore={words.length === 50} base={`/courses/${course.id}`} />
+            </section>
+          );
+        })}
+        {(page > 1 || words.length === 50) && (
+          <Pagination page={page} hasMore={words.length === 50} base={`/courses/${course.id}`} />
+        )}
       </section>
       {owner && (
         <section className="panel" style={{ marginTop: 24 }}>

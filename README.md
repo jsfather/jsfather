@@ -218,3 +218,5 @@ The MVP intentionally omits social feeds, subscriptions, reminders, attachments,
 Assessment names include the full course name: `Course final assessment`, `Course practice assessment`, and `Course Session practice assessment`. Course and session renames update their assessment names. Migration `0011_assessment_names` updates existing exams without changing questions or attempts.
 
 All deletion and removal controls open a shared confirmation dialog. Copy the displayed value and paste it into the confirmation field; Confirm stays disabled until it matches exactly. Cancel, Escape, or the close button dismisses the dialog. Question editor removals update the draft and take effect when the exam is saved.
+
+University names are saved on signed-in accounts and shared across their browsers. Guests keep a separate name in local browser storage. Rename by clicking the brand text or pencil; Enter or blur saves, Escape cancels. The rest of the brand links home. The book logo is available at `public/logo.svg` and also used as the favicon. Apply migration `0012_university_names` before starting this version against an existing database.

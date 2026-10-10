@@ -33,6 +33,11 @@ test('rename without logging in, persist on reload, and keep branding consistent
   await page.goto('/login');
   await expect(name).toHaveValue('Akbar');
   await expect(page).toHaveTitle('Welcome back — Akbar Personal University');
+  const subtitle = await page.locator('.brand small').boundingBox();
+  expect(subtitle).not.toBeNull();
+  await page.mouse.click(subtitle!.x + subtitle!.width / 2, subtitle!.y + subtitle!.height / 2);
+  await expect(page).toHaveTitle('Akbar Personal University — Build your own university');
+  await page.goto('/login');
   await page.getByRole('link', { name: 'Home', exact: true }).click();
   await expect(page).toHaveTitle('Akbar Personal University — Build your own university');
 });

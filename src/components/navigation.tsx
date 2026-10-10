@@ -17,7 +17,7 @@ import {
   LogOut,
   PanelLeftClose,
 } from 'lucide-react';
-import { Brand } from './brand';
+import { Brand, UniversityName } from './brand';
 import { Avatar } from './avatar';
 import { logout } from '@/actions';
 const nav = [
@@ -94,7 +94,9 @@ export function Sidebar({
         <div className="workspace-label">
           <span className="workspace-monogram">{name.slice(0, 1).toUpperCase()}</span>
           <div>
-            <strong>My university</strong>
+            <strong>
+              <UniversityName />
+            </strong>
             <span>Personal workspace</span>
           </div>
           <PanelLeftClose size={16} />

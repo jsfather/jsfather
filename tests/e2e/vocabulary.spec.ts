@@ -272,6 +272,10 @@ test('daily vocabulary, collaborator isolation, spaced practice, mastery, edits,
       .locator('.vocabulary-word')
       .filter({ has: page.getByRole('heading', { name: 'Hello', exact: true }) });
     await helloCard.getByText('Edit or delete word', { exact: true }).click();
+    await page.screenshot({
+      path: test.info().outputPath('vocabulary-editor-desktop.png'),
+      fullPage: true,
+    });
     await helloCard.getByLabel('Meaning / explanation').fill('A greeting');
     await helloCard.getByRole('button', { name: 'Save word', exact: true }).click();
     await expect(helloCard.locator('.alert.success')).toContainText('Word updated');
