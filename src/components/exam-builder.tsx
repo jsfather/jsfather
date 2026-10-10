@@ -1,6 +1,7 @@
 'use client';
 import { useState, useActionState } from 'react';
-import { Plus, ArrowUp, ArrowDown, Trash2, Save } from 'lucide-react';
+import { Plus, ArrowUp, ArrowDown, Save } from 'lucide-react';
+import { ConfirmationDialog } from './confirmation-dialog';
 import { saveExam } from '@/actions';
 import { Feedback, Submit } from './forms';
 import {
@@ -147,17 +148,16 @@ export function ExamBuilder({
               >
                 <ArrowDown size={16} />
               </button>
-              <button
-                type="button"
-                className="icon-button"
-                aria-label={`Remove question ${i + 1}`}
+              <ConfirmationDialog
+                iconOnly
+                trigger={`Remove question ${i + 1}`}
+                confirmation={`Question ${i + 1}`}
+                description="Remove this question from the draft. Save the exam to apply the change."
                 disabled={bank.questions.length === 1}
-                onClick={() =>
+                onConfirm={() =>
                   setBank({ ...bank, questions: bank.questions.filter((_, index) => index !== i) })
                 }
-              >
-                <Trash2 size={16} />
-              </button>
+              />
             </div>
           </header>
           <QuestionTextEditor
@@ -242,16 +242,15 @@ export function ExamBuilder({
                     }
                   />
                   {q.acceptedAnswers.length > 1 && (
-                    <button
-                      type="button"
-                      className="icon-button"
-                      aria-label={`Remove accepted answer ${j + 1}`}
-                      onClick={() =>
+                    <ConfirmationDialog
+                      iconOnly
+                      trigger={`Remove accepted answer ${j + 1}`}
+                      confirmation={answer || `Answer ${j + 1}`}
+                      description="Remove this accepted answer from the draft. Save the exam to apply the change."
+                      onConfirm={() =>
                         update(i, { acceptedAnswers: q.acceptedAnswers.filter((_, k) => k !== j) })
                       }
-                    >
-                      <Trash2 size={14} />
-                    </button>
+                    />
                   )}
                 </div>
               ))}
@@ -323,13 +322,12 @@ export function ExamBuilder({
                     />
                   </label>
                   {q.pairs.length > 2 && (
-                    <button
-                      type="button"
-                      className="button secondary"
-                      onClick={() => update(i, { pairs: q.pairs.filter((_, k) => k !== j) })}
-                    >
-                      Remove pair {j + 1}
-                    </button>
+                    <ConfirmationDialog
+                      trigger={`Remove pair ${j + 1}`}
+                      confirmation={pair.left || `Pair ${j + 1}`}
+                      description="Remove this matching pair from the draft. Save the exam to apply the change."
+                      onConfirm={() => update(i, { pairs: q.pairs.filter((_, k) => k !== j) })}
+                    />
                   )}
                 </div>
               ))}
@@ -405,19 +403,18 @@ export function ExamBuilder({
                     </button>
                   )}
                   {q.type !== 'true_false' && q.options.length > 2 && (
-                    <button
-                      type="button"
-                      className="icon-button"
-                      aria-label={`Remove option ${j + 1}`}
-                      onClick={() => {
+                    <ConfirmationDialog
+                      iconOnly
+                      trigger={`Remove option ${j + 1}`}
+                      confirmation={option.text || `Option ${j + 1}`}
+                      description="Remove this option from the draft. Save the exam to apply the change."
+                      onConfirm={() => {
                         const options = q.options.filter((_, k) => k !== j);
                         if (q.type === 'multiple_choice' && !options.some((o) => o.isCorrect))
                           options[0].isCorrect = true;
                         update(i, { options });
                       }}
-                    >
-                      <Trash2 size={14} />
-                    </button>
+                    />
                   )}
                 </div>
               ))}

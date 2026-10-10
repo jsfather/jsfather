@@ -2772,9 +2772,20 @@ tbody tr:last-child td {
 }
 .vocabulary-answer p {
   margin-top: 16px;
+  line-height: 1.6;
+}
+.vocabulary-reveal-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  margin-top: 24px;
 }
 .vocabulary-review-card .actions-row {
-  margin-top: 20px;
+  margin: 16px 0;
+}
+.vocabulary-review-card .field-hint {
+  margin-top: 16px;
 }
 .vocabulary-member {
   padding-top: 20px;
@@ -2804,5 +2815,76 @@ tbody tr:last-child td {
   }
   .vocabulary-stats .stat-value strong {
     font-size: 26px;
+  }
+}
+
+.confirmation-dialog {
+  width: min(620px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 32px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow);
+  overflow-y: auto;
+}
+.confirmation-dialog::backdrop {
+  background: #0009;
+  backdrop-filter: blur(4px);
+}
+.confirmation-dialog h2 {
+  padding-right: 32px;
+  font-size: 26px;
+}
+.confirmation-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.confirmation-description {
+  margin: 16px 0 24px;
+  font-size: 16px;
+}
+.confirmation-instruction {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.confirmation-copy {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 14px;
+  max-width: 100%;
+}
+.confirmation-copy code {
+  user-select: all;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  min-width: 0;
+  font: inherit;
+}
+.confirmation-copy button {
+  flex-shrink: 0;
+}
+.confirmation-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+.confirmation-dialog .field {
+  margin-top: 16px;
+}
+@media (max-width: 640px) {
+  .confirmation-dialog {
+    padding: 24px;
   }
 }

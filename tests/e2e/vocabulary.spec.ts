@@ -294,11 +294,13 @@ test('daily vocabulary, collaborator isolation, spaced practice, mastery, edits,
     await friend.getByRole('button', { name: 'Reveal answer' }).click();
     const member = page.locator('.vocabulary-member');
     await member.locator('summary').click();
-    await member.getByLabel('Username to confirm removal').fill('wrong');
     await member.getByRole('button', { name: 'Remove collaborator' }).click();
-    await expect(member.locator('.alert.error')).toContainText('Type the username');
-    await member.getByLabel('Username to confirm removal').fill(friendUsername);
-    await member.getByRole('button', { name: 'Remove collaborator' }).click();
+    await page.getByLabel('Username to confirm removal').fill('wrong');
+    await expect(
+      page.getByRole('dialog').getByRole('button', { name: 'Confirm', exact: true }),
+    ).toBeDisabled();
+    await page.getByLabel('Username to confirm removal').fill(friendUsername);
+    await page.getByRole('dialog').getByRole('button', { name: 'Confirm', exact: true }).click();
     await expect(page.locator('.vocabulary-member')).toHaveCount(0);
     await friend.getByRole('button', { name: 'Remembered', exact: true }).click();
     expect(await progress()).toBeUndefined();
@@ -312,8 +314,9 @@ test('daily vocabulary, collaborator isolation, spaced practice, mastery, edits,
     await expect(page.locator('.vocabulary-member')).toHaveCount(1);
     await friend.goto(`/courses/${courseId}`);
     await expect(friend.getByText('2 of 3 words mastered', { exact: true })).toBeVisible();
-    await friend.getByLabel('Course title to confirm leaving').fill('Everyday English');
     await friend.getByRole('button', { name: 'Leave course', exact: true }).click();
+    await friend.getByLabel('Course title to confirm leaving').fill('Everyday English');
+    await friend.getByRole('dialog').getByRole('button', { name: 'Confirm', exact: true }).click();
     await expect(friend).toHaveURL('/courses');
     expect(
       await db
@@ -327,11 +330,13 @@ test('daily vocabulary, collaborator isolation, spaced practice, mastery, edits,
         .from(schema.vocabularyProgress)
         .where(eq(schema.vocabularyProgress.userId, friendId)),
     ).toHaveLength(2);
-    await helloCard.getByLabel('Word to confirm deletion').fill('wrong');
     await helloCard.getByRole('button', { name: 'Delete word' }).click();
-    await expect(helloCard.locator('.alert.error')).toContainText('Type the word');
-    await helloCard.getByLabel('Word to confirm deletion').fill('Hello');
-    await helloCard.getByRole('button', { name: 'Delete word' }).click();
+    await page.getByLabel('Word to confirm deletion').fill('wrong');
+    await expect(
+      page.getByRole('dialog').getByRole('button', { name: 'Confirm', exact: true }),
+    ).toBeDisabled();
+    await page.getByLabel('Word to confirm deletion').fill('Hello');
+    await page.getByRole('dialog').getByRole('button', { name: 'Confirm', exact: true }).click();
     await expect(page.getByRole('heading', { name: 'Hello', exact: true })).toHaveCount(0);
     await page.getByRole('link', { name: 'Edit course', exact: true }).click();
     await page.getByLabel('Course name', { exact: true }).fill('English with friends');
@@ -342,6 +347,20 @@ test('daily vocabulary, collaborator isolation, spaced practice, mastery, edits,
     await expect(
       page.getByRole('heading', { name: 'English with friends', exact: true }),
     ).toBeVisible();
+    await page.goto(`/courses/${courseId}/edit`);
+    await page.getByRole('button', { name: 'Delete course', exact: true }).click();
+    await page.getByLabel('Course title to confirm deletion').fill('English with friends');
+    await page.getByRole('dialog').getByRole('button', { name: 'Confirm', exact: true }).click();
+    await expect(page).toHaveURL('/courses');
+    expect(
+      await db.select().from(schema.courses).where(eq(schema.courses.id, courseId)),
+    ).toHaveLength(0);
+    expect(
+      await db
+        .select()
+        .from(schema.vocabularyWords)
+        .where(eq(schema.vocabularyWords.courseId, courseId)),
+    ).toHaveLength(0);
   } finally {
     await friendContext.close();
     await strangerContext.close();

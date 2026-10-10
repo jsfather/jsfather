@@ -11,6 +11,7 @@ import {
   revealVocabularyReview,
   submitVocabularyReview,
 } from '@/actions/vocabulary';
+import { ConfirmationDialog } from './confirmation-dialog';
 import { Feedback, Submit } from './forms';
 import type { Course, VocabularyWord } from '@/db/schema';
 import { reviewTargets } from '@/lib/vocabulary';
@@ -163,23 +164,14 @@ export function VocabularyWordForm({
   );
 }
 export function DeleteVocabularyWordForm({ word }: { word: VocabularyWord }) {
-  const [state, action] = useActionState(
-    deleteVocabularyWord.bind(null, word.courseId, word.id),
-    {},
-  );
   return (
-    <form action={action} className="panel danger-panel">
-      <h3>Delete word</h3>
-      <p className="muted">
-        This removes the word and its review records for everyone. Type “{word.word}” to confirm.
-      </p>
-      <Feedback state={state} />
-      <label className="field">
-        <span>Word to confirm deletion</span>
-        <input name="confirmation" required autoComplete="off" placeholder={word.word} />
-      </label>
-      <Submit danger>Delete word</Submit>
-    </form>
+    <ConfirmationDialog
+      trigger="Delete word"
+      confirmation={word.word}
+      inputLabel="Word to confirm deletion"
+      description="This action cannot be undone. This permanently deletes this word and its review records for every learner."
+      action={deleteVocabularyWord.bind(null, word.courseId, word.id)}
+    />
   );
 }
 export function AddVocabularyCollaboratorForm({ courseId }: { courseId: string }) {
@@ -209,20 +201,14 @@ export function RemoveVocabularyCollaboratorForm({
   courseId: string;
   member: { id: string; username: string };
 }) {
-  const [state, action] = useActionState(
-    removeVocabularyCollaborator.bind(null, courseId, member.id),
-    {},
-  );
   return (
-    <form action={action} className="panel danger-panel">
-      <p className="muted">Remove access for @{member.username}. Type their username to confirm.</p>
-      <Feedback state={state} />
-      <label className="field">
-        <span>Username to confirm removal</span>
-        <input name="confirmation" required autoComplete="off" placeholder={member.username} />
-      </label>
-      <Submit danger>Remove collaborator</Submit>
-    </form>
+    <ConfirmationDialog
+      trigger="Remove collaborator"
+      confirmation={member.username}
+      inputLabel="Username to confirm removal"
+      description={`Remove access for @${member.username}. Their saved review history is preserved if you add them again.`}
+      action={removeVocabularyCollaborator.bind(null, courseId, member.id)}
+    />
   );
 }
 export function VocabularyReviewCard({
@@ -278,7 +264,7 @@ export function VocabularyReviewCard({
           </p>
         </>
       ) : (
-        <form action={revealAction}>
+        <form action={revealAction} className="vocabulary-reveal-form">
           <Feedback state={revealState} />
           <Submit>Reveal answer</Submit>
         </form>
@@ -288,20 +274,13 @@ export function VocabularyReviewCard({
 }
 
 export function LeaveVocabularyCourseForm({ course }: { course: Course }) {
-  const [state, action] = useActionState(leaveVocabularyCourse.bind(null, course.id), {});
   return (
-    <form action={action} className="panel danger-panel">
-      <h3>Leave course</h3>
-      <p className="muted">
-        You’ll lose access to this course. Your review history is kept if the owner adds you again.
-        Type “{course.title}” to confirm.
-      </p>
-      <Feedback state={state} />
-      <label className="field">
-        <span>Course title to confirm leaving</span>
-        <input name="confirmation" required autoComplete="off" placeholder={course.title} />
-      </label>
-      <Submit danger>Leave course</Submit>
-    </form>
+    <ConfirmationDialog
+      trigger="Leave course"
+      confirmation={course.title}
+      inputLabel="Course title to confirm leaving"
+      description="You will lose access to this course. Your saved review history is preserved if the owner adds you again."
+      action={leaveVocabularyCourse.bind(null, course.id)}
+    />
   );
 }

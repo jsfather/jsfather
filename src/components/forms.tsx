@@ -15,7 +15,8 @@ import {
 } from '@/actions';
 import type { Course, CourseSession, User, Exam } from '@/db/schema';
 import { formatInTimeZone } from 'date-fns-tz';
-import { Plus, Save, Trash2, Lock, Globe } from 'lucide-react';
+import { ConfirmationDialog } from './confirmation-dialog';
+import { Plus, Save, Lock, Globe } from 'lucide-react';
 export function Submit({
   children = 'Save changes',
   danger = false,
@@ -256,23 +257,14 @@ export function CourseForm({
   );
 }
 export function DeleteCourseForm({ course }: { course: Course }) {
-  const [state, action] = useActionState(deleteCourse.bind(null, course.id), {});
   return (
-    <form action={action} className="panel danger-panel">
-      <h3>Delete course</h3>
-      <p className="muted">
-        This permanently removes all sessions, exams, attempts, and certificates in this course.
-        Type “{course.title}” to confirm.
-      </p>
-      <Feedback state={state} />
-      <Field label="Course title to confirm deletion">
-        <input name="confirmation" required autoComplete="off" placeholder={course.title} />
-      </Field>
-      <Submit danger>
-        <Trash2 size={16} />
-        Delete course
-      </Submit>
-    </form>
+    <ConfirmationDialog
+      trigger="Delete course"
+      confirmation={course.title}
+      inputLabel="Course title to confirm deletion"
+      description="This action cannot be undone. This permanently deletes the course and all its sessions, words, exams, review records, attempts, and certificates."
+      action={deleteCourse.bind(null, course.id)}
+    />
   );
 }
 export function DeleteExamForm({
@@ -282,24 +274,16 @@ export function DeleteExamForm({
   exam: Exam;
   returnToSession?: boolean;
 }) {
-  const [state, action] = useActionState(deleteExam.bind(null, exam.id), {});
   return (
-    <form action={action} className="panel danger-panel">
-      <h3>Delete exam</h3>
-      <p className="muted">
-        This permanently removes this exam, its questions, all attempts, and related certificates.
-        Type “{exam.title}” to confirm.
-      </p>
-      <Feedback state={state} />
-      <Field label="Exam title to confirm deletion">
-        <input name="confirmation" required autoComplete="off" placeholder={exam.title} />
-      </Field>
+    <ConfirmationDialog
+      trigger="Delete exam"
+      confirmation={exam.title}
+      inputLabel="Exam title to confirm deletion"
+      description="This action cannot be undone. This permanently deletes this exam, its questions, all attempts, and related certificates."
+      action={deleteExam.bind(null, exam.id)}
+    >
       {returnToSession && <input type="hidden" name="returnToSession" value="on" />}
-      <Submit danger>
-        <Trash2 size={16} />
-        Delete exam
-      </Submit>
-    </form>
+    </ConfirmationDialog>
   );
 }
 export function SessionForm({ session, course }: { session?: CourseSession; course: Course }) {
@@ -515,22 +499,13 @@ export function ProfileForm({ user }: { user: User }) {
 }
 
 export function DeleteSessionForm({ session }: { session: CourseSession }) {
-  const [state, action] = useActionState(deleteSession.bind(null, session.id), {});
   return (
-    <form action={action} className="panel danger-panel">
-      <h3>Remove session</h3>
-      <p className="muted">
-        This permanently removes the session, its attached exam, questions, attempts, and related
-        certificates. The course total updates automatically. Type “{session.title}” to confirm.
-      </p>
-      <Feedback state={state} />
-      <Field label="Session title to confirm deletion">
-        <input name="confirmation" required autoComplete="off" placeholder={session.title} />
-      </Field>
-      <Submit danger>
-        <Trash2 size={16} />
-        Remove session
-      </Submit>
-    </form>
+    <ConfirmationDialog
+      trigger="Remove session"
+      confirmation={session.title}
+      inputLabel="Session title to confirm deletion"
+      description="This action cannot be undone. This permanently deletes this session, its attached exam, questions, attempts, and related certificates. The course total updates automatically."
+      action={deleteSession.bind(null, session.id)}
+    />
   );
 }

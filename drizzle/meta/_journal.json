@@ -78,6 +78,13 @@
       "when": 1791667081809,
       "tag": "0010_vocabulary_courses",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1791667559387,
+      "tag": "0011_assessment_names",
+      "breakpoints": true
     }
   ]
 }

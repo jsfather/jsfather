@@ -57,9 +57,12 @@ test.beforeAll(async () => {
       duration: 60,
     },
   ]);
-  await db
-    .insert(schema.exams)
-    .values({ id: examId, courseId, sessionId: firstId, title: 'First session · Questions' });
+  await db.insert(schema.exams).values({
+    id: examId,
+    courseId,
+    sessionId: firstId,
+    title: 'Session management course First session practice assessment',
+  });
   await db
     .insert(schema.examQuestions)
     .values({ examId, question: 'True?', type: 'true_false', order: 0 });
@@ -103,13 +106,34 @@ test('manage the attached exam and add, edit, remove, and restore sessions', asy
   await examPanel.getByRole('link', { name: 'Results, sharing & edit exam' }).click();
   await page.getByRole('link', { name: 'Edit questions' }).click();
   await expect(page).toHaveURL(`/exams/${examId}/edit`);
+  await page.getByRole('button', { name: 'Add question', exact: true }).click();
+  await page.getByRole('button', { name: 'Remove question 2', exact: true }).click();
+  await page.getByLabel('Confirmation text', { exact: true }).fill('Question 2');
+  await page.getByRole('dialog').getByRole('button', { name: 'Confirm', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Question 2', exact: true })).toHaveCount(0);
+  expect(
+    await db.select().from(schema.examQuestions).where(eq(schema.examQuestions.examId, examId)),
+  ).toHaveLength(1);
   await page.goto(`/sessions/${firstId}`);
-  await page.getByText('Remove attached exam', { exact: true }).click();
+  await page.getByRole('button', { name: 'Delete exam', exact: true }).click();
+  await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+  await page.getByRole('button', { name: 'Copy confirmation text' }).click();
+  await expect
+    .poll(() => page.evaluate(() => navigator.clipboard.readText()))
+    .toBe('Session management course First session practice assessment');
+  await page.screenshot({ path: test.info().outputPath('delete-dialog-desktop.png') });
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Delete exam', exact: true })).toBeFocused();
+  await page.getByRole('button', { name: 'Delete exam', exact: true }).click();
   await page.getByLabel('Exam title to confirm deletion').fill('wrong title');
-  await page.getByRole('button', { name: 'Delete exam', exact: true }).click();
-  await expect(page.locator('.alert.error')).toContainText('Type the exam title');
-  await page.getByLabel('Exam title to confirm deletion').fill('First session · Questions');
-  await page.getByRole('button', { name: 'Delete exam', exact: true }).click();
+  await expect(
+    page.getByRole('dialog').getByRole('button', { name: 'Confirm', exact: true }),
+  ).toBeDisabled();
+  await page
+    .getByLabel('Exam title to confirm deletion')
+    .fill('Session management course First session practice assessment');
+  await page.getByRole('dialog').getByRole('button', { name: 'Confirm', exact: true }).click();
   await expect(page.getByRole('link', { name: 'Add exam', exact: true })).toBeVisible();
   expect((await db.select().from(schema.exams).where(eq(schema.exams.id, examId))).length).toBe(0);
   await page.getByLabel('Session title', { exact: true }).fill('Updated session');
@@ -135,13 +159,15 @@ test('manage the attached exam and add, edit, remove, and restore sessions', asy
     [thirdId, 0],
   ] as const) {
     await page.goto(`/sessions/${id}`);
-    await page.getByLabel('Session title to confirm deletion').fill('wrong title');
-    await page.getByRole('button', { name: 'Remove session', exact: true }).click();
-    await expect(page.locator('.alert.error')).toContainText('Type the session title');
-    expect((await currentCourse()).totalSessions).toBe(remaining + 1);
     const sessionTitle = await page.getByLabel('Session title', { exact: true }).inputValue();
-    await page.getByLabel('Session title to confirm deletion').fill(sessionTitle);
     await page.getByRole('button', { name: 'Remove session', exact: true }).click();
+    await page.getByLabel('Session title to confirm deletion').fill('wrong title');
+    await expect(
+      page.getByRole('dialog').getByRole('button', { name: 'Confirm', exact: true }),
+    ).toBeDisabled();
+    expect((await currentCourse()).totalSessions).toBe(remaining + 1);
+    await page.getByLabel('Session title to confirm deletion').fill(sessionTitle);
+    await page.getByRole('dialog').getByRole('button', { name: 'Confirm', exact: true }).click();
     await expect(page).toHaveURL(`/courses/${courseId}`);
     expect((await currentCourse()).totalSessions).toBe(remaining);
   }

@@ -1,4 +1,6 @@
 'use server';
+import { assessmentName } from '@/lib/assessment-names';
+import { syncAssessmentNames } from '@/lib/sync-assessment-names';
 import { db } from '@/db';
 import {
   courses,
@@ -188,6 +190,7 @@ export async function editCourse(
             duration: input.duration,
           })),
         );
+      await syncAssessmentNames(tx, id);
       return true;
     });
     if (!updated)
@@ -317,10 +320,7 @@ export async function updateSession(
           updatedAt: new Date(),
         })
         .where(eq(courseSessions.id, id));
-      await tx
-        .update(exams)
-        .set({ title: input.title.slice(0, 140) + ' · Questions', updatedAt: new Date() })
-        .where(eq(exams.sessionId, id));
+      await syncAssessmentNames(tx, course.id);
       await syncCourseSessions(tx, course);
     });
   } catch (e) {
@@ -386,7 +386,7 @@ export async function saveExam(
 ): Promise<ActionState> {
   const user = await requireUser();
   if (!sessionId) return { error: 'Choose a class for these questions.' };
-  const { session } = await ownedSession(user.id, sessionId);
+  const { session, course } = await ownedSession(user.id, sessionId);
   if (session.courseId !== courseId) return { error: 'Choose a class in this course.' };
   let previousSessionId: string | null = null;
   if (examId) {
@@ -400,7 +400,7 @@ export async function saveExam(
     const input = classBankSchema.parse(JSON.parse(String(form.get('exam'))));
     const defaults = assessmentDefaults(input.questions);
     const settings = {
-      title: session.title.slice(0, 140) + ' · Questions',
+      title: assessmentName(course.title, 'practice', session.title),
       description: '',
       passingScore: input.passingScore ?? defaults.passingScore,
       timeLimit: input.timeLimit ?? defaults.timeLimit,
@@ -408,12 +408,19 @@ export async function saveExam(
       autoPassingScore: input.passingScore === null,
     };
     const result = await db.transaction(async (tx) => {
-      // Serialize creation and assignment for this session, including concurrent form submissions.
-      await tx
-        .select({ id: courseSessions.id })
+      // Use current names under the same lock order as course and session edits.
+      const [currentCourse] = await tx
+        .select()
+        .from(courses)
+        .where(eq(courses.id, courseId))
+        .for('update');
+      const [currentSession] = await tx
+        .select()
         .from(courseSessions)
         .where(eq(courseSessions.id, sessionId))
         .for('update');
+      if (!currentCourse || !currentSession) return 'This course or session no longer exists.';
+      settings.title = assessmentName(currentCourse.title, 'practice', currentSession.title);
       const [existing] = await tx
         .select({ id: exams.id })
         .from(exams)
@@ -686,16 +693,22 @@ export async function assignExamClass(
   const { exam } = await ownedExam(user.id, examId);
   const sessionId = String(form.get('sessionId') ?? '');
   if (!sessionId) return { error: 'Choose a class.' };
-  const { session } = await ownedSession(user.id, sessionId);
+  const { session, course } = await ownedSession(user.id, sessionId);
   if (exam.isFinal || exam.isPractice || session.courseId !== exam.courseId)
     return { error: 'Choose a class in this course.' };
   try {
     const error = await db.transaction(async (tx) => {
-      await tx
-        .select({ id: courseSessions.id })
+      const [currentCourse] = await tx
+        .select()
+        .from(courses)
+        .where(eq(courses.id, course.id))
+        .for('update');
+      const [currentSession] = await tx
+        .select()
         .from(courseSessions)
         .where(eq(courseSessions.id, sessionId))
         .for('update');
+      if (!currentCourse || !currentSession) return 'This course or session no longer exists.';
       const [existing] = await tx
         .select({ id: exams.id })
         .from(exams)
@@ -707,7 +720,7 @@ export async function assignExamClass(
         .update(exams)
         .set({
           sessionId,
-          title: session.title.slice(0, 140) + ' · Questions',
+          title: assessmentName(currentCourse.title, 'practice', currentSession.title),
           updatedAt: new Date(),
         })
         .where(eq(exams.id, examId));
@@ -734,7 +747,12 @@ async function buildCourseAssessment(
   const id = crypto.randomUUID();
   try {
     const error = await db.transaction(async (tx) => {
-      await tx.select().from(courses).where(eq(courses.id, courseId)).for('update');
+      const [currentCourse] = await tx
+        .select()
+        .from(courses)
+        .where(eq(courses.id, courseId))
+        .for('update');
+      if (!currentCourse) return 'This course no longer exists.';
       await tx
         .select({ id: exams.id })
         .from(exams)
@@ -759,8 +777,7 @@ async function buildCourseAssessment(
         courseId,
         isFinal: mode === 'final',
         isPractice: mode === 'practice',
-        title:
-          course.title.slice(0, 140) + (mode === 'final' ? ' · Final assessment' : ' · Practice'),
+        title: assessmentName(currentCourse.title, mode),
         published: false,
         ...defaults,
         autoTimeLimit: true,

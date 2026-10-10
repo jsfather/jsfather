@@ -1,3 +1,4 @@
+import { readFile } from 'node:fs/promises';
 import { test, expect, type Page } from '@playwright/test';
 import { config } from 'dotenv';
 import { randomUUID } from 'node:crypto';
@@ -72,6 +73,7 @@ test.beforeAll(async () => {
       ]);
     }
   }
+  await client.unsafe(await readFile('drizzle/0011_assessment_names.sql', 'utf8'));
 });
 test.afterAll(async () => {
   await db.delete(schema.users).where(eq(schema.users.id, ownerId));
@@ -173,7 +175,9 @@ test('course practice and final snapshots, certificates, publishing, and public 
   const guestContext = await browser.newContext();
   const guest = await guestContext.newPage();
   await guest.goto(`${base}/practice?scope=course`);
-  await expect(guest.getByText('Assessment flow course · Practice', { exact: true })).toBeVisible();
+  await expect(
+    guest.getByText('Assessment flow course practice assessment', { exact: true }),
+  ).toBeVisible();
   await expect(guest.getByText('Course exam', { exact: true })).toHaveCount(2);
   await expect(guest.getByText('Class 1 · Questions', { exact: true })).toHaveCount(0);
   await guest.setViewportSize({ width: 390, height: 844 });
@@ -181,7 +185,9 @@ test('course practice and final snapshots, certificates, publishing, and public 
     await guest.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
   ).toBe(true);
   await guest.goto(`${base}/practice?scope=session`);
-  await expect(guest.getByText('Class 2 · Questions', { exact: true })).toBeVisible();
+  await expect(
+    guest.getByText('Assessment flow course Class 2 practice assessment', { exact: true }),
+  ).toBeVisible();
   await expect(guest.getByText('Session exam', { exact: true }).first()).toBeVisible();
   const attemptsBeforeGuest = (await db.select().from(schema.examAttempts)).length;
   await guest.goto(`${base}/practice/${bankIds[1]}`);
@@ -237,6 +243,23 @@ test('course practice and final snapshots, certificates, publishing, and public 
   ).toBeVisible();
   await visitor.getByRole('link', { name: 'View results', exact: true }).click();
   await expect(visitor.getByText('100%', { exact: true })).toBeVisible();
+  await page.goto(`/courses/${courseId}/edit`);
+  await page.getByLabel('Course name', { exact: true }).fill('Keyvan');
+  await page.getByRole('button', { name: 'Save course', exact: true }).click();
+  await expect(page.locator('.alert.success')).toContainText('Course updated');
+  const renamed = await db.select().from(schema.exams).where(eq(schema.exams.courseId, courseId));
+  expect(renamed.find((e) => e.id === finalId)?.title).toBe('Keyvan final assessment');
+  expect(renamed.find((e) => e.id === practiceId)?.title).toBe('Keyvan practice assessment');
+  expect(renamed.find((e) => e.id === bankIds[0])?.title).toBe(
+    'Keyvan Class 1 practice assessment',
+  );
+  await page.goto(`/sessions/${sessionIds[0]}`);
+  await page.getByLabel('Session title', { exact: true }).fill('Vocabulary');
+  await page.getByRole('button', { name: 'Save session', exact: true }).click();
+  await expect(page.locator('.alert.success')).toContainText('Session saved');
+  expect(
+    (await db.select().from(schema.exams).where(eq(schema.exams.id, bankIds[0])))[0].title,
+  ).toBe('Keyvan Vocabulary practice assessment');
   await visitorContext.close();
   await guestContext.close();
 });

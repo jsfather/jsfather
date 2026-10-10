@@ -11,7 +11,6 @@ import { eq, asc, sql, and, or, desc, getTableColumns } from 'drizzle-orm';
 import { PageTitle, Progress, SessionRow, Pagination } from '@/components/ui';
 import { formatInTimeZone } from 'date-fns-tz';
 import { AssessmentControls } from '@/components/final-controls';
-import { assessmentLabel } from '@/lib/exam-labels';
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const user = await requireUser();
   return { title: (await accessibleCourse(user.id, (await params).id)).title };
@@ -214,7 +213,7 @@ export default async function CourseDetail({
             {examList.slice(0, 20).map(({ exam, best, passed }) => (
               <div className="session-row" key={exam.id}>
                 <div className="session-info">
-                  <h4>{assessmentLabel(exam)}</h4>
+                  <h4>{exam.title}</h4>
                   <span>
                     {best === null
                       ? 'In progress'
