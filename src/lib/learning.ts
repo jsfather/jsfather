@@ -1,6 +1,7 @@
 import { addDays, format, parseISO } from 'date-fns';
 import { fromZonedTime, formatInTimeZone } from 'date-fns-tz';
 import type { CourseInput } from './validation';
+import { isTypedQuestion, type Answers, type QuestionType } from './assessment';
 export function generateSchedule(
   input: Pick<
     CourseInput,
@@ -48,23 +49,77 @@ export type ScoringQuestion = {
   question: string;
   points: number;
   explanation: string;
+  type?: QuestionType;
+  acceptedAnswers?: string[];
+  caseSensitive?: boolean;
+  tolerance?: number;
+  pairs?: { left: string; right: string }[];
   options: { id: string; text: string; isCorrect: boolean }[];
 };
-export function scoreExam(
-  questions: ScoringQuestion[],
-  answers: Record<string, string>,
-  passingScore: number,
-) {
+export function scoreExam(questions: ScoringQuestion[], answers: Answers, passingScore: number) {
   const review = questions.map((q) => {
-    const correct = q.options.find((o) => o.isCorrect);
-    if (!correct) throw new Error('Invalid exam answer key.');
-    const selected = q.options.find((o) => o.id === answers[q.id]);
-    const isCorrect = selected?.id === correct.id;
+    const type = q.type ?? 'multiple_choice';
+    const answer = answers[q.id];
+    let selected: string | null = null;
+    let correct = '';
+    let isCorrect = false;
+    if (isTypedQuestion(type)) {
+      const accepted = q.acceptedAnswers ?? [];
+      if (!accepted.length) throw new Error('Invalid typed answer key.');
+      selected = typeof answer === 'string' && answer.trim() ? answer : null;
+      correct = accepted.join(' / ');
+      const normalize = (text: string) => {
+        const normalized = text.normalize('NFKC').trim().replace(/\s+/g, ' ');
+        return q.caseSensitive ? normalized : normalized.toLocaleLowerCase('en');
+      };
+      isCorrect =
+        selected !== null &&
+        (type === 'numeric'
+          ? Number.isFinite(Number(selected)) &&
+            Math.abs(Number(selected) - Number(accepted[0])) <=
+              (q.tolerance ?? 0) + Number.EPSILON * Math.max(1, Math.abs(Number(accepted[0])))
+          : accepted.some((text) => normalize(text) === normalize(selected!)));
+    } else if (type === 'matching') {
+      const pairs = q.pairs ?? [];
+      if (!pairs.length) throw new Error('Invalid matching key.');
+      correct = pairs.map((p) => `${p.left} → ${p.right}`).join('; ');
+      selected = Array.isArray(answer)
+        ? pairs.map((p, i) => `${p.left} → ${answer[i] || '—'}`).join('; ')
+        : null;
+      isCorrect =
+        Array.isArray(answer) &&
+        answer.length === pairs.length &&
+        pairs.every((p, i) => answer[i] === p.right);
+    } else if (type === 'ordering' || type === 'multiple_select') {
+      const key = type === 'ordering' ? q.options : q.options.filter((o) => o.isCorrect);
+      if (!key.length) throw new Error('Invalid answer key.');
+      correct = key.map((o) => o.text).join(type === 'ordering' ? ' → ' : '; ');
+      selected =
+        Array.isArray(answer) && answer.length
+          ? answer
+              .map((id) => q.options.find((o) => o.id === id)?.text ?? 'Invalid option')
+              .join(type === 'ordering' ? ' → ' : '; ')
+          : null;
+      isCorrect =
+        Array.isArray(answer) &&
+        new Set(answer).size === answer.length &&
+        answer.length === key.length &&
+        (type === 'ordering'
+          ? key.every((o, i) => answer[i] === o.id)
+          : key.every((o) => answer.includes(o.id)));
+    } else {
+      const key = q.options.find((o) => o.isCorrect);
+      if (!key) throw new Error('Invalid exam answer key.');
+      const option = q.options.find((o) => o.id === answer);
+      selected = option?.text ?? null;
+      correct = key.text;
+      isCorrect = option?.id === key.id;
+    }
     return {
       questionId: q.id,
       question: q.question,
-      selected: selected?.text ?? null,
-      correct: correct.text,
+      selected,
+      correct,
       isCorrect,
       points: q.points,
       earned: isCorrect ? q.points : 0,

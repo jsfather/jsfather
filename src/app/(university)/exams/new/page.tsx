@@ -6,7 +6,7 @@ import { courses, courseSessions } from '@/db/schema';
 import { eq, desc, asc } from 'drizzle-orm';
 import { PageTitle, Empty, Pagination } from '@/components/ui';
 import { ExamBuilder } from '@/components/exam-builder';
-export const metadata = { title: 'Create exam' };
+export const metadata = { title: 'Add class questions' };
 export default async function NewExam({
   searchParams,
 }: {

@@ -29,6 +29,27 @@
       "when": 1791626181233,
       "tag": "0003_curly_spencer_smythe",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1791628371758,
+      "tag": "0004_exotic_lord_hawal",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1791628522585,
+      "tag": "0005_organic_smasher",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1791628647078,
+      "tag": "0006_third_shooting_star",
+      "breakpoints": true
     }
   ]
 }

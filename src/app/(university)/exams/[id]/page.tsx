@@ -9,7 +9,12 @@ import { startAttempt } from '@/actions';
 import { PageTitle, Badge, Pagination } from '@/components/ui';
 import { Submit, DeleteExamForm } from '@/components/forms';
 import { formatInTimeZone } from 'date-fns-tz';
-import { PublicExamControl, AssignExamClass } from '@/components/final-controls';
+import {
+  PublicExamControl,
+  AssignExamClass,
+  AssessmentSettings,
+} from '@/components/final-controls';
+import { assessmentDefaults } from '@/lib/assessment';
 export const metadata = { title: 'Exam details' };
 export default async function ExamDetail({
   params,
@@ -39,10 +44,24 @@ export default async function ExamDetail({
     db
       .select({ id: examAttempts.id })
       .from(examAttempts)
-      .where(eq(examAttempts.examId, exam.id))
+      .where(
+        and(
+          eq(examAttempts.examId, exam.id),
+          sql`${examAttempts.submittedAt} is null`,
+          sql`${examAttempts.snapshot} is null`,
+        ),
+      )
       .limit(1),
   ]);
   const hasAttempts = lock.length > 0;
+  const questionSettings = await db
+    .select({
+      points: examQuestions.points,
+      difficulty: examQuestions.difficulty,
+      timeSeconds: examQuestions.timeSeconds,
+    })
+    .from(examQuestions)
+    .where(eq(examQuestions.examId, exam.id));
   const sessions =
     !exam.isFinal && !exam.sessionId
       ? await db
@@ -63,7 +82,7 @@ export default async function ExamDetail({
           !hasAttempts && !exam.isFinal ? (
             <Link href={`/exams/${exam.id}/edit`} className="button secondary">
               <Pencil size={15} />
-              Edit exam
+              Edit questions
             </Link>
           ) : (
             <Badge>
@@ -125,6 +144,13 @@ export default async function ExamDetail({
           </div>
         </section>
       </div>
+      <AssessmentSettings
+        id={exam.id}
+        timeLimit={exam.timeLimit}
+        passingScore={exam.passingScore}
+        suggested={assessmentDefaults(questionSettings)}
+        locked={hasAttempts}
+      />
       <section className="panel" style={{ marginTop: 24 }}>
         <h2>Public practice</h2>
         <p className="muted" style={{ margin: '12px 0' }}>

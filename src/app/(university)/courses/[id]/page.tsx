@@ -123,7 +123,7 @@ export default async function CourseDetail({
               <h2>Course exams</h2>
               <Link href={`/exams/new?course=${course.id}`} className="text-link">
                 <Plus size={14} />
-                Create exam
+                Add class questions
               </Link>
             </div>
             {examList.length ? (

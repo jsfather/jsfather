@@ -5,12 +5,9 @@ import { submitAttempt, type ActionState } from '@/actions';
 import { Feedback, Submit } from './forms';
 import { QuestionContent } from './question-content';
 import { grade } from '@/lib/learning';
-type SafeQuestion = {
-  id: string;
-  question: string;
-  points: number;
-  options: { id: string; text: string }[];
-};
+import type { SafeQuestion } from '@/lib/safe-questions';
+import type { Answers } from '@/lib/assessment';
+import { QuestionAnswer, isAnswered, restoreAnswer } from './question-answer';
 export function ExamRunner({
   attemptId,
   questions,
@@ -25,7 +22,7 @@ export function ExamRunner({
   submitAction?: (state: ActionState, form: FormData) => Promise<ActionState>;
 }) {
   const [current, setCurrent] = useState(0);
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [answers, setAnswers] = useState<Answers>({});
   const [seconds, setSeconds] = useState(initialSeconds);
   const [ready, setReady] = useState(false);
   const [confirm, setConfirm] = useState(false);
@@ -45,9 +42,10 @@ export function ExamRunner({
     try {
       const saved = JSON.parse(localStorage.getItem('exam-' + attemptId) ?? '{}');
       if (saved && typeof saved === 'object' && !Array.isArray(saved)) {
-        const clean: Record<string, string> = {};
+        const clean: Answers = {};
         for (const q of questions) {
-          if (q.options.some((o) => o.id === saved[q.id])) clean[q.id] = saved[q.id];
+          const restored = restoreAnswer(q, saved[q.id]);
+          if (restored !== undefined) clean[q.id] = restored;
         }
         setAnswers(clean);
       }
@@ -97,13 +95,14 @@ export function ExamRunner({
       </section>
     );
   const q = questions[current];
+  const answeredCount = questions.filter((item) => isAnswered(item, answers[item.id])).length;
   if (!q) return <p>No questions are available.</p>;
   return (
     <>
       <div className="section-header">
         <span className="muted">
           Question {current + 1} of {questions.length} · {q.points}{' '}
-          {q.points === 1 ? 'point' : 'points'}
+          {q.points === 1 ? 'point' : 'points'} · Suggested budget: {q.timeSeconds}s
         </span>
         <div className="exam-timer" style={{ color: seconds < 60 ? '#e8bd76' : undefined }}>
           <Clock size={17} />
@@ -117,7 +116,7 @@ export function ExamRunner({
             type="button"
             aria-label={`Go to question ${i + 1}`}
             key={item.id}
-            className={`${answers[item.id] ? 'answered' : ''} ${i === current ? 'current' : ''}`}
+            className={`${isAnswered(item, answers[item.id]) ? 'answered' : ''} ${i === current ? 'current' : ''}`}
             onClick={() => setCurrent(i)}
           >
             {i + 1}
@@ -126,25 +125,12 @@ export function ExamRunner({
       </div>
       <section className="panel">
         <QuestionContent className="exam-question-title">{q.question}</QuestionContent>
-        <div className="exam-options">
-          {q.options.map((option, i) => (
-            <label key={option.id} className="exam-option">
-              <input
-                type="radio"
-                disabled={seconds === 0 || pending}
-                name={'question-' + q.id}
-                checked={answers[q.id] === option.id}
-                onChange={() => setAnswers({ ...answers, [q.id]: option.id })}
-              />
-              <span>
-                <span style={{ color: 'var(--muted)', marginRight: 14 }}>
-                  {String.fromCharCode(65 + i)}.
-                </span>
-                {option.text}
-              </span>
-            </label>
-          ))}
-        </div>
+        <QuestionAnswer
+          question={q}
+          value={answers[q.id]}
+          disabled={seconds === 0 || pending}
+          onChange={(value) => setAnswers({ ...answers, [q.id]: value })}
+        />
         <div className="form-footer">
           <div className="actions-row" style={{ margin: 0 }}>
             <button
@@ -167,7 +153,7 @@ export function ExamRunner({
             </button>
           </div>
           <span className="muted">
-            {Object.keys(answers).length} of {questions.length} answered
+            {answeredCount} of {questions.length} answered
           </span>
         </div>
       </section>
@@ -178,8 +164,8 @@ export function ExamRunner({
           <div className="panel">
             <h3>{seconds === 0 ? 'Time is up.' : 'Ready to submit?'}</h3>
             <p className="muted" style={{ margin: '10px 0 20px' }}>
-              {questions.length - Object.keys(answers).length} unanswered questions. You can’t
-              change answers after submitting.
+              {questions.length - answeredCount} unanswered questions. You can’t change answers
+              after submitting.
             </p>
             <div className="actions-row" style={{ margin: 0 }}>
               <Submit>

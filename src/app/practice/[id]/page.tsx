@@ -6,6 +6,7 @@ import { PageTitle } from '@/components/ui';
 import { ExamRunner } from '@/components/exam-runner';
 import { sealGuestExam } from '@/lib/guest-exam';
 import { submitGuestExam } from '@/actions';
+import { safeQuestion } from '@/lib/safe-questions';
 export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Public practice', robots: { index: false } };
 
@@ -52,12 +53,7 @@ export default async function PublicExam({ params }: { params: Promise<{ id: str
       />
       <ExamRunner
         attemptId={crypto.randomUUID()}
-        questions={full.map((q) => ({
-          id: q.id,
-          question: q.question,
-          points: q.points,
-          options: q.options.map((o) => ({ id: o.id, text: o.text })),
-        }))}
+        questions={full.map(safeQuestion)}
         expiresAt={expiresAt}
         initialSeconds={exam.timeLimit * 60}
         submitAction={submitGuestExam.bind(null, token)}

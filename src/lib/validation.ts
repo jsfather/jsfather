@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { questionTypes, isTypedQuestion } from './assessment';
 const timezone = z.string().refine((value) => {
   try {
     new Intl.DateTimeFormat('en', { timeZone: value });
@@ -76,15 +77,60 @@ export const questionSchema = z
     // Questions may include long, fenced code examples. PostgreSQL text has no practical UI limit.
     question: z.string().trim().min(2),
     difficulty: z.enum(['easy', 'medium', 'hard']).default('medium'),
-    type: z.enum(['multiple_choice', 'true_false']),
+    type: z.enum(questionTypes),
     points: z.coerce.number().int().min(1).max(100),
+    timeSeconds: z.coerce.number().int().min(5).max(3600).default(90),
+    acceptedAnswers: z.array(z.string().trim().min(1).max(5000)).max(20).default([]),
+    caseSensitive: z.boolean().default(false),
+    tolerance: z.coerce.number().min(0).max(1000000).default(0),
+    pairs: z
+      .array(
+        z.object({
+          left: z.string().trim().min(1).max(1000),
+          right: z.string().trim().min(1).max(1000),
+        }),
+      )
+      .max(12)
+      .default([]),
     explanation: z.string().max(3000),
     options: z
       .array(z.object({ text: z.string().trim().min(1).max(1000), isCorrect: z.boolean() }))
-      .min(2)
-      .max(6),
+      .max(12),
   })
   .superRefine((q, ctx) => {
+    if (isTypedQuestion(q.type)) {
+      if (!q.acceptedAnswers.length)
+        ctx.addIssue({
+          code: 'custom',
+          message: 'Add an accepted answer for each typed question.',
+        });
+      if (
+        q.type === 'numeric' &&
+        (q.acceptedAnswers.length !== 1 || !Number.isFinite(Number(q.acceptedAnswers[0])))
+      )
+        ctx.addIssue({
+          code: 'custom',
+          message: 'Numeric questions need one finite numeric answer.',
+        });
+      return;
+    }
+    if (q.type === 'matching') {
+      if (
+        q.pairs.length < 2 ||
+        new Set(q.pairs.map((p) => p.left)).size !== q.pairs.length ||
+        new Set(q.pairs.map((p) => p.right)).size !== q.pairs.length
+      )
+        ctx.addIssue({ code: 'custom', message: 'Matching needs at least two unique pairs.' });
+      return;
+    }
+    if (q.options.length < 2 || new Set(q.options.map((o) => o.text)).size !== q.options.length)
+      ctx.addIssue({ code: 'custom', message: 'Add at least two distinct options.' });
+    if (q.type === 'ordering') return;
+    if (q.type === 'multiple_select') {
+      if (!q.options.some((o) => o.isCorrect))
+        ctx.addIssue({ code: 'custom', message: 'Select at least one correct answer.' });
+      return;
+    }
     if (q.options.filter((o) => o.isCorrect).length !== 1)
       ctx.addIssue({ code: 'custom', message: 'Every question needs exactly one correct answer.' });
     if (
@@ -105,7 +151,17 @@ export const examSchema = z.object({
   questions: z.array(questionSchema).min(1).max(100),
 });
 export const answersSchema = z
-  .record(z.string().uuid(), z.string().uuid())
+  .record(
+    z.string().uuid(),
+    z.union([z.string().max(20000), z.array(z.string().max(1000)).max(12)]),
+  )
   .refine((v) => Object.keys(v).length <= 1000, 'Too many answers.');
 export type CourseInput = z.infer<typeof courseSchema>;
 export type ExamInput = z.infer<typeof examSchema>;
+export const classBankSchema = z.object({
+  published: z.boolean(),
+  passingScore: z.coerce.number().int().min(1).max(100).nullable(),
+  timeLimit: z.coerce.number().int().min(1).max(60000).nullable(),
+  questions: z.array(questionSchema).min(1).max(100),
+});
+export type ClassBankInput = z.infer<typeof classBankSchema>;

@@ -1336,7 +1336,27 @@ input[type='radio'] {
 .question-editor input:not([type='radio']),
 .question-editor textarea,
 .question-editor select {
-  background: var(--surface);
+  background-color: var(--surface);
+}
+.form-panel details {
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+.form-panel summary {
+  color: var(--text);
+  cursor: pointer;
+  padding: 8px 0;
+  font-weight: 500;
+}
+.form-panel summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+button.text-link {
+  padding: 0;
+  border: 0;
+  background: transparent;
 }
 .exam-options {
   display: flex;

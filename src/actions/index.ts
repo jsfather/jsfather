@@ -16,7 +16,7 @@ import {
   courseSchema,
   sessionSchema,
   profileSchema,
-  examSchema,
+  classBankSchema,
   answersSchema,
 } from '@/lib/validation';
 import { generateSchedule, slugify, scoreExam } from '@/lib/learning';
@@ -26,6 +26,7 @@ import { redirect, unstable_rethrow } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { selectFinalQuestions } from '@/lib/final-selection';
+import { assessmentDefaults } from '@/lib/assessment';
 import { openGuestExam } from '@/lib/guest-exam';
 export type ActionState = {
   error?: string;
@@ -295,24 +296,41 @@ export async function saveExam(
   }
   const id = examId ?? crypto.randomUUID();
   try {
-    const input = examSchema.parse(JSON.parse(String(form.get('exam'))));
+    const input = classBankSchema.parse(JSON.parse(String(form.get('exam'))));
+    const defaults = assessmentDefaults(input.questions);
+    const settings = {
+      title: session.title.slice(0, 140) + ' · Questions',
+      description: '',
+      passingScore: input.passingScore ?? defaults.passingScore,
+      timeLimit: input.timeLimit ?? defaults.timeLimit,
+      autoTimeLimit: input.timeLimit === null,
+      autoPassingScore: input.passingScore === null,
+    };
     const result = await db.transaction(async (tx) => {
       if (examId) {
         await tx.execute(sql`select id from exams where id=${examId} for update`);
         const [attempt] = await tx
           .select({ id: examAttempts.id })
           .from(examAttempts)
-          .where(eq(examAttempts.examId, examId))
+          .where(
+            and(
+              eq(examAttempts.examId, examId),
+              sql`${examAttempts.submittedAt} is null`,
+              sql`${examAttempts.snapshot} is null`,
+            ),
+          )
           .limit(1);
         if (attempt) return false;
         await tx
           .update(exams)
           .set({
-            title: input.title,
+            title: settings.title,
             sessionId,
-            description: input.description,
-            passingScore: input.passingScore,
-            timeLimit: input.timeLimit,
+            description: settings.description,
+            passingScore: settings.passingScore,
+            timeLimit: settings.timeLimit,
+            autoTimeLimit: settings.autoTimeLimit,
+            autoPassingScore: settings.autoPassingScore,
             published: input.published,
             isPublic: input.published,
             updatedAt: new Date(),
@@ -324,10 +342,7 @@ export async function saveExam(
           id,
           courseId,
           sessionId,
-          title: input.title,
-          description: input.description,
-          passingScore: input.passingScore,
-          timeLimit: input.timeLimit,
+          ...settings,
           published: input.published,
           isPublic: input.published,
         });
@@ -341,24 +356,30 @@ export async function saveExam(
           difficulty: q.difficulty,
           type: q.type,
           points: q.points,
+          timeSeconds: q.timeSeconds,
+          acceptedAnswers: q.acceptedAnswers,
+          caseSensitive: q.caseSensitive,
+          tolerance: q.tolerance,
+          pairs: q.pairs,
           order,
           explanation: q.explanation,
         });
-        await tx.insert(examOptions).values(
-          q.options.map((o, i) => ({
-            questionId,
-            text: o.text,
-            isCorrect: o.isCorrect,
-            order: i,
-          })),
-        );
+        if (q.options.length)
+          await tx.insert(examOptions).values(
+            q.options.map((o, i) => ({
+              questionId,
+              text: o.text,
+              isCorrect: o.isCorrect,
+              order: i,
+            })),
+          );
       }
       return true;
     });
     if (!result)
       return {
         error:
-          'This exam already has attempts and is locked. Create a new exam to change its questions.',
+          'Finish the older active attempt before editing these questions. New attempts keep independent snapshots.',
       };
   } catch (e) {
     return failure(e);
@@ -392,7 +413,7 @@ export async function startAttempt(examId: string) {
   const user = await requireUser();
   await ownedExam(user.id, examId);
   const id = await db.transaction(async (tx) => {
-    await tx.select({ id: exams.id }).from(exams).where(eq(exams.id, examId)).for('update');
+    const [exam] = await tx.select().from(exams).where(eq(exams.id, examId)).for('update');
     const [active] = await tx
       .select()
       .from(examAttempts)
@@ -404,9 +425,36 @@ export async function startAttempt(examId: string) {
         ),
       );
     if (active) return active.id;
+    const questions = await tx
+      .select()
+      .from(examQuestions)
+      .where(eq(examQuestions.examId, examId))
+      .orderBy(asc(examQuestions.order));
+    if (!questions.length) throw new Error('Add questions before starting an assessment.');
+    const options = await tx
+      .select()
+      .from(examOptions)
+      .where(
+        inArray(
+          examOptions.questionId,
+          questions.map((q) => q.id),
+        ),
+      )
+      .orderBy(asc(examOptions.order));
     const [attempt] = await tx
       .insert(examAttempts)
-      .values({ examId, userId: user.id })
+      .values({
+        examId,
+        userId: user.id,
+        snapshot: {
+          timeLimit: exam.timeLimit,
+          passingScore: exam.passingScore,
+          questions: questions.map((q) => ({
+            ...q,
+            options: options.filter((o) => o.questionId === q.id),
+          })),
+        },
+      })
       .returning({ id: examAttempts.id });
     return attempt.id;
   });
@@ -446,6 +494,52 @@ export async function submitGuestExam(
   } catch {
     return { error: 'This practice session is invalid. Reload to start again.' };
   }
+}
+export async function updateAssessmentSettings(
+  examId: string,
+  _state: ActionState,
+  form: FormData,
+): Promise<ActionState> {
+  void _state;
+  const user = await requireUser();
+  await ownedExam(user.id, examId);
+  try {
+    const input = z
+      .object({
+        passingScore: z.coerce.number().int().min(1).max(100),
+        timeLimit: z.coerce.number().int().min(1).max(60000),
+      })
+      .parse(formObject(form));
+    const updated = await db.transaction(async (tx) => {
+      await tx.select({ id: exams.id }).from(exams).where(eq(exams.id, examId)).for('update');
+      const [attempt] = await tx
+        .select({ id: examAttempts.id })
+        .from(examAttempts)
+        .where(
+          and(
+            eq(examAttempts.examId, examId),
+            sql`${examAttempts.submittedAt} is null`,
+            sql`${examAttempts.snapshot} is null`,
+          ),
+        )
+        .limit(1);
+      if (attempt) return false;
+      await tx
+        .update(exams)
+        .set({ ...input, autoTimeLimit: false, autoPassingScore: false, updatedAt: new Date() })
+        .where(eq(exams.id, examId));
+      return true;
+    });
+    if (!updated)
+      return {
+        error: 'Finish the older active attempt before changing settings.',
+      };
+  } catch (error) {
+    return failure(error);
+  }
+  revalidatePath('/exams/' + examId);
+  revalidatePath('/practice/' + examId);
+  return { success: 'Assessment settings saved.' };
 }
 export async function generateFinal(courseId: string, _state: ActionState): Promise<ActionState> {
   void _state;
@@ -518,6 +612,7 @@ async function buildFinal(
         candidates,
         Math.max(30, new Set(candidates.map((q) => q.sessionId)).size),
       );
+      const defaults = assessmentDefaults(selected);
       // The answer validator supports up to 1000 classes/questions in a final.
       await tx.insert(exams).values({
         id,
@@ -525,8 +620,9 @@ async function buildFinal(
         isFinal: true,
         title: course.title.slice(0, 140) + ' · Final assessment',
         published: false,
-        timeLimit: Math.min(240, Math.max(30, selected.length * 2)),
-        passingScore: 70,
+        ...defaults,
+        autoTimeLimit: true,
+        autoPassingScore: true,
       });
       for (const [order, question] of selected.entries()) {
         const questionId = crypto.randomUUID();
@@ -536,22 +632,29 @@ async function buildFinal(
           question: question.question,
           difficulty: question.difficulty,
           type: question.type,
-          points: 1,
+          points: question.points,
+          timeSeconds: question.timeSeconds,
+          acceptedAnswers: question.acceptedAnswers,
+          caseSensitive: question.caseSensitive,
+          tolerance: question.tolerance,
+          pairs: question.pairs,
           order,
           explanation: question.explanation,
         });
         const options = await tx
           .select()
           .from(examOptions)
-          .where(eq(examOptions.questionId, question.id));
-        await tx.insert(examOptions).values(
-          options.map((o) => ({
-            questionId,
-            text: o.text,
-            isCorrect: o.isCorrect,
-            order: o.order,
-          })),
-        );
+          .where(eq(examOptions.questionId, question.id))
+          .orderBy(asc(examOptions.order));
+        if (options.length)
+          await tx.insert(examOptions).values(
+            options.map((o) => ({
+              questionId,
+              text: o.text,
+              isCorrect: o.isCorrect,
+              order: o.order,
+            })),
+          );
       }
       return null;
     });
@@ -654,12 +757,18 @@ export async function submitAttempt(
                 questions.map((q) => q.id),
               ),
             )
+            .orderBy(asc(examOptions.order))
         : [];
-      const expired = Date.now() > attempt.startedAt.getTime() + row.exam.timeLimit * 60000 + 15000;
+      const expired =
+        Date.now() >
+        attempt.startedAt.getTime() +
+          (attempt.snapshot?.timeLimit ?? row.exam.timeLimit) * 60000 +
+          15000;
       const result = scoreExam(
-        questions.map((q) => ({ ...q, options: options.filter((o) => o.questionId === q.id) })),
+        attempt.snapshot?.questions ??
+          questions.map((q) => ({ ...q, options: options.filter((o) => o.questionId === q.id) })),
         expired ? {} : answers,
-        row.exam.passingScore,
+        attempt.snapshot?.passingScore ?? row.exam.passingScore,
       );
       await tx
         .update(examAttempts)

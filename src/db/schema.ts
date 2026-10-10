@@ -14,6 +14,7 @@ import {
   jsonb,
 } from 'drizzle-orm/pg-core';
 import type { AdapterAccountType } from 'next-auth/adapters';
+import type { AttemptSnapshot } from '@/lib/assessment';
 const dates = {
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
@@ -30,7 +31,16 @@ export const sessionStatusEnum = pgEnum('session_status', [
   'completed',
   'skipped',
 ]);
-export const questionTypeEnum = pgEnum('question_type', ['multiple_choice', 'true_false']);
+export const questionTypeEnum = pgEnum('question_type', [
+  'multiple_choice',
+  'true_false',
+  'multiple_select',
+  'short_answer',
+  'fill_blank',
+  'numeric',
+  'ordering',
+  'matching',
+]);
 export const users = pgTable('users', {
   id: id(),
   name: text('name'),
@@ -165,6 +175,8 @@ export const exams = pgTable(
     description: text('description').default('').notNull(),
     passingScore: integer('passing_score').default(70).notNull(),
     timeLimit: integer('time_limit').default(30).notNull(),
+    autoTimeLimit: boolean('auto_time_limit').default(false).notNull(),
+    autoPassingScore: boolean('auto_passing_score').default(false).notNull(),
     published: boolean('published').default(false).notNull(),
     ...dates,
   },
@@ -184,6 +196,11 @@ export const examQuestions = pgTable(
     difficulty: text('difficulty').$type<'easy' | 'medium' | 'hard'>().default('medium').notNull(),
     type: questionTypeEnum('type').notNull(),
     points: integer('points').default(1).notNull(),
+    timeSeconds: integer('time_seconds').default(90).notNull(),
+    acceptedAnswers: jsonb('accepted_answers').$type<string[]>().default([]).notNull(),
+    caseSensitive: boolean('case_sensitive').default(false).notNull(),
+    tolerance: doublePrecision('tolerance').default(0).notNull(),
+    pairs: jsonb('pairs').$type<{ left: string; right: string }[]>().default([]).notNull(),
     order: integer('order').notNull(),
     explanation: text('explanation').default('').notNull(),
   },
@@ -233,6 +250,7 @@ export const examAttempts = pgTable(
     startedAt: timestamp('started_at', { withTimezone: true }).defaultNow().notNull(),
     submittedAt: timestamp('submitted_at', { withTimezone: true }),
     review: jsonb('review').$type<AttemptReview[]>(),
+    snapshot: jsonb('snapshot').$type<AttemptSnapshot>(),
   },
   (t) => [
     index('attempts_user_idx').on(t.userId),

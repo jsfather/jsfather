@@ -41,7 +41,7 @@ export default async function Exams({
         action={
           <Link className="button primary" href="/exams/new">
             <Plus size={16} />
-            Create exam
+            Add class questions
           </Link>
         }
       />
@@ -83,9 +83,9 @@ export default async function Exams({
       ) : (
         <Empty
           title="Turn learning into understanding."
-          description="Create an exam for one of your courses. Add questions, set a time limit, and challenge yourself."
+          description="Add questions to a class, then generate an assessment from your course question banks."
           href="/exams/new"
-          label="Create your first exam"
+          label="Add class questions"
         />
       )}
     </>

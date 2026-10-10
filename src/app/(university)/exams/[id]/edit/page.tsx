@@ -3,10 +3,10 @@ import { requireUser } from '@/lib/auth';
 import { ownedExam } from '@/lib/data';
 import { db } from '@/db';
 import { examQuestions, examOptions, examAttempts, courseSessions } from '@/db/schema';
-import { eq, asc, inArray } from 'drizzle-orm';
+import { eq, asc, inArray, and, sql } from 'drizzle-orm';
 import { PageTitle } from '@/components/ui';
 import { ExamBuilder } from '@/components/exam-builder';
-export const metadata = { title: 'Edit exam' };
+export const metadata = { title: 'Edit class questions' };
 export default async function EditExam({ params }: { params: Promise<{ id: string }> }) {
   const user = await requireUser();
   const { exam, course } = await ownedExam(user.id, (await params).id);
@@ -25,17 +25,23 @@ export default async function EditExam({ params }: { params: Promise<{ id: strin
   const [attempt] = await db
     .select({ id: examAttempts.id })
     .from(examAttempts)
-    .where(eq(examAttempts.examId, exam.id))
+    .where(
+      and(
+        eq(examAttempts.examId, exam.id),
+        sql`${examAttempts.submittedAt} is null`,
+        sql`${examAttempts.snapshot} is null`,
+      ),
+    )
     .limit(1);
   if (attempt)
     return (
       <>
         <PageTitle
           title="This exam is locked"
-          description="An attempt has already started. Create a new exam to change the assessment."
+          description="Finish the older active attempt before editing. New attempts keep their own question snapshots."
         />
         <Link className="button primary" href={'/exams/new?course=' + course.id}>
-          Create another exam
+          Add class questions
         </Link>
       </>
     );
@@ -58,23 +64,26 @@ export default async function EditExam({ params }: { params: Promise<{ id: strin
     : [];
   return (
     <>
-      <PageTitle eyebrow={course.title.toUpperCase()} title="Edit exam" />
+      <PageTitle eyebrow={course.title.toUpperCase()} title="Edit class questions" />
       <ExamBuilder
         courseId={course.id}
         sessionId={exam.sessionId ?? ''}
         sessions={sessions}
         examId={exam.id}
         initial={{
-          title: exam.title,
-          description: exam.description,
-          passingScore: exam.passingScore,
-          timeLimit: exam.timeLimit,
+          passingScore: exam.autoPassingScore ? null : exam.passingScore,
+          timeLimit: exam.autoTimeLimit ? null : exam.timeLimit,
           published: exam.isPublic,
           questions: questions.map((q) => ({
             question: q.question,
             difficulty: q.difficulty,
             type: q.type,
             points: q.points,
+            timeSeconds: q.timeSeconds,
+            acceptedAnswers: q.acceptedAnswers,
+            caseSensitive: q.caseSensitive,
+            tolerance: q.tolerance,
+            pairs: q.pairs,
             explanation: q.explanation,
             options: options
               .filter((o) => o.questionId === q.id)

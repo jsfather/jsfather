@@ -6,6 +6,7 @@ import { eq, asc, inArray, and } from 'drizzle-orm';
 import { redirect, notFound } from 'next/navigation';
 import { PageTitle } from '@/components/ui';
 import { ExamRunner } from '@/components/exam-runner';
+import { safeQuestion } from '@/lib/safe-questions';
 export const metadata = { title: 'Take exam' };
 export default async function TakeExam({
   params,
@@ -20,6 +21,7 @@ export default async function TakeExam({
       id: examAttempts.id,
       submittedAt: examAttempts.submittedAt,
       startedAt: examAttempts.startedAt,
+      snapshot: examAttempts.snapshot,
     })
     .from(examAttempts)
     .where(
@@ -31,12 +33,15 @@ export default async function TakeExam({
     );
   if (!attempt) notFound();
   if (attempt.submittedAt) redirect(`/exams/${id}/results/${attemptId}`);
-  // Do not select the answer key or explanations for the client exam interface.
+  // Project snapshots explicitly; never serialize the key or explanations to the runner.
   const questions = await db
     .select({
       id: examQuestions.id,
       question: examQuestions.question,
       points: examQuestions.points,
+      type: examQuestions.type,
+      timeSeconds: examQuestions.timeSeconds,
+      pairs: examQuestions.pairs,
     })
     .from(examQuestions)
     .where(eq(examQuestions.examId, id))
@@ -53,7 +58,8 @@ export default async function TakeExam({
         )
         .orderBy(asc(examOptions.order))
     : [];
-  const expiresAt = attempt.startedAt.getTime() + exam.timeLimit * 60000;
+  const expiresAt =
+    attempt.startedAt.getTime() + (attempt.snapshot?.timeLimit ?? exam.timeLimit) * 60000;
   return (
     <>
       <PageTitle
@@ -65,12 +71,18 @@ export default async function TakeExam({
         attemptId={attemptId}
         expiresAt={expiresAt}
         initialSeconds={Math.max(0, Math.ceil((expiresAt - new Date().getTime()) / 1000))}
-        questions={questions.map((q) => ({
-          ...q,
-          options: options
-            .filter((o) => o.questionId === q.id)
-            .map((o) => ({ id: o.id, text: o.text })),
-        }))}
+        questions={
+          attempt.snapshot
+            ? attempt.snapshot.questions.map(safeQuestion)
+            : questions.map((q) =>
+                safeQuestion({
+                  ...q,
+                  options: options
+                    .filter((o) => o.questionId === q.id)
+                    .map((o) => ({ id: o.id, text: o.text })),
+                }),
+              )
+        }
       />
     </>
   );

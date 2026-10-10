@@ -3,20 +3,64 @@ import { useState, useActionState } from 'react';
 import { Plus, ArrowUp, ArrowDown, Trash2, Save } from 'lucide-react';
 import { saveExam } from '@/actions';
 import { Feedback, Submit } from './forms';
-import type { ExamInput } from '@/lib/validation';
-const blank = (): ExamInput['questions'][number] => ({
+import {
+  assessmentDefaults,
+  questionDefaults,
+  isTypedQuestion,
+  type QuestionType,
+} from '@/lib/assessment';
+import type { ClassBankInput } from '@/lib/validation';
+type Question = ClassBankInput['questions'][number];
+const blank = (): Question => ({
   question: '',
   difficulty: 'medium',
   type: 'multiple_choice',
-  points: 1,
+  points: 2,
+  timeSeconds: 90,
   explanation: '',
+  acceptedAnswers: [],
+  caseSensitive: false,
+  tolerance: 0,
+  pairs: [],
   options: [
     { text: '', isCorrect: true },
     { text: '', isCorrect: false },
-    { text: '', isCorrect: false },
-    { text: '', isCorrect: false },
   ],
 });
+const types: { value: QuestionType; label: string; help: string }[] = [
+  { value: 'multiple_choice', label: 'Single choice', help: 'Choose one correct option.' },
+  {
+    value: 'multiple_select',
+    label: 'Multiple answers',
+    help: 'Mark all correct options. The learner must select exactly that set to earn points.',
+  },
+  { value: 'true_false', label: 'True / false', help: 'Choose the correct statement value.' },
+  {
+    value: 'short_answer',
+    label: 'Short answer',
+    help: 'The learner types an answer. Add alternatives for equivalent wording.',
+  },
+  {
+    value: 'fill_blank',
+    label: 'Fill in the blank',
+    help: 'Use ___ for one blank. Add accepted answers below.',
+  },
+  {
+    value: 'numeric',
+    label: 'Numeric answer',
+    help: 'Enter the expected number and an optional absolute tolerance.',
+  },
+  {
+    value: 'ordering',
+    label: 'Put in order',
+    help: 'Write items in the correct order. They are shuffled for the learner.',
+  },
+  {
+    value: 'matching',
+    label: 'Match pairs',
+    help: 'Enter matching pairs. Right-hand choices are shuffled for the learner.',
+  },
+];
 export function ExamBuilder({
   courseId,
   sessionId,
@@ -28,38 +72,32 @@ export function ExamBuilder({
   sessionId: string;
   sessions?: { id: string; title: string }[];
   examId?: string | null;
-  initial?: ExamInput;
+  initial?: ClassBankInput;
 }) {
   const [selectedSession, setSelectedSession] = useState(sessionId);
-  const [exam, setExam] = useState<ExamInput>(
-    initial ?? {
-      title: '',
-      description: '',
-      passingScore: 70,
-      timeLimit: 30,
-      published: false,
-      questions: [blank()],
-    },
+  const [bank, setBank] = useState<ClassBankInput>(
+    initial ?? { passingScore: null, timeLimit: null, published: false, questions: [blank()] },
   );
   const [state, action] = useActionState(
     saveExam.bind(null, courseId, examId, selectedSession),
     {},
   );
-  const update = (index: number, q: Partial<ExamInput['questions'][number]>) =>
-    setExam({
-      ...exam,
-      questions: exam.questions.map((item, i) => (i === index ? { ...item, ...q } : item)),
-    });
-  function move(index: number, dir: number) {
-    const questions = [...exam.questions];
-    const target = index + dir;
+  const defaults = assessmentDefaults(bank.questions);
+  const update = (index: number, patch: Partial<Question>) =>
+    setBank((current) => ({
+      ...current,
+      questions: current.questions.map((q, i) => (i === index ? { ...q, ...patch } : q)),
+    }));
+  function move(index: number, direction: number) {
+    const questions = [...bank.questions],
+      target = index + direction;
     if (target < 0 || target >= questions.length) return;
     [questions[index], questions[target]] = [questions[target], questions[index]];
-    setExam({ ...exam, questions });
+    setBank({ ...bank, questions });
   }
   return (
     <form action={action} className="form-panel">
-      <input type="hidden" name="exam" value={JSON.stringify(exam)} />
+      <input type="hidden" name="exam" value={JSON.stringify(bank)} />
       <Feedback state={state} />
       {sessions && (
         <label className="field">
@@ -76,58 +114,16 @@ export function ExamBuilder({
               </option>
             ))}
           </select>
-          <small className="field-hint">Assign existing questions to the class they cover.</small>
         </label>
       )}
-      <label className="field">
-        <span>Exam title</span>
-        <input
-          required
-          minLength={2}
-          maxLength={160}
-          placeholder="e.g. JavaScript final assessment"
-          value={exam.title}
-          onChange={(e) => setExam({ ...exam, title: e.target.value })}
-        />
-      </label>
-      <label className="field">
-        <span>Description</span>
-        <textarea
-          rows={3}
-          maxLength={5000}
-          value={exam.description}
-          onChange={(e) => setExam({ ...exam, description: e.target.value })}
-        />
-      </label>
-      <div className="form-grid">
-        <label className="field">
-          <span>Passing score (%)</span>
-          <input
-            type="number"
-            min={1}
-            max={100}
-            required
-            value={exam.passingScore}
-            onChange={(e) => setExam({ ...exam, passingScore: Number(e.target.value) })}
-          />
-        </label>
-        <label className="field">
-          <span>Time limit (minutes)</span>
-          <input
-            type="number"
-            min={1}
-            max={240}
-            required
-            value={exam.timeLimit}
-            onChange={(e) => setExam({ ...exam, timeLimit: Number(e.target.value) })}
-          />
-        </label>
-      </div>
       <div className="section-header">
-        <h2>Questions</h2>
-        <span className="muted">{exam.questions.length} questions</span>
+        <h2>Class questions</h2>
+        <span className="muted">
+          {bank.questions.length} questions · {bank.questions.reduce((sum, q) => sum + q.points, 0)}{' '}
+          points
+        </span>
       </div>
-      {exam.questions.map((q, i) => (
+      {bank.questions.map((q, i) => (
         <section key={i} className="question-editor">
           <header>
             <h3>Question {i + 1}</h3>
@@ -145,7 +141,7 @@ export function ExamBuilder({
                 type="button"
                 className="icon-button"
                 aria-label={`Move question ${i + 1} down`}
-                disabled={i === exam.questions.length - 1}
+                disabled={i === bank.questions.length - 1}
                 onClick={() => move(i, 1)}
               >
                 <ArrowDown size={16} />
@@ -154,9 +150,9 @@ export function ExamBuilder({
                 type="button"
                 className="icon-button"
                 aria-label={`Remove question ${i + 1}`}
-                disabled={exam.questions.length === 1}
+                disabled={bank.questions.length === 1}
                 onClick={() =>
-                  setExam({ ...exam, questions: exam.questions.filter((_, idx) => idx !== i) })
+                  setBank({ ...bank, questions: bank.questions.filter((_, index) => index !== i) })
                 }
               >
                 <Trash2 size={16} />
@@ -166,38 +162,25 @@ export function ExamBuilder({
           <label className="field">
             <span>Question text</span>
             <textarea
-              rows={5}
+              rows={4}
               required
               minLength={2}
-              placeholder={
-                'Write the question. Add code with fenced blocks, for example:\n```ts\nconst answer = 42;\n```'
-              }
+              placeholder="Write your question. Use ___ for a blank or fenced code blocks for code."
               value={q.question}
               onChange={(e) => update(i, { question: e.target.value })}
             />
             <small className="field-hint">
-              Questions can be as long as needed. Wrap code in triple backticks with an optional
-              language such as <code>ts</code>, <code>js</code>, or <code>json</code>.
+              No character limit. Code: triple backticks with an optional language such as js, ts,
+              or json.
             </small>
           </label>
           <div className="form-grid">
-            <label className="field">
-              <span>Difficulty</span>
-              <select
-                value={q.difficulty}
-                onChange={(e) => update(i, { difficulty: e.target.value as typeof q.difficulty })}
-              >
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
-              </select>
-            </label>
             <label className="field">
               <span>Question type</span>
               <select
                 value={q.type}
                 onChange={(e) => {
-                  const type = e.target.value as typeof q.type;
+                  const type = e.target.value as QuestionType;
                   update(i, {
                     type,
                     options:
@@ -206,126 +189,396 @@ export function ExamBuilder({
                             { text: 'True', isCorrect: true },
                             { text: 'False', isCorrect: false },
                           ]
-                        : blank().options,
+                        : isTypedQuestion(type) || type === 'matching'
+                          ? []
+                          : blank().options,
+                    acceptedAnswers: isTypedQuestion(type) ? [''] : [],
+                    pairs:
+                      type === 'matching'
+                        ? [
+                            { left: '', right: '' },
+                            { left: '', right: '' },
+                          ]
+                        : [],
                   });
                 }}
               >
-                <option value="multiple_choice">Multiple choice</option>
-                <option value="true_false">True / false</option>
+                {types.map((type) => (
+                  <option key={type.value} value={type.value}>
+                    {type.label}
+                  </option>
+                ))}
               </select>
             </label>
             <label className="field">
-              <span>Points</span>
-              <input
-                required
-                type="number"
-                min={1}
-                max={100}
-                value={q.points}
-                onChange={(e) => update(i, { points: Number(e.target.value) })}
-              />
+              <span>Difficulty</span>
+              <select
+                value={q.difficulty}
+                onChange={(e) => {
+                  const difficulty = e.target.value as Question['difficulty'],
+                    old = questionDefaults[q.difficulty],
+                    next = questionDefaults[difficulty];
+                  update(i, {
+                    difficulty,
+                    points: q.points === old.points ? next.points : q.points,
+                    timeSeconds:
+                      q.timeSeconds === old.timeSeconds ? next.timeSeconds : q.timeSeconds,
+                  });
+                }}
+              >
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+              </select>
             </label>
           </div>
-          <p className="muted" style={{ fontSize: 12 }}>
-            Select the correct answer. It will be hidden during the exam.
-          </p>
-          {q.options.map((option, j) => (
-            <div key={j} className="answer-editor">
-              <input
-                type="radio"
-                name={`correct-${i}`}
-                aria-label={`Option ${j + 1} is correct for question ${i + 1}`}
-                checked={option.isCorrect}
-                onChange={() =>
-                  update(i, { options: q.options.map((o, k) => ({ ...o, isCorrect: k === j })) })
-                }
-              />
-              <input
-                aria-label={`Question ${i + 1}, option ${j + 1}`}
-                required
-                maxLength={1000}
-                readOnly={q.type === 'true_false'}
-                placeholder={`Option ${String.fromCharCode(65 + j)}`}
-                value={option.text}
-                onChange={(e) =>
-                  update(i, {
-                    options: q.options.map((o, k) =>
-                      k === j ? { ...o, text: e.target.value } : o,
-                    ),
-                  })
-                }
-              />
-              {q.type === 'multiple_choice' && q.options.length > 2 && (
+          <p className="field-hint">{types.find((type) => type.value === q.type)?.help}</p>
+          {isTypedQuestion(q.type) ? (
+            <>
+              {q.acceptedAnswers.map((answer, j) => (
+                <div className="answer-editor" key={j}>
+                  <input
+                    required
+                    aria-label={`Question ${i + 1}, accepted answer ${j + 1}`}
+                    value={answer}
+                    placeholder={q.type === 'numeric' ? 'Expected number' : 'Accepted answer'}
+                    onChange={(e) =>
+                      update(i, {
+                        acceptedAnswers: q.acceptedAnswers.map((a, k) =>
+                          k === j ? e.target.value : a,
+                        ),
+                      })
+                    }
+                  />
+                  {q.acceptedAnswers.length > 1 && (
+                    <button
+                      type="button"
+                      className="icon-button"
+                      aria-label={`Remove accepted answer ${j + 1}`}
+                      onClick={() =>
+                        update(i, { acceptedAnswers: q.acceptedAnswers.filter((_, k) => k !== j) })
+                      }
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  )}
+                </div>
+              ))}
+              {q.type === 'numeric' ? (
+                <label className="field">
+                  <span>Absolute tolerance (±)</span>
+                  <input
+                    type="number"
+                    min={0}
+                    step="any"
+                    value={q.tolerance}
+                    onChange={(e) => update(i, { tolerance: Number(e.target.value) })}
+                  />
+                </label>
+              ) : (
+                <>
+                  <button
+                    type="button"
+                    className="button secondary"
+                    disabled={q.acceptedAnswers.length >= 20}
+                    onClick={() => update(i, { acceptedAnswers: [...q.acceptedAnswers, ''] })}
+                  >
+                    <Plus size={14} />
+                    Add accepted alternative
+                  </button>
+                  <label className="toggle-row">
+                    <span>Case-sensitive answer</span>
+                    <input
+                      type="checkbox"
+                      checked={q.caseSensitive}
+                      onChange={(e) => update(i, { caseSensitive: e.target.checked })}
+                    />
+                  </label>
+                  <p className="field-hint">Whitespace is normalized before checking answers.</p>
+                </>
+              )}
+            </>
+          ) : q.type === 'matching' ? (
+            <>
+              {q.pairs.map((pair, j) => (
+                <div className="form-grid" key={j}>
+                  <label className="field">
+                    <span>Pair {j + 1} · Prompt</span>
+                    <input
+                      required
+                      value={pair.left}
+                      onChange={(e) =>
+                        update(i, {
+                          pairs: q.pairs.map((p, k) =>
+                            k === j ? { ...p, left: e.target.value } : p,
+                          ),
+                        })
+                      }
+                    />
+                  </label>
+                  <label className="field">
+                    <span>Matching answer</span>
+                    <input
+                      required
+                      value={pair.right}
+                      onChange={(e) =>
+                        update(i, {
+                          pairs: q.pairs.map((p, k) =>
+                            k === j ? { ...p, right: e.target.value } : p,
+                          ),
+                        })
+                      }
+                    />
+                  </label>
+                  {q.pairs.length > 2 && (
+                    <button
+                      type="button"
+                      className="button secondary"
+                      onClick={() => update(i, { pairs: q.pairs.filter((_, k) => k !== j) })}
+                    >
+                      Remove pair {j + 1}
+                    </button>
+                  )}
+                </div>
+              ))}
+              <button
+                type="button"
+                className="button secondary"
+                disabled={q.pairs.length >= 12}
+                onClick={() => update(i, { pairs: [...q.pairs, { left: '', right: '' }] })}
+              >
+                <Plus size={14} />
+                Add pair
+              </button>
+            </>
+          ) : (
+            <>
+              {q.options.map((option, j) => (
+                <div className="answer-editor" key={j}>
+                  {q.type !== 'ordering' && (
+                    <input
+                      type={q.type === 'multiple_select' ? 'checkbox' : 'radio'}
+                      name={`correct-${i}`}
+                      aria-label={`Option ${j + 1} is correct for question ${i + 1}`}
+                      checked={option.isCorrect}
+                      onChange={() =>
+                        update(i, {
+                          options: q.options.map((o, k) => ({
+                            ...o,
+                            isCorrect:
+                              q.type === 'multiple_select'
+                                ? k === j
+                                  ? !o.isCorrect
+                                  : o.isCorrect
+                                : k === j,
+                          })),
+                        })
+                      }
+                    />
+                  )}
+                  {q.type === 'ordering' && <span>{j + 1}.</span>}
+                  <input
+                    aria-label={`Question ${i + 1}, option ${j + 1}`}
+                    required
+                    maxLength={1000}
+                    readOnly={q.type === 'true_false'}
+                    placeholder={
+                      q.type === 'ordering'
+                        ? `Item ${j + 1} in correct order`
+                        : `Option ${String.fromCharCode(65 + j)}`
+                    }
+                    value={option.text}
+                    onChange={(e) =>
+                      update(i, {
+                        options: q.options.map((o, k) =>
+                          k === j ? { ...o, text: e.target.value } : o,
+                        ),
+                      })
+                    }
+                  />
+                  {q.type === 'ordering' && (
+                    <button
+                      type="button"
+                      className="icon-button"
+                      aria-label={`Move item ${j + 1} up`}
+                      disabled={j === 0}
+                      onClick={() => {
+                        const options = [...q.options];
+                        [options[j], options[j - 1]] = [options[j - 1], options[j]];
+                        update(i, { options });
+                      }}
+                    >
+                      <ArrowUp size={14} />
+                    </button>
+                  )}
+                  {q.type !== 'true_false' && q.options.length > 2 && (
+                    <button
+                      type="button"
+                      className="icon-button"
+                      aria-label={`Remove option ${j + 1}`}
+                      onClick={() => {
+                        const options = q.options.filter((_, k) => k !== j);
+                        if (q.type === 'multiple_choice' && !options.some((o) => o.isCorrect))
+                          options[0].isCorrect = true;
+                        update(i, { options });
+                      }}
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  )}
+                </div>
+              ))}
+              {q.type !== 'true_false' && (
                 <button
                   type="button"
-                  className="icon-button"
-                  aria-label={`Remove option ${j + 1}`}
-                  onClick={() => {
-                    const options = q.options.filter((_, k) => k !== j);
-                    if (!options.some((o) => o.isCorrect)) options[0].isCorrect = true;
-                    update(i, { options });
-                  }}
+                  className="button secondary"
+                  disabled={q.options.length >= 12}
+                  onClick={() =>
+                    update(i, { options: [...q.options, { text: '', isCorrect: false }] })
+                  }
                 >
-                  <Trash2 size={14} />
+                  <Plus size={14} />
+                  Add {q.type === 'ordering' ? 'item' : 'option'}
                 </button>
               )}
-            </div>
-          ))}
-          {q.type === 'multiple_choice' && q.options.length < 6 && (
-            <button
-              type="button"
-              className="text-link"
-              style={{ border: 0, background: 'none', marginTop: 12 }}
-              onClick={() => update(i, { options: [...q.options, { text: '', isCorrect: false }] })}
-            >
-              <Plus size={13} />
-              Add option
-            </button>
+            </>
           )}
-          <label className="field">
-            <span>Answer explanation</span>
-            <textarea
-              maxLength={3000}
-              rows={2}
-              placeholder="Explain why this answer is correct. Shown after submission."
-              value={q.explanation}
-              onChange={(e) => update(i, { explanation: e.target.value })}
-            />
-          </label>
+          <details style={{ marginTop: 24 }}>
+            <summary>Timing, points & explanation</summary>
+            <div className="form-grid">
+              <label className="field">
+                <span>Points</span>
+                <input
+                  type="number"
+                  required
+                  min={1}
+                  max={100}
+                  value={q.points}
+                  onChange={(e) => update(i, { points: Number(e.target.value) })}
+                />
+                <small className="field-hint">
+                  Suggested: {questionDefaults[q.difficulty].points} ·{' '}
+                  <button
+                    className="text-link"
+                    type="button"
+                    onClick={() => update(i, { points: questionDefaults[q.difficulty].points })}
+                  >
+                    Reset
+                  </button>
+                </small>
+              </label>
+              <label className="field">
+                <span>Time budget (seconds)</span>
+                <input
+                  type="number"
+                  required
+                  min={5}
+                  max={3600}
+                  value={q.timeSeconds}
+                  onChange={(e) => update(i, { timeSeconds: Number(e.target.value) })}
+                />
+                <small className="field-hint">
+                  Suggested: {questionDefaults[q.difficulty].timeSeconds}s ·{' '}
+                  <button
+                    className="text-link"
+                    type="button"
+                    onClick={() =>
+                      update(i, { timeSeconds: questionDefaults[q.difficulty].timeSeconds })
+                    }
+                  >
+                    Reset
+                  </button>
+                </small>
+              </label>
+            </div>
+            <label className="field">
+              <span>Answer explanation</span>
+              <textarea
+                rows={2}
+                maxLength={3000}
+                value={q.explanation}
+                onChange={(e) => update(i, { explanation: e.target.value })}
+                placeholder="Shown after submission."
+              />
+            </label>
+          </details>
         </section>
       ))}
       <button
-        className="button secondary"
         type="button"
-        disabled={exam.questions.length >= 100}
-        onClick={() => setExam({ ...exam, questions: [...exam.questions, blank()] })}
+        className="button secondary"
+        disabled={bank.questions.length >= 100}
+        onClick={() => setBank({ ...bank, questions: [...bank.questions, blank()] })}
       >
         <Plus size={16} />
         Add question
       </button>
-      <label className="toggle-row" style={{ marginTop: 25 }}>
-        <div>
-          <span>
-            <strong>Publish this exam</strong>
-            <small>
-              Anyone with the public link can practice without signing in. Guest scores are never
-              saved.
-            </small>
-          </span>
+      <details style={{ marginTop: 28 }}>
+        <summary>
+          Practice settings · {bank.timeLimit ?? defaults.timeLimit} min · Pass at{' '}
+          {bank.passingScore ?? defaults.passingScore}%
+        </summary>
+        <p className="field-hint">
+          Total time adds question budgets. Suggested passing score weights easy / medium / hard
+          mastery targets of 80 / 70 / 60% by points. These are adjustable study defaults.
+        </p>
+        <div className="form-grid">
+          <label className="field">
+            <span>Total time (minutes)</span>
+            <input
+              type="number"
+              min={1}
+              max={60000}
+              required
+              value={bank.timeLimit ?? defaults.timeLimit}
+              onChange={(e) => setBank({ ...bank, timeLimit: Number(e.target.value) })}
+            />
+            <button
+              type="button"
+              className="text-link"
+              onClick={() => setBank({ ...bank, timeLimit: null })}
+            >
+              Use calculated time
+            </button>
+          </label>
+          <label className="field">
+            <span>Passing score (%)</span>
+            <input
+              type="number"
+              min={1}
+              max={100}
+              required
+              value={bank.passingScore ?? defaults.passingScore}
+              onChange={(e) => setBank({ ...bank, passingScore: Number(e.target.value) })}
+            />
+            <button
+              type="button"
+              className="text-link"
+              onClick={() => setBank({ ...bank, passingScore: null })}
+            >
+              Use suggested score
+            </button>
+          </label>
         </div>
+      </details>
+      <label className="toggle-row" style={{ marginTop: 24 }}>
+        <span>
+          <strong>Public practice link</strong>
+          <small>Anyone can practice without signing in. Guest results are never saved.</small>
+        </span>
         <input
           type="checkbox"
-          checked={exam.published}
-          onChange={(e) => setExam({ ...exam, published: e.target.checked })}
+          checked={bank.published}
+          onChange={(e) => setBank({ ...bank, published: e.target.checked })}
         />
       </label>
       <div className="form-footer">
         <span className="muted">
-          {exam.questions.reduce((sum, q) => sum + q.points, 0)} total points
+          {bank.questions.length} questions · {bank.timeLimit ?? defaults.timeLimit} minutes
         </span>
         <Submit>
           <Save size={16} />
-          Save exam
+          Save questions
         </Submit>
       </div>
     </form>
