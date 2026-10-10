@@ -21,7 +21,7 @@ import {
 } from '@/lib/validation';
 import { generateSchedule, slugify, scoreExam } from '@/lib/learning';
 import { fromZonedTime, formatInTimeZone } from 'date-fns-tz';
-import { and, eq, asc, inArray, sql } from 'drizzle-orm';
+import { and, eq, asc, desc, inArray, sql } from 'drizzle-orm';
 import { redirect, unstable_rethrow } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
@@ -226,7 +226,10 @@ export async function updateSession(
   }
   refresh(course.id);
   revalidatePath('/sessions/' + id);
-  if (form.get('status') === 'completed') await buildFinal(course.id, user.id, true);
+  if (form.get('status') === 'completed') {
+    await buildFinal(course.id, user.id, true);
+    await issueEligibleCertificate(course.id, user.id);
+  }
   return { success: 'Session saved.' };
 }
 export async function setSessionStatus(id: string, status: 'completed' | 'skipped' | 'upcoming') {
@@ -243,7 +246,10 @@ export async function setSessionStatus(id: string, status: 'completed' | 'skippe
     .where(eq(courseSessions.id, id));
   refresh(course.id);
   revalidatePath('/sessions/' + id);
-  if (valid === 'completed') await buildFinal(course.id, user.id, true);
+  if (valid === 'completed') {
+    await buildFinal(course.id, user.id, true);
+    await issueEligibleCertificate(course.id, user.id);
+  }
 }
 export async function updateProfile(_state: ActionState, form: FormData): Promise<ActionState> {
   const user = await requireUser();
@@ -386,15 +392,7 @@ export async function startAttempt(examId: string) {
   const user = await requireUser();
   await ownedExam(user.id, examId);
   const id = await db.transaction(async (tx) => {
-    const [exam] = await tx.select().from(exams).where(eq(exams.id, examId)).for('update');
-    if (exam.isFinal) {
-      const sessions = await tx
-        .select()
-        .from(courseSessions)
-        .where(eq(courseSessions.courseId, exam.courseId));
-      if (!sessions.length || sessions.some((s) => s.status !== 'completed'))
-        throw new Error('Complete every class before taking the final.');
-    }
+    await tx.select({ id: exams.id }).from(exams).where(eq(exams.id, examId)).for('update');
     const [active] = await tx
       .select()
       .from(examAttempts)
@@ -499,7 +497,7 @@ async function buildFinal(
         .from(courseSessions)
         .where(eq(courseSessions.courseId, courseId))
         .for('update');
-      if (!sessions.length || sessions.some((s) => s.status !== 'completed'))
+      if (onlyIfMissing && (!sessions.length || sessions.some((s) => s.status !== 'completed')))
         return 'Complete every class before generating your final.';
       await tx
         .select({ id: exams.id })
@@ -511,13 +509,14 @@ async function buildFinal(
         .from(examQuestions)
         .innerJoin(exams, eq(examQuestions.examId, exams.id))
         .where(and(eq(exams.courseId, courseId), eq(exams.isFinal, false)));
-      if (sessions.some((s) => !pool.some((q) => q.sessionId === s.id)))
-        return 'Add at least one question to every class first.';
+      const candidates = pool
+        .filter((q) => q.sessionId !== null)
+        .map((q) => ({ ...q.question, sessionId: q.sessionId! }));
+      if (!candidates.length)
+        return 'Add at least one question to any class before generating an assessment.';
       const selected = selectFinalQuestions(
-        pool
-          .filter((q) => q.sessionId !== null)
-          .map((q) => ({ ...q.question, sessionId: q.sessionId! })),
-        Math.max(30, sessions.length),
+        candidates,
+        Math.max(30, new Set(candidates.map((q) => q.sessionId)).size),
       );
       // The answer validator supports up to 1000 classes/questions in a final.
       await tx.insert(exams).values({
@@ -563,6 +562,53 @@ async function buildFinal(
   refresh(courseId);
   return { id };
 }
+async function issueEligibleCertificate(courseId: string, userId: string) {
+  await db.transaction(async (tx) => {
+    const [course] = await tx
+      .select()
+      .from(courses)
+      .where(and(eq(courses.id, courseId), eq(courses.ownerId, userId)))
+      .for('update');
+    if (!course) return;
+    const sessions = await tx
+      .select({ status: courseSessions.status })
+      .from(courseSessions)
+      .where(eq(courseSessions.courseId, courseId))
+      .for('share');
+    if (!sessions.length || sessions.some((session) => session.status !== 'completed')) return;
+    const [attempt] = await tx
+      .select({ id: examAttempts.id, percentage: examAttempts.percentage })
+      .from(examAttempts)
+      .innerJoin(exams, eq(examAttempts.examId, exams.id))
+      .where(
+        and(
+          eq(exams.courseId, courseId),
+          eq(exams.isFinal, true),
+          eq(examAttempts.userId, userId),
+          eq(examAttempts.passed, true),
+        ),
+      )
+      .orderBy(desc(examAttempts.submittedAt))
+      .limit(1);
+    if (!attempt || attempt.percentage === null) return;
+    const [user] = await tx
+      .select({ name: users.name, username: users.username })
+      .from(users)
+      .where(eq(users.id, userId));
+    await tx
+      .insert(certificates)
+      .values({
+        attemptId: attempt.id,
+        userId,
+        courseId,
+        recipientName: user.name ?? user.username,
+        courseTitle: course.title,
+        percentage: attempt.percentage,
+      })
+      .onConflictDoNothing();
+  });
+  refresh(courseId);
+}
 export async function submitAttempt(
   attemptId: string,
   _state: ActionState,
@@ -587,6 +633,12 @@ export async function submitAttempt(
         .innerJoin(courses, eq(exams.courseId, courses.id))
         .where(and(eq(exams.id, attempt.examId), eq(courses.ownerId, user.id)));
       if (!row) throw new Error('Exam not found.');
+      // Serialize certificate eligibility with completion-triggered issuance.
+      await tx
+        .select({ id: courses.id })
+        .from(courses)
+        .where(eq(courses.id, row.course.id))
+        .for('update');
       const questions = await tx
         .select()
         .from(examQuestions)
@@ -616,7 +668,8 @@ export async function submitAttempt(
       const sessions = await tx
         .select()
         .from(courseSessions)
-        .where(eq(courseSessions.courseId, row.course.id));
+        .where(eq(courseSessions.courseId, row.course.id))
+        .for('share');
       if (
         result.passed &&
         row.exam.isFinal &&

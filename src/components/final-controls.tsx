@@ -3,20 +3,20 @@ import { useActionState } from 'react';
 import { generateFinal, setExamPublic, assignExamClass } from '@/actions';
 import { Feedback, Submit } from './forms';
 
-export function FinalControls({ courseId, completed }: { courseId: string; completed: boolean }) {
+export function FinalControls({ courseId }: { courseId: string }) {
   const [state, action] = useActionState(generateFinal.bind(null, courseId), {});
   return (
     <section className="panel">
       <h2>Final assessment</h2>
       <p className="muted" style={{ margin: '12px 0 20px' }}>
-        Complete every class and add questions to each one. Your first final is generated
-        automatically. The final selects up to 30 questions (at least one per class), balancing
-        classes and easy / medium / hard levels where available. Pass at 70% to earn your course
-        certificate.
+        Generate an assessment anytime from the classes that have questions, even before studying
+        them. It selects up to 30 questions (at least one per participating class), balancing
+        classes and easy / medium / hard levels where available. Classes without questions are
+        excluded. To earn your certificate, pass at 70% and complete every class in the course.
       </p>
       <form action={action}>
         <Feedback state={state} />
-        <Submit disabled={!completed}>Generate final assessment</Submit>
+        <Submit>Generate final assessment</Submit>
       </form>
     </section>
   );

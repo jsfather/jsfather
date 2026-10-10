@@ -74,7 +74,7 @@ export default async function CourseDetail({
           </Link>
         }
       />
-      <FinalControls courseId={course.id} completed={total > 0 && completed === total} />
+      <FinalControls courseId={course.id} />
       <div className="detail-layout">
         <div>
           <section className="panel detail-panel">

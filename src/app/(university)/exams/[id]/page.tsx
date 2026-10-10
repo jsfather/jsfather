@@ -43,15 +43,6 @@ export default async function ExamDetail({
       .limit(1),
   ]);
   const hasAttempts = lock.length > 0;
-  const classStatuses = exam.isFinal
-    ? await db
-        .select({ status: courseSessions.status })
-        .from(courseSessions)
-        .where(eq(courseSessions.courseId, course.id))
-    : [];
-  const canTake =
-    !exam.isFinal ||
-    (classStatuses.length > 0 && classStatuses.every((s) => s.status === 'completed'));
   const sessions =
     !exam.isFinal && !exam.sessionId
       ? await db
@@ -101,20 +92,12 @@ export default async function ExamDetail({
               <span>Passing score</span>
             </div>
           </div>
-          {canTake ? (
-            <form action={startAttempt.bind(null, exam.id)}>
-              <Submit>
-                <Play size={16} />
-                {attempts.some((a) => !a.submittedAt) ? 'Resume attempt' : 'Start exam'}
-              </Submit>
-            </form>
-          ) : (
-            <div className="alert">
-              <p className="muted">
-                Complete every class before starting or resuming the course final.
-              </p>
-            </div>
-          )}
+          <form action={startAttempt.bind(null, exam.id)}>
+            <Submit>
+              <Play size={16} />
+              {attempts.some((a) => !a.submittedAt) ? 'Resume attempt' : 'Start exam'}
+            </Submit>
+          </form>
           <p className="muted" style={{ fontSize: 12, marginTop: 18 }}>
             The timer starts immediately. Correct answers and explanations appear after submission.
             You can take multiple attempts.
@@ -125,7 +108,7 @@ export default async function ExamDetail({
           <h3>A checkpoint, not a finish line.</h3>
           <p className="muted" style={{ fontSize: 13, lineHeight: 1.8, marginTop: 12 }}>
             {exam.isFinal
-              ? 'Pass this final after completing every class to earn your course certificate.'
+              ? 'Take this assessment anytime. Your certificate requires both a passing score and completion of every class in the course.'
               : 'Practice your class questions. Only the course final awards a certificate.'}
           </p>
           <div className="meta-list">
