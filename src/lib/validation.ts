@@ -75,6 +75,7 @@ export const questionSchema = z
   .object({
     // Questions may include long, fenced code examples. PostgreSQL text has no practical UI limit.
     question: z.string().trim().min(2),
+    difficulty: z.enum(['easy', 'medium', 'hard']).default('medium'),
     type: z.enum(['multiple_choice', 'true_false']),
     points: z.coerce.number().int().min(1).max(100),
     explanation: z.string().max(3000),
@@ -105,6 +106,6 @@ export const examSchema = z.object({
 });
 export const answersSchema = z
   .record(z.string().uuid(), z.string().uuid())
-  .refine((v) => Object.keys(v).length <= 100, 'Too many answers.');
+  .refine((v) => Object.keys(v).length <= 1000, 'Too many answers.');
 export type CourseInput = z.infer<typeof courseSchema>;
 export type ExamInput = z.infer<typeof examSchema>;

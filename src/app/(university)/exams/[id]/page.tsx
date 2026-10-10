@@ -3,12 +3,13 @@ import { Pencil, Play, Lock, ClipboardList } from 'lucide-react';
 import { requireUser } from '@/lib/auth';
 import { ownedExam, pageNumber } from '@/lib/data';
 import { db } from '@/db';
-import { examAttempts, examQuestions } from '@/db/schema';
+import { examAttempts, examQuestions, courseSessions } from '@/db/schema';
 import { eq, and, desc, sql } from 'drizzle-orm';
 import { startAttempt } from '@/actions';
 import { PageTitle, Badge, Pagination } from '@/components/ui';
 import { Submit, DeleteExamForm } from '@/components/forms';
 import { formatInTimeZone } from 'date-fns-tz';
+import { PublicExamControl, AssignExamClass } from '@/components/final-controls';
 export const metadata = { title: 'Exam details' };
 export default async function ExamDetail({
   params,
@@ -42,16 +43,33 @@ export default async function ExamDetail({
       .limit(1),
   ]);
   const hasAttempts = lock.length > 0;
+  const classStatuses = exam.isFinal
+    ? await db
+        .select({ status: courseSessions.status })
+        .from(courseSessions)
+        .where(eq(courseSessions.courseId, course.id))
+    : [];
+  const canTake =
+    !exam.isFinal ||
+    (classStatuses.length > 0 && classStatuses.every((s) => s.status === 'completed'));
+  const sessions =
+    !exam.isFinal && !exam.sessionId
+      ? await db
+          .select({ id: courseSessions.id, title: courseSessions.title })
+          .from(courseSessions)
+          .where(eq(courseSessions.courseId, course.id))
+      : [];
   return (
     <>
+      {!exam.isFinal && !exam.sessionId && <AssignExamClass id={exam.id} sessions={sessions} />}
       <Link className="text-link" href={'/courses/' + course.id} style={{ marginBottom: 22 }}>
         {course.title}
       </Link>
       <PageTitle
-        eyebrow="COURSE ASSESSMENT"
+        eyebrow={exam.isFinal ? 'COURSE FINAL' : 'CLASS QUESTION BANK'}
         title={exam.title}
         action={
-          !hasAttempts ? (
+          !hasAttempts && !exam.isFinal ? (
             <Link href={`/exams/${exam.id}/edit`} className="button secondary">
               <Pencil size={15} />
               Edit exam
@@ -83,7 +101,7 @@ export default async function ExamDetail({
               <span>Passing score</span>
             </div>
           </div>
-          {exam.published ? (
+          {canTake ? (
             <form action={startAttempt.bind(null, exam.id)}>
               <Submit>
                 <Play size={16} />
@@ -93,7 +111,7 @@ export default async function ExamDetail({
           ) : (
             <div className="alert">
               <p className="muted">
-                This exam is a draft. Publish it from the exam editor to start an attempt.
+                Complete every class before starting or resuming the course final.
               </p>
             </div>
           )}
@@ -106,8 +124,9 @@ export default async function ExamDetail({
           <ClipboardList size={24} style={{ color: 'var(--accent)', marginBottom: 17 }} />
           <h3>A checkpoint, not a finish line.</h3>
           <p className="muted" style={{ fontSize: 13, lineHeight: 1.8, marginTop: 12 }}>
-            Pass this exam to earn a personal achievement certificate. Every attempt helps you see
-            where to focus next.
+            {exam.isFinal
+              ? 'Pass this final after completing every class to earn your course certificate.'
+              : 'Practice your class questions. Only the course final awards a certificate.'}
           </p>
           <div className="meta-list">
             <div>
@@ -116,13 +135,25 @@ export default async function ExamDetail({
             </div>
             <div>
               <span>Status</span>
-              <Badge color={exam.published ? 'teal' : 'neutral'}>
-                {exam.published ? 'Published' : 'Draft'}
+              <Badge color={exam.isPublic ? 'teal' : 'neutral'}>
+                {exam.isFinal ? 'Final assessment' : exam.isPublic ? 'Public' : 'Private'}
               </Badge>
             </div>
           </div>
         </section>
       </div>
+      <section className="panel" style={{ marginTop: 24 }}>
+        <h2>Public practice</h2>
+        <p className="muted" style={{ margin: '12px 0' }}>
+          Guests can take this assessment without signing in. Their results are not stored.
+        </p>
+        <PublicExamControl id={exam.id} published={exam.isPublic} />
+        {exam.isPublic && (
+          <Link className="text-link" style={{ marginTop: 16 }} href={'/practice/' + exam.id}>
+            Open public exam link
+          </Link>
+        )}
+      </section>
       <section className="panel" style={{ marginTop: 26 }}>
         <div className="section-header">
           <h2>Your attempts</h2>

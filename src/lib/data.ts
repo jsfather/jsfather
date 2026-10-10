@@ -44,8 +44,8 @@ export async function courseSummaries(
       examStatus: onlyPublic
         ? sql<string>`''`
         : sql<string>`case
-        when exists (select 1 from exams e join exam_attempts a on a.exam_id=e.id where e.course_id=${courses.id} and a.user_id=${userId} and a.passed=true) then 'Exam passed'
-        when exists (select 1 from exams e where e.course_id=${courses.id} and e.published=true) then 'Exam ready'
+        when exists (select 1 from exams e join exam_attempts a on a.exam_id=e.id where e.course_id=${courses.id} and e.is_final=true and a.user_id=${userId} and a.passed=true) then 'Final passed'
+        when exists (select 1 from exams e where e.course_id=${courses.id} and e.is_final=true) then 'Final ready'
         when exists (select 1 from exams e where e.course_id=${courses.id}) then 'Exam draft'
         else 'No exam yet' end`,
       nextDate: sql<Date | null>`min(${courseSessions.scheduledDate}) filter (where ${courseSessions.status} in ('upcoming','in_progress') and ${courseSessions.scheduledDate} >= now())`,
@@ -94,7 +94,7 @@ export async function universityStats(userId: string, onlyPublic = false) {
       .from(examAttempts)
       .innerJoin(exams, eq(examAttempts.examId, exams.id))
       .innerJoin(courses, eq(exams.courseId, courses.id))
-      .where(and(scope, eq(examAttempts.userId, userId))),
+      .where(and(scope, eq(examAttempts.userId, userId), eq(exams.isFinal, true))),
   ]);
   const s = sessionStats[0],
     c = courseStats[0],
@@ -189,7 +189,13 @@ export async function publicCourse(username: string, slug: string) {
       .select({ score: sql<number | null>`max(${examAttempts.percentage})` })
       .from(examAttempts)
       .innerJoin(exams, eq(examAttempts.examId, exams.id))
-      .where(and(eq(exams.courseId, course.id), eq(examAttempts.userId, user.id)));
+      .where(
+        and(
+          eq(exams.courseId, course.id),
+          eq(examAttempts.userId, user.id),
+          eq(exams.isFinal, true),
+        ),
+      );
     bestScore = scores.score;
     const [cert] = await db
       .select({ id: certificates.id })

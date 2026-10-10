@@ -1,9 +1,10 @@
 'use client';
 import { useState, useEffect, useRef, useActionState } from 'react';
 import { Clock, ChevronLeft, ChevronRight, Send } from 'lucide-react';
-import { submitAttempt } from '@/actions';
+import { submitAttempt, type ActionState } from '@/actions';
 import { Feedback, Submit } from './forms';
 import { QuestionContent } from './question-content';
+import { grade } from '@/lib/learning';
 type SafeQuestion = {
   id: string;
   question: string;
@@ -15,23 +16,32 @@ export function ExamRunner({
   questions,
   expiresAt,
   initialSeconds,
+  submitAction,
 }: {
   attemptId: string;
   questions: SafeQuestion[];
   expiresAt: number;
   initialSeconds: number;
+  submitAction?: (state: ActionState, form: FormData) => Promise<ActionState>;
 }) {
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [seconds, setSeconds] = useState(initialSeconds);
   const [ready, setReady] = useState(false);
   const [confirm, setConfirm] = useState(false);
-  const [state, action, pending] = useActionState(submitAttempt.bind(null, attemptId), {});
+  const [state, action, pending] = useActionState(
+    submitAction ?? submitAttempt.bind(null, attemptId),
+    {},
+  );
   const form = useRef<HTMLFormElement>(null);
   const autoSubmitted = useRef(false);
   // Browser storage is an external system; restore its snapshot after hydration.
   /* eslint-disable react-hooks/set-state-in-effect -- Restore a browser storage snapshot after hydration. */
   useEffect(() => {
+    if (submitAction) {
+      setReady(true);
+      return;
+    }
     try {
       const saved = JSON.parse(localStorage.getItem('exam-' + attemptId) ?? '{}');
       if (saved && typeof saved === 'object' && !Array.isArray(saved)) {
@@ -43,14 +53,14 @@ export function ExamRunner({
       }
     } catch {}
     setReady(true);
-  }, [attemptId, questions]);
+  }, [attemptId, questions, submitAction]);
   /* eslint-enable react-hooks/set-state-in-effect */
   useEffect(() => {
-    if (ready)
+    if (ready && !submitAction)
       try {
         localStorage.setItem('exam-' + attemptId, JSON.stringify(answers));
       } catch {}
-  }, [answers, attemptId, ready]);
+  }, [answers, attemptId, ready, submitAction]);
   useEffect(() => {
     const tick = () => setSeconds(Math.max(0, Math.ceil((expiresAt - Date.now()) / 1000)));
     tick();
@@ -58,11 +68,34 @@ export function ExamRunner({
     return () => clearInterval(timer);
   }, [expiresAt]);
   useEffect(() => {
-    if (ready && seconds === 0 && !autoSubmitted.current && !pending) {
+    if (ready && seconds === 0 && !autoSubmitted.current && !pending && !state.result) {
       autoSubmitted.current = true;
       form.current?.requestSubmit();
     }
-  }, [seconds, ready, pending]);
+  }, [seconds, ready, pending, state.result]);
+  if (state.result)
+    return (
+      <section className="panel">
+        <h2>
+          {state.result.percentage}% · {state.result.passed ? 'Passed' : 'Keep practicing'}
+        </h2>
+        <p className="muted" style={{ margin: '12px 0' }}>
+          {state.result.score} / {state.result.maxScore} points · Grade{' '}
+          {grade(state.result.percentage)}. Your result has not been saved.
+        </p>
+        {state.result.review.map((r, i) => (
+          <section key={r.questionId} style={{ marginTop: 24 }}>
+            <h3>
+              Question {i + 1} · {r.isCorrect ? 'Correct' : 'Incorrect'}
+            </h3>
+            <QuestionContent>{r.question}</QuestionContent>
+            <p>Your answer: {r.selected ?? 'Unanswered'}</p>
+            <p>Correct answer: {r.correct}</p>
+            <p className="muted">{r.explanation}</p>
+          </section>
+        ))}
+      </section>
+    );
   const q = questions[current];
   if (!q) return <p>No questions are available.</p>;
   return (
@@ -172,8 +205,10 @@ export function ExamRunner({
         )}
       </form>
       <p className="muted" style={{ fontSize: 12, marginTop: 18 }}>
-        The timer keeps running if you leave this page. Answers are saved on this device. Your exam
-        submits automatically when time runs out.
+        {submitAction
+          ? 'Guest practice: answers and results are not saved. Reloading starts a new session.'
+          : 'The timer keeps running if you leave this page. Answers are saved on this device.'}{' '}
+        Your exam submits automatically when time runs out.
       </p>
     </>
   );

@@ -8,6 +8,7 @@ import { courseSessions, exams, examAttempts } from '@/db/schema';
 import { eq, asc, sql, and } from 'drizzle-orm';
 import { PageTitle, Progress, SessionRow, Badge, Pagination } from '@/components/ui';
 import { formatInTimeZone } from 'date-fns-tz';
+import { FinalControls } from '@/components/final-controls';
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const user = await requireUser();
   return { title: (await ownedCourse(user.id, (await params).id)).title };
@@ -59,7 +60,7 @@ export default async function CourseDetail({
   ]);
   const { total, completed } = counts[0];
   const percentage = total ? Math.round((completed / total) * 100) : 0;
-  const examScores = examList.flatMap((e) => (e.best === null ? [] : [e.best]));
+  const examScores = examList.flatMap((e) => (e.best === null || !e.exam.isFinal ? [] : [e.best]));
   const bestScore = examScores.length ? Math.max(...examScores) : null;
   return (
     <>
@@ -73,6 +74,7 @@ export default async function CourseDetail({
           </Link>
         }
       />
+      <FinalControls courseId={course.id} completed={total > 0 && completed === total} />
       <div className="detail-layout">
         <div>
           <section className="panel detail-panel">
@@ -132,7 +134,8 @@ export default async function CourseDetail({
                     <h4>{exam.title}</h4>
                     <span>
                       {exam.timeLimit} minutes · Pass at {exam.passingScore}% ·{' '}
-                      {exam.published ? 'Published' : 'Draft'}
+                      {exam.isFinal ? 'Course final' : 'Class questions'} ·{' '}
+                      {exam.isPublic ? 'Public' : 'Private'}
                     </span>
                   </div>
                   <Badge color={passed ? 'teal' : 'neutral'}>

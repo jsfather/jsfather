@@ -17,13 +17,19 @@ import { Plus, Save, Trash2, Lock, Globe } from 'lucide-react';
 export function Submit({
   children = 'Save changes',
   danger = false,
+  disabled = false,
 }: {
   children?: ReactNode;
   danger?: boolean;
+  disabled?: boolean;
 }) {
   const { pending } = useFormStatus();
   return (
-    <button disabled={pending} type="submit" className={`button ${danger ? 'danger' : 'primary'}`}>
+    <button
+      disabled={pending || disabled}
+      type="submit"
+      className={`button ${danger ? 'danger' : 'primary'}`}
+    >
       {pending ? 'Saving…' : children}
     </button>
   );

@@ -15,6 +15,20 @@
       "when": 1790769427003,
       "tag": "0001_giant_spencer_smythe",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791625635208,
+      "tag": "0002_striped_echo",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1791626181233,
+      "tag": "0003_curly_spencer_smythe",
+      "breakpoints": true
     }
   ]
 }

@@ -6,6 +6,7 @@ import { Feedback, Submit } from './forms';
 import type { ExamInput } from '@/lib/validation';
 const blank = (): ExamInput['questions'][number] => ({
   question: '',
+  difficulty: 'medium',
   type: 'multiple_choice',
   points: 1,
   explanation: '',
@@ -18,13 +19,18 @@ const blank = (): ExamInput['questions'][number] => ({
 });
 export function ExamBuilder({
   courseId,
+  sessionId,
+  sessions,
   examId = null,
   initial,
 }: {
   courseId: string;
+  sessionId: string;
+  sessions?: { id: string; title: string }[];
   examId?: string | null;
   initial?: ExamInput;
 }) {
+  const [selectedSession, setSelectedSession] = useState(sessionId);
   const [exam, setExam] = useState<ExamInput>(
     initial ?? {
       title: '',
@@ -35,7 +41,10 @@ export function ExamBuilder({
       questions: [blank()],
     },
   );
-  const [state, action] = useActionState(saveExam.bind(null, courseId, examId), {});
+  const [state, action] = useActionState(
+    saveExam.bind(null, courseId, examId, selectedSession),
+    {},
+  );
   const update = (index: number, q: Partial<ExamInput['questions'][number]>) =>
     setExam({
       ...exam,
@@ -52,6 +61,24 @@ export function ExamBuilder({
     <form action={action} className="form-panel">
       <input type="hidden" name="exam" value={JSON.stringify(exam)} />
       <Feedback state={state} />
+      {sessions && (
+        <label className="field">
+          <span>Class</span>
+          <select
+            required
+            value={selectedSession}
+            onChange={(e) => setSelectedSession(e.target.value)}
+          >
+            <option value="">Choose a class</option>
+            {sessions.map((s) => (
+              <option key={s.id} value={s.id}>
+                {s.title}
+              </option>
+            ))}
+          </select>
+          <small className="field-hint">Assign existing questions to the class they cover.</small>
+        </label>
+      )}
       <label className="field">
         <span>Exam title</span>
         <input
@@ -154,6 +181,17 @@ export function ExamBuilder({
             </small>
           </label>
           <div className="form-grid">
+            <label className="field">
+              <span>Difficulty</span>
+              <select
+                value={q.difficulty}
+                onChange={(e) => update(i, { difficulty: e.target.value as typeof q.difficulty })}
+              >
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+              </select>
+            </label>
             <label className="field">
               <span>Question type</span>
               <select
@@ -270,7 +308,8 @@ export function ExamBuilder({
           <span>
             <strong>Publish this exam</strong>
             <small>
-              Published exams can be taken. Questions lock when the first attempt begins.
+              Anyone with the public link can practice without signing in. Guest scores are never
+              saved.
             </small>
           </span>
         </div>

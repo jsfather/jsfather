@@ -14,7 +14,9 @@ A full-stack personal LMS for developers, built for **https://jsfather.ir**. Nex
 - Day, week, and month timetables linking to session details.
 - Exam authoring with multiple-choice/true-false questions, weighted points, question ordering, configurable pass threshold, drafts, publication, safe fenced-code highlighting, and long-form question content.
 - Timed attempts, previous/next navigation, device-local answer recovery, automatic submission, server-side scoring, immutable result reviews, and multiple attempts.
-- Transactionally issued achievement certificates after each passing attempt, with a printable certificate page. Browser printing can save a PDF; dedicated PDF generation is intentionally deferred.
+- Class question banks with easy, medium, and hard questions. When every class is completed and has questions, the first course final is generated automatically. Finals randomly balance class coverage and difficulty, target 30 questions with at least one per class, and use equal question weights. Additional finals can be generated from the course page.
+- Certificates are issued only for passing a course final while every class is completed (70% pass threshold). Class practice never awards a course certificate. Existing certificates remain intact.
+- Optional public exam links at `/practice/[id]` allow anonymous timed practice and result review. Guest attempts, answers, scores, and certificates are never written to the database or browser storage. A server-encrypted, authenticated assessment snapshot holds the answer key and deadline; disabling publication prevents guest submission.
 - Public profiles at `/u/username`, public courses, and independently controlled learning progress, exam scores, and certificate visibility.
 - Responsive navigation, dark/light themes, loading/error/empty states, validation feedback, metadata, robots, sitemap, and database health checks.
 
@@ -97,7 +99,7 @@ npm run db:studio      # Local database inspection; keep it off the public inter
 
 The initial migration is committed under `drizzle/`. Migration startup takes a PostgreSQL advisory lock, serializing multiple application replicas. Back up the database before deploying schema changes. Migrations run before the app starts; failed migrations prevent startup. For incompatible future changes, use an expand/migrate/contract rollout and keep the old app compatible during deployment.
 
-The optional seed creates a user, 25 scheduled Advanced JavaScript sessions, and a published final exam with two questions. Defaults to `keyvan@example.test`, which cannot authenticate through Google. For a usable development seed, set `SEED_EMAIL` to your Google address. Seeding an existing owner with courses changes nothing. The seed and integration scripts refuse `NODE_ENV=production`.
+The optional seed creates a user, 25 scheduled Advanced JavaScript sessions, and two practice questions attached to the first class. The practice bank is private until the owner enables its public link. Defaults to `keyvan@example.test`, which cannot authenticate through Google. For a usable development seed, set `SEED_EMAIL` to your Google address. Seeding an existing owner with courses changes nothing. The seed and integration scripts refuse `NODE_ENV=production`.
 
 Session status, notes, and completion time are the normalized session-progress record. A separate progress table is unnecessary for a single-owner course; percentages, completed courses, and aggregates are derived from sessions and attempts. Course `totalSessions` is the creation configuration; actual progress counts stored sessions. Attempt reviews and certificate names/titles are intentional immutable snapshots. Exams cannot be edited after any attempt starts, keeping timed attempts and grades consistent. Deleting an exam requires its exact title and removes its questions, attempts, and related certificates through database cascades.
 

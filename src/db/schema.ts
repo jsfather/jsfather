@@ -158,6 +158,9 @@ export const exams = pgTable(
     courseId: text('course_id')
       .notNull()
       .references(() => courses.id, { onDelete: 'cascade' }),
+    sessionId: text('session_id').references(() => courseSessions.id, { onDelete: 'cascade' }),
+    isFinal: boolean('is_final').default(false).notNull(),
+    isPublic: boolean('is_public').default(false).notNull(),
     title: text('title').notNull(),
     description: text('description').default('').notNull(),
     passingScore: integer('passing_score').default(70).notNull(),
@@ -178,6 +181,7 @@ export const examQuestions = pgTable(
       .notNull()
       .references(() => exams.id, { onDelete: 'cascade' }),
     question: text('question').notNull(),
+    difficulty: text('difficulty').$type<'easy' | 'medium' | 'hard'>().default('medium').notNull(),
     type: questionTypeEnum('type').notNull(),
     points: integer('points').default(1).notNull(),
     order: integer('order').notNull(),

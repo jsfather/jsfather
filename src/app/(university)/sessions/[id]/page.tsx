@@ -6,10 +6,14 @@ import { setSessionStatus } from '@/actions';
 import { PageTitle, Badge } from '@/components/ui';
 import { SessionForm } from '@/components/forms';
 import { formatInTimeZone } from 'date-fns-tz';
+import { db } from '@/db';
+import { exams } from '@/db/schema';
+import { eq } from 'drizzle-orm';
 export const metadata = { title: 'Study session' };
 export default async function SessionDetail({ params }: { params: Promise<{ id: string }> }) {
   const user = await requireUser();
   const { session, course } = await ownedSession(user.id, (await params).id);
+  const banks = await db.select().from(exams).where(eq(exams.sessionId, session.id));
   return (
     <>
       <Link className="text-link" href={'/courses/' + course.id} style={{ marginBottom: 22 }}>
@@ -55,6 +59,25 @@ export default async function SessionDetail({ params }: { params: Promise<{ id: 
         )}
       </div>
       <SessionForm session={session} timezone={course.timezone} />
+      <section className="panel" style={{ marginTop: 24 }}>
+        <div className="section-header">
+          <h2>Class question bank</h2>
+          <Link className="button primary" href={'/exams/new?session=' + session.id}>
+            Add questions
+          </Link>
+        </div>
+        <p className="muted">
+          Add easy, medium, and hard questions. Your final assessment draws from every class after
+          you complete the course.
+        </p>
+        {banks.map((bank) => (
+          <p key={bank.id} style={{ marginTop: 16 }}>
+            <Link className="text-link" href={'/exams/' + bank.id}>
+              {bank.title}
+            </Link>
+          </p>
+        ))}
+      </section>
     </>
   );
 }

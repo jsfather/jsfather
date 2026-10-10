@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { requireUser } from '@/lib/auth';
 import { ownedExam } from '@/lib/data';
 import { db } from '@/db';
-import { examQuestions, examOptions, examAttempts } from '@/db/schema';
+import { examQuestions, examOptions, examAttempts, courseSessions } from '@/db/schema';
 import { eq, asc, inArray } from 'drizzle-orm';
 import { PageTitle } from '@/components/ui';
 import { ExamBuilder } from '@/components/exam-builder';
@@ -10,6 +10,18 @@ export const metadata = { title: 'Edit exam' };
 export default async function EditExam({ params }: { params: Promise<{ id: string }> }) {
   const user = await requireUser();
   const { exam, course } = await ownedExam(user.id, (await params).id);
+  if (exam.isFinal)
+    return (
+      <PageTitle
+        title="This assessment is a fixed snapshot"
+        description="Edit the question bank on each class and generate another final."
+      />
+    );
+  const sessions = await db
+    .select({ id: courseSessions.id, title: courseSessions.title })
+    .from(courseSessions)
+    .where(eq(courseSessions.courseId, course.id))
+    .orderBy(asc(courseSessions.sessionNumber));
   const [attempt] = await db
     .select({ id: examAttempts.id })
     .from(examAttempts)
@@ -49,15 +61,18 @@ export default async function EditExam({ params }: { params: Promise<{ id: strin
       <PageTitle eyebrow={course.title.toUpperCase()} title="Edit exam" />
       <ExamBuilder
         courseId={course.id}
+        sessionId={exam.sessionId ?? ''}
+        sessions={sessions}
         examId={exam.id}
         initial={{
           title: exam.title,
           description: exam.description,
           passingScore: exam.passingScore,
           timeLimit: exam.timeLimit,
-          published: exam.published,
+          published: exam.isPublic,
           questions: questions.map((q) => ({
             question: q.question,
+            difficulty: q.difficulty,
             type: q.type,
             points: q.points,
             explanation: q.explanation,

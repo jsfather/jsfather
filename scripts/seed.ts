@@ -56,20 +56,24 @@ async function main() {
         duration: 60,
         isPublic: false,
       });
-      await tx.insert(schema.courseSessions).values(
-        generateSchedule(input).map((date, i) => ({
-          courseId,
-          title: `Session ${i + 1}`,
-          sessionNumber: i + 1,
-          scheduledDate: date,
-          duration: 60,
-        })),
-      );
+      const seededSessions = await tx
+        .insert(schema.courseSessions)
+        .values(
+          generateSchedule(input).map((date, i) => ({
+            courseId,
+            title: `Session ${i + 1}`,
+            sessionNumber: i + 1,
+            scheduledDate: date,
+            duration: 60,
+          })),
+        )
+        .returning({ id: schema.courseSessions.id });
       const examId = crypto.randomUUID();
       await tx.insert(schema.exams).values({
         id: examId,
         courseId,
-        title: 'Advanced JavaScript Final Exam',
+        sessionId: seededSessions[0].id,
+        title: 'JavaScript · Class 1 questions',
         description: 'A checkpoint for your JavaScript foundations.',
         passingScore: 70,
         timeLimit: 30,

@@ -60,14 +60,18 @@ export default async function Exams({
                   {title} · {exam.timeLimit} minutes · Pass at {exam.passingScore}%
                 </p>
               </div>
-              <Badge color={passed ? 'teal' : exam.published ? 'blue' : 'neutral'}>
+              <Badge color={passed ? 'teal' : exam.isPublic ? 'blue' : 'neutral'}>
                 {passed
                   ? `Passed · ${best}%`
                   : best !== null
                     ? `Best: ${best}%`
-                    : exam.published
-                      ? 'Ready to take'
-                      : 'Draft'}
+                    : exam.isFinal
+                      ? 'Final assessment'
+                      : exam.sessionId === null
+                        ? 'Assign to a class'
+                        : exam.isPublic
+                          ? 'Public practice'
+                          : 'Class questions'}
               </Badge>
               <Link href={'/exams/' + exam.id} className="button secondary">
                 Open exam
