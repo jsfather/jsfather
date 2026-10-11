@@ -107,7 +107,7 @@ export async function courseSummaries(
               eq(courses.ownerId, userId),
               sql`${courses.kind} = 'vocabulary' and exists (select 1 from vocabulary_members m where m.course_id = courses.id and m.user_id = ${userId})`,
             ),
-        onlyPublic ? and(eq(courses.isPublic, true), eq(courses.kind, 'standard')) : undefined,
+        onlyPublic ? eq(courses.isPublic, true) : undefined,
         activeOnly ? eq(courses.status, 'active') : undefined,
       ),
     )
@@ -234,7 +234,7 @@ export async function publicCourse(username: string, slug: string) {
   let p: null | { total: number; completed: number; percentage: number } = null;
   let bestScore: number | null = null;
   let certificateId: string | null = null;
-  if (canSeeProgress(user)) {
+  if (course.kind === 'standard' && canSeeProgress(user)) {
     const [counts] = await db
       .select({
         total: sql<number>`count(*)::int`,
@@ -270,6 +270,9 @@ export async function publicCourse(username: string, slug: string) {
   return {
     user,
     course: {
+      id: course.id,
+      kind: course.kind,
+      status: course.status,
       title: course.title,
       description: course.description,
       category: course.category,

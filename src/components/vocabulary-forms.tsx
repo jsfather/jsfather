@@ -87,6 +87,14 @@ export function VocabularyCourseForm({ course, timezone }: { course?: Course; ti
       </div>
       {course && (
         <label className="field">
+          <span>
+            <input type="checkbox" name="isPublic" defaultChecked={course.isPublic} /> Public course
+            — anyone can sign in and join
+          </span>
+        </label>
+      )}
+      {course && (
+        <label className="field">
           <span>Course status</span>
           <select name="status" defaultValue={course.status}>
             <option value="active">Active</option>
@@ -149,6 +157,17 @@ export function VocabularyWordForm({
           maxLength={5000}
           rows={3}
           defaultValue={word?.explanation}
+        />
+      </label>
+      <label className="field">
+        <span>معنی فارسی</span>
+        <textarea
+          name="persianMeaning"
+          dir="rtl"
+          lang="fa"
+          maxLength={2000}
+          rows={2}
+          defaultValue={word?.persianMeaning ?? ''}
         />
       </label>
       <label className="field">
@@ -252,6 +271,11 @@ export function VocabularyReviewCard({
         <>
           <div className="vocabulary-answer">
             <h3 dir="auto">{direction === 'word' ? word.explanation : word.word}</h3>
+            {word.persianMeaning && word.persianMeaning !== word.explanation && (
+              <p dir="rtl" lang="fa">
+                {word.persianMeaning}
+              </p>
+            )}
             {word.example && <p dir="auto">{word.example}</p>}
           </div>
           <p className="muted">Did you recall the answer before revealing it?</p>

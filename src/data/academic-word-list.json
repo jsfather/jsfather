@@ -1,0 +1,4921 @@
+[
+  {
+    "word": "analyse",
+    "sublist": 1,
+    "relatedForms": [
+      "analysed",
+      "analyser",
+      "analysers",
+      "analyses",
+      "analysing",
+      "analysis",
+      "analyst",
+      "analysts",
+      "analytic",
+      "analytical",
+      "analytically",
+      "analyze",
+      "analyzed",
+      "analyzes",
+      "analyzing"
+    ],
+    "persianMeaning": "تحلیل کردن"
+  },
+  {
+    "word": "approach",
+    "sublist": 1,
+    "relatedForms": ["approachable", "approached", "approaches", "approaching", "unapproachable"],
+    "persianMeaning": "رویکرد؛ نزدیک شدن"
+  },
+  {
+    "word": "area",
+    "sublist": 1,
+    "relatedForms": ["areas"],
+    "persianMeaning": "ناحیه؛ حوزه"
+  },
+  {
+    "word": "assess",
+    "sublist": 1,
+    "relatedForms": [
+      "assessable",
+      "assessed",
+      "assesses",
+      "assessing",
+      "assessment",
+      "assessments",
+      "reassess",
+      "reassessed",
+      "reassessing",
+      "reassessment",
+      "unassessed"
+    ],
+    "persianMeaning": "ارزیابی کردن"
+  },
+  {
+    "word": "assume",
+    "sublist": 1,
+    "relatedForms": ["assumed", "assumes", "assuming", "assumption", "assumptions"],
+    "persianMeaning": "فرض کردن"
+  },
+  {
+    "word": "authority",
+    "sublist": 1,
+    "relatedForms": ["authoritative", "authorities"],
+    "persianMeaning": "اختیار؛ مرجع"
+  },
+  {
+    "word": "available",
+    "sublist": 1,
+    "relatedForms": ["availability", "unavailable"],
+    "persianMeaning": "در دسترس"
+  },
+  {
+    "word": "benefit",
+    "sublist": 1,
+    "relatedForms": [
+      "beneficial",
+      "beneficiaries",
+      "beneficiary",
+      "benefited",
+      "benefiting",
+      "benefits"
+    ],
+    "persianMeaning": "فایده؛ سود بردن"
+  },
+  {
+    "word": "concept",
+    "sublist": 1,
+    "relatedForms": [
+      "conception",
+      "concepts",
+      "conceptual",
+      "conceptualisation",
+      "conceptualise",
+      "conceptualised",
+      "conceptualises",
+      "conceptualising",
+      "conceptually"
+    ],
+    "persianMeaning": "مفهوم"
+  },
+  {
+    "word": "consist",
+    "sublist": 1,
+    "relatedForms": [
+      "consisted",
+      "consistency",
+      "consistent",
+      "consistently",
+      "consisting",
+      "consists",
+      "inconsistencies",
+      "inconsistency",
+      "inconsistent"
+    ],
+    "persianMeaning": "تشکیل شدن"
+  },
+  {
+    "word": "constitute",
+    "sublist": 1,
+    "relatedForms": [
+      "constituencies",
+      "constituency",
+      "constituent",
+      "constituents",
+      "constituted",
+      "constitutes",
+      "constituting",
+      "constitution",
+      "constitutional",
+      "constitutionally",
+      "constitutions",
+      "constitutive",
+      "unconstitutional"
+    ],
+    "persianMeaning": "تشکیل دادن"
+  },
+  {
+    "word": "context",
+    "sublist": 1,
+    "relatedForms": [
+      "contexts",
+      "contextual",
+      "contextualise",
+      "contextualised",
+      "contextualising",
+      "contextualize",
+      "contextualized",
+      "contextualizing",
+      "uncontextualised",
+      "uncontextualized"
+    ],
+    "persianMeaning": "بافت؛ زمینه"
+  },
+  {
+    "word": "contract",
+    "sublist": 1,
+    "relatedForms": ["contracted", "contracting", "contractor", "contractors", "contracts"],
+    "persianMeaning": "قرارداد؛ منقبض شدن"
+  },
+  {
+    "word": "create",
+    "sublist": 1,
+    "relatedForms": [
+      "created",
+      "creates",
+      "creating",
+      "creation",
+      "creations",
+      "creative",
+      "creatively",
+      "creativity",
+      "creator",
+      "creators",
+      "recreate",
+      "recreated",
+      "recreates",
+      "recreating"
+    ],
+    "persianMeaning": "ایجاد کردن"
+  },
+  {
+    "word": "data",
+    "sublist": 1,
+    "relatedForms": [],
+    "persianMeaning": "داده‌ها"
+  },
+  {
+    "word": "define",
+    "sublist": 1,
+    "relatedForms": [
+      "definable",
+      "defined",
+      "defines",
+      "defining",
+      "definition",
+      "definitions",
+      "redefine",
+      "redefined",
+      "redefines",
+      "redefining",
+      "undefined"
+    ],
+    "persianMeaning": "تعریف کردن"
+  },
+  {
+    "word": "derive",
+    "sublist": 1,
+    "relatedForms": [
+      "derivation",
+      "derivations",
+      "derivative",
+      "derivatives",
+      "derived",
+      "derives",
+      "deriving"
+    ],
+    "persianMeaning": "استخراج کردن؛ ناشی شدن"
+  },
+  {
+    "word": "distribute",
+    "sublist": 1,
+    "relatedForms": [
+      "distributed",
+      "distributing",
+      "distribution",
+      "distributional",
+      "distributions",
+      "distributive",
+      "distributor",
+      "distributors",
+      "redistribute",
+      "redistributed",
+      "redistributes",
+      "redistributing",
+      "redistribution"
+    ],
+    "persianMeaning": "توزیع کردن"
+  },
+  {
+    "word": "economy",
+    "sublist": 1,
+    "relatedForms": [
+      "economic",
+      "economical",
+      "economically",
+      "economics",
+      "economies",
+      "economist",
+      "economists",
+      "uneconomical"
+    ],
+    "persianMeaning": "اقتصاد"
+  },
+  {
+    "word": "environment",
+    "sublist": 1,
+    "relatedForms": [
+      "environmental",
+      "environmentalist",
+      "environmentalists",
+      "environmentally",
+      "environments"
+    ],
+    "persianMeaning": "محیط"
+  },
+  {
+    "word": "establish",
+    "sublist": 1,
+    "relatedForms": [
+      "disestablish",
+      "disestablished",
+      "disestablishes",
+      "disestablishing",
+      "disestablishment",
+      "established",
+      "establishes",
+      "establishing",
+      "establishment",
+      "establishments"
+    ],
+    "persianMeaning": "تأسیس کردن؛ برقرار کردن"
+  },
+  {
+    "word": "estimate",
+    "sublist": 1,
+    "relatedForms": [
+      "estimated",
+      "estimates",
+      "estimating",
+      "estimation",
+      "estimations",
+      "over-estimate",
+      "overestimate",
+      "overestimated",
+      "overestimates",
+      "overestimating",
+      "underestimate",
+      "underestimated",
+      "underestimates",
+      "underestimating"
+    ],
+    "persianMeaning": "برآورد کردن"
+  },
+  {
+    "word": "evident",
+    "sublist": 1,
+    "relatedForms": ["evidence", "evidenced", "evidential", "evidently"],
+    "persianMeaning": "آشکار"
+  },
+  {
+    "word": "export",
+    "sublist": 1,
+    "relatedForms": ["exported", "exporter", "exporters", "exporting", "exports"],
+    "persianMeaning": "صادر کردن؛ صادرات"
+  },
+  {
+    "word": "factor",
+    "sublist": 1,
+    "relatedForms": ["factored", "factoring", "factors"],
+    "persianMeaning": "عامل"
+  },
+  {
+    "word": "finance",
+    "sublist": 1,
+    "relatedForms": [
+      "financed",
+      "finances",
+      "financial",
+      "financially",
+      "financier",
+      "financiers",
+      "financing"
+    ],
+    "persianMeaning": "امور مالی؛ تأمین مالی کردن"
+  },
+  {
+    "word": "formula",
+    "sublist": 1,
+    "relatedForms": [
+      "formulae",
+      "formulas",
+      "formulate",
+      "formulated",
+      "formulating",
+      "formulation",
+      "formulations",
+      "reformulate",
+      "reformulated",
+      "reformulating",
+      "reformulation",
+      "reformulations"
+    ],
+    "persianMeaning": "فرمول"
+  },
+  {
+    "word": "function",
+    "sublist": 1,
+    "relatedForms": ["functional", "functionally", "functioned", "functioning", "functions"],
+    "persianMeaning": "کارکرد؛ عمل کردن"
+  },
+  {
+    "word": "identify",
+    "sublist": 1,
+    "relatedForms": [
+      "identifiable",
+      "identification",
+      "identified",
+      "identifies",
+      "identifying",
+      "identities",
+      "identity",
+      "unidentifiable"
+    ],
+    "persianMeaning": "شناسایی کردن"
+  },
+  {
+    "word": "income",
+    "sublist": 1,
+    "relatedForms": ["incomes"],
+    "persianMeaning": "درآمد"
+  },
+  {
+    "word": "indicate",
+    "sublist": 1,
+    "relatedForms": [
+      "indicated",
+      "indicates",
+      "indicating",
+      "indication",
+      "indications",
+      "indicative",
+      "indicator",
+      "indicators"
+    ],
+    "persianMeaning": "نشان دادن"
+  },
+  {
+    "word": "individual",
+    "sublist": 1,
+    "relatedForms": [
+      "individualised",
+      "individualism",
+      "individualist",
+      "individualistic",
+      "individualists",
+      "individuality",
+      "individually",
+      "individuals"
+    ],
+    "persianMeaning": "فرد؛ فردی"
+  },
+  {
+    "word": "interpret",
+    "sublist": 1,
+    "relatedForms": [
+      "interpretation",
+      "interpretations",
+      "interpretative",
+      "interpreted",
+      "interpreting",
+      "interpretive",
+      "interprets",
+      "misinterpret",
+      "misinterpretation",
+      "misinterpretations",
+      "misinterpreted",
+      "misinterpreting",
+      "misinterprets",
+      "reinterpret",
+      "reinterpretation",
+      "reinterpretations",
+      "reinterpreted",
+      "reinterpreting",
+      "reinterprets"
+    ],
+    "persianMeaning": "تفسیر کردن"
+  },
+  {
+    "word": "involve",
+    "sublist": 1,
+    "relatedForms": ["involved", "involvement", "involves", "involving", "uninvolved"],
+    "persianMeaning": "درگیر کردن؛ شامل بودن"
+  },
+  {
+    "word": "issue",
+    "sublist": 1,
+    "relatedForms": ["issued", "issues", "issuing"],
+    "persianMeaning": "موضوع؛ منتشر کردن"
+  },
+  {
+    "word": "labour",
+    "sublist": 1,
+    "relatedForms": ["labor", "labored", "labors", "laboured", "labouring", "labours"],
+    "persianMeaning": "کار؛ نیروی کار"
+  },
+  {
+    "word": "legal",
+    "sublist": 1,
+    "relatedForms": ["illegal", "illegality", "illegally", "legality", "legally"],
+    "persianMeaning": "قانونی"
+  },
+  {
+    "word": "legislate",
+    "sublist": 1,
+    "relatedForms": [
+      "legislated",
+      "legislates",
+      "legislating",
+      "legislation",
+      "legislative",
+      "legislator",
+      "legislators",
+      "legislature"
+    ],
+    "persianMeaning": "قانون‌گذاری کردن"
+  },
+  {
+    "word": "major",
+    "sublist": 1,
+    "relatedForms": ["majorities", "majority"],
+    "persianMeaning": "عمده؛ رشتهٔ تحصیلی"
+  },
+  {
+    "word": "method",
+    "sublist": 1,
+    "relatedForms": ["methodical", "methodological", "methodologies", "methodology", "methods"],
+    "persianMeaning": "روش"
+  },
+  {
+    "word": "occur",
+    "sublist": 1,
+    "relatedForms": [
+      "occurred",
+      "occurrence",
+      "occurrences",
+      "occurring",
+      "occurs",
+      "reoccur",
+      "reoccurred",
+      "reoccurring",
+      "reoccurs"
+    ],
+    "persianMeaning": "رخ دادن"
+  },
+  {
+    "word": "percent",
+    "sublist": 1,
+    "relatedForms": ["percentage", "percentages"],
+    "persianMeaning": "درصد"
+  },
+  {
+    "word": "period",
+    "sublist": 1,
+    "relatedForms": ["periodic", "periodical", "periodically", "periodicals", "periods"],
+    "persianMeaning": "دوره؛ بازهٔ زمانی"
+  },
+  {
+    "word": "policy",
+    "sublist": 1,
+    "relatedForms": ["policies"],
+    "persianMeaning": "سیاست؛ خط‌مشی"
+  },
+  {
+    "word": "principle",
+    "sublist": 1,
+    "relatedForms": ["principled", "principles", "unprincipled"],
+    "persianMeaning": "اصل"
+  },
+  {
+    "word": "proceed",
+    "sublist": 1,
+    "relatedForms": [
+      "procedural",
+      "procedure",
+      "procedures",
+      "proceeded",
+      "proceeding",
+      "proceedings",
+      "proceeds"
+    ],
+    "persianMeaning": "ادامه دادن؛ پیش رفتن"
+  },
+  {
+    "word": "process",
+    "sublist": 1,
+    "relatedForms": ["processed", "processes", "processing"],
+    "persianMeaning": "فرایند؛ پردازش کردن"
+  },
+  {
+    "word": "require",
+    "sublist": 1,
+    "relatedForms": ["required", "requirement", "requirements", "requires", "requiring"],
+    "persianMeaning": "نیاز داشتن"
+  },
+  {
+    "word": "research",
+    "sublist": 1,
+    "relatedForms": ["researched", "researcher", "researchers", "researches", "researching"],
+    "persianMeaning": "پژوهش؛ تحقیق کردن"
+  },
+  {
+    "word": "respond",
+    "sublist": 1,
+    "relatedForms": [
+      "responded",
+      "respondent",
+      "respondents",
+      "responding",
+      "responds",
+      "response",
+      "responses",
+      "responsive",
+      "responsiveness",
+      "unresponsive"
+    ],
+    "persianMeaning": "پاسخ دادن"
+  },
+  {
+    "word": "role",
+    "sublist": 1,
+    "relatedForms": ["roles"],
+    "persianMeaning": "نقش"
+  },
+  {
+    "word": "section",
+    "sublist": 1,
+    "relatedForms": ["sectioned", "sectioning", "sections"],
+    "persianMeaning": "بخش"
+  },
+  {
+    "word": "sector",
+    "sublist": 1,
+    "relatedForms": ["sectors"],
+    "persianMeaning": "حوزه؛ بخش"
+  },
+  {
+    "word": "significant",
+    "sublist": 1,
+    "relatedForms": [
+      "insignificant",
+      "insignificantly",
+      "significance",
+      "significantly",
+      "signified",
+      "signifies",
+      "signify",
+      "signifying"
+    ],
+    "persianMeaning": "مهم؛ معنادار"
+  },
+  {
+    "word": "similar",
+    "sublist": 1,
+    "relatedForms": ["dissimilar", "similarities", "similarity", "similarly"],
+    "persianMeaning": "مشابه"
+  },
+  {
+    "word": "source",
+    "sublist": 1,
+    "relatedForms": ["sourced", "sources", "sourcing"],
+    "persianMeaning": "منبع"
+  },
+  {
+    "word": "specific",
+    "sublist": 1,
+    "relatedForms": ["specifically", "specification", "specifications", "specificity", "specifics"],
+    "persianMeaning": "مشخص؛ خاص"
+  },
+  {
+    "word": "structure",
+    "sublist": 1,
+    "relatedForms": [
+      "restructure",
+      "restructured",
+      "restructures",
+      "restructuring",
+      "structural",
+      "structurally",
+      "structured",
+      "structures",
+      "structuring",
+      "unstructured"
+    ],
+    "persianMeaning": "ساختار"
+  },
+  {
+    "word": "theory",
+    "sublist": 1,
+    "relatedForms": ["theoretical", "theoretically", "theories", "theorist", "theorists"],
+    "persianMeaning": "نظریه"
+  },
+  {
+    "word": "vary",
+    "sublist": 1,
+    "relatedForms": [
+      "invariable",
+      "invariably",
+      "variability",
+      "variable",
+      "variables",
+      "variably",
+      "variance",
+      "variant",
+      "variants",
+      "variation",
+      "variations",
+      "varied",
+      "varies",
+      "varying"
+    ],
+    "persianMeaning": "تغییر کردن؛ متفاوت بودن"
+  },
+  {
+    "word": "achieve",
+    "sublist": 2,
+    "relatedForms": [
+      "achievable",
+      "achieved",
+      "achievement",
+      "achievements",
+      "achieves",
+      "achieving"
+    ],
+    "persianMeaning": "دست یافتن"
+  },
+  {
+    "word": "acquire",
+    "sublist": 2,
+    "relatedForms": ["acquired", "acquires", "acquiring", "acquisition", "acquisitions"],
+    "persianMeaning": "به دست آوردن"
+  },
+  {
+    "word": "administrate",
+    "sublist": 2,
+    "relatedForms": [
+      "administrates",
+      "administration",
+      "administrations",
+      "administrative",
+      "administratively",
+      "administrator",
+      "administrators"
+    ],
+    "persianMeaning": "اداره کردن"
+  },
+  {
+    "word": "affect",
+    "sublist": 2,
+    "relatedForms": ["affected", "affecting", "affective", "affectively", "affects", "unaffected"],
+    "persianMeaning": "تأثیر گذاشتن"
+  },
+  {
+    "word": "appropriate",
+    "sublist": 2,
+    "relatedForms": [
+      "appropriacy",
+      "appropriately",
+      "appropriateness",
+      "inappropriacy",
+      "inappropriate",
+      "inappropriately"
+    ],
+    "persianMeaning": "مناسب؛ اختصاص دادن"
+  },
+  {
+    "word": "aspect",
+    "sublist": 2,
+    "relatedForms": ["aspects"],
+    "persianMeaning": "جنبه"
+  },
+  {
+    "word": "assist",
+    "sublist": 2,
+    "relatedForms": [
+      "assistance",
+      "assistant",
+      "assistants",
+      "assisted",
+      "assisting",
+      "assists",
+      "unassisted"
+    ],
+    "persianMeaning": "کمک کردن"
+  },
+  {
+    "word": "category",
+    "sublist": 2,
+    "relatedForms": [
+      "categories",
+      "categorisation",
+      "categorise",
+      "categorised",
+      "categorises",
+      "categorising",
+      "categorization",
+      "categorized",
+      "categorizes",
+      "categorizing"
+    ],
+    "persianMeaning": "دسته؛ طبقه"
+  },
+  {
+    "word": "chapter",
+    "sublist": 2,
+    "relatedForms": ["chapters"],
+    "persianMeaning": "فصلِ کتاب"
+  },
+  {
+    "word": "commission",
+    "sublist": 2,
+    "relatedForms": [
+      "commissioned",
+      "commissioner",
+      "commissioners",
+      "commissioning",
+      "commissions"
+    ],
+    "persianMeaning": "کمیسیون؛ مأموریت دادن"
+  },
+  {
+    "word": "community",
+    "sublist": 2,
+    "relatedForms": ["communities"],
+    "persianMeaning": "جامعه"
+  },
+  {
+    "word": "complex",
+    "sublist": 2,
+    "relatedForms": ["complexities", "complexity"],
+    "persianMeaning": "پیچیده؛ مجموعه"
+  },
+  {
+    "word": "compute",
+    "sublist": 2,
+    "relatedForms": [
+      "computable",
+      "computation",
+      "computational",
+      "computations",
+      "computed",
+      "computer",
+      "computerised",
+      "computers",
+      "computing"
+    ],
+    "persianMeaning": "محاسبه کردن"
+  },
+  {
+    "word": "conclude",
+    "sublist": 2,
+    "relatedForms": [
+      "concluded",
+      "concludes",
+      "concluding",
+      "conclusion",
+      "conclusions",
+      "conclusive",
+      "conclusively",
+      "inconclusive",
+      "inconclusively"
+    ],
+    "persianMeaning": "نتیجه‌گیری کردن"
+  },
+  {
+    "word": "conduct",
+    "sublist": 2,
+    "relatedForms": ["conducted", "conducting", "conducts"],
+    "persianMeaning": "انجام دادن؛ رفتار"
+  },
+  {
+    "word": "consequent",
+    "sublist": 2,
+    "relatedForms": ["consequence", "consequences", "consequently"],
+    "persianMeaning": "ناشی از؛ پیامدی"
+  },
+  {
+    "word": "construct",
+    "sublist": 2,
+    "relatedForms": [
+      "constructed",
+      "constructing",
+      "construction",
+      "constructions",
+      "constructive",
+      "constructs",
+      "reconstruct",
+      "reconstructed",
+      "reconstructing",
+      "reconstruction",
+      "reconstructs"
+    ],
+    "persianMeaning": "ساختن"
+  },
+  {
+    "word": "consume",
+    "sublist": 2,
+    "relatedForms": ["consumed", "consumer", "consumers", "consumes", "consuming", "consumption"],
+    "persianMeaning": "مصرف کردن"
+  },
+  {
+    "word": "credit",
+    "sublist": 2,
+    "relatedForms": ["credited", "crediting", "creditor", "creditors", "credits"],
+    "persianMeaning": "اعتبار"
+  },
+  {
+    "word": "culture",
+    "sublist": 2,
+    "relatedForms": ["cultural", "culturally", "cultured", "cultures", "uncultured"],
+    "persianMeaning": "فرهنگ"
+  },
+  {
+    "word": "design",
+    "sublist": 2,
+    "relatedForms": ["designed", "designer", "designers", "designing", "designs"],
+    "persianMeaning": "طراحی کردن؛ طرح"
+  },
+  {
+    "word": "distinct",
+    "sublist": 2,
+    "relatedForms": [
+      "distinction",
+      "distinctions",
+      "distinctive",
+      "distinctively",
+      "distinctly",
+      "indistinct",
+      "indistinctly"
+    ],
+    "persianMeaning": "متمایز"
+  },
+  {
+    "word": "element",
+    "sublist": 2,
+    "relatedForms": ["elements"],
+    "persianMeaning": "عنصر"
+  },
+  {
+    "word": "equate",
+    "sublist": 2,
+    "relatedForms": ["equated", "equates", "equating", "equation", "equations"],
+    "persianMeaning": "برابر دانستن"
+  },
+  {
+    "word": "evaluate",
+    "sublist": 2,
+    "relatedForms": [
+      "evaluated",
+      "evaluates",
+      "evaluating",
+      "evaluation",
+      "evaluations",
+      "evaluative",
+      "re-evaluate",
+      "re-evaluated",
+      "re-evaluates",
+      "re-evaluating",
+      "re-evaluation"
+    ],
+    "persianMeaning": "ارزیابی کردن"
+  },
+  {
+    "word": "feature",
+    "sublist": 2,
+    "relatedForms": ["featured", "features", "featuring"],
+    "persianMeaning": "ویژگی"
+  },
+  {
+    "word": "final",
+    "sublist": 2,
+    "relatedForms": [
+      "finalise",
+      "finalised",
+      "finalises",
+      "finalising",
+      "finality",
+      "finalize",
+      "finalized",
+      "finalizes",
+      "finalizing",
+      "finally",
+      "finals"
+    ],
+    "persianMeaning": "نهایی"
+  },
+  {
+    "word": "focus",
+    "sublist": 2,
+    "relatedForms": [
+      "focused",
+      "focuses",
+      "focusing",
+      "focussed",
+      "focussing",
+      "refocus",
+      "refocused",
+      "refocuses",
+      "refocusing",
+      "refocussed",
+      "refocusses",
+      "refocussing"
+    ],
+    "persianMeaning": "تمرکز کردن؛ کانون"
+  },
+  {
+    "word": "impact",
+    "sublist": 2,
+    "relatedForms": ["impacted", "impacting", "impacts"],
+    "persianMeaning": "تأثیر؛ برخورد"
+  },
+  {
+    "word": "injure",
+    "sublist": 2,
+    "relatedForms": ["injured", "injures", "injuries", "injuring", "injury", "uninjured"],
+    "persianMeaning": "آسیب رساندن"
+  },
+  {
+    "word": "institute",
+    "sublist": 2,
+    "relatedForms": [
+      "instituted",
+      "institutes",
+      "instituting",
+      "institution",
+      "institutional",
+      "institutionalise",
+      "institutionalised",
+      "institutionalises",
+      "institutionalising",
+      "institutionalized",
+      "institutionalizes",
+      "institutionalizing",
+      "institutionally",
+      "institutions"
+    ],
+    "persianMeaning": "مؤسسه؛ ایجاد کردن"
+  },
+  {
+    "word": "invest",
+    "sublist": 2,
+    "relatedForms": [
+      "invested",
+      "investing",
+      "investment",
+      "investments",
+      "investor",
+      "investors",
+      "invests",
+      "reinvest",
+      "reinvested",
+      "reinvesting",
+      "reinvestment",
+      "reinvests"
+    ],
+    "persianMeaning": "سرمایه‌گذاری کردن"
+  },
+  {
+    "word": "item",
+    "sublist": 2,
+    "relatedForms": ["itemisation", "itemise", "itemised", "itemises", "itemising", "items"],
+    "persianMeaning": "مورد؛ قلم"
+  },
+  {
+    "word": "journal",
+    "sublist": 2,
+    "relatedForms": ["journals"],
+    "persianMeaning": "نشریه؛ دفتر روزانه"
+  },
+  {
+    "word": "maintain",
+    "sublist": 2,
+    "relatedForms": ["maintained", "maintaining", "maintains", "maintenance"],
+    "persianMeaning": "حفظ کردن؛ نگهداری کردن"
+  },
+  {
+    "word": "normal",
+    "sublist": 2,
+    "relatedForms": [
+      "abnormal",
+      "abnormally",
+      "normalisation",
+      "normalise",
+      "normalised",
+      "normalises",
+      "normalising",
+      "normality",
+      "normalization",
+      "normalize",
+      "normalized",
+      "normalizes",
+      "normalizing",
+      "normally"
+    ],
+    "persianMeaning": "عادی"
+  },
+  {
+    "word": "obtain",
+    "sublist": 2,
+    "relatedForms": ["obtainable", "obtained", "obtaining", "obtains", "unobtainable"],
+    "persianMeaning": "به دست آوردن"
+  },
+  {
+    "word": "participate",
+    "sublist": 2,
+    "relatedForms": [
+      "participant",
+      "participants",
+      "participated",
+      "participates",
+      "participating",
+      "participation",
+      "participatory"
+    ],
+    "persianMeaning": "شرکت کردن"
+  },
+  {
+    "word": "perceive",
+    "sublist": 2,
+    "relatedForms": ["perceived", "perceives", "perceiving", "perception", "perceptions"],
+    "persianMeaning": "درک کردن"
+  },
+  {
+    "word": "positive",
+    "sublist": 2,
+    "relatedForms": ["positively"],
+    "persianMeaning": "مثبت"
+  },
+  {
+    "word": "potential",
+    "sublist": 2,
+    "relatedForms": ["potentially"],
+    "persianMeaning": "بالقوه؛ ظرفیت"
+  },
+  {
+    "word": "previous",
+    "sublist": 2,
+    "relatedForms": ["previously"],
+    "persianMeaning": "قبلی"
+  },
+  {
+    "word": "primary",
+    "sublist": 2,
+    "relatedForms": ["primarily"],
+    "persianMeaning": "اصلی؛ اولیه"
+  },
+  {
+    "word": "purchase",
+    "sublist": 2,
+    "relatedForms": ["purchased", "purchaser", "purchasers", "purchases", "purchasing"],
+    "persianMeaning": "خریدن"
+  },
+  {
+    "word": "range",
+    "sublist": 2,
+    "relatedForms": ["ranged", "ranges", "ranging"],
+    "persianMeaning": "دامنه؛ گستره"
+  },
+  {
+    "word": "region",
+    "sublist": 2,
+    "relatedForms": ["regional", "regionally", "regions"],
+    "persianMeaning": "منطقه"
+  },
+  {
+    "word": "regulate",
+    "sublist": 2,
+    "relatedForms": [
+      "deregulated",
+      "deregulates",
+      "deregulating",
+      "deregulation",
+      "regulated",
+      "regulates",
+      "regulating",
+      "regulation",
+      "regulations",
+      "regulator",
+      "regulators",
+      "regulatory",
+      "unregulated"
+    ],
+    "persianMeaning": "تنظیم کردن؛ قانون‌مند کردن"
+  },
+  {
+    "word": "relevant",
+    "sublist": 2,
+    "relatedForms": ["irrelevance", "irrelevant", "relevance"],
+    "persianMeaning": "مرتبط"
+  },
+  {
+    "word": "reside",
+    "sublist": 2,
+    "relatedForms": [
+      "resided",
+      "residence",
+      "resident",
+      "residential",
+      "residents",
+      "resides",
+      "residing"
+    ],
+    "persianMeaning": "اقامت داشتن"
+  },
+  {
+    "word": "resource",
+    "sublist": 2,
+    "relatedForms": [
+      "resourced",
+      "resourceful",
+      "resources",
+      "resourcing",
+      "under-resourced",
+      "unresourceful"
+    ],
+    "persianMeaning": "منبع"
+  },
+  {
+    "word": "restrict",
+    "sublist": 2,
+    "relatedForms": [
+      "restricted",
+      "restricting",
+      "restriction",
+      "restrictions",
+      "restrictive",
+      "restrictively",
+      "restricts",
+      "unrestricted",
+      "unrestrictive"
+    ],
+    "persianMeaning": "محدود کردن"
+  },
+  {
+    "word": "secure",
+    "sublist": 2,
+    "relatedForms": [
+      "insecure",
+      "insecurities",
+      "insecurity",
+      "secured",
+      "securely",
+      "secures",
+      "securing",
+      "securities",
+      "security"
+    ],
+    "persianMeaning": "امن؛ تأمین کردن"
+  },
+  {
+    "word": "seek",
+    "sublist": 2,
+    "relatedForms": ["seeking", "seeks", "sought"],
+    "persianMeaning": "جست‌وجو کردن"
+  },
+  {
+    "word": "select",
+    "sublist": 2,
+    "relatedForms": [
+      "selected",
+      "selecting",
+      "selection",
+      "selections",
+      "selective",
+      "selectively",
+      "selector",
+      "selectors",
+      "selects"
+    ],
+    "persianMeaning": "انتخاب کردن"
+  },
+  {
+    "word": "site",
+    "sublist": 2,
+    "relatedForms": ["sites"],
+    "persianMeaning": "محل؛ وب‌سایت"
+  },
+  {
+    "word": "strategy",
+    "sublist": 2,
+    "relatedForms": ["strategic", "strategically", "strategies", "strategist", "strategists"],
+    "persianMeaning": "راهبرد"
+  },
+  {
+    "word": "survey",
+    "sublist": 2,
+    "relatedForms": ["surveyed", "surveying", "surveys"],
+    "persianMeaning": "نظرسنجی؛ بررسی کردن"
+  },
+  {
+    "word": "text",
+    "sublist": 2,
+    "relatedForms": ["texts", "textual"],
+    "persianMeaning": "متن"
+  },
+  {
+    "word": "tradition",
+    "sublist": 2,
+    "relatedForms": [
+      "non-traditional",
+      "traditional",
+      "traditionalist",
+      "traditionally",
+      "traditions"
+    ],
+    "persianMeaning": "سنت"
+  },
+  {
+    "word": "transfer",
+    "sublist": 2,
+    "relatedForms": ["transferable", "transference", "transferred", "transferring", "transfers"],
+    "persianMeaning": "انتقال دادن"
+  },
+  {
+    "word": "alternative",
+    "sublist": 3,
+    "relatedForms": ["alternatively", "alternatives"],
+    "persianMeaning": "جایگزین؛ گزینهٔ دیگر"
+  },
+  {
+    "word": "circumstance",
+    "sublist": 3,
+    "relatedForms": ["circumstances"],
+    "persianMeaning": "شرایط"
+  },
+  {
+    "word": "comment",
+    "sublist": 3,
+    "relatedForms": [
+      "commentaries",
+      "commentary",
+      "commentator",
+      "commentators",
+      "commented",
+      "commenting",
+      "comments"
+    ],
+    "persianMeaning": "نظر؛ اظهار نظر کردن"
+  },
+  {
+    "word": "compensate",
+    "sublist": 3,
+    "relatedForms": [
+      "compensated",
+      "compensates",
+      "compensating",
+      "compensation",
+      "compensations",
+      "compensatory"
+    ],
+    "persianMeaning": "جبران کردن"
+  },
+  {
+    "word": "component",
+    "sublist": 3,
+    "relatedForms": ["componentry", "components"],
+    "persianMeaning": "جزء؛ مؤلفه"
+  },
+  {
+    "word": "consent",
+    "sublist": 3,
+    "relatedForms": ["consensus", "consented", "consenting", "consents"],
+    "persianMeaning": "رضایت؛ موافقت کردن"
+  },
+  {
+    "word": "considerable",
+    "sublist": 3,
+    "relatedForms": ["considerably"],
+    "persianMeaning": "قابل‌توجه"
+  },
+  {
+    "word": "constant",
+    "sublist": 3,
+    "relatedForms": ["constancy", "constantly", "constants", "inconstancy", "inconstantly"],
+    "persianMeaning": "ثابت"
+  },
+  {
+    "word": "constrain",
+    "sublist": 3,
+    "relatedForms": [
+      "constrained",
+      "constraining",
+      "constrains",
+      "constraint",
+      "constraints",
+      "unconstrained"
+    ],
+    "persianMeaning": "محدود کردن"
+  },
+  {
+    "word": "contribute",
+    "sublist": 3,
+    "relatedForms": [
+      "contributed",
+      "contributes",
+      "contributing",
+      "contribution",
+      "contributions",
+      "contributor",
+      "contributors"
+    ],
+    "persianMeaning": "مشارکت کردن؛ کمک کردن"
+  },
+  {
+    "word": "convene",
+    "sublist": 3,
+    "relatedForms": [
+      "convened",
+      "convenes",
+      "convening",
+      "convention",
+      "conventional",
+      "conventionally",
+      "conventions",
+      "unconventional"
+    ],
+    "persianMeaning": "گرد هم آمدن؛ تشکیل جلسه دادن"
+  },
+  {
+    "word": "coordinate",
+    "sublist": 3,
+    "relatedForms": [
+      "co-ordinate",
+      "co-ordinated",
+      "co-ordinates",
+      "co-ordinating",
+      "co-ordination",
+      "co-ordinator",
+      "co-ordinators",
+      "coordinated",
+      "coordinates",
+      "coordinating",
+      "coordination",
+      "coordinator",
+      "coordinators"
+    ],
+    "persianMeaning": "هماهنگ کردن"
+  },
+  {
+    "word": "core",
+    "sublist": 3,
+    "relatedForms": ["cored", "cores", "coring"],
+    "persianMeaning": "هسته؛ بخش اصلی"
+  },
+  {
+    "word": "corporate",
+    "sublist": 3,
+    "relatedForms": ["corporates", "corporation", "corporations"],
+    "persianMeaning": "شرکتی"
+  },
+  {
+    "word": "correspond",
+    "sublist": 3,
+    "relatedForms": [
+      "corresponded",
+      "correspondence",
+      "corresponding",
+      "correspondingly",
+      "corresponds"
+    ],
+    "persianMeaning": "مطابقت داشتن؛ مکاتبه کردن"
+  },
+  {
+    "word": "criteria",
+    "sublist": 3,
+    "relatedForms": ["criterion"],
+    "persianMeaning": "معیارها"
+  },
+  {
+    "word": "deduce",
+    "sublist": 3,
+    "relatedForms": ["deduced", "deduces", "deducing", "deduction", "deductions"],
+    "persianMeaning": "استنتاج کردن"
+  },
+  {
+    "word": "demonstrate",
+    "sublist": 3,
+    "relatedForms": [
+      "demonstrable",
+      "demonstrably",
+      "demonstrated",
+      "demonstrates",
+      "demonstrating",
+      "demonstration",
+      "demonstrations",
+      "demonstrative",
+      "demonstratively",
+      "demonstrator",
+      "demonstrators"
+    ],
+    "persianMeaning": "نشان دادن؛ اثبات کردن"
+  },
+  {
+    "word": "document",
+    "sublist": 3,
+    "relatedForms": ["documentation", "documented", "documenting", "documents"],
+    "persianMeaning": "سند؛ مستند کردن"
+  },
+  {
+    "word": "dominate",
+    "sublist": 3,
+    "relatedForms": ["dominance", "dominant", "dominated", "dominates", "dominating", "domination"],
+    "persianMeaning": "تسلط داشتن"
+  },
+  {
+    "word": "emphasis",
+    "sublist": 3,
+    "relatedForms": [
+      "emphasise",
+      "emphasised",
+      "emphasising",
+      "emphasize",
+      "emphasized",
+      "emphasizes",
+      "emphasizing",
+      "emphatic",
+      "emphatically"
+    ],
+    "persianMeaning": "تأکید"
+  },
+  {
+    "word": "ensure",
+    "sublist": 3,
+    "relatedForms": ["ensured", "ensures", "ensuring"],
+    "persianMeaning": "اطمینان حاصل کردن"
+  },
+  {
+    "word": "exclude",
+    "sublist": 3,
+    "relatedForms": [
+      "excluded",
+      "excludes",
+      "excluding",
+      "exclusion",
+      "exclusionary",
+      "exclusionist",
+      "exclusions",
+      "exclusive",
+      "exclusively"
+    ],
+    "persianMeaning": "حذف کردن؛ مستثنا کردن"
+  },
+  {
+    "word": "framework",
+    "sublist": 3,
+    "relatedForms": ["frameworks"],
+    "persianMeaning": "چارچوب"
+  },
+  {
+    "word": "fund",
+    "sublist": 3,
+    "relatedForms": ["funded", "funder", "funders", "funding", "funds"],
+    "persianMeaning": "صندوق؛ تأمین مالی کردن"
+  },
+  {
+    "word": "illustrate",
+    "sublist": 3,
+    "relatedForms": [
+      "illustrated",
+      "illustrates",
+      "illustrating",
+      "illustration",
+      "illustrations",
+      "illustrative"
+    ],
+    "persianMeaning": "با مثال توضیح دادن"
+  },
+  {
+    "word": "immigrate",
+    "sublist": 3,
+    "relatedForms": [
+      "immigrant",
+      "immigrants",
+      "immigrated",
+      "immigrates",
+      "immigrating",
+      "immigration"
+    ],
+    "persianMeaning": "مهاجرت کردن به کشور دیگر"
+  },
+  {
+    "word": "imply",
+    "sublist": 3,
+    "relatedForms": ["implied", "implies", "implying"],
+    "persianMeaning": "به‌طور ضمنی رساندن"
+  },
+  {
+    "word": "initial",
+    "sublist": 3,
+    "relatedForms": ["initially"],
+    "persianMeaning": "اولیه"
+  },
+  {
+    "word": "instance",
+    "sublist": 3,
+    "relatedForms": ["instances"],
+    "persianMeaning": "نمونه؛ مورد"
+  },
+  {
+    "word": "interact",
+    "sublist": 3,
+    "relatedForms": [
+      "interacted",
+      "interacting",
+      "interaction",
+      "interactions",
+      "interactive",
+      "interactively",
+      "interacts"
+    ],
+    "persianMeaning": "تعامل کردن"
+  },
+  {
+    "word": "justify",
+    "sublist": 3,
+    "relatedForms": [
+      "justifiable",
+      "justifiably",
+      "justification",
+      "justifications",
+      "justified",
+      "justifies",
+      "justifying",
+      "unjustified"
+    ],
+    "persianMeaning": "توجیه کردن"
+  },
+  {
+    "word": "layer",
+    "sublist": 3,
+    "relatedForms": ["layered", "layering", "layers"],
+    "persianMeaning": "لایه"
+  },
+  {
+    "word": "link",
+    "sublist": 3,
+    "relatedForms": ["linkage", "linkages", "linked", "linking", "links"],
+    "persianMeaning": "پیوند؛ متصل کردن"
+  },
+  {
+    "word": "locate",
+    "sublist": 3,
+    "relatedForms": [
+      "located",
+      "locating",
+      "location",
+      "locations",
+      "relocate",
+      "relocated",
+      "relocates",
+      "relocating",
+      "relocation"
+    ],
+    "persianMeaning": "پیدا کردن؛ واقع بودن"
+  },
+  {
+    "word": "maximise",
+    "sublist": 3,
+    "relatedForms": [
+      "max",
+      "maximisation",
+      "maximised",
+      "maximises",
+      "maximising",
+      "maximization",
+      "maximize",
+      "maximized",
+      "maximizes",
+      "maximizing",
+      "maximum"
+    ],
+    "persianMeaning": "به حداکثر رساندن"
+  },
+  {
+    "word": "minor",
+    "sublist": 3,
+    "relatedForms": ["minorities", "minority", "minors"],
+    "persianMeaning": "جزئی؛ کم‌اهمیت"
+  },
+  {
+    "word": "negate",
+    "sublist": 3,
+    "relatedForms": ["negated", "negates", "negating", "negative", "negatively", "negatives"],
+    "persianMeaning": "نفی کردن"
+  },
+  {
+    "word": "outcome",
+    "sublist": 3,
+    "relatedForms": ["outcomes"],
+    "persianMeaning": "نتیجه؛ پیامد"
+  },
+  {
+    "word": "partner",
+    "sublist": 3,
+    "relatedForms": ["partners", "partnership", "partnerships"],
+    "persianMeaning": "شریک"
+  },
+  {
+    "word": "philosophy",
+    "sublist": 3,
+    "relatedForms": [
+      "philosopher",
+      "philosophers",
+      "philosophical",
+      "philosophically",
+      "philosophies",
+      "philosophise",
+      "philosophised",
+      "philosophises",
+      "philosophising",
+      "philosophize",
+      "philosophized",
+      "philosophizes",
+      "philosophizing"
+    ],
+    "persianMeaning": "فلسفه"
+  },
+  {
+    "word": "physical",
+    "sublist": 3,
+    "relatedForms": ["physically"],
+    "persianMeaning": "جسمی؛ فیزیکی"
+  },
+  {
+    "word": "proportion",
+    "sublist": 3,
+    "relatedForms": [
+      "disproportion",
+      "disproportionate",
+      "disproportionately",
+      "proportional",
+      "proportionally",
+      "proportionate",
+      "proportionately",
+      "proportions"
+    ],
+    "persianMeaning": "نسبت؛ تناسب"
+  },
+  {
+    "word": "publish",
+    "sublist": 3,
+    "relatedForms": [
+      "published",
+      "publisher",
+      "publishers",
+      "publishes",
+      "publishing",
+      "unpublished"
+    ],
+    "persianMeaning": "منتشر کردن"
+  },
+  {
+    "word": "react",
+    "sublist": 3,
+    "relatedForms": [
+      "reacted",
+      "reacting",
+      "reaction",
+      "reactionaries",
+      "reactionary",
+      "reactions",
+      "reactivate",
+      "reactivation",
+      "reactive",
+      "reactor",
+      "reactors",
+      "reacts"
+    ],
+    "persianMeaning": "واکنش نشان دادن"
+  },
+  {
+    "word": "register",
+    "sublist": 3,
+    "relatedForms": [
+      "deregister",
+      "deregistered",
+      "deregistering",
+      "deregisters",
+      "deregistration",
+      "registered",
+      "registering",
+      "registers",
+      "registration"
+    ],
+    "persianMeaning": "ثبت‌نام کردن؛ ثبت کردن"
+  },
+  {
+    "word": "rely",
+    "sublist": 3,
+    "relatedForms": [
+      "reliability",
+      "reliable",
+      "reliably",
+      "reliance",
+      "reliant",
+      "relied",
+      "relies",
+      "relying",
+      "unreliable"
+    ],
+    "persianMeaning": "تکیه کردن؛ اعتماد کردن"
+  },
+  {
+    "word": "remove",
+    "sublist": 3,
+    "relatedForms": ["removable", "removal", "removals", "removed", "removes", "removing"],
+    "persianMeaning": "برداشتن؛ حذف کردن"
+  },
+  {
+    "word": "scheme",
+    "sublist": 3,
+    "relatedForms": ["schematic", "schematically", "schemed", "schemes", "scheming"],
+    "persianMeaning": "طرح؛ برنامه"
+  },
+  {
+    "word": "sequence",
+    "sublist": 3,
+    "relatedForms": ["sequenced", "sequences", "sequencing", "sequential", "sequentially"],
+    "persianMeaning": "توالی"
+  },
+  {
+    "word": "sex",
+    "sublist": 3,
+    "relatedForms": ["sexes", "sexism", "sexual", "sexuality", "sexually"],
+    "persianMeaning": "جنس؛ رابطهٔ جنسی"
+  },
+  {
+    "word": "shift",
+    "sublist": 3,
+    "relatedForms": ["shifted", "shifting", "shifts"],
+    "persianMeaning": "تغییر؛ جابه‌جا شدن"
+  },
+  {
+    "word": "specify",
+    "sublist": 3,
+    "relatedForms": ["specifiable", "specified", "specifies", "specifying", "unspecified"],
+    "persianMeaning": "مشخص کردن"
+  },
+  {
+    "word": "sufficient",
+    "sublist": 3,
+    "relatedForms": ["insufficient", "insufficiently", "sufficiency", "sufficiently"],
+    "persianMeaning": "کافی"
+  },
+  {
+    "word": "task",
+    "sublist": 3,
+    "relatedForms": ["tasks"],
+    "persianMeaning": "وظیفه"
+  },
+  {
+    "word": "technical",
+    "sublist": 3,
+    "relatedForms": ["technically"],
+    "persianMeaning": "فنی"
+  },
+  {
+    "word": "technique",
+    "sublist": 3,
+    "relatedForms": ["techniques"],
+    "persianMeaning": "فن؛ شیوه"
+  },
+  {
+    "word": "technology",
+    "sublist": 3,
+    "relatedForms": ["technological", "technologically"],
+    "persianMeaning": "فناوری"
+  },
+  {
+    "word": "valid",
+    "sublist": 3,
+    "relatedForms": [
+      "invalidate",
+      "invalidity",
+      "validate",
+      "validated",
+      "validating",
+      "validation",
+      "validity",
+      "validly"
+    ],
+    "persianMeaning": "معتبر"
+  },
+  {
+    "word": "volume",
+    "sublist": 3,
+    "relatedForms": ["volumes"],
+    "persianMeaning": "حجم؛ جلدِ کتاب"
+  },
+  {
+    "word": "access",
+    "sublist": 4,
+    "relatedForms": [
+      "accessed",
+      "accesses",
+      "accessibility",
+      "accessible",
+      "accessing",
+      "inaccessible"
+    ],
+    "persianMeaning": "دسترسی"
+  },
+  {
+    "word": "adequate",
+    "sublist": 4,
+    "relatedForms": [
+      "adequacy",
+      "adequately",
+      "inadequacies",
+      "inadequacy",
+      "inadequate",
+      "inadequately"
+    ],
+    "persianMeaning": "کافی؛ مناسب"
+  },
+  {
+    "word": "annual",
+    "sublist": 4,
+    "relatedForms": ["annually"],
+    "persianMeaning": "سالانه"
+  },
+  {
+    "word": "apparent",
+    "sublist": 4,
+    "relatedForms": ["apparently"],
+    "persianMeaning": "آشکار؛ ظاهری"
+  },
+  {
+    "word": "approximate",
+    "sublist": 4,
+    "relatedForms": [
+      "approximated",
+      "approximately",
+      "approximates",
+      "approximating",
+      "approximation",
+      "approximations"
+    ],
+    "persianMeaning": "تقریبی؛ تخمین زدن"
+  },
+  {
+    "word": "attitude",
+    "sublist": 4,
+    "relatedForms": ["attitudes"],
+    "persianMeaning": "نگرش"
+  },
+  {
+    "word": "attribute",
+    "sublist": 4,
+    "relatedForms": ["attributable", "attributed", "attributes", "attributing", "attribution"],
+    "persianMeaning": "ویژگی؛ نسبت دادن"
+  },
+  {
+    "word": "civil",
+    "sublist": 4,
+    "relatedForms": [],
+    "persianMeaning": "مدنی"
+  },
+  {
+    "word": "code",
+    "sublist": 4,
+    "relatedForms": ["coded", "codes", "coding"],
+    "persianMeaning": "کد؛ مجموعهٔ قوانین"
+  },
+  {
+    "word": "commit",
+    "sublist": 4,
+    "relatedForms": ["commitment", "commitments", "commits", "committed", "committing"],
+    "persianMeaning": "متعهد شدن؛ مرتکب شدن"
+  },
+  {
+    "word": "communicate",
+    "sublist": 4,
+    "relatedForms": [
+      "communicable",
+      "communicated",
+      "communicates",
+      "communicating",
+      "communication",
+      "communications",
+      "communicative",
+      "communicatively",
+      "uncommunicative"
+    ],
+    "persianMeaning": "ارتباط برقرار کردن"
+  },
+  {
+    "word": "concentrate",
+    "sublist": 4,
+    "relatedForms": ["concentrated", "concentrates", "concentrating", "concentration"],
+    "persianMeaning": "تمرکز کردن"
+  },
+  {
+    "word": "confer",
+    "sublist": 4,
+    "relatedForms": ["conference", "conferences", "conferred", "conferring", "confers"],
+    "persianMeaning": "اعطا کردن؛ مشورت کردن"
+  },
+  {
+    "word": "contrast",
+    "sublist": 4,
+    "relatedForms": ["contrasted", "contrasting", "contrastive", "contrasts"],
+    "persianMeaning": "تفاوت؛ مقایسه کردن"
+  },
+  {
+    "word": "cycle",
+    "sublist": 4,
+    "relatedForms": ["cycled", "cycles", "cyclic", "cyclical", "cycling"],
+    "persianMeaning": "چرخه"
+  },
+  {
+    "word": "debate",
+    "sublist": 4,
+    "relatedForms": ["debatable", "debated", "debates", "debating"],
+    "persianMeaning": "بحث؛ مناظره کردن"
+  },
+  {
+    "word": "despite",
+    "sublist": 4,
+    "relatedForms": [],
+    "persianMeaning": "با وجودِ"
+  },
+  {
+    "word": "dimension",
+    "sublist": 4,
+    "relatedForms": ["dimensional", "dimensions", "multidimensional"],
+    "persianMeaning": "بُعد"
+  },
+  {
+    "word": "domestic",
+    "sublist": 4,
+    "relatedForms": ["domestically", "domesticate", "domesticated", "domesticating", "domestics"],
+    "persianMeaning": "داخلی؛ خانگی"
+  },
+  {
+    "word": "emerge",
+    "sublist": 4,
+    "relatedForms": ["emerged", "emergence", "emergent", "emerges", "emerging"],
+    "persianMeaning": "پدیدار شدن"
+  },
+  {
+    "word": "error",
+    "sublist": 4,
+    "relatedForms": ["erroneous", "erroneously", "errors"],
+    "persianMeaning": "خطا"
+  },
+  {
+    "word": "ethnic",
+    "sublist": 4,
+    "relatedForms": ["ethnicity"],
+    "persianMeaning": "قومی"
+  },
+  {
+    "word": "goal",
+    "sublist": 4,
+    "relatedForms": ["goals"],
+    "persianMeaning": "هدف"
+  },
+  {
+    "word": "grant",
+    "sublist": 4,
+    "relatedForms": ["granted", "granting", "grants"],
+    "persianMeaning": "اعطا کردن؛ کمک‌هزینه"
+  },
+  {
+    "word": "hence",
+    "sublist": 4,
+    "relatedForms": [],
+    "persianMeaning": "از این رو"
+  },
+  {
+    "word": "hypothesis",
+    "sublist": 4,
+    "relatedForms": [
+      "hypotheses",
+      "hypothesise",
+      "hypothesised",
+      "hypothesises",
+      "hypothesising",
+      "hypothesize",
+      "hypothesized",
+      "hypothesizes",
+      "hypothesizing",
+      "hypothetical",
+      "hypothetically"
+    ],
+    "persianMeaning": "فرضیه"
+  },
+  {
+    "word": "implement",
+    "sublist": 4,
+    "relatedForms": ["implementation", "implemented", "implementing", "implements"],
+    "persianMeaning": "اجرا کردن"
+  },
+  {
+    "word": "implicate",
+    "sublist": 4,
+    "relatedForms": ["implicated", "implicates", "implicating", "implication", "implications"],
+    "persianMeaning": "دخیل دانستن"
+  },
+  {
+    "word": "impose",
+    "sublist": 4,
+    "relatedForms": ["imposed", "imposes", "imposing", "imposition"],
+    "persianMeaning": "تحمیل کردن"
+  },
+  {
+    "word": "integrate",
+    "sublist": 4,
+    "relatedForms": ["integrated", "integrates", "integrating", "integration"],
+    "persianMeaning": "یکپارچه کردن"
+  },
+  {
+    "word": "internal",
+    "sublist": 4,
+    "relatedForms": [
+      "internalise",
+      "internalised",
+      "internalises",
+      "internalising",
+      "internalize",
+      "internalized",
+      "internalizes",
+      "internalizing",
+      "internally"
+    ],
+    "persianMeaning": "داخلی"
+  },
+  {
+    "word": "investigate",
+    "sublist": 4,
+    "relatedForms": [
+      "investigated",
+      "investigates",
+      "investigating",
+      "investigation",
+      "investigations",
+      "investigative",
+      "investigator",
+      "investigators"
+    ],
+    "persianMeaning": "بررسی کردن؛ تحقیق کردن"
+  },
+  {
+    "word": "job",
+    "sublist": 4,
+    "relatedForms": ["jobs"],
+    "persianMeaning": "شغل"
+  },
+  {
+    "word": "label",
+    "sublist": 4,
+    "relatedForms": ["labeled", "labeling", "labelled", "labelling", "labels"],
+    "persianMeaning": "برچسب"
+  },
+  {
+    "word": "mechanism",
+    "sublist": 4,
+    "relatedForms": ["mechanisms"],
+    "persianMeaning": "سازوکار"
+  },
+  {
+    "word": "obvious",
+    "sublist": 4,
+    "relatedForms": ["obviously"],
+    "persianMeaning": "واضح"
+  },
+  {
+    "word": "occupy",
+    "sublist": 4,
+    "relatedForms": [
+      "occupancy",
+      "occupant",
+      "occupants",
+      "occupation",
+      "occupational",
+      "occupations",
+      "occupied",
+      "occupier",
+      "occupiers",
+      "occupies",
+      "occupying"
+    ],
+    "persianMeaning": "اشغال کردن"
+  },
+  {
+    "word": "option",
+    "sublist": 4,
+    "relatedForms": ["optional", "options"],
+    "persianMeaning": "گزینه"
+  },
+  {
+    "word": "output",
+    "sublist": 4,
+    "relatedForms": ["outputs"],
+    "persianMeaning": "خروجی"
+  },
+  {
+    "word": "overall",
+    "sublist": 4,
+    "relatedForms": [],
+    "persianMeaning": "کلی؛ در مجموع"
+  },
+  {
+    "word": "parallel",
+    "sublist": 4,
+    "relatedForms": ["paralleled", "parallelled", "parallelling", "parallels", "unparalleled"],
+    "persianMeaning": "موازی"
+  },
+  {
+    "word": "parameter",
+    "sublist": 4,
+    "relatedForms": ["parameters"],
+    "persianMeaning": "پارامتر"
+  },
+  {
+    "word": "phase",
+    "sublist": 4,
+    "relatedForms": ["phased", "phases", "phasing"],
+    "persianMeaning": "مرحله"
+  },
+  {
+    "word": "predict",
+    "sublist": 4,
+    "relatedForms": [
+      "predictability",
+      "predictable",
+      "predictably",
+      "predicted",
+      "predicting",
+      "prediction",
+      "predictions",
+      "predicts",
+      "unpredictability",
+      "unpredictable"
+    ],
+    "persianMeaning": "پیش‌بینی کردن"
+  },
+  {
+    "word": "principal",
+    "sublist": 4,
+    "relatedForms": ["principally"],
+    "persianMeaning": "اصلی؛ مدیر"
+  },
+  {
+    "word": "prior",
+    "sublist": 4,
+    "relatedForms": [],
+    "persianMeaning": "پیشین؛ قبلی"
+  },
+  {
+    "word": "professional",
+    "sublist": 4,
+    "relatedForms": ["professionalism", "professionally", "professionals"],
+    "persianMeaning": "حرفه‌ای"
+  },
+  {
+    "word": "project",
+    "sublist": 4,
+    "relatedForms": ["projected", "projecting", "projection", "projections", "projects"],
+    "persianMeaning": "پروژه؛ طرح‌ریزی کردن"
+  },
+  {
+    "word": "promote",
+    "sublist": 4,
+    "relatedForms": [
+      "promoted",
+      "promoter",
+      "promoters",
+      "promotes",
+      "promoting",
+      "promotion",
+      "promotions"
+    ],
+    "persianMeaning": "ارتقا دادن؛ ترویج کردن"
+  },
+  {
+    "word": "regime",
+    "sublist": 4,
+    "relatedForms": ["regimes"],
+    "persianMeaning": "نظام؛ رژیم"
+  },
+  {
+    "word": "resolve",
+    "sublist": 4,
+    "relatedForms": ["resolution", "resolved", "resolves", "resolving", "unresolved"],
+    "persianMeaning": "حل کردن؛ تصمیم قاطع گرفتن"
+  },
+  {
+    "word": "retain",
+    "sublist": 4,
+    "relatedForms": [
+      "retained",
+      "retainer",
+      "retainers",
+      "retaining",
+      "retains",
+      "retention",
+      "retentive"
+    ],
+    "persianMeaning": "حفظ کردن"
+  },
+  {
+    "word": "series",
+    "sublist": 4,
+    "relatedForms": [],
+    "persianMeaning": "مجموعه؛ سلسله"
+  },
+  {
+    "word": "statistic",
+    "sublist": 4,
+    "relatedForms": ["statistical", "statistically", "statistician", "statisticians", "statistics"],
+    "persianMeaning": "آماره؛ مقدار آماری"
+  },
+  {
+    "word": "status",
+    "sublist": 4,
+    "relatedForms": [],
+    "persianMeaning": "وضعیت"
+  },
+  {
+    "word": "stress",
+    "sublist": 4,
+    "relatedForms": ["stressed", "stresses", "stressful", "stressing", "unstressed"],
+    "persianMeaning": "فشار؛ تأکید کردن"
+  },
+  {
+    "word": "subsequent",
+    "sublist": 4,
+    "relatedForms": ["subsequently"],
+    "persianMeaning": "بعدی"
+  },
+  {
+    "word": "sum",
+    "sublist": 4,
+    "relatedForms": ["summation", "summed", "summing", "sums"],
+    "persianMeaning": "مجموع"
+  },
+  {
+    "word": "summary",
+    "sublist": 4,
+    "relatedForms": [
+      "summaries",
+      "summarisation",
+      "summarisations",
+      "summarise",
+      "summarised",
+      "summarises",
+      "summarising",
+      "summarization",
+      "summarizations",
+      "summarize",
+      "summarized",
+      "summarizes",
+      "summarizing"
+    ],
+    "persianMeaning": "خلاصه"
+  },
+  {
+    "word": "undertake",
+    "sublist": 4,
+    "relatedForms": ["undertaken", "undertakes", "undertaking", "undertook"],
+    "persianMeaning": "بر عهده گرفتن"
+  },
+  {
+    "word": "academy",
+    "sublist": 5,
+    "relatedForms": ["academia", "academic", "academically", "academics", "academies"],
+    "persianMeaning": "آکادمی؛ مؤسسهٔ علمی"
+  },
+  {
+    "word": "adjust",
+    "sublist": 5,
+    "relatedForms": [
+      "adjusted",
+      "adjusting",
+      "adjustment",
+      "adjustments",
+      "adjusts",
+      "readjust",
+      "readjusted",
+      "readjusting",
+      "readjustment",
+      "readjustments",
+      "readjusts"
+    ],
+    "persianMeaning": "تنظیم کردن؛ سازگار کردن"
+  },
+  {
+    "word": "alter",
+    "sublist": 5,
+    "relatedForms": [
+      "alterable",
+      "alteration",
+      "alterations",
+      "altered",
+      "altering",
+      "alternate",
+      "alternating",
+      "alters",
+      "unalterable",
+      "unaltered"
+    ],
+    "persianMeaning": "تغییر دادن"
+  },
+  {
+    "word": "amend",
+    "sublist": 5,
+    "relatedForms": ["amended", "amending", "amendment", "amendments", "amends"],
+    "persianMeaning": "اصلاح کردن"
+  },
+  {
+    "word": "aware",
+    "sublist": 5,
+    "relatedForms": ["awareness", "unaware"],
+    "persianMeaning": "آگاه"
+  },
+  {
+    "word": "capacity",
+    "sublist": 5,
+    "relatedForms": ["capacities", "incapacitate", "incapacitated"],
+    "persianMeaning": "ظرفیت؛ توانایی"
+  },
+  {
+    "word": "challenge",
+    "sublist": 5,
+    "relatedForms": ["challenged", "challenger", "challengers", "challenges", "challenging"],
+    "persianMeaning": "چالش"
+  },
+  {
+    "word": "clause",
+    "sublist": 5,
+    "relatedForms": ["clauses"],
+    "persianMeaning": "بندِ قرارداد؛ جمله‌واره"
+  },
+  {
+    "word": "compound",
+    "sublist": 5,
+    "relatedForms": ["compounded", "compounding", "compounds"],
+    "persianMeaning": "ترکیب؛ مرکب"
+  },
+  {
+    "word": "conflict",
+    "sublist": 5,
+    "relatedForms": ["conflicted", "conflicting", "conflicts"],
+    "persianMeaning": "تعارض؛ درگیری"
+  },
+  {
+    "word": "consult",
+    "sublist": 5,
+    "relatedForms": [
+      "consultancy",
+      "consultant",
+      "consultants",
+      "consultation",
+      "consultations",
+      "consultative",
+      "consulted",
+      "consulting",
+      "consults"
+    ],
+    "persianMeaning": "مشورت کردن"
+  },
+  {
+    "word": "contact",
+    "sublist": 5,
+    "relatedForms": ["contactable", "contacted", "contacting", "contacts"],
+    "persianMeaning": "تماس"
+  },
+  {
+    "word": "decline",
+    "sublist": 5,
+    "relatedForms": ["declined", "declines", "declining"],
+    "persianMeaning": "کاهش؛ رد کردن"
+  },
+  {
+    "word": "discrete",
+    "sublist": 5,
+    "relatedForms": ["discretely", "discretion", "discretionary", "indiscrete", "indiscretion"],
+    "persianMeaning": "جدا؛ گسسته"
+  },
+  {
+    "word": "draft",
+    "sublist": 5,
+    "relatedForms": [
+      "drafted",
+      "drafting",
+      "drafts",
+      "redraft",
+      "redrafted",
+      "redrafting",
+      "redrafts"
+    ],
+    "persianMeaning": "پیش‌نویس"
+  },
+  {
+    "word": "enable",
+    "sublist": 5,
+    "relatedForms": ["enabled", "enables", "enabling"],
+    "persianMeaning": "ممکن ساختن"
+  },
+  {
+    "word": "energy",
+    "sublist": 5,
+    "relatedForms": ["energetic", "energetically", "energies"],
+    "persianMeaning": "انرژی"
+  },
+  {
+    "word": "enforce",
+    "sublist": 5,
+    "relatedForms": ["enforced", "enforcement", "enforces", "enforcing"],
+    "persianMeaning": "اجرا کردنِ قانون"
+  },
+  {
+    "word": "entity",
+    "sublist": 5,
+    "relatedForms": ["entities"],
+    "persianMeaning": "موجودیت"
+  },
+  {
+    "word": "equivalent",
+    "sublist": 5,
+    "relatedForms": ["equivalence"],
+    "persianMeaning": "معادل"
+  },
+  {
+    "word": "evolve",
+    "sublist": 5,
+    "relatedForms": [
+      "evolution",
+      "evolutionary",
+      "evolutionist",
+      "evolutionists",
+      "evolved",
+      "evolves",
+      "evolving"
+    ],
+    "persianMeaning": "تکامل یافتن"
+  },
+  {
+    "word": "expand",
+    "sublist": 5,
+    "relatedForms": ["expanded", "expanding", "expands", "expansion", "expansionism", "expansive"],
+    "persianMeaning": "گسترش دادن"
+  },
+  {
+    "word": "expose",
+    "sublist": 5,
+    "relatedForms": ["exposed", "exposes", "exposing", "exposure", "exposures"],
+    "persianMeaning": "آشکار کردن؛ در معرض گذاشتن"
+  },
+  {
+    "word": "external",
+    "sublist": 5,
+    "relatedForms": [
+      "externalisation",
+      "externalise",
+      "externalised",
+      "externalises",
+      "externalising",
+      "externality",
+      "externalization",
+      "externalize",
+      "externalized",
+      "externalizes",
+      "externalizing",
+      "externally"
+    ],
+    "persianMeaning": "خارجی"
+  },
+  {
+    "word": "facilitate",
+    "sublist": 5,
+    "relatedForms": [
+      "facilitated",
+      "facilitates",
+      "facilitating",
+      "facilitation",
+      "facilitator",
+      "facilitators",
+      "facilities",
+      "facility"
+    ],
+    "persianMeaning": "تسهیل کردن"
+  },
+  {
+    "word": "fundamental",
+    "sublist": 5,
+    "relatedForms": ["fundamentally"],
+    "persianMeaning": "بنیادی"
+  },
+  {
+    "word": "generate",
+    "sublist": 5,
+    "relatedForms": ["generated", "generates", "generating"],
+    "persianMeaning": "تولید کردن"
+  },
+  {
+    "word": "generation",
+    "sublist": 5,
+    "relatedForms": ["generations"],
+    "persianMeaning": "نسل؛ تولید"
+  },
+  {
+    "word": "image",
+    "sublist": 5,
+    "relatedForms": ["imagery", "images"],
+    "persianMeaning": "تصویر"
+  },
+  {
+    "word": "liberal",
+    "sublist": 5,
+    "relatedForms": [
+      "liberalisation",
+      "liberalise",
+      "liberalised",
+      "liberalises",
+      "liberalising",
+      "liberalism",
+      "liberalization",
+      "liberalize",
+      "liberalized",
+      "liberalizes",
+      "liberalizing",
+      "liberally",
+      "liberate",
+      "liberated",
+      "liberates",
+      "liberating",
+      "liberation",
+      "liberations",
+      "liberator",
+      "liberators"
+    ],
+    "persianMeaning": "آزاداندیش؛ لیبرال"
+  },
+  {
+    "word": "licence",
+    "sublist": 5,
+    "relatedForms": ["licences", "license", "licensed", "licenses", "licensing", "unlicensed"],
+    "persianMeaning": "مجوز"
+  },
+  {
+    "word": "logic",
+    "sublist": 5,
+    "relatedForms": ["illogical", "illogically", "logical", "logically", "logician", "logicians"],
+    "persianMeaning": "منطق"
+  },
+  {
+    "word": "margin",
+    "sublist": 5,
+    "relatedForms": ["marginal", "marginally", "margins"],
+    "persianMeaning": "حاشیه"
+  },
+  {
+    "word": "medical",
+    "sublist": 5,
+    "relatedForms": ["medically"],
+    "persianMeaning": "پزشکی"
+  },
+  {
+    "word": "mental",
+    "sublist": 5,
+    "relatedForms": ["mentality", "mentally"],
+    "persianMeaning": "ذهنی"
+  },
+  {
+    "word": "modify",
+    "sublist": 5,
+    "relatedForms": [
+      "modification",
+      "modifications",
+      "modified",
+      "modifies",
+      "modifying",
+      "unmodified"
+    ],
+    "persianMeaning": "تغییر دادن؛ اصلاح کردن"
+  },
+  {
+    "word": "monitor",
+    "sublist": 5,
+    "relatedForms": ["monitored", "monitoring", "monitors", "unmonitored"],
+    "persianMeaning": "پایش کردن؛ ناظر"
+  },
+  {
+    "word": "network",
+    "sublist": 5,
+    "relatedForms": ["networked", "networking", "networks"],
+    "persianMeaning": "شبکه"
+  },
+  {
+    "word": "notion",
+    "sublist": 5,
+    "relatedForms": ["notions"],
+    "persianMeaning": "تصور؛ مفهوم"
+  },
+  {
+    "word": "objective",
+    "sublist": 5,
+    "relatedForms": ["objectively", "objectivity"],
+    "persianMeaning": "هدف؛ عینی"
+  },
+  {
+    "word": "orient",
+    "sublist": 5,
+    "relatedForms": [
+      "orientate",
+      "orientated",
+      "orientates",
+      "orientating",
+      "orientation",
+      "oriented",
+      "orienting",
+      "orients",
+      "reorient",
+      "reorientation"
+    ],
+    "persianMeaning": "جهت دادن"
+  },
+  {
+    "word": "perspective",
+    "sublist": 5,
+    "relatedForms": ["perspectives"],
+    "persianMeaning": "دیدگاه"
+  },
+  {
+    "word": "precise",
+    "sublist": 5,
+    "relatedForms": ["imprecise", "precisely", "precision"],
+    "persianMeaning": "دقیق"
+  },
+  {
+    "word": "prime",
+    "sublist": 5,
+    "relatedForms": ["primacy"],
+    "persianMeaning": "اصلی؛ نخست"
+  },
+  {
+    "word": "psychology",
+    "sublist": 5,
+    "relatedForms": ["psychological", "psychologically", "psychologist", "psychologists"],
+    "persianMeaning": "روان‌شناسی"
+  },
+  {
+    "word": "pursue",
+    "sublist": 5,
+    "relatedForms": ["pursued", "pursues", "pursuing", "pursuit", "pursuits"],
+    "persianMeaning": "دنبال کردن"
+  },
+  {
+    "word": "ratio",
+    "sublist": 5,
+    "relatedForms": ["ratios"],
+    "persianMeaning": "نسبت"
+  },
+  {
+    "word": "reject",
+    "sublist": 5,
+    "relatedForms": ["rejected", "rejecting", "rejection", "rejections", "rejects"],
+    "persianMeaning": "رد کردن"
+  },
+  {
+    "word": "revenue",
+    "sublist": 5,
+    "relatedForms": ["revenues"],
+    "persianMeaning": "درآمد"
+  },
+  {
+    "word": "stable",
+    "sublist": 5,
+    "relatedForms": [
+      "instability",
+      "stabilisation",
+      "stabilise",
+      "stabilised",
+      "stabilises",
+      "stabilising",
+      "stability",
+      "stabilization",
+      "stabilize",
+      "stabilized",
+      "stabilizes",
+      "stabilizing",
+      "unstable"
+    ],
+    "persianMeaning": "پایدار"
+  },
+  {
+    "word": "style",
+    "sublist": 5,
+    "relatedForms": [
+      "styled",
+      "styles",
+      "styling",
+      "stylise",
+      "stylised",
+      "stylises",
+      "stylish",
+      "stylising",
+      "stylize",
+      "stylized",
+      "stylizes",
+      "stylizing"
+    ],
+    "persianMeaning": "سبک"
+  },
+  {
+    "word": "substitute",
+    "sublist": 5,
+    "relatedForms": ["substituted", "substitutes", "substituting", "substitution"],
+    "persianMeaning": "جایگزین کردن"
+  },
+  {
+    "word": "sustain",
+    "sublist": 5,
+    "relatedForms": [
+      "sustainability",
+      "sustainable",
+      "sustained",
+      "sustaining",
+      "sustains",
+      "sustenance",
+      "unsustainable"
+    ],
+    "persianMeaning": "حفظ کردن؛ تداوم بخشیدن"
+  },
+  {
+    "word": "symbol",
+    "sublist": 5,
+    "relatedForms": [
+      "symbolic",
+      "symbolically",
+      "symbolise",
+      "symbolised",
+      "symbolises",
+      "symbolising",
+      "symbolism",
+      "symbolize",
+      "symbolized",
+      "symbolizes",
+      "symbolizing",
+      "symbols"
+    ],
+    "persianMeaning": "نماد"
+  },
+  {
+    "word": "target",
+    "sublist": 5,
+    "relatedForms": ["targeted", "targeting", "targets"],
+    "persianMeaning": "هدف"
+  },
+  {
+    "word": "transit",
+    "sublist": 5,
+    "relatedForms": [
+      "transited",
+      "transiting",
+      "transition",
+      "transitional",
+      "transitions",
+      "transitory",
+      "transits"
+    ],
+    "persianMeaning": "عبور؛ حمل‌ونقل"
+  },
+  {
+    "word": "trend",
+    "sublist": 5,
+    "relatedForms": ["trends"],
+    "persianMeaning": "روند"
+  },
+  {
+    "word": "version",
+    "sublist": 5,
+    "relatedForms": ["versions"],
+    "persianMeaning": "نسخه"
+  },
+  {
+    "word": "welfare",
+    "sublist": 5,
+    "relatedForms": [],
+    "persianMeaning": "رفاه"
+  },
+  {
+    "word": "whereas",
+    "sublist": 5,
+    "relatedForms": [],
+    "persianMeaning": "در حالی که"
+  },
+  {
+    "word": "abstract",
+    "sublist": 6,
+    "relatedForms": ["abstraction", "abstractions", "abstractly", "abstracts"],
+    "persianMeaning": "انتزاعی؛ چکیده"
+  },
+  {
+    "word": "accurate",
+    "sublist": 6,
+    "relatedForms": ["accuracy", "accurately", "inaccuracies", "inaccuracy", "inaccurate"],
+    "persianMeaning": "دقیق"
+  },
+  {
+    "word": "acknowledge",
+    "sublist": 6,
+    "relatedForms": [
+      "acknowledged",
+      "acknowledgement",
+      "acknowledgements",
+      "acknowledges",
+      "acknowledging"
+    ],
+    "persianMeaning": "تصدیق کردن؛ قدردانی کردن"
+  },
+  {
+    "word": "aggregate",
+    "sublist": 6,
+    "relatedForms": ["aggregated", "aggregates", "aggregating", "aggregation"],
+    "persianMeaning": "مجموع؛ تجمیع کردن"
+  },
+  {
+    "word": "allocate",
+    "sublist": 6,
+    "relatedForms": ["allocated", "allocates", "allocating", "allocation", "allocations"],
+    "persianMeaning": "تخصیص دادن"
+  },
+  {
+    "word": "assign",
+    "sublist": 6,
+    "relatedForms": [
+      "assigned",
+      "assigning",
+      "assignment",
+      "assignments",
+      "assigns",
+      "reassign",
+      "reassigned",
+      "reassigning",
+      "reassigns",
+      "unassigned"
+    ],
+    "persianMeaning": "واگذار کردن"
+  },
+  {
+    "word": "attach",
+    "sublist": 6,
+    "relatedForms": [
+      "attached",
+      "attaches",
+      "attaching",
+      "attachment",
+      "attachments",
+      "unattached"
+    ],
+    "persianMeaning": "پیوست کردن"
+  },
+  {
+    "word": "author",
+    "sublist": 6,
+    "relatedForms": ["authored", "authoring", "authors", "authorship"],
+    "persianMeaning": "نویسنده"
+  },
+  {
+    "word": "bond",
+    "sublist": 6,
+    "relatedForms": ["bonded", "bonding", "bonds"],
+    "persianMeaning": "پیوند؛ اوراق قرضه"
+  },
+  {
+    "word": "brief",
+    "sublist": 6,
+    "relatedForms": ["brevity", "briefed", "briefing", "briefly", "briefs"],
+    "persianMeaning": "مختصر"
+  },
+  {
+    "word": "capable",
+    "sublist": 6,
+    "relatedForms": ["capabilities", "capability", "incapable"],
+    "persianMeaning": "توانا"
+  },
+  {
+    "word": "cite",
+    "sublist": 6,
+    "relatedForms": ["citation", "citations", "cited", "cites", "citing"],
+    "persianMeaning": "استناد کردن"
+  },
+  {
+    "word": "cooperate",
+    "sublist": 6,
+    "relatedForms": [
+      "co-operate",
+      "co-operated",
+      "co-operates",
+      "co-operation",
+      "co-operative",
+      "co-operatively",
+      "cooperated",
+      "cooperates",
+      "cooperating",
+      "cooperation",
+      "cooperative",
+      "cooperatively"
+    ],
+    "persianMeaning": "همکاری کردن"
+  },
+  {
+    "word": "discriminate",
+    "sublist": 6,
+    "relatedForms": ["discriminated", "discriminates", "discriminating", "discrimination"],
+    "persianMeaning": "تمایز قائل شدن؛ تبعیض کردن"
+  },
+  {
+    "word": "display",
+    "sublist": 6,
+    "relatedForms": ["displayed", "displaying", "displays"],
+    "persianMeaning": "نمایش دادن"
+  },
+  {
+    "word": "diverse",
+    "sublist": 6,
+    "relatedForms": [
+      "diversely",
+      "diversification",
+      "diversified",
+      "diversifies",
+      "diversify",
+      "diversifying",
+      "diversity"
+    ],
+    "persianMeaning": "متنوع"
+  },
+  {
+    "word": "domain",
+    "sublist": 6,
+    "relatedForms": ["domains"],
+    "persianMeaning": "حوزه؛ دامنه"
+  },
+  {
+    "word": "edit",
+    "sublist": 6,
+    "relatedForms": [
+      "edited",
+      "editing",
+      "edition",
+      "editions",
+      "editor",
+      "editorial",
+      "editorials",
+      "editors",
+      "edits"
+    ],
+    "persianMeaning": "ویرایش کردن"
+  },
+  {
+    "word": "enhance",
+    "sublist": 6,
+    "relatedForms": ["enhanced", "enhancement", "enhances", "enhancing"],
+    "persianMeaning": "بهبود دادن"
+  },
+  {
+    "word": "estate",
+    "sublist": 6,
+    "relatedForms": ["estates"],
+    "persianMeaning": "ملک؛ دارایی"
+  },
+  {
+    "word": "exceed",
+    "sublist": 6,
+    "relatedForms": ["exceeded", "exceeding", "exceeds"],
+    "persianMeaning": "فراتر رفتن"
+  },
+  {
+    "word": "expert",
+    "sublist": 6,
+    "relatedForms": ["expertise", "expertly", "experts"],
+    "persianMeaning": "متخصص"
+  },
+  {
+    "word": "explicit",
+    "sublist": 6,
+    "relatedForms": ["explicitly"],
+    "persianMeaning": "صریح"
+  },
+  {
+    "word": "federal",
+    "sublist": 6,
+    "relatedForms": ["federation", "federations"],
+    "persianMeaning": "فدرال"
+  },
+  {
+    "word": "fee",
+    "sublist": 6,
+    "relatedForms": ["fees"],
+    "persianMeaning": "هزینه؛ حق‌الزحمه"
+  },
+  {
+    "word": "flexible",
+    "sublist": 6,
+    "relatedForms": ["flexibility", "inflexibility", "inflexible"],
+    "persianMeaning": "انعطاف‌پذیر"
+  },
+  {
+    "word": "furthermore",
+    "sublist": 6,
+    "relatedForms": [],
+    "persianMeaning": "علاوه بر این"
+  },
+  {
+    "word": "gender",
+    "sublist": 6,
+    "relatedForms": ["genders"],
+    "persianMeaning": "جنسیت"
+  },
+  {
+    "word": "ignorant",
+    "sublist": 6,
+    "relatedForms": ["ignorance", "ignore", "ignored", "ignores", "ignoring"],
+    "persianMeaning": "ناآگاه"
+  },
+  {
+    "word": "incentive",
+    "sublist": 6,
+    "relatedForms": ["incentives"],
+    "persianMeaning": "مشوق"
+  },
+  {
+    "word": "incidence",
+    "sublist": 6,
+    "relatedForms": ["incident", "incidentally", "incidents"],
+    "persianMeaning": "میزان وقوع"
+  },
+  {
+    "word": "incorporate",
+    "sublist": 6,
+    "relatedForms": ["incorporated", "incorporates", "incorporating", "incorporation"],
+    "persianMeaning": "ادغام کردن"
+  },
+  {
+    "word": "index",
+    "sublist": 6,
+    "relatedForms": ["indexed", "indexes", "indexing"],
+    "persianMeaning": "شاخص؛ نمایه"
+  },
+  {
+    "word": "inhibit",
+    "sublist": 6,
+    "relatedForms": ["inhibited", "inhibiting", "inhibition", "inhibitions", "inhibits"],
+    "persianMeaning": "بازداشتن؛ مهار کردن"
+  },
+  {
+    "word": "initiate",
+    "sublist": 6,
+    "relatedForms": [
+      "initiated",
+      "initiates",
+      "initiating",
+      "initiation",
+      "initiations",
+      "initiative",
+      "initiatives",
+      "initiator",
+      "initiators"
+    ],
+    "persianMeaning": "آغاز کردن"
+  },
+  {
+    "word": "input",
+    "sublist": 6,
+    "relatedForms": ["inputs"],
+    "persianMeaning": "ورودی"
+  },
+  {
+    "word": "instruct",
+    "sublist": 6,
+    "relatedForms": [
+      "instructed",
+      "instructing",
+      "instruction",
+      "instructions",
+      "instructive",
+      "instructor",
+      "instructors",
+      "instructs"
+    ],
+    "persianMeaning": "آموزش دادن؛ دستور دادن"
+  },
+  {
+    "word": "intelligent",
+    "sublist": 6,
+    "relatedForms": ["intelligence", "intelligently", "unintelligent"],
+    "persianMeaning": "باهوش"
+  },
+  {
+    "word": "interval",
+    "sublist": 6,
+    "relatedForms": ["intervals"],
+    "persianMeaning": "فاصله؛ بازه"
+  },
+  {
+    "word": "lecture",
+    "sublist": 6,
+    "relatedForms": ["lectured", "lecturer", "lecturers", "lectures", "lecturing"],
+    "persianMeaning": "سخنرانی"
+  },
+  {
+    "word": "migrate",
+    "sublist": 6,
+    "relatedForms": [
+      "migrant",
+      "migrants",
+      "migrated",
+      "migrates",
+      "migrating",
+      "migration",
+      "migrations",
+      "migratory"
+    ],
+    "persianMeaning": "مهاجرت کردن"
+  },
+  {
+    "word": "minimum",
+    "sublist": 6,
+    "relatedForms": [],
+    "persianMeaning": "حداقل"
+  },
+  {
+    "word": "ministry",
+    "sublist": 6,
+    "relatedForms": ["ministered", "ministerial", "ministering", "ministries"],
+    "persianMeaning": "وزارتخانه"
+  },
+  {
+    "word": "motive",
+    "sublist": 6,
+    "relatedForms": [
+      "motivate",
+      "motivated",
+      "motivates",
+      "motivating",
+      "motivation",
+      "motivations",
+      "motives",
+      "unmotivated"
+    ],
+    "persianMeaning": "انگیزه"
+  },
+  {
+    "word": "neutral",
+    "sublist": 6,
+    "relatedForms": [
+      "neutralisation",
+      "neutralise",
+      "neutralised",
+      "neutralises",
+      "neutralising",
+      "neutrality",
+      "neutralization",
+      "neutralize",
+      "neutralized",
+      "neutralizes",
+      "neutralizing"
+    ],
+    "persianMeaning": "بی‌طرف؛ خنثی"
+  },
+  {
+    "word": "nevertheless",
+    "sublist": 6,
+    "relatedForms": [],
+    "persianMeaning": "با این حال"
+  },
+  {
+    "word": "overseas",
+    "sublist": 6,
+    "relatedForms": [],
+    "persianMeaning": "خارج از کشور"
+  },
+  {
+    "word": "precede",
+    "sublist": 6,
+    "relatedForms": [
+      "preceded",
+      "precedence",
+      "precedent",
+      "precedes",
+      "preceding",
+      "unprecedented"
+    ],
+    "persianMeaning": "پیش از چیزی آمدن"
+  },
+  {
+    "word": "presume",
+    "sublist": 6,
+    "relatedForms": [
+      "presumably",
+      "presumed",
+      "presumes",
+      "presuming",
+      "presumption",
+      "presumptions",
+      "presumptuous"
+    ],
+    "persianMeaning": "فرض کردن"
+  },
+  {
+    "word": "rational",
+    "sublist": 6,
+    "relatedForms": [
+      "irrational",
+      "rationalisation",
+      "rationalisations",
+      "rationalise",
+      "rationalised",
+      "rationalises",
+      "rationalising",
+      "rationalism",
+      "rationality",
+      "rationalization",
+      "rationalizations",
+      "rationalize",
+      "rationalized",
+      "rationalizes",
+      "rationally"
+    ],
+    "persianMeaning": "عقلانی"
+  },
+  {
+    "word": "recover",
+    "sublist": 6,
+    "relatedForms": ["recoverable", "recovered", "recovering", "recovers", "recovery"],
+    "persianMeaning": "بازیابی کردن؛ بهبود یافتن"
+  },
+  {
+    "word": "reveal",
+    "sublist": 6,
+    "relatedForms": ["revealed", "revealing", "reveals", "revelation", "revelations"],
+    "persianMeaning": "آشکار کردن"
+  },
+  {
+    "word": "scope",
+    "sublist": 6,
+    "relatedForms": [],
+    "persianMeaning": "دامنه؛ محدوده"
+  },
+  {
+    "word": "subsidy",
+    "sublist": 6,
+    "relatedForms": [
+      "subsidiary",
+      "subsidies",
+      "subsidise",
+      "subsidised",
+      "subsidises",
+      "subsidising",
+      "subsidize",
+      "subsidized",
+      "subsidizes",
+      "subsidizing"
+    ],
+    "persianMeaning": "یارانه"
+  },
+  {
+    "word": "tape",
+    "sublist": 6,
+    "relatedForms": ["taped", "tapes", "taping"],
+    "persianMeaning": "نوار"
+  },
+  {
+    "word": "trace",
+    "sublist": 6,
+    "relatedForms": ["traceable", "traced", "traces", "tracing"],
+    "persianMeaning": "رد؛ ردیابی کردن"
+  },
+  {
+    "word": "transform",
+    "sublist": 6,
+    "relatedForms": [
+      "transformation",
+      "transformations",
+      "transformed",
+      "transforming",
+      "transforms"
+    ],
+    "persianMeaning": "دگرگون کردن"
+  },
+  {
+    "word": "transport",
+    "sublist": 6,
+    "relatedForms": [
+      "transportation",
+      "transported",
+      "transporter",
+      "transporters",
+      "transporting",
+      "transports"
+    ],
+    "persianMeaning": "حمل‌ونقل؛ جابه‌جا کردن"
+  },
+  {
+    "word": "underlie",
+    "sublist": 6,
+    "relatedForms": ["underlay", "underlies", "underlying"],
+    "persianMeaning": "زیربنای چیزی بودن"
+  },
+  {
+    "word": "utilise",
+    "sublist": 6,
+    "relatedForms": [
+      "utilisation",
+      "utilised",
+      "utiliser",
+      "utilisers",
+      "utilises",
+      "utilising",
+      "utilities",
+      "utility",
+      "utilization",
+      "utilize",
+      "utilized",
+      "utilizes",
+      "utilizing"
+    ],
+    "persianMeaning": "استفاده کردن"
+  },
+  {
+    "word": "adapt",
+    "sublist": 7,
+    "relatedForms": [
+      "adaptability",
+      "adaptable",
+      "adaptation",
+      "adaptations",
+      "adapted",
+      "adapting",
+      "adaptive",
+      "adapts"
+    ],
+    "persianMeaning": "سازگار کردن"
+  },
+  {
+    "word": "adult",
+    "sublist": 7,
+    "relatedForms": ["adulthood", "adults"],
+    "persianMeaning": "بزرگسال"
+  },
+  {
+    "word": "advocate",
+    "sublist": 7,
+    "relatedForms": ["advocacy", "advocated", "advocates", "advocating"],
+    "persianMeaning": "حمایت کردن؛ حامی"
+  },
+  {
+    "word": "aid",
+    "sublist": 7,
+    "relatedForms": ["aided", "aiding", "aids", "unaided"],
+    "persianMeaning": "کمک"
+  },
+  {
+    "word": "channel",
+    "sublist": 7,
+    "relatedForms": ["channelled", "channelling", "channels"],
+    "persianMeaning": "کانال؛ مسیر"
+  },
+  {
+    "word": "chemical",
+    "sublist": 7,
+    "relatedForms": ["chemically", "chemicals"],
+    "persianMeaning": "مادهٔ شیمیایی؛ شیمیایی"
+  },
+  {
+    "word": "classic",
+    "sublist": 7,
+    "relatedForms": ["classical", "classics"],
+    "persianMeaning": "کلاسیک؛ اثر برجسته"
+  },
+  {
+    "word": "comprehensive",
+    "sublist": 7,
+    "relatedForms": ["comprehensively"],
+    "persianMeaning": "جامع"
+  },
+  {
+    "word": "comprise",
+    "sublist": 7,
+    "relatedForms": ["comprised", "comprises", "comprising"],
+    "persianMeaning": "شامل بودن"
+  },
+  {
+    "word": "confirm",
+    "sublist": 7,
+    "relatedForms": ["confirmation", "confirmed", "confirming", "confirms"],
+    "persianMeaning": "تأیید کردن"
+  },
+  {
+    "word": "contrary",
+    "sublist": 7,
+    "relatedForms": ["contrarily"],
+    "persianMeaning": "مخالف؛ برعکس"
+  },
+  {
+    "word": "convert",
+    "sublist": 7,
+    "relatedForms": [
+      "conversion",
+      "conversions",
+      "converted",
+      "convertible",
+      "converting",
+      "converts"
+    ],
+    "persianMeaning": "تبدیل کردن"
+  },
+  {
+    "word": "couple",
+    "sublist": 7,
+    "relatedForms": ["coupled", "couples", "coupling"],
+    "persianMeaning": "زوج؛ جفت"
+  },
+  {
+    "word": "decade",
+    "sublist": 7,
+    "relatedForms": ["decades"],
+    "persianMeaning": "دهه"
+  },
+  {
+    "word": "definite",
+    "sublist": 7,
+    "relatedForms": ["definitely", "definitive", "indefinite", "indefinitely"],
+    "persianMeaning": "قطعی؛ مشخص"
+  },
+  {
+    "word": "deny",
+    "sublist": 7,
+    "relatedForms": ["deniable", "denial", "denials", "denied", "denies", "denying", "undeniable"],
+    "persianMeaning": "انکار کردن"
+  },
+  {
+    "word": "differentiate",
+    "sublist": 7,
+    "relatedForms": ["differentiated", "differentiates", "differentiating", "differentiation"],
+    "persianMeaning": "تمایز قائل شدن"
+  },
+  {
+    "word": "dispose",
+    "sublist": 7,
+    "relatedForms": ["disposable", "disposal", "disposed", "disposes", "disposing"],
+    "persianMeaning": "دور انداختن؛ ترتیب دادن"
+  },
+  {
+    "word": "dynamic",
+    "sublist": 7,
+    "relatedForms": ["dynamically", "dynamics"],
+    "persianMeaning": "پویا"
+  },
+  {
+    "word": "eliminate",
+    "sublist": 7,
+    "relatedForms": ["eliminated", "eliminates", "eliminating", "elimination"],
+    "persianMeaning": "حذف کردن"
+  },
+  {
+    "word": "empirical",
+    "sublist": 7,
+    "relatedForms": ["empirically", "empiricism"],
+    "persianMeaning": "تجربی"
+  },
+  {
+    "word": "equip",
+    "sublist": 7,
+    "relatedForms": ["equipment", "equipped", "equipping", "equips"],
+    "persianMeaning": "مجهز کردن"
+  },
+  {
+    "word": "extract",
+    "sublist": 7,
+    "relatedForms": ["extracted", "extracting", "extraction", "extracts"],
+    "persianMeaning": "استخراج کردن؛ گزیده"
+  },
+  {
+    "word": "file",
+    "sublist": 7,
+    "relatedForms": ["filed", "files", "filing"],
+    "persianMeaning": "پرونده"
+  },
+  {
+    "word": "finite",
+    "sublist": 7,
+    "relatedForms": ["infinite", "infinitely"],
+    "persianMeaning": "محدود؛ متناهی"
+  },
+  {
+    "word": "foundation",
+    "sublist": 7,
+    "relatedForms": ["foundations"],
+    "persianMeaning": "بنیاد؛ پایه"
+  },
+  {
+    "word": "globe",
+    "sublist": 7,
+    "relatedForms": ["global", "globalisation", "globalization", "globally"],
+    "persianMeaning": "کرهٔ زمین"
+  },
+  {
+    "word": "grade",
+    "sublist": 7,
+    "relatedForms": ["graded", "grades", "grading"],
+    "persianMeaning": "نمره؛ درجه"
+  },
+  {
+    "word": "guarantee",
+    "sublist": 7,
+    "relatedForms": ["guaranteed", "guaranteeing", "guarantees"],
+    "persianMeaning": "تضمین کردن"
+  },
+  {
+    "word": "hierarchy",
+    "sublist": 7,
+    "relatedForms": ["hierarchical", "hierarchies"],
+    "persianMeaning": "سلسله‌مراتب"
+  },
+  {
+    "word": "identical",
+    "sublist": 7,
+    "relatedForms": ["identically"],
+    "persianMeaning": "یکسان"
+  },
+  {
+    "word": "ideology",
+    "sublist": 7,
+    "relatedForms": ["ideological", "ideologically", "ideologies"],
+    "persianMeaning": "ایدئولوژی"
+  },
+  {
+    "word": "infer",
+    "sublist": 7,
+    "relatedForms": ["inference", "inferences", "inferred", "inferring", "infers"],
+    "persianMeaning": "استنباط کردن"
+  },
+  {
+    "word": "innovate",
+    "sublist": 7,
+    "relatedForms": [
+      "innovated",
+      "innovates",
+      "innovating",
+      "innovation",
+      "innovations",
+      "innovative",
+      "innovator",
+      "innovators"
+    ],
+    "persianMeaning": "نوآوری کردن"
+  },
+  {
+    "word": "insert",
+    "sublist": 7,
+    "relatedForms": ["inserted", "inserting", "insertion", "inserts"],
+    "persianMeaning": "وارد کردن"
+  },
+  {
+    "word": "intervene",
+    "sublist": 7,
+    "relatedForms": ["intervened", "intervenes", "intervening", "intervention", "interventions"],
+    "persianMeaning": "مداخله کردن"
+  },
+  {
+    "word": "isolate",
+    "sublist": 7,
+    "relatedForms": ["isolated", "isolates", "isolating", "isolation", "isolationism"],
+    "persianMeaning": "جدا کردن"
+  },
+  {
+    "word": "media",
+    "sublist": 7,
+    "relatedForms": [],
+    "persianMeaning": "رسانه‌ها"
+  },
+  {
+    "word": "mode",
+    "sublist": 7,
+    "relatedForms": ["modes"],
+    "persianMeaning": "حالت؛ شیوه"
+  },
+  {
+    "word": "paradigm",
+    "sublist": 7,
+    "relatedForms": ["paradigms"],
+    "persianMeaning": "الگو؛ پارادایم"
+  },
+  {
+    "word": "phenomenon",
+    "sublist": 7,
+    "relatedForms": ["phenomena", "phenomenal"],
+    "persianMeaning": "پدیده"
+  },
+  {
+    "word": "priority",
+    "sublist": 7,
+    "relatedForms": [
+      "priorities",
+      "prioritisation",
+      "prioritise",
+      "prioritised",
+      "prioritises",
+      "prioritising",
+      "prioritization",
+      "prioritize",
+      "prioritized",
+      "prioritizes",
+      "prioritizing"
+    ],
+    "persianMeaning": "اولویت"
+  },
+  {
+    "word": "prohibit",
+    "sublist": 7,
+    "relatedForms": [
+      "prohibited",
+      "prohibiting",
+      "prohibition",
+      "prohibitions",
+      "prohibitive",
+      "prohibits"
+    ],
+    "persianMeaning": "ممنوع کردن"
+  },
+  {
+    "word": "publication",
+    "sublist": 7,
+    "relatedForms": ["publications"],
+    "persianMeaning": "انتشار؛ نشریه"
+  },
+  {
+    "word": "quote",
+    "sublist": 7,
+    "relatedForms": ["quotation", "quotations", "quoted", "quotes", "quoting"],
+    "persianMeaning": "نقل‌قول کردن"
+  },
+  {
+    "word": "release",
+    "sublist": 7,
+    "relatedForms": ["released", "releases", "releasing"],
+    "persianMeaning": "آزاد کردن؛ انتشار"
+  },
+  {
+    "word": "reverse",
+    "sublist": 7,
+    "relatedForms": [
+      "irreversible",
+      "reversal",
+      "reversals",
+      "reversed",
+      "reverses",
+      "reversible",
+      "reversing"
+    ],
+    "persianMeaning": "معکوس؛ برعکس کردن"
+  },
+  {
+    "word": "simulate",
+    "sublist": 7,
+    "relatedForms": ["simulated", "simulates", "simulating", "simulation"],
+    "persianMeaning": "شبیه‌سازی کردن"
+  },
+  {
+    "word": "sole",
+    "sublist": 7,
+    "relatedForms": ["solely"],
+    "persianMeaning": "تنها؛ یگانه"
+  },
+  {
+    "word": "somewhat",
+    "sublist": 7,
+    "relatedForms": [],
+    "persianMeaning": "تا حدی"
+  },
+  {
+    "word": "submit",
+    "sublist": 7,
+    "relatedForms": ["submission", "submissions", "submits", "submitted", "submitting"],
+    "persianMeaning": "ارائه کردن"
+  },
+  {
+    "word": "successor",
+    "sublist": 7,
+    "relatedForms": ["succession", "successions", "successive", "successively", "successors"],
+    "persianMeaning": "جانشین"
+  },
+  {
+    "word": "survive",
+    "sublist": 7,
+    "relatedForms": ["survival", "survived", "survives", "surviving", "survivor", "survivors"],
+    "persianMeaning": "زنده ماندن"
+  },
+  {
+    "word": "thesis",
+    "sublist": 7,
+    "relatedForms": ["theses"],
+    "persianMeaning": "پایان‌نامه؛ گزارهٔ اصلی"
+  },
+  {
+    "word": "topic",
+    "sublist": 7,
+    "relatedForms": ["topical", "topics"],
+    "persianMeaning": "موضوع"
+  },
+  {
+    "word": "transmit",
+    "sublist": 7,
+    "relatedForms": ["transmission", "transmissions", "transmits", "transmitted", "transmitting"],
+    "persianMeaning": "انتقال دادن"
+  },
+  {
+    "word": "ultimate",
+    "sublist": 7,
+    "relatedForms": ["ultimately"],
+    "persianMeaning": "نهایی"
+  },
+  {
+    "word": "unique",
+    "sublist": 7,
+    "relatedForms": ["uniquely", "uniqueness"],
+    "persianMeaning": "منحصربه‌فرد"
+  },
+  {
+    "word": "visible",
+    "sublist": 7,
+    "relatedForms": ["invisibility", "invisible", "visibility", "visibly"],
+    "persianMeaning": "قابل مشاهده"
+  },
+  {
+    "word": "voluntary",
+    "sublist": 7,
+    "relatedForms": ["voluntarily", "volunteer", "volunteered", "volunteering", "volunteers"],
+    "persianMeaning": "داوطلبانه"
+  },
+  {
+    "word": "abandon",
+    "sublist": 8,
+    "relatedForms": ["abandoned", "abandoning", "abandonment", "abandons"],
+    "persianMeaning": "رها کردن"
+  },
+  {
+    "word": "accompany",
+    "sublist": 8,
+    "relatedForms": [
+      "accompanied",
+      "accompanies",
+      "accompaniment",
+      "accompanying",
+      "unaccompanied"
+    ],
+    "persianMeaning": "همراهی کردن"
+  },
+  {
+    "word": "accumulate",
+    "sublist": 8,
+    "relatedForms": ["accumulated", "accumulates", "accumulating", "accumulation"],
+    "persianMeaning": "انباشت کردن"
+  },
+  {
+    "word": "ambiguous",
+    "sublist": 8,
+    "relatedForms": ["ambiguities", "ambiguity", "unambiguous", "unambiguously"],
+    "persianMeaning": "مبهم"
+  },
+  {
+    "word": "append",
+    "sublist": 8,
+    "relatedForms": ["appended", "appendices", "appending", "appendix", "appendixes", "appends"],
+    "persianMeaning": "افزودن؛ پیوست کردن"
+  },
+  {
+    "word": "appreciate",
+    "sublist": 8,
+    "relatedForms": [
+      "appreciable",
+      "appreciably",
+      "appreciated",
+      "appreciates",
+      "appreciating",
+      "appreciation",
+      "unappreciated"
+    ],
+    "persianMeaning": "قدردانی کردن؛ درک کردن"
+  },
+  {
+    "word": "arbitrary",
+    "sublist": 8,
+    "relatedForms": ["arbitrarily", "arbitrariness"],
+    "persianMeaning": "دل‌بخواهی؛ خودسرانه"
+  },
+  {
+    "word": "automate",
+    "sublist": 8,
+    "relatedForms": [
+      "automated",
+      "automates",
+      "automatic",
+      "automatically",
+      "automating",
+      "automation"
+    ],
+    "persianMeaning": "خودکار کردن"
+  },
+  {
+    "word": "bias",
+    "sublist": 8,
+    "relatedForms": ["biased", "biases", "biasing", "unbiased"],
+    "persianMeaning": "سوگیری"
+  },
+  {
+    "word": "chart",
+    "sublist": 8,
+    "relatedForms": ["charted", "charting", "charts", "uncharted"],
+    "persianMeaning": "نمودار"
+  },
+  {
+    "word": "clarify",
+    "sublist": 8,
+    "relatedForms": ["clarification", "clarified", "clarifies", "clarifying", "clarity"],
+    "persianMeaning": "روشن کردن"
+  },
+  {
+    "word": "commodity",
+    "sublist": 8,
+    "relatedForms": ["commodities"],
+    "persianMeaning": "کالا"
+  },
+  {
+    "word": "complement",
+    "sublist": 8,
+    "relatedForms": ["complementary", "complemented", "complementing", "complements"],
+    "persianMeaning": "مکمل؛ تکمیل کردن"
+  },
+  {
+    "word": "conform",
+    "sublist": 8,
+    "relatedForms": [
+      "conformability",
+      "conformable",
+      "conformance",
+      "conformation",
+      "conformed",
+      "conforming",
+      "conformist",
+      "conformists",
+      "conformity",
+      "conforms",
+      "non-conformist",
+      "non-conformists",
+      "non-conformity",
+      "nonconformist",
+      "nonconformists",
+      "nonconformity"
+    ],
+    "persianMeaning": "مطابقت داشتن"
+  },
+  {
+    "word": "contemporary",
+    "sublist": 8,
+    "relatedForms": ["contemporaries"],
+    "persianMeaning": "معاصر"
+  },
+  {
+    "word": "contradict",
+    "sublist": 8,
+    "relatedForms": [
+      "contradicted",
+      "contradicting",
+      "contradiction",
+      "contradictions",
+      "contradictory",
+      "contradicts"
+    ],
+    "persianMeaning": "تناقض داشتن"
+  },
+  {
+    "word": "crucial",
+    "sublist": 8,
+    "relatedForms": ["crucially"],
+    "persianMeaning": "بسیار مهم؛ حیاتی"
+  },
+  {
+    "word": "currency",
+    "sublist": 8,
+    "relatedForms": ["currencies"],
+    "persianMeaning": "پول رایج؛ ارز"
+  },
+  {
+    "word": "denote",
+    "sublist": 8,
+    "relatedForms": ["denotation", "denotations", "denoted", "denotes", "denoting"],
+    "persianMeaning": "دلالت داشتن"
+  },
+  {
+    "word": "detect",
+    "sublist": 8,
+    "relatedForms": [
+      "detectable",
+      "detected",
+      "detecting",
+      "detection",
+      "detective",
+      "detectives",
+      "detector",
+      "detectors",
+      "detects"
+    ],
+    "persianMeaning": "تشخیص دادن"
+  },
+  {
+    "word": "deviate",
+    "sublist": 8,
+    "relatedForms": ["deviated", "deviates", "deviating", "deviation", "deviations"],
+    "persianMeaning": "منحرف شدن"
+  },
+  {
+    "word": "displace",
+    "sublist": 8,
+    "relatedForms": ["displaced", "displacement", "displaces", "displacing"],
+    "persianMeaning": "جابه‌جا کردن"
+  },
+  {
+    "word": "drama",
+    "sublist": 8,
+    "relatedForms": [
+      "dramas",
+      "dramatic",
+      "dramatically",
+      "dramatisation",
+      "dramatisations",
+      "dramatise",
+      "dramatised",
+      "dramatises",
+      "dramatising",
+      "dramatist",
+      "dramatists",
+      "dramatization",
+      "dramatizations",
+      "dramatize",
+      "dramatized",
+      "dramatizes",
+      "dramatizing"
+    ],
+    "persianMeaning": "نمایش؛ درام"
+  },
+  {
+    "word": "eventual",
+    "sublist": 8,
+    "relatedForms": ["eventuality", "eventually"],
+    "persianMeaning": "نهایی؛ سرانجامی"
+  },
+  {
+    "word": "exhibit",
+    "sublist": 8,
+    "relatedForms": ["exhibited", "exhibiting", "exhibition", "exhibitions", "exhibits"],
+    "persianMeaning": "نمایش دادن"
+  },
+  {
+    "word": "exploit",
+    "sublist": 8,
+    "relatedForms": ["exploitation", "exploited", "exploiting", "exploits"],
+    "persianMeaning": "بهره‌برداری کردن؛ سوءاستفاده کردن"
+  },
+  {
+    "word": "fluctuate",
+    "sublist": 8,
+    "relatedForms": ["fluctuated", "fluctuates", "fluctuating", "fluctuation", "fluctuations"],
+    "persianMeaning": "نوسان داشتن"
+  },
+  {
+    "word": "guideline",
+    "sublist": 8,
+    "relatedForms": ["guidelines"],
+    "persianMeaning": "دستورالعمل"
+  },
+  {
+    "word": "highlight",
+    "sublist": 8,
+    "relatedForms": ["highlighted", "highlighting", "highlights"],
+    "persianMeaning": "برجسته کردن"
+  },
+  {
+    "word": "implicit",
+    "sublist": 8,
+    "relatedForms": ["implicitly"],
+    "persianMeaning": "ضمنی"
+  },
+  {
+    "word": "induce",
+    "sublist": 8,
+    "relatedForms": ["induced", "induces", "inducing", "induction"],
+    "persianMeaning": "ایجاد کردن؛ ترغیب کردن"
+  },
+  {
+    "word": "inevitable",
+    "sublist": 8,
+    "relatedForms": ["inevitability", "inevitably"],
+    "persianMeaning": "اجتناب‌ناپذیر"
+  },
+  {
+    "word": "infrastructure",
+    "sublist": 8,
+    "relatedForms": ["infrastructures"],
+    "persianMeaning": "زیرساخت"
+  },
+  {
+    "word": "inspect",
+    "sublist": 8,
+    "relatedForms": [
+      "inspected",
+      "inspecting",
+      "inspection",
+      "inspections",
+      "inspector",
+      "inspectors",
+      "inspects"
+    ],
+    "persianMeaning": "بازرسی کردن"
+  },
+  {
+    "word": "intense",
+    "sublist": 8,
+    "relatedForms": [
+      "intensely",
+      "intenseness",
+      "intensification",
+      "intensified",
+      "intensifies",
+      "intensify",
+      "intensifying",
+      "intension",
+      "intensity",
+      "intensive",
+      "intensively"
+    ],
+    "persianMeaning": "شدید"
+  },
+  {
+    "word": "manipulate",
+    "sublist": 8,
+    "relatedForms": [
+      "manipulated",
+      "manipulates",
+      "manipulating",
+      "manipulation",
+      "manipulations",
+      "manipulative"
+    ],
+    "persianMeaning": "دست‌کاری کردن"
+  },
+  {
+    "word": "minimise",
+    "sublist": 8,
+    "relatedForms": [
+      "minimised",
+      "minimises",
+      "minimising",
+      "minimize",
+      "minimized",
+      "minimizes",
+      "minimizing"
+    ],
+    "persianMeaning": "به حداقل رساندن"
+  },
+  {
+    "word": "nuclear",
+    "sublist": 8,
+    "relatedForms": [],
+    "persianMeaning": "هسته‌ای"
+  },
+  {
+    "word": "offset",
+    "sublist": 8,
+    "relatedForms": ["offsets", "offsetting"],
+    "persianMeaning": "جبران کردن؛ خنثی کردن"
+  },
+  {
+    "word": "paragraph",
+    "sublist": 8,
+    "relatedForms": ["paragraphing", "paragraphs"],
+    "persianMeaning": "بند؛ پاراگراف"
+  },
+  {
+    "word": "plus",
+    "sublist": 8,
+    "relatedForms": ["pluses"],
+    "persianMeaning": "به‌علاوه"
+  },
+  {
+    "word": "practitioner",
+    "sublist": 8,
+    "relatedForms": ["practitioners"],
+    "persianMeaning": "فرد شاغل در حرفه"
+  },
+  {
+    "word": "predominant",
+    "sublist": 8,
+    "relatedForms": [
+      "predominance",
+      "predominantly",
+      "predominate",
+      "predominated",
+      "predominates",
+      "predominating"
+    ],
+    "persianMeaning": "غالب"
+  },
+  {
+    "word": "prospect",
+    "sublist": 8,
+    "relatedForms": ["prospective", "prospects"],
+    "persianMeaning": "چشم‌انداز؛ احتمال"
+  },
+  {
+    "word": "radical",
+    "sublist": 8,
+    "relatedForms": ["radically", "radicals"],
+    "persianMeaning": "بنیادی؛ رادیکال"
+  },
+  {
+    "word": "random",
+    "sublist": 8,
+    "relatedForms": ["randomly", "randomness"],
+    "persianMeaning": "تصادفی"
+  },
+  {
+    "word": "reinforce",
+    "sublist": 8,
+    "relatedForms": ["reinforced", "reinforcement", "reinforcements", "reinforces", "reinforcing"],
+    "persianMeaning": "تقویت کردن"
+  },
+  {
+    "word": "restore",
+    "sublist": 8,
+    "relatedForms": ["restoration", "restored", "restores", "restoring"],
+    "persianMeaning": "بازگرداندن"
+  },
+  {
+    "word": "revise",
+    "sublist": 8,
+    "relatedForms": ["revised", "revises", "revising", "revision", "revisions"],
+    "persianMeaning": "بازنگری کردن"
+  },
+  {
+    "word": "schedule",
+    "sublist": 8,
+    "relatedForms": [
+      "reschedule",
+      "rescheduled",
+      "reschedules",
+      "rescheduling",
+      "scheduled",
+      "schedules",
+      "scheduling",
+      "unscheduled"
+    ],
+    "persianMeaning": "برنامه؛ زمان‌بندی کردن"
+  },
+  {
+    "word": "tense",
+    "sublist": 8,
+    "relatedForms": ["tensely", "tenser", "tensest", "tension", "tensions"],
+    "persianMeaning": "پرتنش؛ زمانِ فعل"
+  },
+  {
+    "word": "terminate",
+    "sublist": 8,
+    "relatedForms": [
+      "terminal",
+      "terminals",
+      "terminated",
+      "terminates",
+      "terminating",
+      "termination",
+      "terminations"
+    ],
+    "persianMeaning": "پایان دادن"
+  },
+  {
+    "word": "theme",
+    "sublist": 8,
+    "relatedForms": ["thematic", "thematically", "themes"],
+    "persianMeaning": "موضوع؛ مضمون"
+  },
+  {
+    "word": "thereby",
+    "sublist": 8,
+    "relatedForms": [],
+    "persianMeaning": "بدین وسیله"
+  },
+  {
+    "word": "uniform",
+    "sublist": 8,
+    "relatedForms": ["uniformity", "uniformly"],
+    "persianMeaning": "یکنواخت؛ لباس متحدالشکل"
+  },
+  {
+    "word": "vehicle",
+    "sublist": 8,
+    "relatedForms": ["vehicles"],
+    "persianMeaning": "وسیلهٔ نقلیه"
+  },
+  {
+    "word": "via",
+    "sublist": 8,
+    "relatedForms": [],
+    "persianMeaning": "از طریق"
+  },
+  {
+    "word": "virtual",
+    "sublist": 8,
+    "relatedForms": ["virtually"],
+    "persianMeaning": "مجازی"
+  },
+  {
+    "word": "visual",
+    "sublist": 8,
+    "relatedForms": [
+      "visualisation",
+      "visualise",
+      "visualised",
+      "visualising",
+      "visualization",
+      "visualize",
+      "visualized",
+      "visualizing",
+      "visually"
+    ],
+    "persianMeaning": "دیداری"
+  },
+  {
+    "word": "widespread",
+    "sublist": 8,
+    "relatedForms": [],
+    "persianMeaning": "گسترده"
+  },
+  {
+    "word": "accommodate",
+    "sublist": 9,
+    "relatedForms": ["accommodated", "accommodates", "accommodating", "accommodation"],
+    "persianMeaning": "جا دادن؛ سازگار کردن"
+  },
+  {
+    "word": "analogy",
+    "sublist": 9,
+    "relatedForms": ["analogies", "analogous"],
+    "persianMeaning": "قیاس؛ تشابه"
+  },
+  {
+    "word": "anticipate",
+    "sublist": 9,
+    "relatedForms": ["anticipated", "anticipates", "anticipating", "anticipation", "unanticipated"],
+    "persianMeaning": "پیش‌بینی کردن؛ انتظار داشتن"
+  },
+  {
+    "word": "assure",
+    "sublist": 9,
+    "relatedForms": ["assurance", "assurances", "assured", "assuredly", "assures", "assuring"],
+    "persianMeaning": "اطمینان دادن"
+  },
+  {
+    "word": "attain",
+    "sublist": 9,
+    "relatedForms": [
+      "attainable",
+      "attained",
+      "attaining",
+      "attainment",
+      "attainments",
+      "attains",
+      "unattainable"
+    ],
+    "persianMeaning": "دست یافتن"
+  },
+  {
+    "word": "behalf",
+    "sublist": 9,
+    "relatedForms": [],
+    "persianMeaning": "از طرفِ؛ به نمایندگی از"
+  },
+  {
+    "word": "bulk",
+    "sublist": 9,
+    "relatedForms": ["bulky"],
+    "persianMeaning": "حجم عمده"
+  },
+  {
+    "word": "cease",
+    "sublist": 9,
+    "relatedForms": ["ceased", "ceaseless", "ceases", "ceasing"],
+    "persianMeaning": "متوقف شدن"
+  },
+  {
+    "word": "coherent",
+    "sublist": 9,
+    "relatedForms": ["coherence", "coherently", "incoherent", "incoherently"],
+    "persianMeaning": "منسجم"
+  },
+  {
+    "word": "coincide",
+    "sublist": 9,
+    "relatedForms": [
+      "coincided",
+      "coincidence",
+      "coincidences",
+      "coincident",
+      "coincidental",
+      "coincides",
+      "coinciding"
+    ],
+    "persianMeaning": "هم‌زمان شدن؛ منطبق بودن"
+  },
+  {
+    "word": "commence",
+    "sublist": 9,
+    "relatedForms": [
+      "commenced",
+      "commencement",
+      "commences",
+      "commencing",
+      "recommenced",
+      "recommences",
+      "recommencing"
+    ],
+    "persianMeaning": "آغاز کردن"
+  },
+  {
+    "word": "compatible",
+    "sublist": 9,
+    "relatedForms": ["compatibility", "incompatibility", "incompatible"],
+    "persianMeaning": "سازگار"
+  },
+  {
+    "word": "concurrent",
+    "sublist": 9,
+    "relatedForms": ["concurrently"],
+    "persianMeaning": "هم‌زمان"
+  },
+  {
+    "word": "confine",
+    "sublist": 9,
+    "relatedForms": ["confined", "confines", "confining", "unconfined"],
+    "persianMeaning": "محدود کردن"
+  },
+  {
+    "word": "controversy",
+    "sublist": 9,
+    "relatedForms": ["controversial", "controversially", "controversies", "uncontroversial"],
+    "persianMeaning": "اختلاف‌نظر؛ مناقشه"
+  },
+  {
+    "word": "converse",
+    "sublist": 9,
+    "relatedForms": ["conversely"],
+    "persianMeaning": "گفت‌وگو کردن؛ عکسِ گزاره"
+  },
+  {
+    "word": "device",
+    "sublist": 9,
+    "relatedForms": ["devices"],
+    "persianMeaning": "وسیله؛ دستگاه"
+  },
+  {
+    "word": "devote",
+    "sublist": 9,
+    "relatedForms": ["devoted", "devotedly", "devotes", "devoting", "devotion", "devotions"],
+    "persianMeaning": "اختصاص دادن"
+  },
+  {
+    "word": "diminish",
+    "sublist": 9,
+    "relatedForms": ["diminished", "diminishes", "diminishing", "diminution", "undiminished"],
+    "persianMeaning": "کاهش یافتن"
+  },
+  {
+    "word": "distort",
+    "sublist": 9,
+    "relatedForms": ["distorted", "distorting", "distortion", "distortions", "distorts"],
+    "persianMeaning": "تحریف کردن"
+  },
+  {
+    "word": "duration",
+    "sublist": 9,
+    "relatedForms": [],
+    "persianMeaning": "مدت"
+  },
+  {
+    "word": "erode",
+    "sublist": 9,
+    "relatedForms": ["eroded", "erodes", "eroding", "erosion"],
+    "persianMeaning": "فرسایش دادن"
+  },
+  {
+    "word": "ethic",
+    "sublist": 9,
+    "relatedForms": ["ethical", "ethically", "ethics", "unethical"],
+    "persianMeaning": "اصل اخلاقی"
+  },
+  {
+    "word": "format",
+    "sublist": 9,
+    "relatedForms": ["formats", "formatted", "formatting"],
+    "persianMeaning": "قالب"
+  },
+  {
+    "word": "found",
+    "sublist": 9,
+    "relatedForms": ["founded", "founder", "founders", "founding", "unfounded"],
+    "persianMeaning": "تأسیس کردن"
+  },
+  {
+    "word": "inherent",
+    "sublist": 9,
+    "relatedForms": ["inherently"],
+    "persianMeaning": "ذاتی"
+  },
+  {
+    "word": "insight",
+    "sublist": 9,
+    "relatedForms": ["insightful", "insights"],
+    "persianMeaning": "بینش"
+  },
+  {
+    "word": "integral",
+    "sublist": 9,
+    "relatedForms": [],
+    "persianMeaning": "جدایی‌ناپذیر؛ کامل"
+  },
+  {
+    "word": "intermediate",
+    "sublist": 9,
+    "relatedForms": [],
+    "persianMeaning": "میانی"
+  },
+  {
+    "word": "manual",
+    "sublist": 9,
+    "relatedForms": ["manually", "manuals"],
+    "persianMeaning": "دستی؛ راهنما"
+  },
+  {
+    "word": "mature",
+    "sublist": 9,
+    "relatedForms": [
+      "immature",
+      "immaturity",
+      "maturation",
+      "maturational",
+      "matured",
+      "matures",
+      "maturing",
+      "maturity"
+    ],
+    "persianMeaning": "بالغ؛ رشد کردن"
+  },
+  {
+    "word": "mediate",
+    "sublist": 9,
+    "relatedForms": ["mediated", "mediates", "mediating", "mediation"],
+    "persianMeaning": "میانجیگری کردن"
+  },
+  {
+    "word": "medium",
+    "sublist": 9,
+    "relatedForms": [],
+    "persianMeaning": "رسانه؛ متوسط"
+  },
+  {
+    "word": "military",
+    "sublist": 9,
+    "relatedForms": [],
+    "persianMeaning": "نظامی"
+  },
+  {
+    "word": "minimal",
+    "sublist": 9,
+    "relatedForms": [
+      "minimalisation",
+      "minimalise",
+      "minimalised",
+      "minimalises",
+      "minimalising",
+      "minimalist",
+      "minimalistic",
+      "minimalists",
+      "minimalization",
+      "minimalize",
+      "minimalized",
+      "minimalizes",
+      "minimalizing",
+      "minimally"
+    ],
+    "persianMeaning": "بسیار کم؛ حداقلی"
+  },
+  {
+    "word": "mutual",
+    "sublist": 9,
+    "relatedForms": ["mutually"],
+    "persianMeaning": "متقابل"
+  },
+  {
+    "word": "norm",
+    "sublist": 9,
+    "relatedForms": ["norms"],
+    "persianMeaning": "هنجار"
+  },
+  {
+    "word": "overlap",
+    "sublist": 9,
+    "relatedForms": ["overlapped", "overlapping", "overlaps"],
+    "persianMeaning": "هم‌پوشانی"
+  },
+  {
+    "word": "passive",
+    "sublist": 9,
+    "relatedForms": ["passively", "passivity"],
+    "persianMeaning": "منفعل"
+  },
+  {
+    "word": "portion",
+    "sublist": 9,
+    "relatedForms": ["portions"],
+    "persianMeaning": "بخش؛ سهم"
+  },
+  {
+    "word": "preliminary",
+    "sublist": 9,
+    "relatedForms": ["preliminaries"],
+    "persianMeaning": "مقدماتی"
+  },
+  {
+    "word": "protocol",
+    "sublist": 9,
+    "relatedForms": ["protocols"],
+    "persianMeaning": "پروتکل؛ شیوه‌نامه"
+  },
+  {
+    "word": "qualitative",
+    "sublist": 9,
+    "relatedForms": ["qualitatively"],
+    "persianMeaning": "کیفی"
+  },
+  {
+    "word": "refine",
+    "sublist": 9,
+    "relatedForms": ["refined", "refinement", "refinements", "refines", "refining"],
+    "persianMeaning": "پالایش کردن؛ بهبود دادن"
+  },
+  {
+    "word": "relax",
+    "sublist": 9,
+    "relatedForms": ["relaxation", "relaxed", "relaxes", "relaxing"],
+    "persianMeaning": "آرام شدن؛ کاهش دادن"
+  },
+  {
+    "word": "restrain",
+    "sublist": 9,
+    "relatedForms": [
+      "restrained",
+      "restraining",
+      "restrains",
+      "restraint",
+      "restraints",
+      "unrestrained"
+    ],
+    "persianMeaning": "مهار کردن"
+  },
+  {
+    "word": "revolution",
+    "sublist": 9,
+    "relatedForms": [
+      "revolutionaries",
+      "revolutionary",
+      "revolutionise",
+      "revolutionised",
+      "revolutionises",
+      "revolutionising",
+      "revolutionist",
+      "revolutionists",
+      "revolutionize",
+      "revolutionized",
+      "revolutionizes",
+      "revolutionizing",
+      "revolutions"
+    ],
+    "persianMeaning": "انقلاب"
+  },
+  {
+    "word": "rigid",
+    "sublist": 9,
+    "relatedForms": ["rigidities", "rigidity", "rigidly"],
+    "persianMeaning": "سخت؛ انعطاف‌ناپذیر"
+  },
+  {
+    "word": "route",
+    "sublist": 9,
+    "relatedForms": ["routed", "routes", "routing"],
+    "persianMeaning": "مسیر"
+  },
+  {
+    "word": "scenario",
+    "sublist": 9,
+    "relatedForms": ["scenarios"],
+    "persianMeaning": "سناریو"
+  },
+  {
+    "word": "sphere",
+    "sublist": 9,
+    "relatedForms": ["spheres", "spherical", "spherically"],
+    "persianMeaning": "کره؛ حوزه"
+  },
+  {
+    "word": "subordinate",
+    "sublist": 9,
+    "relatedForms": ["subordinates", "subordination"],
+    "persianMeaning": "زیردست؛ تابع"
+  },
+  {
+    "word": "supplement",
+    "sublist": 9,
+    "relatedForms": ["supplementary", "supplemented", "supplementing", "supplements"],
+    "persianMeaning": "مکمل"
+  },
+  {
+    "word": "suspend",
+    "sublist": 9,
+    "relatedForms": ["suspended", "suspending", "suspends", "suspension"],
+    "persianMeaning": "تعلیق کردن"
+  },
+  {
+    "word": "team",
+    "sublist": 9,
+    "relatedForms": ["teamed", "teaming", "teams"],
+    "persianMeaning": "گروه؛ تیم"
+  },
+  {
+    "word": "temporary",
+    "sublist": 9,
+    "relatedForms": ["temporarily"],
+    "persianMeaning": "موقت"
+  },
+  {
+    "word": "trigger",
+    "sublist": 9,
+    "relatedForms": ["triggered", "triggering", "triggers"],
+    "persianMeaning": "محرک؛ فعال کردن"
+  },
+  {
+    "word": "unify",
+    "sublist": 9,
+    "relatedForms": ["unification", "unified", "unifies", "unifying"],
+    "persianMeaning": "یکپارچه کردن"
+  },
+  {
+    "word": "violate",
+    "sublist": 9,
+    "relatedForms": ["violated", "violates", "violating", "violation", "violations"],
+    "persianMeaning": "نقض کردن"
+  },
+  {
+    "word": "vision",
+    "sublist": 9,
+    "relatedForms": ["visions"],
+    "persianMeaning": "بینایی؛ چشم‌انداز"
+  },
+  {
+    "word": "adjacent",
+    "sublist": 10,
+    "relatedForms": [],
+    "persianMeaning": "مجاور"
+  },
+  {
+    "word": "albeit",
+    "sublist": 10,
+    "relatedForms": [],
+    "persianMeaning": "اگرچه"
+  },
+  {
+    "word": "assemble",
+    "sublist": 10,
+    "relatedForms": ["assembled", "assembles", "assemblies", "assembling", "assembly"],
+    "persianMeaning": "گردآوری کردن؛ مونتاژ کردن"
+  },
+  {
+    "word": "collapse",
+    "sublist": 10,
+    "relatedForms": ["collapsed", "collapses", "collapsible", "collapsing"],
+    "persianMeaning": "فروپاشیدن"
+  },
+  {
+    "word": "colleague",
+    "sublist": 10,
+    "relatedForms": ["colleagues"],
+    "persianMeaning": "همکار"
+  },
+  {
+    "word": "compile",
+    "sublist": 10,
+    "relatedForms": ["compilation", "compilations", "compiled", "compiles", "compiling"],
+    "persianMeaning": "گردآوری و تدوین کردن"
+  },
+  {
+    "word": "conceive",
+    "sublist": 10,
+    "relatedForms": [
+      "conceivable",
+      "conceivably",
+      "conceived",
+      "conceives",
+      "conceiving",
+      "inconceivable",
+      "inconceivably"
+    ],
+    "persianMeaning": "تصور کردن"
+  },
+  {
+    "word": "convince",
+    "sublist": 10,
+    "relatedForms": ["convinced", "convinces", "convincing", "convincingly", "unconvinced"],
+    "persianMeaning": "متقاعد کردن"
+  },
+  {
+    "word": "depress",
+    "sublist": 10,
+    "relatedForms": ["depressed", "depresses", "depressing", "depression"],
+    "persianMeaning": "افسرده کردن؛ کاهش دادن"
+  },
+  {
+    "word": "encounter",
+    "sublist": 10,
+    "relatedForms": ["encountered", "encountering", "encounters"],
+    "persianMeaning": "مواجه شدن"
+  },
+  {
+    "word": "enormous",
+    "sublist": 10,
+    "relatedForms": ["enormity", "enormously"],
+    "persianMeaning": "بسیار بزرگ"
+  },
+  {
+    "word": "forthcoming",
+    "sublist": 10,
+    "relatedForms": [],
+    "persianMeaning": "پیشِ رو"
+  },
+  {
+    "word": "incline",
+    "sublist": 10,
+    "relatedForms": ["inclination", "inclinations", "inclined", "inclines", "inclining"],
+    "persianMeaning": "تمایل داشتن"
+  },
+  {
+    "word": "integrity",
+    "sublist": 10,
+    "relatedForms": [],
+    "persianMeaning": "درستی؛ یکپارچگی"
+  },
+  {
+    "word": "intrinsic",
+    "sublist": 10,
+    "relatedForms": ["intrinsically"],
+    "persianMeaning": "ذاتی"
+  },
+  {
+    "word": "invoke",
+    "sublist": 10,
+    "relatedForms": ["invoked", "invokes", "invoking"],
+    "persianMeaning": "فراخواندن؛ استناد کردن"
+  },
+  {
+    "word": "levy",
+    "sublist": 10,
+    "relatedForms": ["levies"],
+    "persianMeaning": "وضع کردنِ مالیات؛ عوارض"
+  },
+  {
+    "word": "likewise",
+    "sublist": 10,
+    "relatedForms": [],
+    "persianMeaning": "به همین ترتیب"
+  },
+  {
+    "word": "nonetheless",
+    "sublist": 10,
+    "relatedForms": [],
+    "persianMeaning": "با این حال"
+  },
+  {
+    "word": "notwithstanding",
+    "sublist": 10,
+    "relatedForms": [],
+    "persianMeaning": "با وجودِ"
+  },
+  {
+    "word": "odd",
+    "sublist": 10,
+    "relatedForms": ["odds"],
+    "persianMeaning": "عجیب؛ فرد"
+  },
+  {
+    "word": "ongoing",
+    "sublist": 10,
+    "relatedForms": [],
+    "persianMeaning": "در حال انجام"
+  },
+  {
+    "word": "panel",
+    "sublist": 10,
+    "relatedForms": ["panelled", "panelling", "panels"],
+    "persianMeaning": "هیئت؛ صفحه"
+  },
+  {
+    "word": "persist",
+    "sublist": 10,
+    "relatedForms": [
+      "persisted",
+      "persistence",
+      "persistent",
+      "persistently",
+      "persisting",
+      "persists"
+    ],
+    "persianMeaning": "ادامه دادن؛ اصرار ورزیدن"
+  },
+  {
+    "word": "pose",
+    "sublist": 10,
+    "relatedForms": ["posed", "poses", "posing"],
+    "persianMeaning": "مطرح کردن؛ ژست گرفتن"
+  },
+  {
+    "word": "reluctance",
+    "sublist": 10,
+    "relatedForms": ["reluctant", "reluctantly"],
+    "persianMeaning": "بی‌میلی"
+  },
+  {
+    "word": "so-called",
+    "sublist": 10,
+    "relatedForms": [],
+    "persianMeaning": "اصطلاحاً؛ به‌اصطلاح"
+  },
+  {
+    "word": "straightforward",
+    "sublist": 10,
+    "relatedForms": [],
+    "persianMeaning": "سرراست"
+  },
+  {
+    "word": "undergo",
+    "sublist": 10,
+    "relatedForms": ["undergoes", "undergoing", "undergone", "underwent"],
+    "persianMeaning": "تجربه کردن؛ متحمل شدن"
+  },
+  {
+    "word": "whereby",
+    "sublist": 10,
+    "relatedForms": [],
+    "persianMeaning": "که به موجب آن"
+  }
+]

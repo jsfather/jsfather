@@ -12,6 +12,7 @@ import {
   type User,
 } from '@/db/schema';
 import { vocabularyStats } from '@/lib/vocabulary-data';
+import { dailyVocabulary } from '@/lib/daily-vocabulary';
 import { reviewTargets } from '@/lib/vocabulary';
 import { startVocabularyReview } from '@/actions/vocabulary';
 import { PageTitle, Badge, Progress, Pagination } from './ui';
@@ -33,7 +34,7 @@ export async function VocabularyCourseDetail({
   page: number;
 }) {
   const owner = course.ownerId === user.id;
-  const [stats, words, members, history] = await Promise.all([
+  const [stats, words, members, history, suggestionWords, membership] = await Promise.all([
     vocabularyStats(course.id, user.id),
     db
       .select({ word: vocabularyWords, progress: vocabularyProgress })
@@ -55,7 +56,12 @@ export async function VocabularyCourseDetail({
       .offset((page - 1) * 50),
     owner
       ? db
-          .select({ id: users.id, name: users.name, username: users.username })
+          .select({
+            id: users.id,
+            name: users.name,
+            username: users.username,
+            role: vocabularyMembers.role,
+          })
           .from(vocabularyMembers)
           .innerJoin(users, eq(users.id, vocabularyMembers.userId))
           .where(eq(vocabularyMembers.courseId, course.id))
@@ -78,8 +84,25 @@ export async function VocabularyCourseDetail({
       )
       .orderBy(desc(vocabularyReviews.submittedAt))
       .limit(10),
+    db
+      .select({
+        id: vocabularyWords.id,
+        word: vocabularyWords.word,
+        persianMeaning: vocabularyWords.persianMeaning,
+        awlSublist: vocabularyWords.awlSublist,
+      })
+      .from(vocabularyWords)
+      .where(eq(vocabularyWords.courseId, course.id)),
+    db
+      .select({ role: vocabularyMembers.role })
+      .from(vocabularyMembers)
+      .where(and(eq(vocabularyMembers.courseId, course.id), eq(vocabularyMembers.userId, user.id))),
   ]);
   const today = formatInTimeZone(new Date(), course.timezone, 'yyyy-MM-dd');
+  const suggestions =
+    owner || membership[0]?.role === 'collaborator'
+      ? dailyVocabulary(suggestionWords, today, course.startDate)
+      : [];
   return (
     <>
       <PageTitle
@@ -94,7 +117,7 @@ export async function VocabularyCourseDetail({
               Edit course
             </Link>
           ) : (
-            <Badge>Collaborator</Badge>
+            <Badge>{membership[0]?.role === 'collaborator' ? 'Collaborator' : 'Learner'}</Badge>
           )
         }
       />
@@ -112,6 +135,26 @@ export async function VocabularyCourseDetail({
           </article>
         ))}
       </div>
+      {suggestions.length > 0 && (
+        <section className="panel" style={{ marginTop: 24 }}>
+          <h2>Today’s suggested words</h2>
+          <p className="muted">
+            {today} · {course.timezone}. You and invited collaborators receive the same{' '}
+            {suggestions.length} words today. Review schedules and progress remain personal.
+          </p>
+          <div className="vocabulary-word-grid">
+            {suggestions.map((word) => (
+              <article className="vocabulary-word" key={word.id}>
+                <h3>{word.word}</h3>
+                <p dir="rtl" lang="fa">
+                  {word.persianMeaning}
+                </p>
+                {word.awlSublist && <Badge>AWL {word.awlSublist}</Badge>}
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
       <section className="panel" style={{ marginTop: 24 }}>
         <h2>Practice</h2>
         <p className="muted" style={{ margin: '12px 0 20px' }}>
@@ -185,6 +228,29 @@ export async function VocabularyCourseDetail({
                       <p dir="auto" className="vocabulary-meaning">
                         {word.explanation}
                       </p>
+                      {word.persianMeaning && word.persianMeaning !== word.explanation && (
+                        <p dir="rtl" lang="fa">
+                          <strong>معنی فارسی: </strong>
+                          {word.persianMeaning}
+                        </p>
+                      )}
+                      {word.awlSublist && <Badge>AWL sublist {word.awlSublist}</Badge>}
+                      {word.relatedForms.length > 0 && (
+                        <details>
+                          <summary>Related word forms ({word.relatedForms.length})</summary>
+                          <p>{word.relatedForms.join(', ')}</p>
+                        </details>
+                      )}
+                      {word.sourceUrl && (
+                        <a
+                          className="text-link"
+                          href={word.sourceUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Word list source
+                        </a>
+                      )}
                       {word.example && (
                         <blockquote dir="auto" className="vocabulary-example">
                           {word.example}
@@ -227,16 +293,18 @@ export async function VocabularyCourseDetail({
       </section>
       {owner && (
         <section className="panel" style={{ marginTop: 24 }}>
-          <h2>Collaborators</h2>
+          <h2>Collaborators and enrolled learners</h2>
           <p className="muted" style={{ margin: '12px 0 20px' }}>
             Add a friend’s account username. They’ll see this course in My courses and can practice
-            all its words. Only you can add or edit words and manage collaborators.
+            all its words and see the same daily suggestions as you. Public learners can join
+            themselves with their own practice schedule. Adding an enrolled learner here promotes
+            them to collaborator. Only you can add or edit words and manage collaborators.
           </p>
           <AddVocabularyCollaboratorForm courseId={course.id} />
           {members.map((member) => (
             <details className="vocabulary-member" key={member.id}>
               <summary>
-                {member.name || member.username} · @{member.username}
+                {member.name || member.username} · @{member.username} · {member.role}
               </summary>
               <div className="destructive-actions">
                 <RemoveVocabularyCollaboratorForm courseId={course.id} member={member} />

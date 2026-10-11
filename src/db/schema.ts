@@ -305,11 +305,13 @@ export const vocabularyMembers = pgTable(
     userId: text('user_id')
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
+    role: text('role').$type<'collaborator' | 'learner'>().default('collaborator').notNull(),
     joinedAt: timestamp('joined_at', { withTimezone: true }).defaultNow().notNull(),
   },
   (t) => [
     primaryKey({ columns: [t.courseId, t.userId] }),
     index('vocabulary_members_user_idx').on(t.userId),
+    check('vocabulary_member_role_valid', sql`${t.role} in ('collaborator', 'learner')`),
   ],
 );
 export const vocabularyWords = pgTable(
@@ -321,6 +323,10 @@ export const vocabularyWords = pgTable(
       .references(() => courses.id, { onDelete: 'cascade' }),
     word: text('word').notNull(),
     explanation: text('explanation').notNull(),
+    persianMeaning: text('persian_meaning').default('').notNull(),
+    awlSublist: integer('awl_sublist'),
+    relatedForms: jsonb('related_forms').$type<string[]>().default([]).notNull(),
+    sourceUrl: text('source_url').default('').notNull(),
     example: text('example').default('').notNull(),
     difficulty: text('difficulty').$type<'easy' | 'medium' | 'hard'>().default('medium').notNull(),
     addedOn: text('added_on').notNull(),
@@ -331,6 +337,7 @@ export const vocabularyWords = pgTable(
     index('vocabulary_words_course_idx').on(t.courseId, t.addedOn),
     uniqueIndex('vocabulary_word_unique').on(t.courseId, sql`lower(trim(${t.word}))`),
     check('vocabulary_difficulty_valid', sql`${t.difficulty} in ('easy', 'medium', 'hard')`),
+    check('vocabulary_awl_sublist_valid', sql`${t.awlSublist} between 1 and 10`),
     check('vocabulary_version_positive', sql`${t.version} > 0`),
   ],
 );

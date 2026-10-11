@@ -34,6 +34,7 @@ const wordSchema = z.object({
   word: z.string().trim().min(1).max(200),
   explanation: z.string().trim().min(1).max(5000),
   example: z.string().trim().max(2000),
+  persianMeaning: z.string().trim().max(2000).default(''),
   difficulty: z.enum(['easy', 'medium', 'hard']),
   addedOn: localDate,
 });
@@ -119,7 +120,10 @@ export async function editVocabularyCourse(
   const user = await requireUser();
   try {
     const input = vocabularyCourseSchema
-      .extend({ status: z.enum(['active', 'archived']) })
+      .extend({
+        status: z.enum(['active', 'archived']),
+        isPublic: z.preprocess((v) => v === 'on', z.boolean()),
+      })
       .parse(Object.fromEntries(form));
     await withCourse(user.id, id, true, async (tx) => {
       await tx
@@ -152,7 +156,10 @@ export async function saveVocabularyWord(
         .from(vocabularyWords)
         .where(and(eq(vocabularyWords.id, wordId), eq(vocabularyWords.courseId, courseId)));
       if (!word) notFound();
-      const contentChanged = word.word !== input.word || word.explanation !== input.explanation;
+      const contentChanged =
+        word.word !== input.word ||
+        word.explanation !== input.explanation ||
+        word.persianMeaning !== input.persianMeaning;
       await tx
         .update(vocabularyWords)
         .set({ ...input, version: word.version + 1, updatedAt: new Date() })
@@ -224,7 +231,13 @@ export async function addVocabularyCollaborator(
           'No account has that username. Ask your friend to sign in and check their username in Settings.',
         );
       if (friend.id === course.ownerId) throw new VocabularyError('You already own this course.');
-      await tx.insert(vocabularyMembers).values({ courseId, userId: friend.id });
+      await tx
+        .insert(vocabularyMembers)
+        .values({ courseId, userId: friend.id, role: 'collaborator' })
+        .onConflictDoUpdate({
+          target: [vocabularyMembers.courseId, vocabularyMembers.userId],
+          set: { role: 'collaborator' },
+        });
     });
   } catch (e) {
     return failure(e);
@@ -458,4 +471,41 @@ export async function leaveVocabularyCourse(
   }
   refresh(courseId);
   redirect('/courses');
+}
+
+export async function joinPublicVocabularyCourse(courseId: string) {
+  const user = await requireUser();
+  await db.transaction(async (tx) => {
+    const [course] = await tx
+      .select()
+      .from(courses)
+      .where(
+        and(
+          eq(courses.id, courseId),
+          eq(courses.kind, 'vocabulary'),
+          eq(courses.isPublic, true),
+          eq(courses.status, 'active'),
+        ),
+      )
+      .for('update');
+    if (!course) notFound();
+    const [owner] = await tx
+      .select({ id: users.id })
+      .from(users)
+      .where(
+        and(
+          eq(users.id, course.ownerId),
+          eq(users.publicProfile, true),
+          eq(users.showCourses, true),
+        ),
+      );
+    if (!owner) notFound();
+    if (course.ownerId !== user.id)
+      await tx
+        .insert(vocabularyMembers)
+        .values({ courseId, userId: user.id, role: 'learner' })
+        .onConflictDoNothing();
+  });
+  refresh(courseId);
+  redirect('/courses/' + courseId);
 }

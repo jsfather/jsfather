@@ -256,3 +256,33 @@ words. Unreviewed words are “to learn”; previously reviewed words are “to 
 Empty queues send nothing. Expired subscriptions are removed; transient delivery
 failures can be retried. Phone settings and push-service availability affect
 actual delivery. A scheduler outage delays reminders until the next eligible run.
+
+### Academic vocabulary and public enrollment
+
+Vocabulary course settings now include **Public course**. With the owner's public
+profile and Show courses enabled, anyone can sign in and join from the public
+course page. Enrolled learners have separate review progress. Adding an enrolled
+learner by username promotes them to collaborator; existing invitations remain
+collaborators after migration.
+
+Owners and invited collaborators see the same ten suggested words on each course
+calendar day, using the course timezone and start date. Suggestions rotate through
+words ordered by AWL sublist and spelling, independently of individual mastery or
+review timing. Personal spaced reviews remain separate.
+
+The bundled Academic Word List contains all 570 headword families and 2,539 related
+forms from https://www.eapfoundation.com/vocab/academic/awllists/, with authored
+Persian glosses. Related forms are stored within each family rather than duplicated
+as inflection flashcards. Each family includes معنی فارسی, AWL sublist, related
+forms, source URL, and the existing meaning, example, and difficulty fields. Persian
+glosses describe common senses, rather than every possible meaning in context.
+
+Apply migration `0014_rare_runaways`, then import into an existing vocabulary course:
+
+```sh
+npx tsx scripts/import-academic-word-list.ts --course-id=YOUR_COURSE_ID --publish
+```
+
+The transaction inserts missing headwords, preserves existing content and progress,
+and publishes only the specified course when `--publish` is present. Repeating it
+is safe. It does not alter the owner's profile privacy settings.

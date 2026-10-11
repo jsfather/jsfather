@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { joinPublicVocabularyCourse } from '@/actions/vocabulary';
+import { Submit } from '@/components/forms';
 import { publicCourse } from '@/lib/data';
 import { PageTitle, Badge, Progress } from '@/components/ui';
 export async function generateMetadata({
@@ -35,8 +37,18 @@ export default async function PublicCoursePage({
       <section className="panel">
         <p className="detail-description">{course.description}</p>
         <p className="muted" style={{ marginBottom: 24 }}>
-          {course.totalSessions} scheduled sessions
+          {course.kind === 'vocabulary'
+            ? 'Language vocabulary · practice with your own saved progress'
+            : `${course.totalSessions} scheduled sessions`}
         </p>
+        {course.kind === 'vocabulary' && course.status === 'active' && (
+          <form action={joinPublicVocabularyCourse.bind(null, course.id)}>
+            <Submit>Join and practice</Submit>
+            <p className="field-hint">
+              Sign in to register. Your learning progress is saved separately.
+            </p>
+          </form>
+        )}
         {progress && (
           <>
             <div className="progress-label">
