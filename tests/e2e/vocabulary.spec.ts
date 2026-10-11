@@ -96,16 +96,19 @@ test('daily vocabulary, collaborator isolation, spaced practice, mastery, edits,
         .from(schema.courseSessions)
         .where(eq(schema.courseSessions.courseId, courseId)),
     ).toHaveLength(0);
-    const addForm = page
-      .locator('section')
-      .filter({ has: page.getByRole('heading', { name: 'Add today’s words' }) });
+    await page.locator('.vocabulary-add-word > summary').click();
+    const addForm = page.locator('.vocabulary-add-word');
     async function add(word: string, difficulty: string) {
+      if (!(await addForm.getByLabel('Word or phrase').isVisible()))
+        await addForm.locator('summary').first().click();
       await addForm.getByLabel('Word or phrase').fill(word);
       await addForm.getByLabel('Meaning / explanation').fill(`Meaning of ${word}`);
       await addForm.getByLabel('Difficulty').selectOption(difficulty);
       const request = actionRequest(page);
       await addForm.getByRole('button', { name: 'Add word', exact: true }).click();
-      await expect(page.getByRole('heading', { name: word, exact: true })).toBeVisible();
+      await expect(
+        page.locator('.vocabulary-word').getByRole('heading', { name: word, exact: true }),
+      ).toBeVisible();
       return await request;
     }
     const addRequest = await add('Hello', 'easy');
@@ -120,6 +123,11 @@ test('daily vocabulary, collaborator isolation, spaced practice, mastery, edits,
     await addForm.getByLabel('Meaning / explanation').fill('Duplicate');
     await addForm.getByRole('button', { name: 'Add word', exact: true }).click();
     await expect(addForm.locator('.alert.error')).toContainText('already');
+    if (!(await page.getByLabel('Collaborator username').isVisible()))
+      await page
+        .locator('.vocabulary-disclosure > summary')
+        .filter({ hasText: 'Collaborators and enrolled learners' })
+        .click();
     await page.getByLabel('Collaborator username').fill(friendUsername);
     await page.getByRole('button', { name: 'Add collaborator' }).click();
     await expect(
@@ -296,6 +304,11 @@ test('daily vocabulary, collaborator isolation, spaced practice, mastery, edits,
     await expect(friend).toHaveURL(new RegExp(`/courses/${courseId}/review/[a-z0-9-]+$`));
     const revokedReview = friend.url();
     await friend.getByRole('button', { name: 'Reveal answer' }).click();
+    if (!(await page.locator('.vocabulary-member').isVisible()))
+      await page
+        .locator('.vocabulary-disclosure > summary')
+        .filter({ hasText: 'Collaborators and enrolled learners' })
+        .click();
     const member = page.locator('.vocabulary-member');
     await member.locator('summary').click();
     await member.getByRole('button', { name: 'Remove collaborator' }).click();
@@ -313,6 +326,11 @@ test('daily vocabulary, collaborator isolation, spaced practice, mastery, edits,
     await expect(
       friend.getByRole('heading', { name: 'Everyday English', exact: true }),
     ).toHaveCount(0);
+    if (!(await page.getByLabel('Collaborator username').isVisible()))
+      await page
+        .locator('.vocabulary-disclosure > summary')
+        .filter({ hasText: 'Collaborators and enrolled learners' })
+        .click();
     await page.getByLabel('Collaborator username').fill(friendUsername);
     await page.getByRole('button', { name: 'Add collaborator' }).click();
     await expect(page.locator('.vocabulary-member')).toHaveCount(1);

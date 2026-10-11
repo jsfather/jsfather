@@ -73,6 +73,10 @@ test('public learners enroll independently, and invited collaborators share dail
         await db`select count(*)::int as n from vocabulary_members where course_id=${courseId} and user_id=${reader}`
       )[0].n,
     ).toBe(1);
+    await ownerPage
+      .locator('.vocabulary-disclosure > summary')
+      .filter({ hasText: 'Collaborators and enrolled learners' })
+      .click();
     await ownerPage.getByLabel('Collaborator username').fill(reader);
     await ownerPage.getByRole('button', { name: 'Add collaborator', exact: true }).click();
     await expect(

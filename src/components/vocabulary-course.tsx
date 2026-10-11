@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { and, desc, eq, sql } from 'drizzle-orm';
+import { and, asc, desc, eq, sql } from 'drizzle-orm';
 import { formatInTimeZone } from 'date-fns-tz';
 import { db } from '@/db';
 import {
@@ -49,11 +49,12 @@ export async function VocabularyCourseDetail({
       .where(eq(vocabularyWords.courseId, course.id))
       .orderBy(
         desc(vocabularyWords.addedOn),
-        desc(vocabularyWords.createdAt),
-        desc(vocabularyWords.id),
+        asc(vocabularyWords.awlSublist),
+        asc(vocabularyWords.word),
+        asc(vocabularyWords.id),
       )
-      .limit(50)
-      .offset((page - 1) * 50),
+      .limit(24)
+      .offset((page - 1) * 24),
     owner
       ? db
           .select({
@@ -104,7 +105,7 @@ export async function VocabularyCourseDetail({
       ? dailyVocabulary(suggestionWords, today, course.startDate)
       : [];
   return (
-    <>
+    <div className="vocabulary-course-layout">
       <PageTitle
         eyebrow="LANGUAGE VOCABULARY"
         title={course.title}
@@ -135,69 +136,102 @@ export async function VocabularyCourseDetail({
           </article>
         ))}
       </div>
-      {suggestions.length > 0 && (
-        <section className="panel" style={{ marginTop: 24 }}>
-          <h2>Today’s suggested words</h2>
+      <section className="panel vocabulary-section">
+        <div className="vocabulary-practice-header">
+          <div>
+            <p className="eyebrow">YOUR NEXT STEP</p>
+            <h2>Practice</h2>
+            <p className="muted">Recall a word or its meaning, then check your answer.</p>
+          </div>
+          {course.status === 'archived' ? (
+            <p className="muted">
+              This course is archived. The owner can reactivate it in course settings.
+            </p>
+          ) : stats.due ? (
+            <form action={startVocabularyReview.bind(null, course.id)}>
+              <Submit>Practice</Submit>
+            </form>
+          ) : (
+            <p className="muted">
+              {stats.total ? 'You’re caught up for now.' : 'Add some words to begin.'}
+              {stats.nextDue &&
+                ` Next review: ${formatInTimeZone(new Date(stats.nextDue), user.timezone, 'MMM d, HH:mm')}.`}
+            </p>
+          )}
+        </div>
+        <div className="vocabulary-mastery">
+          <div className="progress-label">
+            <span>
+              {stats.mastered} of {stats.total} words mastered
+            </span>
+          </div>
+          <Progress
+            value={stats.total ? Math.round((stats.mastered / stats.total) * 100) : 0}
+            color={course.color}
+          />
+        </div>
+        <details className="vocabulary-help">
+          <summary>How practice works</summary>
           <p className="muted">
-            {today} · {course.timezone}. You and invited collaborators receive the same{' '}
-            {suggestions.length} words today. Review schedules and progress remain personal.
+            Due words are shuffled. Easy words need 5 successful recalls, medium 10, and hard 15.
+            Your review schedule and progress are personal.
           </p>
-          <div className="vocabulary-word-grid">
+        </details>
+      </section>
+      {suggestions.length > 0 && (
+        <section className="panel vocabulary-section">
+          <header className="vocabulary-section-heading">
+            <div>
+              <h2>Today’s suggested words</h2>
+              <p className="muted">A shared daily selection for you and your collaborators.</p>
+            </div>
+            <span className="vocabulary-section-meta">
+              {formatInTimeZone(new Date(), course.timezone, 'MMM d')} · {course.timezone}
+            </span>
+          </header>
+          <div className="vocabulary-suggestion-grid">
             {suggestions.map((word) => (
-              <article className="vocabulary-word" key={word.id}>
-                <h3>{word.word}</h3>
+              <article className="vocabulary-suggestion" key={word.id}>
+                <header>
+                  <h3>{word.word}</h3>
+                  {word.awlSublist && (
+                    <span className="vocabulary-sublist">AWL {word.awlSublist}</span>
+                  )}
+                </header>
                 <p dir="rtl" lang="fa">
                   {word.persianMeaning}
                 </p>
-                {word.awlSublist && <Badge>AWL {word.awlSublist}</Badge>}
               </article>
             ))}
           </div>
         </section>
       )}
-      <section className="panel" style={{ marginTop: 24 }}>
-        <h2>Practice</h2>
-        <p className="muted" style={{ margin: '12px 0 20px' }}>
-          Review due words in random order, recalling either the word or its meaning. Easy words
-          need 5 successful reviews, medium 10, and hard 15. Your progress is yours alone.
-        </p>
-        {course.status === 'archived' ? (
-          <p className="muted">
-            This course is archived. The owner can reactivate it in course settings.
-          </p>
-        ) : stats.due ? (
-          <form action={startVocabularyReview.bind(null, course.id)}>
-            <Submit>Practice</Submit>
-          </form>
-        ) : (
-          <p className="muted">
-            {stats.total ? 'You’re caught up for now.' : 'Add some words to begin.'}
-            {stats.nextDue &&
-              ` Next review: ${formatInTimeZone(new Date(stats.nextDue), user.timezone, 'MMM d, HH:mm')}.`}
-          </p>
-        )}
-        <div className="progress-label" style={{ marginTop: 24 }}>
-          <span>
-            {stats.mastered} of {stats.total} words mastered
+      <section className="panel vocabulary-section">
+        <header className="vocabulary-section-heading">
+          <div>
+            <h2>Word library</h2>
+            <p className="muted">
+              {stats.total} words · grouped by date, then AWL sublist and spelling
+            </p>
+          </div>
+          <span className="vocabulary-section-meta">
+            Page {page} of {Math.max(1, Math.ceil(stats.total / 24))}
           </span>
-        </div>
-        <Progress
-          value={stats.total ? Math.round((stats.mastered / stats.total) * 100) : 0}
-          color={course.color}
-        />
-      </section>
-      {owner && (
-        <section className="panel" style={{ marginTop: 24 }}>
-          <h2>Add today’s words</h2>
-          <p className="muted" style={{ margin: '12px 0 20px' }}>
-            Add a meaning and difficulty for each word. Every collaborator can review new words
-            immediately.
-          </p>
-          <VocabularyWordForm courseId={course.id} today={today} />
-        </section>
-      )}
-      <section className="panel" style={{ marginTop: 24 }}>
-        <h2>Daily word list</h2>
+        </header>
+        {owner && (
+          <details className="vocabulary-add-word">
+            <summary>Add a word</summary>
+            <div className="vocabulary-disclosure-body">
+              <h2>Add today’s words</h2>
+              <p className="muted">
+                Add a meaning and difficulty for each word. Every collaborator can review new words
+                immediately.
+              </p>
+              <VocabularyWordForm courseId={course.id} today={today} />
+            </div>
+          </details>
+        )}
+
         {!words.length && (
           <p className="muted">{page > 1 ? 'No more words on this page.' : 'No words yet.'}</p>
         )}
@@ -234,22 +268,31 @@ export async function VocabularyCourseDetail({
                           {word.persianMeaning}
                         </p>
                       )}
-                      {word.awlSublist && <Badge>AWL sublist {word.awlSublist}</Badge>}
-                      {word.relatedForms.length > 0 && (
-                        <details>
-                          <summary>Related word forms ({word.relatedForms.length})</summary>
-                          <p>{word.relatedForms.join(', ')}</p>
+                      {(word.relatedForms.length > 0 || word.sourceUrl || word.awlSublist) && (
+                        <details className="vocabulary-word-details">
+                          <summary>
+                            Word details{word.awlSublist ? ` · AWL ${word.awlSublist}` : ''}
+                          </summary>
+                          <div>
+                            {word.relatedForms.length > 0 && (
+                              <p>
+                                <strong>Related forms</strong>
+                                <br />
+                                {word.relatedForms.join(', ')}
+                              </p>
+                            )}
+                            {word.sourceUrl && (
+                              <a
+                                className="text-link"
+                                href={word.sourceUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                Word list source
+                              </a>
+                            )}
+                          </div>
                         </details>
-                      )}
-                      {word.sourceUrl && (
-                        <a
-                          className="text-link"
-                          href={word.sourceUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Word list source
-                        </a>
                       )}
                       {word.example && (
                         <blockquote dir="auto" className="vocabulary-example">
@@ -287,52 +330,63 @@ export async function VocabularyCourseDetail({
             </section>
           );
         })}
-        {(page > 1 || words.length === 50) && (
-          <Pagination page={page} hasMore={words.length === 50} base={`/courses/${course.id}`} />
+        {(page > 1 || words.length === 24) && (
+          <Pagination page={page} hasMore={words.length === 24} base={`/courses/${course.id}`} />
         )}
       </section>
       {owner && (
-        <section className="panel" style={{ marginTop: 24 }}>
-          <h2>Collaborators and enrolled learners</h2>
-          <p className="muted" style={{ margin: '12px 0 20px' }}>
-            Add a friend’s account username. They’ll see this course in My courses and can practice
-            all its words and see the same daily suggestions as you. Public learners can join
-            themselves with their own practice schedule. Adding an enrolled learner here promotes
-            them to collaborator. Only you can add or edit words and manage collaborators.
-          </p>
-          <AddVocabularyCollaboratorForm courseId={course.id} />
-          {members.map((member) => (
-            <details className="vocabulary-member" key={member.id}>
-              <summary>
-                {member.name || member.username} · @{member.username} · {member.role}
-              </summary>
-              <div className="destructive-actions">
-                <RemoveVocabularyCollaboratorForm courseId={course.id} member={member} />
-              </div>
-            </details>
-          ))}
-        </section>
-      )}
-      <section className="panel" style={{ marginTop: 24 }}>
-        <h2>Your recent reviews</h2>
-        {!history.length && <p className="muted">Your practice record will appear here.</p>}
-        {history.map((review, i) => (
-          <div className="vocabulary-history" key={i}>
-            <span dir="auto">{review.snapshot.word}</span>
-            <Badge color={review.remembered ? 'teal' : 'amber'}>
-              {review.remembered ? 'Remembered' : 'Review again'}
-            </Badge>
-            <span className="muted">
-              {formatInTimeZone(review.date!, user.timezone, 'MMM d, HH:mm')}
-            </span>
+        <details className="panel vocabulary-section vocabulary-disclosure">
+          <summary>
+            Collaborators and enrolled learners <span>{members.length} members</span>
+          </summary>
+          <div className="vocabulary-disclosure-body">
+            <h2>Manage members</h2>
+            <p className="muted">
+              Add a friend’s account username. They’ll see this course in My courses and can
+              practice all its words and see the same daily suggestions as you. Public learners can
+              join themselves with their own practice schedule. Adding an enrolled learner here
+              promotes them to collaborator. Only you can add or edit words and manage
+              collaborators.
+            </p>
+            <AddVocabularyCollaboratorForm courseId={course.id} />
+            {members.map((member) => (
+              <details className="vocabulary-member" key={member.id}>
+                <summary>
+                  {member.name || member.username} · @{member.username} · {member.role}
+                </summary>
+                <div className="destructive-actions">
+                  <RemoveVocabularyCollaboratorForm courseId={course.id} member={member} />
+                </div>
+              </details>
+            ))}
           </div>
-        ))}
-      </section>
+        </details>
+      )}
+      <details className="panel vocabulary-section vocabulary-disclosure">
+        <summary>
+          Your recent reviews{' '}
+          <span>{history.length ? `${history.length} recent` : 'No reviews yet'}</span>
+        </summary>
+        <div className="vocabulary-disclosure-body">
+          {!history.length && <p className="muted">Your practice record will appear here.</p>}
+          {history.map((review, i) => (
+            <div className="vocabulary-history" key={i}>
+              <span dir="auto">{review.snapshot.word}</span>
+              <Badge color={review.remembered ? 'teal' : 'amber'}>
+                {review.remembered ? 'Remembered' : 'Review again'}
+              </Badge>
+              <span className="muted">
+                {formatInTimeZone(review.date!, user.timezone, 'MMM d, HH:mm')}
+              </span>
+            </div>
+          ))}
+        </div>
+      </details>
       {!owner && (
         <div className="destructive-actions">
           <LeaveVocabularyCourseForm course={course} />
         </div>
       )}
-    </>
+    </div>
   );
 }
