@@ -2259,13 +2259,6 @@ tbody tr:last-child td {
     z-index: 25;
     border: 0;
   }
-  .mobile-menu {
-    display: flex;
-    position: fixed;
-    top: 17px;
-    left: 15px;
-    z-index: 40;
-  }
   .app-main {
     margin-left: 0;
   }
@@ -3016,5 +3009,249 @@ tbody tr:last-child td {
 @media (max-width: 640px) {
   .confirmation-dialog {
     padding: 24px;
+  }
+}
+
+/* Shared shrink and wrapping rules keep content within its own scroll container. */
+.app-main,
+.content,
+.panel,
+.field,
+.form-grid > *,
+.dashboard-grid > *,
+.detail-layout > *,
+.stat-card,
+.public-shell,
+.question-editor,
+.exam-card > div,
+.profile-header > div,
+.page-heading > div {
+  min-width: 0;
+}
+h1,
+h2,
+h3,
+h4,
+p,
+.meta-list,
+.question-prose {
+  overflow-wrap: anywhere;
+}
+img,
+video {
+  max-width: 100%;
+}
+input,
+select,
+textarea {
+  max-width: 100%;
+}
+.table-wrap,
+.timetable-scroll {
+  max-width: 100%;
+  overscroll-behavior-x: contain;
+}
+.sidebar {
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+}
+.sidebar-note {
+  margin-top: auto;
+  flex-shrink: 0;
+}
+.sidebar-footer {
+  flex-shrink: 0;
+}
+.mobile-header,
+.drawer-close {
+  display: none;
+}
+.pwa-banner {
+  position: fixed;
+  bottom: max(16px, env(safe-area-inset-bottom));
+  left: max(16px, env(safe-area-inset-left));
+  right: max(16px, env(safe-area-inset-right));
+  z-index: 20;
+  max-width: 520px;
+  margin-left: auto;
+  padding: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+.pwa-banner p,
+.pwa-settings p {
+  margin: 8px 0 16px;
+}
+.pwa-banner .actions-row,
+.pwa-settings .actions-row {
+  margin-bottom: 0;
+}
+.pwa-settings {
+  margin-top: 24px;
+}
+.vocabulary-reminder {
+  margin-bottom: 24px;
+}
+.vocabulary-reminder p {
+  margin: 8px 0 14px;
+}
+@media (max-width: 760px) {
+  .topbar {
+    display: none;
+  }
+  .mobile-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: sticky;
+    top: 0;
+    z-index: 24;
+    min-height: calc(64px + env(safe-area-inset-top));
+    padding: env(safe-area-inset-top) max(12px, env(safe-area-inset-right)) 0
+      max(12px, env(safe-area-inset-left));
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .mobile-header .breadcrumb {
+    flex: 1;
+    min-width: 0;
+  }
+  .mobile-header .breadcrumb > svg,
+  .mobile-header .breadcrumb > span {
+    display: none;
+  }
+  .mobile-header .breadcrumb strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .mobile-menu {
+    position: static;
+    display: inline-flex;
+  }
+  .icon-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .sidebar {
+    width: min(320px, calc(100vw - 48px));
+    z-index: 30;
+    padding: calc(20px + env(safe-area-inset-top)) 20px env(safe-area-inset-bottom);
+    visibility: hidden;
+  }
+  .sidebar.open {
+    visibility: visible;
+  }
+  .sidebar .editable-brand {
+    margin-right: 40px;
+  }
+  .drawer-close {
+    display: inline-flex;
+    position: absolute;
+    top: calc(12px + env(safe-area-inset-top));
+    right: 8px;
+  }
+  .sidebar-backdrop {
+    z-index: 29;
+  }
+  .content {
+    padding: 24px max(16px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom))
+      max(16px, env(safe-area-inset-left));
+  }
+  .form-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+  .section-header,
+  .public-header,
+  .landing-footer,
+  .profile-header,
+  .detail-stats,
+  .exam-top {
+    flex-wrap: wrap;
+  }
+  .public-header {
+    gap: 16px;
+  }
+  .public-header .actions-row {
+    gap: 8px;
+  }
+  .calendar-grid {
+    min-width: 0;
+    overflow-x: auto;
+    grid-template-columns: repeat(7, minmax(90px, 1fr));
+  }
+  .segmented {
+    flex-wrap: wrap;
+  }
+  .button {
+    min-height: 44px;
+    white-space: normal;
+    text-align: center;
+  }
+  .stat-value {
+    flex-wrap: wrap;
+  }
+  .exam-card > div:nth-child(2) {
+    min-width: 0;
+  }
+  .exam-card .button {
+    margin-left: 0;
+  }
+  .question-editor {
+    padding: 16px;
+  }
+  .landing-hero h1 {
+    font-size: clamp(36px, 10vw, 55px);
+  }
+  .landing-header {
+    gap: 12px;
+    padding: 20px 16px;
+  }
+  .landing-header nav {
+    gap: 8px;
+  }
+  .result-summary {
+    padding: 24px 16px;
+  }
+  .vocabulary-word-heading {
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 380px) {
+  .stats-grid,
+  .vocabulary-stats {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .vocabulary-stats .stat-label {
+    min-height: 0;
+  }
+  .side-column {
+    display: flex;
+  }
+  .landing-header {
+    flex-wrap: wrap;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+@media print {
+  .mobile-header,
+  .pwa-banner,
+  .pwa-settings {
+    display: none !important;
   }
 }

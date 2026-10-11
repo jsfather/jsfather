@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { vocabularyDueSummary } from '@/lib/vocabulary-data';
+import { vocabularyReminderBody } from '@/lib/reminders';
 import { requireUser } from '@/lib/auth';
 import { courseSummaries, universityStats, upcomingSessions, sessionsBetween } from '@/lib/data';
 import { PageTitle, CourseCard, SessionRow, Empty } from '@/components/ui';
@@ -30,6 +32,8 @@ export default async function Dashboard() {
     sessionsBetween(user.id, start, end),
     upcomingSessions(user.id, 5),
   ]);
+  const due = await vocabularyDueSummary(user.id);
+  const reminder = vocabularyReminderBody(due.learn, due.review);
   const firstName = user.name?.split(' ')[0] ?? user.username;
   return (
     <>
@@ -44,6 +48,20 @@ export default async function Dashboard() {
           </Link>
         }
       />
+      {reminder && (
+        <section className="panel vocabulary-reminder">
+          <h2>Today’s vocabulary</h2>
+          <p>{reminder}</p>
+          <div className="actions-row">
+            <Link href="/courses" className="button primary">
+              Practice vocabulary
+            </Link>
+            <Link href="/settings" className="text-link">
+              Set up reminders
+            </Link>
+          </div>
+        </section>
+      )}
       <div className="stats-grid">
         {[
           {

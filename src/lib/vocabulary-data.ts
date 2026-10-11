@@ -39,3 +39,30 @@ export async function vocabularyStats(courseId: string, userId: string) {
     .where(eq(vocabularyWords.courseId, courseId));
   return stats;
 }
+
+export async function vocabularyDueSummary(userId: string) {
+  const [summary] = await db
+    .select({
+      learn: sql<number>`count(*) filter (where coalesce(${vocabularyProgress.totalReviews}, 0) = 0)::int`,
+      review: sql<number>`count(*) filter (where ${vocabularyProgress.totalReviews} > 0)::int`,
+    })
+    .from(vocabularyWords)
+    .innerJoin(courses, eq(courses.id, vocabularyWords.courseId))
+    .leftJoin(
+      vocabularyProgress,
+      and(eq(vocabularyProgress.wordId, vocabularyWords.id), eq(vocabularyProgress.userId, userId)),
+    )
+    .where(
+      and(
+        eq(courses.kind, 'vocabulary'),
+        eq(courses.status, 'active'),
+        or(
+          eq(courses.ownerId, userId),
+          sql`exists (select 1 from vocabulary_members m where m.course_id = ${courses.id} and m.user_id = ${userId})`,
+        ),
+        sql`coalesce(${vocabularyProgress.successfulReviews}, 0) < ${vocabularyTargetSql}`,
+        sql`(${vocabularyProgress.dueAt} is null or ${vocabularyProgress.dueAt} <= now())`,
+      ),
+    );
+  return summary;
+}

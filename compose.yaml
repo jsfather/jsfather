@@ -12,6 +12,10 @@ services:
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:?Set GOOGLE_CLIENT_SECRET}
       AUTH_URL: ${AUTH_URL:-https://jsfather.ir}
       AUTH_TRUST_HOST: 'true'
+      VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY:-}
+      VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY:-}
+      VAPID_SUBJECT: ${VAPID_SUBJECT:-}
+      CRON_SECRET: ${CRON_SECRET:-}
       NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-https://jsfather.ir}
     depends_on:
       postgres:

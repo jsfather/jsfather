@@ -220,3 +220,39 @@ Assessment names include the full course name: `Course final assessment`, `Cours
 All deletion and removal controls open a shared confirmation dialog. Copy the displayed value and paste it into the confirmation field; Confirm stays disabled until it matches exactly. Cancel, Escape, or the close button dismisses the dialog. Question editor removals update the draft and take effect when the exam is saved.
 
 University names are saved on signed-in accounts and shared across their browsers. Guests keep a separate name in local browser storage. Rename by clicking the brand text or pencil; Enter or blur saves, Escape cancels. The rest of the brand links home. The book logo is available at `public/logo.svg` and also used as the favicon. Apply migration `0012_university_names` before starting this version against an existing database.
+
+### Phone installation and vocabulary notifications
+
+The app includes a standalone web manifest, regular and maskable PNG icons, an
+Apple touch icon, and a root-scoped service worker. Serve production over HTTPS.
+Android browsers that expose an install prompt show an Install app action;
+iPhone/iPad users see Share → Add to Home Screen instructions. Installation is
+also explained in Settings. The offline screen helps users reconnect; authenticated
+pages and API responses are never cached for offline use.
+
+Vocabulary due counts appear on the dashboard. Users can enable or disable Web
+Push in Settings for each device. On iOS/iPadOS 16.4+, launch the installed Home
+Screen app before enabling notifications. Permission is only requested when the
+user presses Enable vocabulary reminders.
+
+To enable background reminders:
+
+1. Run `npm run db:migrate` to create `push_subscriptions`.
+2. Generate a stable VAPID key pair with `npx web-push generate-vapid-keys` and set
+   `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, and `VAPID_SUBJECT` (a contact mailto or
+   HTTPS URL). Keep the private key on the server; rotating keys requires devices
+   to subscribe again.
+3. Set `CRON_SECRET` to a cryptographically random secret (for example,
+   `openssl rand -hex 32`).
+4. Configure your hosting scheduler to POST to
+   `/api/cron/vocabulary-reminders` every 15 minutes with the header
+   `Authorization: Bearer <CRON_SECRET>`. This endpoint does not run on its own.
+   Retry non-2xx responses. Do not expose the secret to the browser.
+
+The first eligible run after 09:00 in the user's profile timezone sends at most
+one notification per device per local day. Counts are calculated at delivery time
+from active owned/joined vocabulary courses, excluding mastered or future-due
+words. Unreviewed words are “to learn”; previously reviewed words are “to review”.
+Empty queues send nothing. Expired subscriptions are removed; transient delivery
+failures can be retried. Phone settings and push-service availability affect
+actual delivery. A scheduler outage delays reminders until the next eligible run.

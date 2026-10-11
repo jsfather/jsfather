@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState, useEffect, useSyncExternalStore } from 'react';
+import { useState, useEffect, useSyncExternalStore, useRef } from 'react';
 import {
   LayoutDashboard,
   BookOpen,
@@ -73,15 +73,70 @@ export function Sidebar({
 }) {
   const path = usePathname();
   const [open, setOpen] = useState(false);
+  const drawer = useRef<HTMLElement>(null);
+  const trigger = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 760px)');
+    const closeOnResize = () => {
+      drawer.current?.toggleAttribute('inert', media.matches && !open);
+      if (!media.matches) setOpen(false);
+    };
+    media.addEventListener('change', closeOnResize);
+    if (!open) {
+      drawer.current?.toggleAttribute('inert', media.matches);
+    }
+    if (!open) return () => media.removeEventListener('change', closeOnResize);
+    drawer.current?.removeAttribute('inert');
+    const main = document.querySelector<HTMLElement>('.app-main');
+    main?.setAttribute('inert', '');
+    const triggerButton = trigger.current;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const focusable = () =>
+      Array.from(
+        drawer.current?.querySelectorAll<HTMLElement>('a[href], button, input') ?? [],
+      ).filter((el) => !el.hasAttribute('disabled') && el.getClientRects().length);
+    focusable()[0]?.focus();
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false);
+      if (event.key === 'Tab') {
+        const items = focusable();
+        const first = items[0],
+          last = items.at(-1);
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last?.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first?.focus();
+        }
+      }
+    };
+    document.addEventListener('keydown', handleKey);
+    return () => {
+      main?.removeAttribute('inert');
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', handleKey);
+      media.removeEventListener('change', closeOnResize);
+      triggerButton?.focus();
+    };
+  }, [open]);
   return (
     <>
-      <button
-        className="mobile-menu icon-button"
-        onClick={() => setOpen(!open)}
-        aria-label="Toggle navigation"
-      >
-        {open ? <X /> : <Menu />}
-      </button>
+      <header className="mobile-header">
+        <button
+          ref={trigger}
+          className="mobile-menu icon-button"
+          onClick={() => setOpen(!open)}
+          aria-label="Toggle navigation"
+          aria-expanded={open}
+          aria-controls="university-navigation"
+        >
+          <Menu />
+        </button>
+        <Breadcrumb />
+        <ThemeToggle />
+      </header>
       {open && (
         <button
           className="sidebar-backdrop"
@@ -89,7 +144,21 @@ export function Sidebar({
           aria-label="Close navigation"
         />
       )}
-      <aside className={`sidebar ${open ? 'open' : ''}`}>
+      <aside
+        ref={drawer}
+        id="university-navigation"
+        className={`sidebar ${open ? 'open' : ''}`}
+        aria-label="University navigation"
+        role={open ? 'dialog' : undefined}
+        aria-modal={open || undefined}
+      >
+        <button
+          className="drawer-close icon-button"
+          onClick={() => setOpen(false)}
+          aria-label="Close menu"
+        >
+          <X />
+        </button>
         <Brand />
         <div className="workspace-label">
           <span className="workspace-monogram">{name.slice(0, 1).toUpperCase()}</span>
@@ -137,7 +206,7 @@ export function Sidebar({
           <GraduationCap size={21} />
           <strong>Your future, on the syllabus.</strong>
           <p>A little progress, every day.</p>
-          <Link href="/courses/new">
+          <Link href="/courses/new" onClick={() => setOpen(false)}>
             Add your next course <span>+</span>
           </Link>
         </div>

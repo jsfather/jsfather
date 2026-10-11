@@ -1,11 +1,18 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { auth } from '@/lib/auth';
 import { db } from '@/db';
 import { users } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 import { UniversityBrandProvider, UniversityTitle } from '@/components/brand';
 import { universityTitleBootstrap } from '@/lib/university-title-bootstrap';
+import { PwaProvider } from '@/components/pwa';
 import './globals.css';
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#0c1015',
+};
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'https://jsfather.ir'),
   title: {
@@ -14,7 +21,10 @@ export const metadata: Metadata = {
   },
   description:
     'Create your own developer courses, schedule classes, track progress, take exams, and earn personal achievement certificates.',
-  icons: { icon: '/favicon.svg' },
+  manifest: '/manifest.webmanifest',
+  applicationName: 'Personal University',
+  appleWebApp: { capable: true, statusBarStyle: 'black-translucent', title: 'University' },
+  icons: { icon: '/favicon.svg', apple: '/icons/apple-touch-icon.png' },
 };
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const session = await auth();
@@ -41,6 +51,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           accountName={user?.universityName ?? null}
         >
           <UniversityTitle />
+          <PwaProvider />
           {children}
         </UniversityBrandProvider>
       </body>

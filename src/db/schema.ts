@@ -395,3 +395,19 @@ export const vocabularyReviews = pgTable(
   ],
 );
 export type VocabularyWord = typeof vocabularyWords.$inferSelect;
+
+export const pushSubscriptions = pgTable(
+  'push_subscriptions',
+  {
+    id: id(),
+    userId: text('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    endpoint: text('endpoint').notNull().unique(),
+    p256dh: text('p256dh').notNull(),
+    auth: text('auth').notNull(),
+    lastSentDay: text('last_sent_day'),
+    ...dates,
+  },
+  (t) => [index('push_subscriptions_user_idx').on(t.userId)],
+);

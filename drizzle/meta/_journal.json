@@ -92,6 +92,13 @@
       "when": 1791669370387,
       "tag": "0012_university_names",
       "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1791670000000,
+      "tag": "0013_push_subscriptions",
+      "breakpoints": true
     }
   ]
 }
