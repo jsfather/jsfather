@@ -286,3 +286,29 @@ npx tsx scripts/import-academic-word-list.ts --course-id=YOUR_COURSE_ID --publis
 The transaction inserts missing headwords, preserves existing content and progress,
 and publishes only the specified course when `--publish` is present. Repeating it
 is safe. It does not alter the owner's profile privacy settings.
+
+### English and Persian pronunciation guides
+
+Vocabulary entries now have editable US English IPA and approximate Persian
+pronunciation guides. All 570 bundled AWL headwords have pronunciations derived
+from the [CMU Pronouncing Dictionary](https://github.com/cmusphinx/cmudict), with
+its license preserved in `public/licenses/cmudict.txt`. Multiple pronunciations
+are retained. Persian guides use syllable separators and «» for primary stress;
+English audio is the reference for sounds without a Persian equivalent.
+
+Pronunciation and normal/slow English playback appear on daily suggestions and
+library cards. Revealing a practice answer also displays pronunciation and every
+related word form. Meaning-to-word prompts keep these hidden until reveal.
+Playback uses the device's English Web Speech voices, with visible feedback when
+unsupported or unavailable; it does not read the Persian transliteration aloud
+as if it were native English speech.
+
+After applying migration `0015_safe_arachne`, populate missing pronunciations for
+an existing AWL course without resetting progress or overwriting edited guides:
+
+```sh
+npx tsx scripts/import-academic-word-list.ts --course-id=YOUR_COURSE_ID --pronunciations
+```
+
+To rebuild the bundled guides from an updated CMUdict file, run
+`python3 scripts/data/build-awl-pronunciations.py /path/to/cmudict.dict`.

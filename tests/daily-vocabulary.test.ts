@@ -6,6 +6,11 @@ it('includes every source family and a Persian meaning, preserving related forms
   expect(words).toHaveLength(570);
   expect(new Set(words.map((w) => w.word)).size).toBe(570);
   expect(words.every((w) => /[\u0600-\u06ff]/.test(w.persianMeaning))).toBe(true);
+  expect(
+    words.every(
+      (w) => w.pronunciationIpa.startsWith('/') && /[\u0600-\u06ff]/.test(w.pronunciationFa),
+    ),
+  ).toBe(true);
   expect(words.reduce((sum, w) => sum + w.relatedForms.length, 0)).toBe(2539);
   for (let n = 1; n <= 10; n++)
     expect(words.filter((w) => w.sublist === n)).toHaveLength(n === 10 ? 30 : 60);

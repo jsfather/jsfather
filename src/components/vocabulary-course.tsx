@@ -12,6 +12,7 @@ import {
   type User,
 } from '@/db/schema';
 import { vocabularyStats } from '@/lib/vocabulary-data';
+import { WordPronunciation, PronunciationHelp } from './word-pronunciation';
 import { dailyVocabulary } from '@/lib/daily-vocabulary';
 import { reviewTargets } from '@/lib/vocabulary';
 import { startVocabularyReview } from '@/actions/vocabulary';
@@ -90,6 +91,8 @@ export async function VocabularyCourseDetail({
         id: vocabularyWords.id,
         word: vocabularyWords.word,
         persianMeaning: vocabularyWords.persianMeaning,
+        pronunciationIpa: vocabularyWords.pronunciationIpa,
+        pronunciationFa: vocabularyWords.pronunciationFa,
         awlSublist: vocabularyWords.awlSublist,
       })
       .from(vocabularyWords)
@@ -201,9 +204,15 @@ export async function VocabularyCourseDetail({
                 <p dir="rtl" lang="fa">
                   {word.persianMeaning}
                 </p>
+                <WordPronunciation
+                  word={word.word}
+                  ipa={word.pronunciationIpa}
+                  persian={word.pronunciationFa}
+                />
               </article>
             ))}
           </div>
+          <PronunciationHelp />
         </section>
       )}
       <section className="panel vocabulary-section">
@@ -268,6 +277,11 @@ export async function VocabularyCourseDetail({
                           {word.persianMeaning}
                         </p>
                       )}
+                      <WordPronunciation
+                        word={word.word}
+                        ipa={word.pronunciationIpa}
+                        persian={word.pronunciationFa}
+                      />
                       {(word.relatedForms.length > 0 || word.sourceUrl || word.awlSublist) && (
                         <details className="vocabulary-word-details">
                           <summary>

@@ -14,6 +14,7 @@ import {
 import { ConfirmationDialog } from './confirmation-dialog';
 import { Feedback, Submit } from './forms';
 import type { Course, VocabularyWord } from '@/db/schema';
+import { WordPronunciation, PronunciationHelp } from './word-pronunciation';
 import { reviewTargets } from '@/lib/vocabulary';
 
 export function VocabularyCourseForm({ course, timezone }: { course?: Course; timezone: string }) {
@@ -170,6 +171,28 @@ export function VocabularyWordForm({
           defaultValue={word?.persianMeaning ?? ''}
         />
       </label>
+      <div className="form-grid">
+        <label className="field">
+          <span>English pronunciation (IPA)</span>
+          <input
+            name="pronunciationIpa"
+            dir="ltr"
+            maxLength={1000}
+            defaultValue={word?.pronunciationIpa ?? ''}
+            placeholder="/əˈproʊtʃ/"
+          />
+        </label>
+        <label className="field">
+          <span>تلفظ فارسی (تقریبی)</span>
+          <input
+            name="pronunciationFa"
+            dir="rtl"
+            lang="fa"
+            maxLength={1000}
+            defaultValue={word?.pronunciationFa ?? ''}
+          />
+        </label>
+      </div>
       <label className="field">
         <span>Example sentence (optional)</span>
         <textarea name="example" maxLength={2000} rows={2} defaultValue={word?.example ?? ''} />
@@ -275,6 +298,24 @@ export function VocabularyReviewCard({
               <p dir="rtl" lang="fa">
                 {word.persianMeaning}
               </p>
+            )}
+            <WordPronunciation
+              word={word.word}
+              ipa={word.pronunciationIpa}
+              persian={word.pronunciationFa}
+            />
+            <PronunciationHelp />
+            {word.relatedForms.length > 0 && (
+              <section className="vocabulary-related-answer">
+                <h4>Related word forms · واژه‌های مرتبط</h4>
+                <div className="vocabulary-related-forms">
+                  {word.relatedForms.map((form) => (
+                    <span key={form} lang="en" dir="ltr">
+                      {form}
+                    </span>
+                  ))}
+                </div>
+              </section>
             )}
             {word.example && <p dir="auto">{word.example}</p>}
           </div>

@@ -35,6 +35,8 @@ const wordSchema = z.object({
   explanation: z.string().trim().min(1).max(5000),
   example: z.string().trim().max(2000),
   persianMeaning: z.string().trim().max(2000).default(''),
+  pronunciationIpa: z.string().trim().max(1000).default(''),
+  pronunciationFa: z.string().trim().max(1000).default(''),
   difficulty: z.enum(['easy', 'medium', 'hard']),
   addedOn: localDate,
 });

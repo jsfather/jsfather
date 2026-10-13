@@ -324,6 +324,8 @@ export const vocabularyWords = pgTable(
     word: text('word').notNull(),
     explanation: text('explanation').notNull(),
     persianMeaning: text('persian_meaning').default('').notNull(),
+    pronunciationIpa: text('pronunciation_ipa').default('').notNull(),
+    pronunciationFa: text('pronunciation_fa').default('').notNull(),
     awlSublist: integer('awl_sublist'),
     relatedForms: jsonb('related_forms').$type<string[]>().default([]).notNull(),
     sourceUrl: text('source_url').default('').notNull(),

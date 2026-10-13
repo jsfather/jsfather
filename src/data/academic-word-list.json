@@ -19,19 +19,25 @@
       "analyzes",
       "analyzing"
     ],
-    "persianMeaning": "تحلیل کردن"
+    "persianMeaning": "تحلیل کردن",
+    "pronunciationIpa": "/ˈænəˌlaɪz/",
+    "pronunciationFa": "«اَ» ـ نَ ـ لایز"
   },
   {
     "word": "approach",
     "sublist": 1,
     "relatedForms": ["approachable", "approached", "approaches", "approaching", "unapproachable"],
-    "persianMeaning": "رویکرد؛ نزدیک شدن"
+    "persianMeaning": "رویکرد؛ نزدیک شدن",
+    "pronunciationIpa": "/əˈpɹoʊtʃ/",
+    "pronunciationFa": "اَ ـ «پرُوچ»"
   },
   {
     "word": "area",
     "sublist": 1,
     "relatedForms": ["areas"],
-    "persianMeaning": "ناحیه؛ حوزه"
+    "persianMeaning": "ناحیه؛ حوزه",
+    "pronunciationIpa": "/ˈɛɹiə/",
+    "pronunciationFa": "«اِ» ـ ری ـ اَ"
   },
   {
     "word": "assess",
@@ -49,25 +55,33 @@
       "reassessment",
       "unassessed"
     ],
-    "persianMeaning": "ارزیابی کردن"
+    "persianMeaning": "ارزیابی کردن",
+    "pronunciationIpa": "/əˈsɛs/",
+    "pronunciationFa": "اَ ـ «سِس»"
   },
   {
     "word": "assume",
     "sublist": 1,
     "relatedForms": ["assumed", "assumes", "assuming", "assumption", "assumptions"],
-    "persianMeaning": "فرض کردن"
+    "persianMeaning": "فرض کردن",
+    "pronunciationIpa": "/əˈsum/",
+    "pronunciationFa": "اَ ـ «سوم»"
   },
   {
     "word": "authority",
     "sublist": 1,
     "relatedForms": ["authoritative", "authorities"],
-    "persianMeaning": "اختیار؛ مرجع"
+    "persianMeaning": "اختیار؛ مرجع",
+    "pronunciationIpa": "/əˈθɔɹəti/",
+    "pronunciationFa": "اَ ـ «ثا» ـ رَ ـ تی"
   },
   {
     "word": "available",
     "sublist": 1,
     "relatedForms": ["availability", "unavailable"],
-    "persianMeaning": "در دسترس"
+    "persianMeaning": "در دسترس",
+    "pronunciationIpa": "/əˈveɪləbəl/",
+    "pronunciationFa": "اَ ـ «وِی» ـ لَ ـ بَل"
   },
   {
     "word": "benefit",
@@ -80,7 +94,9 @@
       "benefiting",
       "benefits"
     ],
-    "persianMeaning": "فایده؛ سود بردن"
+    "persianMeaning": "فایده؛ سود بردن",
+    "pronunciationIpa": "/ˈbɛnəfɪt/",
+    "pronunciationFa": "«بِ» ـ نَ ـ فِت"
   },
   {
     "word": "concept",
@@ -96,7 +112,9 @@
       "conceptualising",
       "conceptually"
     ],
-    "persianMeaning": "مفهوم"
+    "persianMeaning": "مفهوم",
+    "pronunciationIpa": "/ˈkɑnsɛpt/",
+    "pronunciationFa": "«کان» ـ سِپت"
   },
   {
     "word": "consist",
@@ -112,7 +130,9 @@
       "inconsistency",
       "inconsistent"
     ],
-    "persianMeaning": "تشکیل شدن"
+    "persianMeaning": "تشکیل شدن",
+    "pronunciationIpa": "/kənˈsɪst/",
+    "pronunciationFa": "کَن ـ «سِست»"
   },
   {
     "word": "constitute",
@@ -132,7 +152,9 @@
       "constitutive",
       "unconstitutional"
     ],
-    "persianMeaning": "تشکیل دادن"
+    "persianMeaning": "تشکیل دادن",
+    "pronunciationIpa": "/ˈkɑnstəˌtut/",
+    "pronunciationFa": "«کان» ـ ستَ ـ توت"
   },
   {
     "word": "context",
@@ -149,13 +171,17 @@
       "uncontextualised",
       "uncontextualized"
     ],
-    "persianMeaning": "بافت؛ زمینه"
+    "persianMeaning": "بافت؛ زمینه",
+    "pronunciationIpa": "/ˈkɑntɛkst/",
+    "pronunciationFa": "«کان» ـ تِکست"
   },
   {
     "word": "contract",
     "sublist": 1,
     "relatedForms": ["contracted", "contracting", "contractor", "contractors", "contracts"],
-    "persianMeaning": "قرارداد؛ منقبض شدن"
+    "persianMeaning": "قرارداد؛ منقبض شدن",
+    "pronunciationIpa": "/ˈkɑnˌtɹækt/ · /kənˈtɹækt/",
+    "pronunciationFa": "«کان» ـ ترَکت / کَن ـ «ترَکت»"
   },
   {
     "word": "create",
@@ -176,13 +202,17 @@
       "recreates",
       "recreating"
     ],
-    "persianMeaning": "ایجاد کردن"
+    "persianMeaning": "ایجاد کردن",
+    "pronunciationIpa": "/kɹiˈeɪt/",
+    "pronunciationFa": "کری ـ «اِیت»"
   },
   {
     "word": "data",
     "sublist": 1,
     "relatedForms": [],
-    "persianMeaning": "داده‌ها"
+    "persianMeaning": "داده‌ها",
+    "pronunciationIpa": "/ˈdeɪtə/ · /ˈdætə/",
+    "pronunciationFa": "«دِی» ـ تَ / «دَ» ـ تَ"
   },
   {
     "word": "define",
@@ -200,7 +230,9 @@
       "redefining",
       "undefined"
     ],
-    "persianMeaning": "تعریف کردن"
+    "persianMeaning": "تعریف کردن",
+    "pronunciationIpa": "/dɪˈfaɪn/",
+    "pronunciationFa": "دِ ـ «فاین»"
   },
   {
     "word": "derive",
@@ -214,7 +246,9 @@
       "derives",
       "deriving"
     ],
-    "persianMeaning": "استخراج کردن؛ ناشی شدن"
+    "persianMeaning": "استخراج کردن؛ ناشی شدن",
+    "pronunciationIpa": "/dɚˈaɪv/",
+    "pronunciationFa": "دِر ـ «آیو»"
   },
   {
     "word": "distribute",
@@ -234,7 +268,9 @@
       "redistributing",
       "redistribution"
     ],
-    "persianMeaning": "توزیع کردن"
+    "persianMeaning": "توزیع کردن",
+    "pronunciationIpa": "/dɪˈstɹɪbjut/",
+    "pronunciationFa": "دِ ـ «سترِ» ـ بیوت"
   },
   {
     "word": "economy",
@@ -249,7 +285,9 @@
       "economists",
       "uneconomical"
     ],
-    "persianMeaning": "اقتصاد"
+    "persianMeaning": "اقتصاد",
+    "pronunciationIpa": "/ɪˈkɑnəmi/ · /iˈkɑnəmi/",
+    "pronunciationFa": "اِ ـ «کا» ـ نَ ـ می / ای ـ «کا» ـ نَ ـ می"
   },
   {
     "word": "environment",
@@ -261,7 +299,9 @@
       "environmentally",
       "environments"
     ],
-    "persianMeaning": "محیط"
+    "persianMeaning": "محیط",
+    "pronunciationIpa": "/ɪnˈvaɪɹənmənt/",
+    "pronunciationFa": "اِن ـ «وای» ـ رَن ـ مَنت"
   },
   {
     "word": "establish",
@@ -278,7 +318,9 @@
       "establishment",
       "establishments"
     ],
-    "persianMeaning": "تأسیس کردن؛ برقرار کردن"
+    "persianMeaning": "تأسیس کردن؛ برقرار کردن",
+    "pronunciationIpa": "/ɪˈstæblɪʃ/",
+    "pronunciationFa": "اِ ـ «ستَ» ـ بلِش"
   },
   {
     "word": "estimate",
@@ -299,25 +341,33 @@
       "underestimates",
       "underestimating"
     ],
-    "persianMeaning": "برآورد کردن"
+    "persianMeaning": "برآورد کردن",
+    "pronunciationIpa": "/ˈɛstəmət/ · /ˈɛstəˌmeɪt/",
+    "pronunciationFa": "«اِ» ـ ستَ ـ مَت / «اِ» ـ ستَ ـ مِیت"
   },
   {
     "word": "evident",
     "sublist": 1,
     "relatedForms": ["evidence", "evidenced", "evidential", "evidently"],
-    "persianMeaning": "آشکار"
+    "persianMeaning": "آشکار",
+    "pronunciationIpa": "/ˈɛvədənt/",
+    "pronunciationFa": "«اِ» ـ وَ ـ دَنت"
   },
   {
     "word": "export",
     "sublist": 1,
     "relatedForms": ["exported", "exporter", "exporters", "exporting", "exports"],
-    "persianMeaning": "صادر کردن؛ صادرات"
+    "persianMeaning": "صادر کردن؛ صادرات",
+    "pronunciationIpa": "/ˈɛkspɔɹt/",
+    "pronunciationFa": "«اِک» ـ سپارت"
   },
   {
     "word": "factor",
     "sublist": 1,
     "relatedForms": ["factored", "factoring", "factors"],
-    "persianMeaning": "عامل"
+    "persianMeaning": "عامل",
+    "pronunciationIpa": "/ˈfæktɚ/",
+    "pronunciationFa": "«فَک» ـ تِر"
   },
   {
     "word": "finance",
@@ -331,7 +381,9 @@
       "financiers",
       "financing"
     ],
-    "persianMeaning": "امور مالی؛ تأمین مالی کردن"
+    "persianMeaning": "امور مالی؛ تأمین مالی کردن",
+    "pronunciationIpa": "/fəˈnæns/ · /fɪˈnæns/ · /ˈfaɪˌnæns/",
+    "pronunciationFa": "فَ ـ «نَنس» / فِ ـ «نَنس» / «فای» ـ نَنس"
   },
   {
     "word": "formula",
@@ -350,13 +402,17 @@
       "reformulation",
       "reformulations"
     ],
-    "persianMeaning": "فرمول"
+    "persianMeaning": "فرمول",
+    "pronunciationIpa": "/ˈfɔɹmjələ/",
+    "pronunciationFa": "«فار» ـ میَ ـ لَ"
   },
   {
     "word": "function",
     "sublist": 1,
     "relatedForms": ["functional", "functionally", "functioned", "functioning", "functions"],
-    "persianMeaning": "کارکرد؛ عمل کردن"
+    "persianMeaning": "کارکرد؛ عمل کردن",
+    "pronunciationIpa": "/ˈfʌŋkʃən/",
+    "pronunciationFa": "«فآنگک» ـ شَن"
   },
   {
     "word": "identify",
@@ -371,13 +427,17 @@
       "identity",
       "unidentifiable"
     ],
-    "persianMeaning": "شناسایی کردن"
+    "persianMeaning": "شناسایی کردن",
+    "pronunciationIpa": "/aɪˈdɛntəˌfaɪ/",
+    "pronunciationFa": "آی ـ «دِن» ـ تَ ـ فای"
   },
   {
     "word": "income",
     "sublist": 1,
     "relatedForms": ["incomes"],
-    "persianMeaning": "درآمد"
+    "persianMeaning": "درآمد",
+    "pronunciationIpa": "/ˈɪnˌkʌm/",
+    "pronunciationFa": "«اِن» ـ کآم"
   },
   {
     "word": "indicate",
@@ -392,7 +452,9 @@
       "indicator",
       "indicators"
     ],
-    "persianMeaning": "نشان دادن"
+    "persianMeaning": "نشان دادن",
+    "pronunciationIpa": "/ˈɪndəˌkeɪt/",
+    "pronunciationFa": "«اِن» ـ دَ ـ کِیت"
   },
   {
     "word": "individual",
@@ -407,7 +469,9 @@
       "individually",
       "individuals"
     ],
-    "persianMeaning": "فرد؛ فردی"
+    "persianMeaning": "فرد؛ فردی",
+    "pronunciationIpa": "/ˌɪndəˈvɪdʒəwəl/",
+    "pronunciationFa": "اِن ـ دَ ـ «وِ» ـ جَ ـ وَل"
   },
   {
     "word": "interpret",
@@ -433,31 +497,41 @@
       "reinterpreting",
       "reinterprets"
     ],
-    "persianMeaning": "تفسیر کردن"
+    "persianMeaning": "تفسیر کردن",
+    "pronunciationIpa": "/ˌɪnˈtɝpɹət/",
+    "pronunciationFa": "اِن ـ «تِر» ـ پرَت"
   },
   {
     "word": "involve",
     "sublist": 1,
     "relatedForms": ["involved", "involvement", "involves", "involving", "uninvolved"],
-    "persianMeaning": "درگیر کردن؛ شامل بودن"
+    "persianMeaning": "درگیر کردن؛ شامل بودن",
+    "pronunciationIpa": "/ˌɪnˈvɑlv/",
+    "pronunciationFa": "اِن ـ «والو»"
   },
   {
     "word": "issue",
     "sublist": 1,
     "relatedForms": ["issued", "issues", "issuing"],
-    "persianMeaning": "موضوع؛ منتشر کردن"
+    "persianMeaning": "موضوع؛ منتشر کردن",
+    "pronunciationIpa": "/ˈɪʃu/",
+    "pronunciationFa": "«اِ» ـ شو"
   },
   {
     "word": "labour",
     "sublist": 1,
     "relatedForms": ["labor", "labored", "labors", "laboured", "labouring", "labours"],
-    "persianMeaning": "کار؛ نیروی کار"
+    "persianMeaning": "کار؛ نیروی کار",
+    "pronunciationIpa": "/ˈleɪbɚ/",
+    "pronunciationFa": "«لِی» ـ بِر"
   },
   {
     "word": "legal",
     "sublist": 1,
     "relatedForms": ["illegal", "illegality", "illegally", "legality", "legally"],
-    "persianMeaning": "قانونی"
+    "persianMeaning": "قانونی",
+    "pronunciationIpa": "/ˈliɡəl/",
+    "pronunciationFa": "«لی» ـ گَل"
   },
   {
     "word": "legislate",
@@ -472,19 +546,25 @@
       "legislators",
       "legislature"
     ],
-    "persianMeaning": "قانون‌گذاری کردن"
+    "persianMeaning": "قانون‌گذاری کردن",
+    "pronunciationIpa": "/ˈlɛdʒɪˌsleɪt/",
+    "pronunciationFa": "«لِ» ـ جِ ـ سلِیت"
   },
   {
     "word": "major",
     "sublist": 1,
     "relatedForms": ["majorities", "majority"],
-    "persianMeaning": "عمده؛ رشتهٔ تحصیلی"
+    "persianMeaning": "عمده؛ رشتهٔ تحصیلی",
+    "pronunciationIpa": "/ˈmeɪdʒɚ/",
+    "pronunciationFa": "«مِی» ـ جِر"
   },
   {
     "word": "method",
     "sublist": 1,
     "relatedForms": ["methodical", "methodological", "methodologies", "methodology", "methods"],
-    "persianMeaning": "روش"
+    "persianMeaning": "روش",
+    "pronunciationIpa": "/ˈmɛθəd/",
+    "pronunciationFa": "«مِ» ـ ثَد"
   },
   {
     "word": "occur",
@@ -500,31 +580,41 @@
       "reoccurring",
       "reoccurs"
     ],
-    "persianMeaning": "رخ دادن"
+    "persianMeaning": "رخ دادن",
+    "pronunciationIpa": "/əˈkɝ/",
+    "pronunciationFa": "اَ ـ «کِر»"
   },
   {
     "word": "percent",
     "sublist": 1,
     "relatedForms": ["percentage", "percentages"],
-    "persianMeaning": "درصد"
+    "persianMeaning": "درصد",
+    "pronunciationIpa": "/pɚˈsɛnt/",
+    "pronunciationFa": "پِر ـ «سِنت»"
   },
   {
     "word": "period",
     "sublist": 1,
     "relatedForms": ["periodic", "periodical", "periodically", "periodicals", "periods"],
-    "persianMeaning": "دوره؛ بازهٔ زمانی"
+    "persianMeaning": "دوره؛ بازهٔ زمانی",
+    "pronunciationIpa": "/ˈpɪɹiəd/",
+    "pronunciationFa": "«پِ» ـ ری ـ اَد"
   },
   {
     "word": "policy",
     "sublist": 1,
     "relatedForms": ["policies"],
-    "persianMeaning": "سیاست؛ خط‌مشی"
+    "persianMeaning": "سیاست؛ خط‌مشی",
+    "pronunciationIpa": "/ˈpɑləsi/",
+    "pronunciationFa": "«پا» ـ لَ ـ سی"
   },
   {
     "word": "principle",
     "sublist": 1,
     "relatedForms": ["principled", "principles", "unprincipled"],
-    "persianMeaning": "اصل"
+    "persianMeaning": "اصل",
+    "pronunciationIpa": "/ˈpɹɪnsəpəl/",
+    "pronunciationFa": "«پرِن» ـ سَ ـ پَل"
   },
   {
     "word": "proceed",
@@ -538,25 +628,33 @@
       "proceedings",
       "proceeds"
     ],
-    "persianMeaning": "ادامه دادن؛ پیش رفتن"
+    "persianMeaning": "ادامه دادن؛ پیش رفتن",
+    "pronunciationIpa": "/pɹəˈsid/ · /pɹoʊˈsid/ · /pɚˈsid/",
+    "pronunciationFa": "پرَ ـ «سید» / پرُو ـ «سید» / پِر ـ «سید»"
   },
   {
     "word": "process",
     "sublist": 1,
     "relatedForms": ["processed", "processes", "processing"],
-    "persianMeaning": "فرایند؛ پردازش کردن"
+    "persianMeaning": "فرایند؛ پردازش کردن",
+    "pronunciationIpa": "/ˈpɹɑˌsɛs/ · /ˈpɹɔˌsɛs/",
+    "pronunciationFa": "«پرا» ـ سِس / «پرا» ـ سِس"
   },
   {
     "word": "require",
     "sublist": 1,
     "relatedForms": ["required", "requirement", "requirements", "requires", "requiring"],
-    "persianMeaning": "نیاز داشتن"
+    "persianMeaning": "نیاز داشتن",
+    "pronunciationIpa": "/ˌɹiˈkwaɪɚ/ · /ɹiˈkwaɪɹ/ · /ɹɪˈkwaɪɚ/",
+    "pronunciationFa": "ری ـ «کوای» ـ اِر / ری ـ «کوایر» / رِ ـ «کوای» ـ اِر"
   },
   {
     "word": "research",
     "sublist": 1,
     "relatedForms": ["researched", "researcher", "researchers", "researches", "researching"],
-    "persianMeaning": "پژوهش؛ تحقیق کردن"
+    "persianMeaning": "پژوهش؛ تحقیق کردن",
+    "pronunciationIpa": "/ɹiˈsɝtʃ/ · /ˈɹisɚtʃ/",
+    "pronunciationFa": "ری ـ «سِرچ» / «ری» ـ سِرچ"
   },
   {
     "word": "respond",
@@ -573,25 +671,33 @@
       "responsiveness",
       "unresponsive"
     ],
-    "persianMeaning": "پاسخ دادن"
+    "persianMeaning": "پاسخ دادن",
+    "pronunciationIpa": "/ɹɪˈspɑnd/ · /ɹiˈspɑnd/",
+    "pronunciationFa": "رِ ـ «سپاند» / ری ـ «سپاند»"
   },
   {
     "word": "role",
     "sublist": 1,
     "relatedForms": ["roles"],
-    "persianMeaning": "نقش"
+    "persianMeaning": "نقش",
+    "pronunciationIpa": "/ˈɹoʊl/",
+    "pronunciationFa": "«رُول»"
   },
   {
     "word": "section",
     "sublist": 1,
     "relatedForms": ["sectioned", "sectioning", "sections"],
-    "persianMeaning": "بخش"
+    "persianMeaning": "بخش",
+    "pronunciationIpa": "/ˈsɛkʃən/",
+    "pronunciationFa": "«سِک» ـ شَن"
   },
   {
     "word": "sector",
     "sublist": 1,
     "relatedForms": ["sectors"],
-    "persianMeaning": "حوزه؛ بخش"
+    "persianMeaning": "حوزه؛ بخش",
+    "pronunciationIpa": "/ˈsɛktɚ/",
+    "pronunciationFa": "«سِک» ـ تِر"
   },
   {
     "word": "significant",
@@ -606,25 +712,33 @@
       "signify",
       "signifying"
     ],
-    "persianMeaning": "مهم؛ معنادار"
+    "persianMeaning": "مهم؛ معنادار",
+    "pronunciationIpa": "/səɡˈnɪfɪkənt/ · /sɪɡˈnɪfɪkənt/",
+    "pronunciationFa": "سَگ ـ «نِ» ـ فِ ـ کَنت / سِگ ـ «نِ» ـ فِ ـ کَنت"
   },
   {
     "word": "similar",
     "sublist": 1,
     "relatedForms": ["dissimilar", "similarities", "similarity", "similarly"],
-    "persianMeaning": "مشابه"
+    "persianMeaning": "مشابه",
+    "pronunciationIpa": "/ˈsɪməlɚ/",
+    "pronunciationFa": "«سِ» ـ مَ ـ لِر"
   },
   {
     "word": "source",
     "sublist": 1,
     "relatedForms": ["sourced", "sources", "sourcing"],
-    "persianMeaning": "منبع"
+    "persianMeaning": "منبع",
+    "pronunciationIpa": "/ˈsɔɹs/",
+    "pronunciationFa": "«سارس»"
   },
   {
     "word": "specific",
     "sublist": 1,
     "relatedForms": ["specifically", "specification", "specifications", "specificity", "specifics"],
-    "persianMeaning": "مشخص؛ خاص"
+    "persianMeaning": "مشخص؛ خاص",
+    "pronunciationIpa": "/spəˈsɪfɪk/ · /spɪˈsɪfɪk/",
+    "pronunciationFa": "سپَ ـ «سِ» ـ فِک / سپِ ـ «سِ» ـ فِک"
   },
   {
     "word": "structure",
@@ -641,13 +755,17 @@
       "structuring",
       "unstructured"
     ],
-    "persianMeaning": "ساختار"
+    "persianMeaning": "ساختار",
+    "pronunciationIpa": "/ˈstɹʌktʃɚ/",
+    "pronunciationFa": "«سترآک» ـ چِر"
   },
   {
     "word": "theory",
     "sublist": 1,
     "relatedForms": ["theoretical", "theoretically", "theories", "theorist", "theorists"],
-    "persianMeaning": "نظریه"
+    "persianMeaning": "نظریه",
+    "pronunciationIpa": "/ˈθɪɹi/ · /ˈθiɚi/",
+    "pronunciationFa": "«ثِ» ـ ری / «ثی» ـ اِر ـ ای"
   },
   {
     "word": "vary",
@@ -668,7 +786,9 @@
       "varies",
       "varying"
     ],
-    "persianMeaning": "تغییر کردن؛ متفاوت بودن"
+    "persianMeaning": "تغییر کردن؛ متفاوت بودن",
+    "pronunciationIpa": "/ˈvɛɹi/",
+    "pronunciationFa": "«وِ» ـ ری"
   },
   {
     "word": "achieve",
@@ -681,13 +801,17 @@
       "achieves",
       "achieving"
     ],
-    "persianMeaning": "دست یافتن"
+    "persianMeaning": "دست یافتن",
+    "pronunciationIpa": "/əˈtʃiv/",
+    "pronunciationFa": "اَ ـ «چیو»"
   },
   {
     "word": "acquire",
     "sublist": 2,
     "relatedForms": ["acquired", "acquires", "acquiring", "acquisition", "acquisitions"],
-    "persianMeaning": "به دست آوردن"
+    "persianMeaning": "به دست آوردن",
+    "pronunciationIpa": "/əˈkwaɪɚ/",
+    "pronunciationFa": "اَ ـ «کوای» ـ اِر"
   },
   {
     "word": "administrate",
@@ -701,13 +825,17 @@
       "administrator",
       "administrators"
     ],
-    "persianMeaning": "اداره کردن"
+    "persianMeaning": "اداره کردن",
+    "pronunciationIpa": "/ædˈmɪnɪˌstɹeɪt/",
+    "pronunciationFa": "اَد ـ «مِ» ـ نِ ـ سترِیت"
   },
   {
     "word": "affect",
     "sublist": 2,
     "relatedForms": ["affected", "affecting", "affective", "affectively", "affects", "unaffected"],
-    "persianMeaning": "تأثیر گذاشتن"
+    "persianMeaning": "تأثیر گذاشتن",
+    "pronunciationIpa": "/əˈfɛkt/",
+    "pronunciationFa": "اَ ـ «فِکت»"
   },
   {
     "word": "appropriate",
@@ -720,13 +848,17 @@
       "inappropriate",
       "inappropriately"
     ],
-    "persianMeaning": "مناسب؛ اختصاص دادن"
+    "persianMeaning": "مناسب؛ اختصاص دادن",
+    "pronunciationIpa": "/əˈpɹoʊpɹiət/ · /əˈpɹoʊpɹiˌeɪt/",
+    "pronunciationFa": "اَ ـ «پرُو» ـ پری ـ اَت / اَ ـ «پرُو» ـ پری ـ اِیت"
   },
   {
     "word": "aspect",
     "sublist": 2,
     "relatedForms": ["aspects"],
-    "persianMeaning": "جنبه"
+    "persianMeaning": "جنبه",
+    "pronunciationIpa": "/ˈæˌspɛkt/",
+    "pronunciationFa": "«اَ» ـ سپِکت"
   },
   {
     "word": "assist",
@@ -740,7 +872,9 @@
       "assists",
       "unassisted"
     ],
-    "persianMeaning": "کمک کردن"
+    "persianMeaning": "کمک کردن",
+    "pronunciationIpa": "/əˈsɪst/",
+    "pronunciationFa": "اَ ـ «سِست»"
   },
   {
     "word": "category",
@@ -757,13 +891,17 @@
       "categorizes",
       "categorizing"
     ],
-    "persianMeaning": "دسته؛ طبقه"
+    "persianMeaning": "دسته؛ طبقه",
+    "pronunciationIpa": "/ˈkætəˌɡɔɹi/",
+    "pronunciationFa": "«کَ» ـ تَ ـ گا ـ ری"
   },
   {
     "word": "chapter",
     "sublist": 2,
     "relatedForms": ["chapters"],
-    "persianMeaning": "فصلِ کتاب"
+    "persianMeaning": "فصلِ کتاب",
+    "pronunciationIpa": "/ˈtʃæptɚ/",
+    "pronunciationFa": "«چَپ» ـ تِر"
   },
   {
     "word": "commission",
@@ -775,19 +913,25 @@
       "commissioning",
       "commissions"
     ],
-    "persianMeaning": "کمیسیون؛ مأموریت دادن"
+    "persianMeaning": "کمیسیون؛ مأموریت دادن",
+    "pronunciationIpa": "/kəˈmɪʃən/",
+    "pronunciationFa": "کَ ـ «مِ» ـ شَن"
   },
   {
     "word": "community",
     "sublist": 2,
     "relatedForms": ["communities"],
-    "persianMeaning": "جامعه"
+    "persianMeaning": "جامعه",
+    "pronunciationIpa": "/kəˈmjunəti/ · /kəˈmjunɪti/",
+    "pronunciationFa": "کَ ـ «میو» ـ نَ ـ تی / کَ ـ «میو» ـ نِ ـ تی"
   },
   {
     "word": "complex",
     "sublist": 2,
     "relatedForms": ["complexities", "complexity"],
-    "persianMeaning": "پیچیده؛ مجموعه"
+    "persianMeaning": "پیچیده؛ مجموعه",
+    "pronunciationIpa": "/ˈkɑmplɛks/ · /kəmˈplɛks/",
+    "pronunciationFa": "«کام» ـ پلِکس / کَم ـ «پلِکس»"
   },
   {
     "word": "compute",
@@ -803,7 +947,9 @@
       "computers",
       "computing"
     ],
-    "persianMeaning": "محاسبه کردن"
+    "persianMeaning": "محاسبه کردن",
+    "pronunciationIpa": "/kəmˈpjut/",
+    "pronunciationFa": "کَم ـ «پیوت»"
   },
   {
     "word": "conclude",
@@ -819,19 +965,25 @@
       "inconclusive",
       "inconclusively"
     ],
-    "persianMeaning": "نتیجه‌گیری کردن"
+    "persianMeaning": "نتیجه‌گیری کردن",
+    "pronunciationIpa": "/kənˈklud/",
+    "pronunciationFa": "کَن ـ «کلود»"
   },
   {
     "word": "conduct",
     "sublist": 2,
     "relatedForms": ["conducted", "conducting", "conducts"],
-    "persianMeaning": "انجام دادن؛ رفتار"
+    "persianMeaning": "انجام دادن؛ رفتار",
+    "pronunciationIpa": "/ˈkɑndəkt/ · /kɑnˈdʌkt/",
+    "pronunciationFa": "«کان» ـ دَکت / کان ـ «دآکت»"
   },
   {
     "word": "consequent",
     "sublist": 2,
     "relatedForms": ["consequence", "consequences", "consequently"],
-    "persianMeaning": "ناشی از؛ پیامدی"
+    "persianMeaning": "ناشی از؛ پیامدی",
+    "pronunciationIpa": "/ˈkɑnsəkwənt/",
+    "pronunciationFa": "«کان» ـ سَ ـ کوَنت"
   },
   {
     "word": "construct",
@@ -849,31 +1001,41 @@
       "reconstruction",
       "reconstructs"
     ],
-    "persianMeaning": "ساختن"
+    "persianMeaning": "ساختن",
+    "pronunciationIpa": "/kənˈstɹʌkt/ · /ˈkɑnstɹəkt/",
+    "pronunciationFa": "کَن ـ «سترآکت» / «کان» ـ سترَکت"
   },
   {
     "word": "consume",
     "sublist": 2,
     "relatedForms": ["consumed", "consumer", "consumers", "consumes", "consuming", "consumption"],
-    "persianMeaning": "مصرف کردن"
+    "persianMeaning": "مصرف کردن",
+    "pronunciationIpa": "/kənˈsum/",
+    "pronunciationFa": "کَن ـ «سوم»"
   },
   {
     "word": "credit",
     "sublist": 2,
     "relatedForms": ["credited", "crediting", "creditor", "creditors", "credits"],
-    "persianMeaning": "اعتبار"
+    "persianMeaning": "اعتبار",
+    "pronunciationIpa": "/ˈkɹɛdət/ · /ˈkɹɛdɪt/",
+    "pronunciationFa": "«کرِ» ـ دَت / «کرِ» ـ دِت"
   },
   {
     "word": "culture",
     "sublist": 2,
     "relatedForms": ["cultural", "culturally", "cultured", "cultures", "uncultured"],
-    "persianMeaning": "فرهنگ"
+    "persianMeaning": "فرهنگ",
+    "pronunciationIpa": "/ˈkʌltʃɚ/",
+    "pronunciationFa": "«کآل» ـ چِر"
   },
   {
     "word": "design",
     "sublist": 2,
     "relatedForms": ["designed", "designer", "designers", "designing", "designs"],
-    "persianMeaning": "طراحی کردن؛ طرح"
+    "persianMeaning": "طراحی کردن؛ طرح",
+    "pronunciationIpa": "/dɪˈzaɪn/",
+    "pronunciationFa": "دِ ـ «زاین»"
   },
   {
     "word": "distinct",
@@ -887,19 +1049,25 @@
       "indistinct",
       "indistinctly"
     ],
-    "persianMeaning": "متمایز"
+    "persianMeaning": "متمایز",
+    "pronunciationIpa": "/dɪˈstɪŋkt/",
+    "pronunciationFa": "دِ ـ «ستِنگکت»"
   },
   {
     "word": "element",
     "sublist": 2,
     "relatedForms": ["elements"],
-    "persianMeaning": "عنصر"
+    "persianMeaning": "عنصر",
+    "pronunciationIpa": "/ˈɛləmənt/",
+    "pronunciationFa": "«اِ» ـ لَ ـ مَنت"
   },
   {
     "word": "equate",
     "sublist": 2,
     "relatedForms": ["equated", "equates", "equating", "equation", "equations"],
-    "persianMeaning": "برابر دانستن"
+    "persianMeaning": "برابر دانستن",
+    "pronunciationIpa": "/ɪˈkweɪt/",
+    "pronunciationFa": "اِ ـ «کوِیت»"
   },
   {
     "word": "evaluate",
@@ -917,13 +1085,17 @@
       "re-evaluating",
       "re-evaluation"
     ],
-    "persianMeaning": "ارزیابی کردن"
+    "persianMeaning": "ارزیابی کردن",
+    "pronunciationIpa": "/ɪˈvæljuˌeɪt/ · /iˈvæljuˌeɪt/",
+    "pronunciationFa": "اِ ـ «وَل» ـ یو ـ اِیت / ای ـ «وَل» ـ یو ـ اِیت"
   },
   {
     "word": "feature",
     "sublist": 2,
     "relatedForms": ["featured", "features", "featuring"],
-    "persianMeaning": "ویژگی"
+    "persianMeaning": "ویژگی",
+    "pronunciationIpa": "/ˈfitʃɚ/",
+    "pronunciationFa": "«فی» ـ چِر"
   },
   {
     "word": "final",
@@ -941,7 +1113,9 @@
       "finally",
       "finals"
     ],
-    "persianMeaning": "نهایی"
+    "persianMeaning": "نهایی",
+    "pronunciationIpa": "/ˈfaɪnəl/",
+    "pronunciationFa": "«فای» ـ نَل"
   },
   {
     "word": "focus",
@@ -960,19 +1134,25 @@
       "refocusses",
       "refocussing"
     ],
-    "persianMeaning": "تمرکز کردن؛ کانون"
+    "persianMeaning": "تمرکز کردن؛ کانون",
+    "pronunciationIpa": "/ˈfoʊkəs/ · /ˈfoʊkɪs/",
+    "pronunciationFa": "«فُو» ـ کَس / «فُو» ـ کِس"
   },
   {
     "word": "impact",
     "sublist": 2,
     "relatedForms": ["impacted", "impacting", "impacts"],
-    "persianMeaning": "تأثیر؛ برخورد"
+    "persianMeaning": "تأثیر؛ برخورد",
+    "pronunciationIpa": "/ˌɪmˈpækt/ · /ˈɪmpækt/",
+    "pronunciationFa": "اِم ـ «پَکت» / «اِم» ـ پَکت"
   },
   {
     "word": "injure",
     "sublist": 2,
     "relatedForms": ["injured", "injures", "injuries", "injuring", "injury", "uninjured"],
-    "persianMeaning": "آسیب رساندن"
+    "persianMeaning": "آسیب رساندن",
+    "pronunciationIpa": "/ˈɪndʒɚ/",
+    "pronunciationFa": "«اِن» ـ جِر"
   },
   {
     "word": "institute",
@@ -993,7 +1173,9 @@
       "institutionally",
       "institutions"
     ],
-    "persianMeaning": "مؤسسه؛ ایجاد کردن"
+    "persianMeaning": "مؤسسه؛ ایجاد کردن",
+    "pronunciationIpa": "/ˈɪnstəˌtut/",
+    "pronunciationFa": "«اِن» ـ ستَ ـ توت"
   },
   {
     "word": "invest",
@@ -1012,25 +1194,33 @@
       "reinvestment",
       "reinvests"
     ],
-    "persianMeaning": "سرمایه‌گذاری کردن"
+    "persianMeaning": "سرمایه‌گذاری کردن",
+    "pronunciationIpa": "/ˌɪnˈvɛst/",
+    "pronunciationFa": "اِن ـ «وِست»"
   },
   {
     "word": "item",
     "sublist": 2,
     "relatedForms": ["itemisation", "itemise", "itemised", "itemises", "itemising", "items"],
-    "persianMeaning": "مورد؛ قلم"
+    "persianMeaning": "مورد؛ قلم",
+    "pronunciationIpa": "/ˈaɪtəm/",
+    "pronunciationFa": "«آی» ـ تَم"
   },
   {
     "word": "journal",
     "sublist": 2,
     "relatedForms": ["journals"],
-    "persianMeaning": "نشریه؛ دفتر روزانه"
+    "persianMeaning": "نشریه؛ دفتر روزانه",
+    "pronunciationIpa": "/ˈdʒɝnəl/",
+    "pronunciationFa": "«جِر» ـ نَل"
   },
   {
     "word": "maintain",
     "sublist": 2,
     "relatedForms": ["maintained", "maintaining", "maintains", "maintenance"],
-    "persianMeaning": "حفظ کردن؛ نگهداری کردن"
+    "persianMeaning": "حفظ کردن؛ نگهداری کردن",
+    "pronunciationIpa": "/meɪnˈteɪn/",
+    "pronunciationFa": "مِین ـ «تِین»"
   },
   {
     "word": "normal",
@@ -1051,13 +1241,17 @@
       "normalizing",
       "normally"
     ],
-    "persianMeaning": "عادی"
+    "persianMeaning": "عادی",
+    "pronunciationIpa": "/ˈnɔɹməl/",
+    "pronunciationFa": "«نار» ـ مَل"
   },
   {
     "word": "obtain",
     "sublist": 2,
     "relatedForms": ["obtainable", "obtained", "obtaining", "obtains", "unobtainable"],
-    "persianMeaning": "به دست آوردن"
+    "persianMeaning": "به دست آوردن",
+    "pronunciationIpa": "/əbˈteɪn/",
+    "pronunciationFa": "اَب ـ «تِین»"
   },
   {
     "word": "participate",
@@ -1071,55 +1265,73 @@
       "participation",
       "participatory"
     ],
-    "persianMeaning": "شرکت کردن"
+    "persianMeaning": "شرکت کردن",
+    "pronunciationIpa": "/pɑɹˈtɪsəˌpeɪt/",
+    "pronunciationFa": "پار ـ «تِ» ـ سَ ـ پِیت"
   },
   {
     "word": "perceive",
     "sublist": 2,
     "relatedForms": ["perceived", "perceives", "perceiving", "perception", "perceptions"],
-    "persianMeaning": "درک کردن"
+    "persianMeaning": "درک کردن",
+    "pronunciationIpa": "/pɚˈsiv/",
+    "pronunciationFa": "پِر ـ «سیو»"
   },
   {
     "word": "positive",
     "sublist": 2,
     "relatedForms": ["positively"],
-    "persianMeaning": "مثبت"
+    "persianMeaning": "مثبت",
+    "pronunciationIpa": "/ˈpɑzətɪv/",
+    "pronunciationFa": "«پا» ـ زَ ـ تِو"
   },
   {
     "word": "potential",
     "sublist": 2,
     "relatedForms": ["potentially"],
-    "persianMeaning": "بالقوه؛ ظرفیت"
+    "persianMeaning": "بالقوه؛ ظرفیت",
+    "pronunciationIpa": "/pəˈtɛnʃəl/",
+    "pronunciationFa": "پَ ـ «تِن» ـ شَل"
   },
   {
     "word": "previous",
     "sublist": 2,
     "relatedForms": ["previously"],
-    "persianMeaning": "قبلی"
+    "persianMeaning": "قبلی",
+    "pronunciationIpa": "/ˈpɹiviəs/",
+    "pronunciationFa": "«پری» ـ وی ـ اَس"
   },
   {
     "word": "primary",
     "sublist": 2,
     "relatedForms": ["primarily"],
-    "persianMeaning": "اصلی؛ اولیه"
+    "persianMeaning": "اصلی؛ اولیه",
+    "pronunciationIpa": "/ˈpɹaɪˌmɛɹi/",
+    "pronunciationFa": "«پرای» ـ مِ ـ ری"
   },
   {
     "word": "purchase",
     "sublist": 2,
     "relatedForms": ["purchased", "purchaser", "purchasers", "purchases", "purchasing"],
-    "persianMeaning": "خریدن"
+    "persianMeaning": "خریدن",
+    "pronunciationIpa": "/ˈpɝtʃəs/",
+    "pronunciationFa": "«پِر» ـ چَس"
   },
   {
     "word": "range",
     "sublist": 2,
     "relatedForms": ["ranged", "ranges", "ranging"],
-    "persianMeaning": "دامنه؛ گستره"
+    "persianMeaning": "دامنه؛ گستره",
+    "pronunciationIpa": "/ˈɹeɪndʒ/",
+    "pronunciationFa": "«رِینج»"
   },
   {
     "word": "region",
     "sublist": 2,
     "relatedForms": ["regional", "regionally", "regions"],
-    "persianMeaning": "منطقه"
+    "persianMeaning": "منطقه",
+    "pronunciationIpa": "/ˈɹidʒən/",
+    "pronunciationFa": "«ری» ـ جَن"
   },
   {
     "word": "regulate",
@@ -1139,13 +1351,17 @@
       "regulatory",
       "unregulated"
     ],
-    "persianMeaning": "تنظیم کردن؛ قانون‌مند کردن"
+    "persianMeaning": "تنظیم کردن؛ قانون‌مند کردن",
+    "pronunciationIpa": "/ˈɹɛɡjəˌleɪt/",
+    "pronunciationFa": "«رِ» ـ گیَ ـ لِیت"
   },
   {
     "word": "relevant",
     "sublist": 2,
     "relatedForms": ["irrelevance", "irrelevant", "relevance"],
-    "persianMeaning": "مرتبط"
+    "persianMeaning": "مرتبط",
+    "pronunciationIpa": "/ˈɹɛləvənt/",
+    "pronunciationFa": "«رِ» ـ لَ ـ وَنت"
   },
   {
     "word": "reside",
@@ -1159,7 +1375,9 @@
       "resides",
       "residing"
     ],
-    "persianMeaning": "اقامت داشتن"
+    "persianMeaning": "اقامت داشتن",
+    "pronunciationIpa": "/ɹɪˈzaɪd/ · /ɹiˈzaɪd/",
+    "pronunciationFa": "رِ ـ «زاید» / ری ـ «زاید»"
   },
   {
     "word": "resource",
@@ -1172,7 +1390,9 @@
       "under-resourced",
       "unresourceful"
     ],
-    "persianMeaning": "منبع"
+    "persianMeaning": "منبع",
+    "pronunciationIpa": "/ˈɹisɔɹs/",
+    "pronunciationFa": "«ری» ـ سارس"
   },
   {
     "word": "restrict",
@@ -1188,7 +1408,9 @@
       "unrestricted",
       "unrestrictive"
     ],
-    "persianMeaning": "محدود کردن"
+    "persianMeaning": "محدود کردن",
+    "pronunciationIpa": "/ɹiˈstɹɪkt/",
+    "pronunciationFa": "ری ـ «سترِکت»"
   },
   {
     "word": "secure",
@@ -1204,13 +1426,17 @@
       "securities",
       "security"
     ],
-    "persianMeaning": "امن؛ تأمین کردن"
+    "persianMeaning": "امن؛ تأمین کردن",
+    "pronunciationIpa": "/sɪˈkjʊɹ/",
+    "pronunciationFa": "سِ ـ «کیُر»"
   },
   {
     "word": "seek",
     "sublist": 2,
     "relatedForms": ["seeking", "seeks", "sought"],
-    "persianMeaning": "جست‌وجو کردن"
+    "persianMeaning": "جست‌وجو کردن",
+    "pronunciationIpa": "/ˈsik/",
+    "pronunciationFa": "«سیک»"
   },
   {
     "word": "select",
@@ -1226,31 +1452,41 @@
       "selectors",
       "selects"
     ],
-    "persianMeaning": "انتخاب کردن"
+    "persianMeaning": "انتخاب کردن",
+    "pronunciationIpa": "/səˈlɛkt/",
+    "pronunciationFa": "سَ ـ «لِکت»"
   },
   {
     "word": "site",
     "sublist": 2,
     "relatedForms": ["sites"],
-    "persianMeaning": "محل؛ وب‌سایت"
+    "persianMeaning": "محل؛ وب‌سایت",
+    "pronunciationIpa": "/ˈsaɪt/",
+    "pronunciationFa": "«سایت»"
   },
   {
     "word": "strategy",
     "sublist": 2,
     "relatedForms": ["strategic", "strategically", "strategies", "strategist", "strategists"],
-    "persianMeaning": "راهبرد"
+    "persianMeaning": "راهبرد",
+    "pronunciationIpa": "/ˈstɹætədʒi/",
+    "pronunciationFa": "«سترَ» ـ تَ ـ جی"
   },
   {
     "word": "survey",
     "sublist": 2,
     "relatedForms": ["surveyed", "surveying", "surveys"],
-    "persianMeaning": "نظرسنجی؛ بررسی کردن"
+    "persianMeaning": "نظرسنجی؛ بررسی کردن",
+    "pronunciationIpa": "/sɚˈveɪ/ · /ˈsɝˌveɪ/",
+    "pronunciationFa": "سِر ـ «وِی» / «سِر» ـ وِی"
   },
   {
     "word": "text",
     "sublist": 2,
     "relatedForms": ["texts", "textual"],
-    "persianMeaning": "متن"
+    "persianMeaning": "متن",
+    "pronunciationIpa": "/ˈtɛkst/",
+    "pronunciationFa": "«تِکست»"
   },
   {
     "word": "tradition",
@@ -1262,25 +1498,33 @@
       "traditionally",
       "traditions"
     ],
-    "persianMeaning": "سنت"
+    "persianMeaning": "سنت",
+    "pronunciationIpa": "/tɹəˈdɪʃən/",
+    "pronunciationFa": "ترَ ـ «دِ» ـ شَن"
   },
   {
     "word": "transfer",
     "sublist": 2,
     "relatedForms": ["transferable", "transference", "transferred", "transferring", "transfers"],
-    "persianMeaning": "انتقال دادن"
+    "persianMeaning": "انتقال دادن",
+    "pronunciationIpa": "/tɹænsˈfɝ/ · /ˈtɹænsfɚ/",
+    "pronunciationFa": "ترَنس ـ «فِر» / «ترَنس» ـ فِر"
   },
   {
     "word": "alternative",
     "sublist": 3,
     "relatedForms": ["alternatively", "alternatives"],
-    "persianMeaning": "جایگزین؛ گزینهٔ دیگر"
+    "persianMeaning": "جایگزین؛ گزینهٔ دیگر",
+    "pronunciationIpa": "/ɔlˈtɝnətɪv/",
+    "pronunciationFa": "آل ـ «تِر» ـ نَ ـ تِو"
   },
   {
     "word": "circumstance",
     "sublist": 3,
     "relatedForms": ["circumstances"],
-    "persianMeaning": "شرایط"
+    "persianMeaning": "شرایط",
+    "pronunciationIpa": "/ˈsɝkəmˌstæns/",
+    "pronunciationFa": "«سِر» ـ کَم ـ ستَنس"
   },
   {
     "word": "comment",
@@ -1294,7 +1538,9 @@
       "commenting",
       "comments"
     ],
-    "persianMeaning": "نظر؛ اظهار نظر کردن"
+    "persianMeaning": "نظر؛ اظهار نظر کردن",
+    "pronunciationIpa": "/ˈkɑmɛnt/",
+    "pronunciationFa": "«کا» ـ مِنت"
   },
   {
     "word": "compensate",
@@ -1307,31 +1553,41 @@
       "compensations",
       "compensatory"
     ],
-    "persianMeaning": "جبران کردن"
+    "persianMeaning": "جبران کردن",
+    "pronunciationIpa": "/ˈkɑmpənˌseɪt/",
+    "pronunciationFa": "«کام» ـ پَن ـ سِیت"
   },
   {
     "word": "component",
     "sublist": 3,
     "relatedForms": ["componentry", "components"],
-    "persianMeaning": "جزء؛ مؤلفه"
+    "persianMeaning": "جزء؛ مؤلفه",
+    "pronunciationIpa": "/kəmˈpoʊnənt/",
+    "pronunciationFa": "کَم ـ «پُو» ـ نَنت"
   },
   {
     "word": "consent",
     "sublist": 3,
     "relatedForms": ["consensus", "consented", "consenting", "consents"],
-    "persianMeaning": "رضایت؛ موافقت کردن"
+    "persianMeaning": "رضایت؛ موافقت کردن",
+    "pronunciationIpa": "/kənˈsɛnt/",
+    "pronunciationFa": "کَن ـ «سِنت»"
   },
   {
     "word": "considerable",
     "sublist": 3,
     "relatedForms": ["considerably"],
-    "persianMeaning": "قابل‌توجه"
+    "persianMeaning": "قابل‌توجه",
+    "pronunciationIpa": "/kənˈsɪdɚəbəl/",
+    "pronunciationFa": "کَن ـ «سِ» ـ دِر ـ اَ ـ بَل"
   },
   {
     "word": "constant",
     "sublist": 3,
     "relatedForms": ["constancy", "constantly", "constants", "inconstancy", "inconstantly"],
-    "persianMeaning": "ثابت"
+    "persianMeaning": "ثابت",
+    "pronunciationIpa": "/ˈkɑnstənt/",
+    "pronunciationFa": "«کان» ـ ستَنت"
   },
   {
     "word": "constrain",
@@ -1344,7 +1600,9 @@
       "constraints",
       "unconstrained"
     ],
-    "persianMeaning": "محدود کردن"
+    "persianMeaning": "محدود کردن",
+    "pronunciationIpa": "/kənˈstɹeɪn/",
+    "pronunciationFa": "کَن ـ «سترِین»"
   },
   {
     "word": "contribute",
@@ -1358,7 +1616,9 @@
       "contributor",
       "contributors"
     ],
-    "persianMeaning": "مشارکت کردن؛ کمک کردن"
+    "persianMeaning": "مشارکت کردن؛ کمک کردن",
+    "pronunciationIpa": "/kənˈtɹɪbjut/",
+    "pronunciationFa": "کَن ـ «ترِ» ـ بیوت"
   },
   {
     "word": "convene",
@@ -1373,7 +1633,9 @@
       "conventions",
       "unconventional"
     ],
-    "persianMeaning": "گرد هم آمدن؛ تشکیل جلسه دادن"
+    "persianMeaning": "گرد هم آمدن؛ تشکیل جلسه دادن",
+    "pronunciationIpa": "/kənˈvin/",
+    "pronunciationFa": "کَن ـ «وین»"
   },
   {
     "word": "coordinate",
@@ -1393,19 +1655,25 @@
       "coordinator",
       "coordinators"
     ],
-    "persianMeaning": "هماهنگ کردن"
+    "persianMeaning": "هماهنگ کردن",
+    "pronunciationIpa": "/koʊˈɔɹdənət/ · /koʊˈɔɹdəˌneɪt/",
+    "pronunciationFa": "کُو ـ «آر» ـ دَ ـ نَت / کُو ـ «آر» ـ دَ ـ نِیت"
   },
   {
     "word": "core",
     "sublist": 3,
     "relatedForms": ["cored", "cores", "coring"],
-    "persianMeaning": "هسته؛ بخش اصلی"
+    "persianMeaning": "هسته؛ بخش اصلی",
+    "pronunciationIpa": "/ˈkɔɹ/",
+    "pronunciationFa": "«کار»"
   },
   {
     "word": "corporate",
     "sublist": 3,
     "relatedForms": ["corporates", "corporation", "corporations"],
-    "persianMeaning": "شرکتی"
+    "persianMeaning": "شرکتی",
+    "pronunciationIpa": "/ˈkɔɹpɚət/ · /ˈkɔɹpɹət/",
+    "pronunciationFa": "«کار» ـ پِر ـ اَت / «کار» ـ پرَت"
   },
   {
     "word": "correspond",
@@ -1417,19 +1685,25 @@
       "correspondingly",
       "corresponds"
     ],
-    "persianMeaning": "مطابقت داشتن؛ مکاتبه کردن"
+    "persianMeaning": "مطابقت داشتن؛ مکاتبه کردن",
+    "pronunciationIpa": "/ˌkɔɹəˈspɑnd/",
+    "pronunciationFa": "کا ـ رَ ـ «سپاند»"
   },
   {
     "word": "criteria",
     "sublist": 3,
     "relatedForms": ["criterion"],
-    "persianMeaning": "معیارها"
+    "persianMeaning": "معیارها",
+    "pronunciationIpa": "/kɹaɪˈtɪɹiə/",
+    "pronunciationFa": "کرای ـ «تِ» ـ ری ـ اَ"
   },
   {
     "word": "deduce",
     "sublist": 3,
     "relatedForms": ["deduced", "deduces", "deducing", "deduction", "deductions"],
-    "persianMeaning": "استنتاج کردن"
+    "persianMeaning": "استنتاج کردن",
+    "pronunciationIpa": "/dɪˈdus/",
+    "pronunciationFa": "دِ ـ «دوس»"
   },
   {
     "word": "demonstrate",
@@ -1447,19 +1721,25 @@
       "demonstrator",
       "demonstrators"
     ],
-    "persianMeaning": "نشان دادن؛ اثبات کردن"
+    "persianMeaning": "نشان دادن؛ اثبات کردن",
+    "pronunciationIpa": "/ˈdɛmənˌstɹeɪt/",
+    "pronunciationFa": "«دِ» ـ مَن ـ سترِیت"
   },
   {
     "word": "document",
     "sublist": 3,
     "relatedForms": ["documentation", "documented", "documenting", "documents"],
-    "persianMeaning": "سند؛ مستند کردن"
+    "persianMeaning": "سند؛ مستند کردن",
+    "pronunciationIpa": "/ˈdɑkjəmɛnt/ · /ˈdɑkjumɛnt/",
+    "pronunciationFa": "«دا» ـ کیَ ـ مِنت / «دا» ـ کیو ـ مِنت"
   },
   {
     "word": "dominate",
     "sublist": 3,
     "relatedForms": ["dominance", "dominant", "dominated", "dominates", "dominating", "domination"],
-    "persianMeaning": "تسلط داشتن"
+    "persianMeaning": "تسلط داشتن",
+    "pronunciationIpa": "/ˈdɑməˌneɪt/",
+    "pronunciationFa": "«دا» ـ مَ ـ نِیت"
   },
   {
     "word": "emphasis",
@@ -1475,13 +1755,17 @@
       "emphatic",
       "emphatically"
     ],
-    "persianMeaning": "تأکید"
+    "persianMeaning": "تأکید",
+    "pronunciationIpa": "/ˈɛmfəsəs/ · /ˈɛmfəsɪs/",
+    "pronunciationFa": "«اِم» ـ فَ ـ سَس / «اِم» ـ فَ ـ سِس"
   },
   {
     "word": "ensure",
     "sublist": 3,
     "relatedForms": ["ensured", "ensures", "ensuring"],
-    "persianMeaning": "اطمینان حاصل کردن"
+    "persianMeaning": "اطمینان حاصل کردن",
+    "pronunciationIpa": "/ɛnˈʃʊɹ/ · /ɪnˈʃʊɹ/",
+    "pronunciationFa": "اِن ـ «شُر» / اِن ـ «شُر»"
   },
   {
     "word": "exclude",
@@ -1497,19 +1781,25 @@
       "exclusive",
       "exclusively"
     ],
-    "persianMeaning": "حذف کردن؛ مستثنا کردن"
+    "persianMeaning": "حذف کردن؛ مستثنا کردن",
+    "pronunciationIpa": "/ɪksˈklud/",
+    "pronunciationFa": "اِکس ـ «کلود»"
   },
   {
     "word": "framework",
     "sublist": 3,
     "relatedForms": ["frameworks"],
-    "persianMeaning": "چارچوب"
+    "persianMeaning": "چارچوب",
+    "pronunciationIpa": "/ˈfɹeɪmˌwɝk/",
+    "pronunciationFa": "«فرِیم» ـ وِرک"
   },
   {
     "word": "fund",
     "sublist": 3,
     "relatedForms": ["funded", "funder", "funders", "funding", "funds"],
-    "persianMeaning": "صندوق؛ تأمین مالی کردن"
+    "persianMeaning": "صندوق؛ تأمین مالی کردن",
+    "pronunciationIpa": "/ˈfʌnd/",
+    "pronunciationFa": "«فآند»"
   },
   {
     "word": "illustrate",
@@ -1522,7 +1812,9 @@
       "illustrations",
       "illustrative"
     ],
-    "persianMeaning": "با مثال توضیح دادن"
+    "persianMeaning": "با مثال توضیح دادن",
+    "pronunciationIpa": "/ˈɪləˌstɹeɪt/",
+    "pronunciationFa": "«اِ» ـ لَ ـ سترِیت"
   },
   {
     "word": "immigrate",
@@ -1535,25 +1827,33 @@
       "immigrating",
       "immigration"
     ],
-    "persianMeaning": "مهاجرت کردن به کشور دیگر"
+    "persianMeaning": "مهاجرت کردن به کشور دیگر",
+    "pronunciationIpa": "/ˈɪməˌɡɹeɪt/",
+    "pronunciationFa": "«اِ» ـ مَ ـ گرِیت"
   },
   {
     "word": "imply",
     "sublist": 3,
     "relatedForms": ["implied", "implies", "implying"],
-    "persianMeaning": "به‌طور ضمنی رساندن"
+    "persianMeaning": "به‌طور ضمنی رساندن",
+    "pronunciationIpa": "/ˌɪmˈplaɪ/",
+    "pronunciationFa": "اِم ـ «پلای»"
   },
   {
     "word": "initial",
     "sublist": 3,
     "relatedForms": ["initially"],
-    "persianMeaning": "اولیه"
+    "persianMeaning": "اولیه",
+    "pronunciationIpa": "/ˌɪˈnɪʃəl/",
+    "pronunciationFa": "اِ ـ «نِ» ـ شَل"
   },
   {
     "word": "instance",
     "sublist": 3,
     "relatedForms": ["instances"],
-    "persianMeaning": "نمونه؛ مورد"
+    "persianMeaning": "نمونه؛ مورد",
+    "pronunciationIpa": "/ˈɪnstəns/",
+    "pronunciationFa": "«اِن» ـ ستَنس"
   },
   {
     "word": "interact",
@@ -1567,7 +1867,9 @@
       "interactively",
       "interacts"
     ],
-    "persianMeaning": "تعامل کردن"
+    "persianMeaning": "تعامل کردن",
+    "pronunciationIpa": "/ˌɪntɚˈækt/ · /ˌɪnɚˈækt/",
+    "pronunciationFa": "اِن ـ تِر ـ «اَکت» / اِ ـ نِر ـ «اَکت»"
   },
   {
     "word": "justify",
@@ -1582,19 +1884,25 @@
       "justifying",
       "unjustified"
     ],
-    "persianMeaning": "توجیه کردن"
+    "persianMeaning": "توجیه کردن",
+    "pronunciationIpa": "/ˈdʒʌstəˌfaɪ/",
+    "pronunciationFa": "«جآ» ـ ستَ ـ فای"
   },
   {
     "word": "layer",
     "sublist": 3,
     "relatedForms": ["layered", "layering", "layers"],
-    "persianMeaning": "لایه"
+    "persianMeaning": "لایه",
+    "pronunciationIpa": "/ˈleɪɚ/",
+    "pronunciationFa": "«لِی» ـ اِر"
   },
   {
     "word": "link",
     "sublist": 3,
     "relatedForms": ["linkage", "linkages", "linked", "linking", "links"],
-    "persianMeaning": "پیوند؛ متصل کردن"
+    "persianMeaning": "پیوند؛ متصل کردن",
+    "pronunciationIpa": "/ˈlɪŋk/",
+    "pronunciationFa": "«لِنگک»"
   },
   {
     "word": "locate",
@@ -1610,7 +1918,9 @@
       "relocating",
       "relocation"
     ],
-    "persianMeaning": "پیدا کردن؛ واقع بودن"
+    "persianMeaning": "پیدا کردن؛ واقع بودن",
+    "pronunciationIpa": "/ˈloʊˌkeɪt/",
+    "pronunciationFa": "«لُو» ـ کِیت"
   },
   {
     "word": "maximise",
@@ -1628,31 +1938,41 @@
       "maximizing",
       "maximum"
     ],
-    "persianMeaning": "به حداکثر رساندن"
+    "persianMeaning": "به حداکثر رساندن",
+    "pronunciationIpa": "/ˈmæksəˌmaɪz/",
+    "pronunciationFa": "«مَک» ـ سَ ـ مایز"
   },
   {
     "word": "minor",
     "sublist": 3,
     "relatedForms": ["minorities", "minority", "minors"],
-    "persianMeaning": "جزئی؛ کم‌اهمیت"
+    "persianMeaning": "جزئی؛ کم‌اهمیت",
+    "pronunciationIpa": "/ˈmaɪnɚ/",
+    "pronunciationFa": "«مای» ـ نِر"
   },
   {
     "word": "negate",
     "sublist": 3,
     "relatedForms": ["negated", "negates", "negating", "negative", "negatively", "negatives"],
-    "persianMeaning": "نفی کردن"
+    "persianMeaning": "نفی کردن",
+    "pronunciationIpa": "/nɪˈɡeɪt/",
+    "pronunciationFa": "نِ ـ «گِیت»"
   },
   {
     "word": "outcome",
     "sublist": 3,
     "relatedForms": ["outcomes"],
-    "persianMeaning": "نتیجه؛ پیامد"
+    "persianMeaning": "نتیجه؛ پیامد",
+    "pronunciationIpa": "/ˈaʊtˌkʌm/",
+    "pronunciationFa": "«آوت» ـ کآم"
   },
   {
     "word": "partner",
     "sublist": 3,
     "relatedForms": ["partners", "partnership", "partnerships"],
-    "persianMeaning": "شریک"
+    "persianMeaning": "شریک",
+    "pronunciationIpa": "/ˈpɑɹtnɚ/",
+    "pronunciationFa": "«پارت» ـ نِر"
   },
   {
     "word": "philosophy",
@@ -1672,13 +1992,17 @@
       "philosophizes",
       "philosophizing"
     ],
-    "persianMeaning": "فلسفه"
+    "persianMeaning": "فلسفه",
+    "pronunciationIpa": "/fəˈlɑsəfi/",
+    "pronunciationFa": "فَ ـ «لا» ـ سَ ـ فی"
   },
   {
     "word": "physical",
     "sublist": 3,
     "relatedForms": ["physically"],
-    "persianMeaning": "جسمی؛ فیزیکی"
+    "persianMeaning": "جسمی؛ فیزیکی",
+    "pronunciationIpa": "/ˈfɪzɪkəl/",
+    "pronunciationFa": "«فِ» ـ زِ ـ کَل"
   },
   {
     "word": "proportion",
@@ -1693,7 +2017,9 @@
       "proportionately",
       "proportions"
     ],
-    "persianMeaning": "نسبت؛ تناسب"
+    "persianMeaning": "نسبت؛ تناسب",
+    "pronunciationIpa": "/pɹəˈpɔɹʃən/",
+    "pronunciationFa": "پرَ ـ «پار» ـ شَن"
   },
   {
     "word": "publish",
@@ -1706,7 +2032,9 @@
       "publishing",
       "unpublished"
     ],
-    "persianMeaning": "منتشر کردن"
+    "persianMeaning": "منتشر کردن",
+    "pronunciationIpa": "/ˈpʌblɪʃ/",
+    "pronunciationFa": "«پآ» ـ بلِش"
   },
   {
     "word": "react",
@@ -1725,7 +2053,9 @@
       "reactors",
       "reacts"
     ],
-    "persianMeaning": "واکنش نشان دادن"
+    "persianMeaning": "واکنش نشان دادن",
+    "pronunciationIpa": "/ɹiˈækt/",
+    "pronunciationFa": "ری ـ «اَکت»"
   },
   {
     "word": "register",
@@ -1741,7 +2071,9 @@
       "registers",
       "registration"
     ],
-    "persianMeaning": "ثبت‌نام کردن؛ ثبت کردن"
+    "persianMeaning": "ثبت‌نام کردن؛ ثبت کردن",
+    "pronunciationIpa": "/ˈɹɛdʒɪstɚ/",
+    "pronunciationFa": "«رِ» ـ جِ ـ ستِر"
   },
   {
     "word": "rely",
@@ -1757,73 +2089,97 @@
       "relying",
       "unreliable"
     ],
-    "persianMeaning": "تکیه کردن؛ اعتماد کردن"
+    "persianMeaning": "تکیه کردن؛ اعتماد کردن",
+    "pronunciationIpa": "/ɹɪˈlaɪ/ · /ɹiˈlaɪ/",
+    "pronunciationFa": "رِ ـ «لای» / ری ـ «لای»"
   },
   {
     "word": "remove",
     "sublist": 3,
     "relatedForms": ["removable", "removal", "removals", "removed", "removes", "removing"],
-    "persianMeaning": "برداشتن؛ حذف کردن"
+    "persianMeaning": "برداشتن؛ حذف کردن",
+    "pronunciationIpa": "/ɹiˈmuv/",
+    "pronunciationFa": "ری ـ «موو»"
   },
   {
     "word": "scheme",
     "sublist": 3,
     "relatedForms": ["schematic", "schematically", "schemed", "schemes", "scheming"],
-    "persianMeaning": "طرح؛ برنامه"
+    "persianMeaning": "طرح؛ برنامه",
+    "pronunciationIpa": "/ˈskim/",
+    "pronunciationFa": "«سکیم»"
   },
   {
     "word": "sequence",
     "sublist": 3,
     "relatedForms": ["sequenced", "sequences", "sequencing", "sequential", "sequentially"],
-    "persianMeaning": "توالی"
+    "persianMeaning": "توالی",
+    "pronunciationIpa": "/ˈsikwəns/",
+    "pronunciationFa": "«سی» ـ کوَنس"
   },
   {
     "word": "sex",
     "sublist": 3,
     "relatedForms": ["sexes", "sexism", "sexual", "sexuality", "sexually"],
-    "persianMeaning": "جنس؛ رابطهٔ جنسی"
+    "persianMeaning": "جنس؛ رابطهٔ جنسی",
+    "pronunciationIpa": "/ˈsɛks/",
+    "pronunciationFa": "«سِکس»"
   },
   {
     "word": "shift",
     "sublist": 3,
     "relatedForms": ["shifted", "shifting", "shifts"],
-    "persianMeaning": "تغییر؛ جابه‌جا شدن"
+    "persianMeaning": "تغییر؛ جابه‌جا شدن",
+    "pronunciationIpa": "/ˈʃɪft/",
+    "pronunciationFa": "«شِفت»"
   },
   {
     "word": "specify",
     "sublist": 3,
     "relatedForms": ["specifiable", "specified", "specifies", "specifying", "unspecified"],
-    "persianMeaning": "مشخص کردن"
+    "persianMeaning": "مشخص کردن",
+    "pronunciationIpa": "/ˈspɛsəˌfaɪ/",
+    "pronunciationFa": "«سپِ» ـ سَ ـ فای"
   },
   {
     "word": "sufficient",
     "sublist": 3,
     "relatedForms": ["insufficient", "insufficiently", "sufficiency", "sufficiently"],
-    "persianMeaning": "کافی"
+    "persianMeaning": "کافی",
+    "pronunciationIpa": "/səˈfɪʃənt/",
+    "pronunciationFa": "سَ ـ «فِ» ـ شَنت"
   },
   {
     "word": "task",
     "sublist": 3,
     "relatedForms": ["tasks"],
-    "persianMeaning": "وظیفه"
+    "persianMeaning": "وظیفه",
+    "pronunciationIpa": "/ˈtæsk/",
+    "pronunciationFa": "«تَسک»"
   },
   {
     "word": "technical",
     "sublist": 3,
     "relatedForms": ["technically"],
-    "persianMeaning": "فنی"
+    "persianMeaning": "فنی",
+    "pronunciationIpa": "/ˈtɛknɪkəl/",
+    "pronunciationFa": "«تِک» ـ نِ ـ کَل"
   },
   {
     "word": "technique",
     "sublist": 3,
     "relatedForms": ["techniques"],
-    "persianMeaning": "فن؛ شیوه"
+    "persianMeaning": "فن؛ شیوه",
+    "pronunciationIpa": "/tɛkˈnik/",
+    "pronunciationFa": "تِک ـ «نیک»"
   },
   {
     "word": "technology",
     "sublist": 3,
     "relatedForms": ["technological", "technologically"],
-    "persianMeaning": "فناوری"
+    "persianMeaning": "فناوری",
+    "pronunciationIpa": "/tɛkˈnɑlədʒi/",
+    "pronunciationFa": "تِک ـ «نا» ـ لَ ـ جی"
   },
   {
     "word": "valid",
@@ -1838,13 +2194,17 @@
       "validity",
       "validly"
     ],
-    "persianMeaning": "معتبر"
+    "persianMeaning": "معتبر",
+    "pronunciationIpa": "/ˈvælɪd/",
+    "pronunciationFa": "«وَ» ـ لِد"
   },
   {
     "word": "volume",
     "sublist": 3,
     "relatedForms": ["volumes"],
-    "persianMeaning": "حجم؛ جلدِ کتاب"
+    "persianMeaning": "حجم؛ جلدِ کتاب",
+    "pronunciationIpa": "/ˈvɑljum/",
+    "pronunciationFa": "«وال» ـ یوم"
   },
   {
     "word": "access",
@@ -1857,7 +2217,9 @@
       "accessing",
       "inaccessible"
     ],
-    "persianMeaning": "دسترسی"
+    "persianMeaning": "دسترسی",
+    "pronunciationIpa": "/ˈækˌsɛs/",
+    "pronunciationFa": "«اَک» ـ سِس"
   },
   {
     "word": "adequate",
@@ -1870,19 +2232,25 @@
       "inadequate",
       "inadequately"
     ],
-    "persianMeaning": "کافی؛ مناسب"
+    "persianMeaning": "کافی؛ مناسب",
+    "pronunciationIpa": "/ˈædəkwət/ · /ˈædəˌkweɪt/",
+    "pronunciationFa": "«اَ» ـ دَ ـ کوَت / «اَ» ـ دَ ـ کوِیت"
   },
   {
     "word": "annual",
     "sublist": 4,
     "relatedForms": ["annually"],
-    "persianMeaning": "سالانه"
+    "persianMeaning": "سالانه",
+    "pronunciationIpa": "/ˈænjuəl/",
+    "pronunciationFa": "«اَ» ـ نیو ـ اَل"
   },
   {
     "word": "apparent",
     "sublist": 4,
     "relatedForms": ["apparently"],
-    "persianMeaning": "آشکار؛ ظاهری"
+    "persianMeaning": "آشکار؛ ظاهری",
+    "pronunciationIpa": "/əˈpɛɹənt/",
+    "pronunciationFa": "اَ ـ «پِ» ـ رَنت"
   },
   {
     "word": "approximate",
@@ -1895,37 +2263,49 @@
       "approximation",
       "approximations"
     ],
-    "persianMeaning": "تقریبی؛ تخمین زدن"
+    "persianMeaning": "تقریبی؛ تخمین زدن",
+    "pronunciationIpa": "/əˈpɹɑksəmət/ · /əˈpɹɑksəˌmeɪt/",
+    "pronunciationFa": "اَ ـ «پراک» ـ سَ ـ مَت / اَ ـ «پراک» ـ سَ ـ مِیت"
   },
   {
     "word": "attitude",
     "sublist": 4,
     "relatedForms": ["attitudes"],
-    "persianMeaning": "نگرش"
+    "persianMeaning": "نگرش",
+    "pronunciationIpa": "/ˈætəˌtud/",
+    "pronunciationFa": "«اَ» ـ تَ ـ تود"
   },
   {
     "word": "attribute",
     "sublist": 4,
     "relatedForms": ["attributable", "attributed", "attributes", "attributing", "attribution"],
-    "persianMeaning": "ویژگی؛ نسبت دادن"
+    "persianMeaning": "ویژگی؛ نسبت دادن",
+    "pronunciationIpa": "/ˈætɹəˌbjut/ · /əˈtɹɪˌbjut/",
+    "pronunciationFa": "«اَ» ـ ترَ ـ بیوت / اَ ـ «ترِ» ـ بیوت"
   },
   {
     "word": "civil",
     "sublist": 4,
     "relatedForms": [],
-    "persianMeaning": "مدنی"
+    "persianMeaning": "مدنی",
+    "pronunciationIpa": "/ˈsɪvəl/",
+    "pronunciationFa": "«سِ» ـ وَل"
   },
   {
     "word": "code",
     "sublist": 4,
     "relatedForms": ["coded", "codes", "coding"],
-    "persianMeaning": "کد؛ مجموعهٔ قوانین"
+    "persianMeaning": "کد؛ مجموعهٔ قوانین",
+    "pronunciationIpa": "/ˈkoʊd/",
+    "pronunciationFa": "«کُود»"
   },
   {
     "word": "commit",
     "sublist": 4,
     "relatedForms": ["commitment", "commitments", "commits", "committed", "committing"],
-    "persianMeaning": "متعهد شدن؛ مرتکب شدن"
+    "persianMeaning": "متعهد شدن؛ مرتکب شدن",
+    "pronunciationIpa": "/kəˈmɪt/",
+    "pronunciationFa": "کَ ـ «مِت»"
   },
   {
     "word": "communicate",
@@ -1941,91 +2321,121 @@
       "communicatively",
       "uncommunicative"
     ],
-    "persianMeaning": "ارتباط برقرار کردن"
+    "persianMeaning": "ارتباط برقرار کردن",
+    "pronunciationIpa": "/kəˈmjunəˌkeɪt/",
+    "pronunciationFa": "کَ ـ «میو» ـ نَ ـ کِیت"
   },
   {
     "word": "concentrate",
     "sublist": 4,
     "relatedForms": ["concentrated", "concentrates", "concentrating", "concentration"],
-    "persianMeaning": "تمرکز کردن"
+    "persianMeaning": "تمرکز کردن",
+    "pronunciationIpa": "/ˈkɑnsənˌtɹeɪt/",
+    "pronunciationFa": "«کان» ـ سَن ـ ترِیت"
   },
   {
     "word": "confer",
     "sublist": 4,
     "relatedForms": ["conference", "conferences", "conferred", "conferring", "confers"],
-    "persianMeaning": "اعطا کردن؛ مشورت کردن"
+    "persianMeaning": "اعطا کردن؛ مشورت کردن",
+    "pronunciationIpa": "/kənˈfɝ/",
+    "pronunciationFa": "کَن ـ «فِر»"
   },
   {
     "word": "contrast",
     "sublist": 4,
     "relatedForms": ["contrasted", "contrasting", "contrastive", "contrasts"],
-    "persianMeaning": "تفاوت؛ مقایسه کردن"
+    "persianMeaning": "تفاوت؛ مقایسه کردن",
+    "pronunciationIpa": "/ˈkɑntɹæst/ · /kənˈtɹæst/",
+    "pronunciationFa": "«کان» ـ ترَست / کَن ـ «ترَست»"
   },
   {
     "word": "cycle",
     "sublist": 4,
     "relatedForms": ["cycled", "cycles", "cyclic", "cyclical", "cycling"],
-    "persianMeaning": "چرخه"
+    "persianMeaning": "چرخه",
+    "pronunciationIpa": "/ˈsaɪkəl/",
+    "pronunciationFa": "«سای» ـ کَل"
   },
   {
     "word": "debate",
     "sublist": 4,
     "relatedForms": ["debatable", "debated", "debates", "debating"],
-    "persianMeaning": "بحث؛ مناظره کردن"
+    "persianMeaning": "بحث؛ مناظره کردن",
+    "pronunciationIpa": "/dəˈbeɪt/",
+    "pronunciationFa": "دَ ـ «بِیت»"
   },
   {
     "word": "despite",
     "sublist": 4,
     "relatedForms": [],
-    "persianMeaning": "با وجودِ"
+    "persianMeaning": "با وجودِ",
+    "pronunciationIpa": "/dɪˈspaɪt/",
+    "pronunciationFa": "دِ ـ «سپایت»"
   },
   {
     "word": "dimension",
     "sublist": 4,
     "relatedForms": ["dimensional", "dimensions", "multidimensional"],
-    "persianMeaning": "بُعد"
+    "persianMeaning": "بُعد",
+    "pronunciationIpa": "/dɪˈmɛnʃən/",
+    "pronunciationFa": "دِ ـ «مِن» ـ شَن"
   },
   {
     "word": "domestic",
     "sublist": 4,
     "relatedForms": ["domestically", "domesticate", "domesticated", "domesticating", "domestics"],
-    "persianMeaning": "داخلی؛ خانگی"
+    "persianMeaning": "داخلی؛ خانگی",
+    "pronunciationIpa": "/dəˈmɛstɪk/",
+    "pronunciationFa": "دَ ـ «مِ» ـ ستِک"
   },
   {
     "word": "emerge",
     "sublist": 4,
     "relatedForms": ["emerged", "emergence", "emergent", "emerges", "emerging"],
-    "persianMeaning": "پدیدار شدن"
+    "persianMeaning": "پدیدار شدن",
+    "pronunciationIpa": "/ɪˈmɝdʒ/ · /ˈimɚdʒ/",
+    "pronunciationFa": "اِ ـ «مِرج» / «ای» ـ مِرج"
   },
   {
     "word": "error",
     "sublist": 4,
     "relatedForms": ["erroneous", "erroneously", "errors"],
-    "persianMeaning": "خطا"
+    "persianMeaning": "خطا",
+    "pronunciationIpa": "/ˈɛɹɚ/",
+    "pronunciationFa": "«اِ» ـ رِر"
   },
   {
     "word": "ethnic",
     "sublist": 4,
     "relatedForms": ["ethnicity"],
-    "persianMeaning": "قومی"
+    "persianMeaning": "قومی",
+    "pronunciationIpa": "/ˈɛθnɪk/",
+    "pronunciationFa": "«اِث» ـ نِک"
   },
   {
     "word": "goal",
     "sublist": 4,
     "relatedForms": ["goals"],
-    "persianMeaning": "هدف"
+    "persianMeaning": "هدف",
+    "pronunciationIpa": "/ˈɡoʊl/",
+    "pronunciationFa": "«گُول»"
   },
   {
     "word": "grant",
     "sublist": 4,
     "relatedForms": ["granted", "granting", "grants"],
-    "persianMeaning": "اعطا کردن؛ کمک‌هزینه"
+    "persianMeaning": "اعطا کردن؛ کمک‌هزینه",
+    "pronunciationIpa": "/ˈɡɹænt/",
+    "pronunciationFa": "«گرَنت»"
   },
   {
     "word": "hence",
     "sublist": 4,
     "relatedForms": [],
-    "persianMeaning": "از این رو"
+    "persianMeaning": "از این رو",
+    "pronunciationIpa": "/ˈhɛns/",
+    "pronunciationFa": "«هِنس»"
   },
   {
     "word": "hypothesis",
@@ -2043,31 +2453,41 @@
       "hypothetical",
       "hypothetically"
     ],
-    "persianMeaning": "فرضیه"
+    "persianMeaning": "فرضیه",
+    "pronunciationIpa": "/haɪˈpɑθəsəs/",
+    "pronunciationFa": "های ـ «پا» ـ ثَ ـ سَس"
   },
   {
     "word": "implement",
     "sublist": 4,
     "relatedForms": ["implementation", "implemented", "implementing", "implements"],
-    "persianMeaning": "اجرا کردن"
+    "persianMeaning": "اجرا کردن",
+    "pronunciationIpa": "/ˈɪmpləmənt/",
+    "pronunciationFa": "«اِم» ـ پلَ ـ مَنت"
   },
   {
     "word": "implicate",
     "sublist": 4,
     "relatedForms": ["implicated", "implicates", "implicating", "implication", "implications"],
-    "persianMeaning": "دخیل دانستن"
+    "persianMeaning": "دخیل دانستن",
+    "pronunciationIpa": "/ˈɪmplɪˌkeɪt/",
+    "pronunciationFa": "«اِم» ـ پلِ ـ کِیت"
   },
   {
     "word": "impose",
     "sublist": 4,
     "relatedForms": ["imposed", "imposes", "imposing", "imposition"],
-    "persianMeaning": "تحمیل کردن"
+    "persianMeaning": "تحمیل کردن",
+    "pronunciationIpa": "/ˌɪmˈpoʊz/",
+    "pronunciationFa": "اِم ـ «پُوز»"
   },
   {
     "word": "integrate",
     "sublist": 4,
     "relatedForms": ["integrated", "integrates", "integrating", "integration"],
-    "persianMeaning": "یکپارچه کردن"
+    "persianMeaning": "یکپارچه کردن",
+    "pronunciationIpa": "/ˈɪntəˌɡɹeɪt/ · /ˈɪnəˌɡɹeɪt/",
+    "pronunciationFa": "«اِن» ـ تَ ـ گرِیت / «اِ» ـ نَ ـ گرِیت"
   },
   {
     "word": "internal",
@@ -2083,7 +2503,9 @@
       "internalizing",
       "internally"
     ],
-    "persianMeaning": "داخلی"
+    "persianMeaning": "داخلی",
+    "pronunciationIpa": "/ˌɪnˈtɝnəl/",
+    "pronunciationFa": "اِن ـ «تِر» ـ نَل"
   },
   {
     "word": "investigate",
@@ -2098,31 +2520,41 @@
       "investigator",
       "investigators"
     ],
-    "persianMeaning": "بررسی کردن؛ تحقیق کردن"
+    "persianMeaning": "بررسی کردن؛ تحقیق کردن",
+    "pronunciationIpa": "/ˌɪnˈvɛstəˌɡeɪt/",
+    "pronunciationFa": "اِن ـ «وِ» ـ ستَ ـ گِیت"
   },
   {
     "word": "job",
     "sublist": 4,
     "relatedForms": ["jobs"],
-    "persianMeaning": "شغل"
+    "persianMeaning": "شغل",
+    "pronunciationIpa": "/ˈdʒɑb/ · /ˈdʒoʊb/",
+    "pronunciationFa": "«جاب» / «جُوب»"
   },
   {
     "word": "label",
     "sublist": 4,
     "relatedForms": ["labeled", "labeling", "labelled", "labelling", "labels"],
-    "persianMeaning": "برچسب"
+    "persianMeaning": "برچسب",
+    "pronunciationIpa": "/ˈleɪbəl/",
+    "pronunciationFa": "«لِی» ـ بَل"
   },
   {
     "word": "mechanism",
     "sublist": 4,
     "relatedForms": ["mechanisms"],
-    "persianMeaning": "سازوکار"
+    "persianMeaning": "سازوکار",
+    "pronunciationIpa": "/ˈmɛkəˌnɪzəm/",
+    "pronunciationFa": "«مِ» ـ کَ ـ نِ ـ زَم"
   },
   {
     "word": "obvious",
     "sublist": 4,
     "relatedForms": ["obviously"],
-    "persianMeaning": "واضح"
+    "persianMeaning": "واضح",
+    "pronunciationIpa": "/ˈɑbviəs/",
+    "pronunciationFa": "«آب» ـ وی ـ اَس"
   },
   {
     "word": "occupy",
@@ -2140,43 +2572,57 @@
       "occupies",
       "occupying"
     ],
-    "persianMeaning": "اشغال کردن"
+    "persianMeaning": "اشغال کردن",
+    "pronunciationIpa": "/ˈɑkjəˌpaɪ/",
+    "pronunciationFa": "«آ» ـ کیَ ـ پای"
   },
   {
     "word": "option",
     "sublist": 4,
     "relatedForms": ["optional", "options"],
-    "persianMeaning": "گزینه"
+    "persianMeaning": "گزینه",
+    "pronunciationIpa": "/ˈɑpʃən/ · /ˈɔpʃən/",
+    "pronunciationFa": "«آپ» ـ شَن / «آپ» ـ شَن"
   },
   {
     "word": "output",
     "sublist": 4,
     "relatedForms": ["outputs"],
-    "persianMeaning": "خروجی"
+    "persianMeaning": "خروجی",
+    "pronunciationIpa": "/ˈaʊtˌpʊt/",
+    "pronunciationFa": "«آوت» ـ پُت"
   },
   {
     "word": "overall",
     "sublist": 4,
     "relatedForms": [],
-    "persianMeaning": "کلی؛ در مجموع"
+    "persianMeaning": "کلی؛ در مجموع",
+    "pronunciationIpa": "/ˈoʊvɚˌɔl/",
+    "pronunciationFa": "«اُو» ـ وِر ـ آل"
   },
   {
     "word": "parallel",
     "sublist": 4,
     "relatedForms": ["paralleled", "parallelled", "parallelling", "parallels", "unparalleled"],
-    "persianMeaning": "موازی"
+    "persianMeaning": "موازی",
+    "pronunciationIpa": "/ˈpɛɹəˌlɛl/",
+    "pronunciationFa": "«پِ» ـ رَ ـ لِل"
   },
   {
     "word": "parameter",
     "sublist": 4,
     "relatedForms": ["parameters"],
-    "persianMeaning": "پارامتر"
+    "persianMeaning": "پارامتر",
+    "pronunciationIpa": "/pɚˈæmətɚ/",
+    "pronunciationFa": "پِر ـ «اَ» ـ مَ ـ تِر"
   },
   {
     "word": "phase",
     "sublist": 4,
     "relatedForms": ["phased", "phases", "phasing"],
-    "persianMeaning": "مرحله"
+    "persianMeaning": "مرحله",
+    "pronunciationIpa": "/ˈfeɪz/",
+    "pronunciationFa": "«فِیز»"
   },
   {
     "word": "predict",
@@ -2193,31 +2639,41 @@
       "unpredictability",
       "unpredictable"
     ],
-    "persianMeaning": "پیش‌بینی کردن"
+    "persianMeaning": "پیش‌بینی کردن",
+    "pronunciationIpa": "/pɹɪˈdɪkt/ · /pɹiˈdɪkt/",
+    "pronunciationFa": "پرِ ـ «دِکت» / پری ـ «دِکت»"
   },
   {
     "word": "principal",
     "sublist": 4,
     "relatedForms": ["principally"],
-    "persianMeaning": "اصلی؛ مدیر"
+    "persianMeaning": "اصلی؛ مدیر",
+    "pronunciationIpa": "/ˈpɹɪnsəpəl/",
+    "pronunciationFa": "«پرِن» ـ سَ ـ پَل"
   },
   {
     "word": "prior",
     "sublist": 4,
     "relatedForms": [],
-    "persianMeaning": "پیشین؛ قبلی"
+    "persianMeaning": "پیشین؛ قبلی",
+    "pronunciationIpa": "/ˈpɹaɪɚ/",
+    "pronunciationFa": "«پرای» ـ اِر"
   },
   {
     "word": "professional",
     "sublist": 4,
     "relatedForms": ["professionalism", "professionally", "professionals"],
-    "persianMeaning": "حرفه‌ای"
+    "persianMeaning": "حرفه‌ای",
+    "pronunciationIpa": "/pɹəˈfɛʃənəl/",
+    "pronunciationFa": "پرَ ـ «فِ» ـ شَ ـ نَل"
   },
   {
     "word": "project",
     "sublist": 4,
     "relatedForms": ["projected", "projecting", "projection", "projections", "projects"],
-    "persianMeaning": "پروژه؛ طرح‌ریزی کردن"
+    "persianMeaning": "پروژه؛ طرح‌ریزی کردن",
+    "pronunciationIpa": "/ˈpɹɑdʒɛkt/ · /pɹəˈdʒɛkt/",
+    "pronunciationFa": "«پرا» ـ جِکت / پرَ ـ «جِکت»"
   },
   {
     "word": "promote",
@@ -2231,19 +2687,25 @@
       "promotion",
       "promotions"
     ],
-    "persianMeaning": "ارتقا دادن؛ ترویج کردن"
+    "persianMeaning": "ارتقا دادن؛ ترویج کردن",
+    "pronunciationIpa": "/pɹəˈmoʊt/",
+    "pronunciationFa": "پرَ ـ «مُوت»"
   },
   {
     "word": "regime",
     "sublist": 4,
     "relatedForms": ["regimes"],
-    "persianMeaning": "نظام؛ رژیم"
+    "persianMeaning": "نظام؛ رژیم",
+    "pronunciationIpa": "/ɹəˈʒim/ · /ɹeɪˈʒim/",
+    "pronunciationFa": "رَ ـ «ژیم» / رِی ـ «ژیم»"
   },
   {
     "word": "resolve",
     "sublist": 4,
     "relatedForms": ["resolution", "resolved", "resolves", "resolving", "unresolved"],
-    "persianMeaning": "حل کردن؛ تصمیم قاطع گرفتن"
+    "persianMeaning": "حل کردن؛ تصمیم قاطع گرفتن",
+    "pronunciationIpa": "/ɹiˈzɑlv/",
+    "pronunciationFa": "ری ـ «زالو»"
   },
   {
     "word": "retain",
@@ -2257,43 +2719,57 @@
       "retention",
       "retentive"
     ],
-    "persianMeaning": "حفظ کردن"
+    "persianMeaning": "حفظ کردن",
+    "pronunciationIpa": "/ɹɪˈteɪn/ · /ɹiˈteɪn/",
+    "pronunciationFa": "رِ ـ «تِین» / ری ـ «تِین»"
   },
   {
     "word": "series",
     "sublist": 4,
     "relatedForms": [],
-    "persianMeaning": "مجموعه؛ سلسله"
+    "persianMeaning": "مجموعه؛ سلسله",
+    "pronunciationIpa": "/ˈsɪɹiz/",
+    "pronunciationFa": "«سِ» ـ ریز"
   },
   {
     "word": "statistic",
     "sublist": 4,
     "relatedForms": ["statistical", "statistically", "statistician", "statisticians", "statistics"],
-    "persianMeaning": "آماره؛ مقدار آماری"
+    "persianMeaning": "آماره؛ مقدار آماری",
+    "pronunciationIpa": "/stəˈtɪstɪk/",
+    "pronunciationFa": "ستَ ـ «تِ» ـ ستِک"
   },
   {
     "word": "status",
     "sublist": 4,
     "relatedForms": [],
-    "persianMeaning": "وضعیت"
+    "persianMeaning": "وضعیت",
+    "pronunciationIpa": "/ˈstætəs/ · /ˈsteɪtəs/",
+    "pronunciationFa": "«ستَ» ـ تَس / «ستِی» ـ تَس"
   },
   {
     "word": "stress",
     "sublist": 4,
     "relatedForms": ["stressed", "stresses", "stressful", "stressing", "unstressed"],
-    "persianMeaning": "فشار؛ تأکید کردن"
+    "persianMeaning": "فشار؛ تأکید کردن",
+    "pronunciationIpa": "/ˈstɹɛs/",
+    "pronunciationFa": "«سترِس»"
   },
   {
     "word": "subsequent",
     "sublist": 4,
     "relatedForms": ["subsequently"],
-    "persianMeaning": "بعدی"
+    "persianMeaning": "بعدی",
+    "pronunciationIpa": "/ˈsʌbsəkwənt/",
+    "pronunciationFa": "«سآب» ـ سَ ـ کوَنت"
   },
   {
     "word": "sum",
     "sublist": 4,
     "relatedForms": ["summation", "summed", "summing", "sums"],
-    "persianMeaning": "مجموع"
+    "persianMeaning": "مجموع",
+    "pronunciationIpa": "/ˈsʌm/",
+    "pronunciationFa": "«سآم»"
   },
   {
     "word": "summary",
@@ -2313,19 +2789,25 @@
       "summarizes",
       "summarizing"
     ],
-    "persianMeaning": "خلاصه"
+    "persianMeaning": "خلاصه",
+    "pronunciationIpa": "/ˈsʌmɚi/",
+    "pronunciationFa": "«سآ» ـ مِر ـ ای"
   },
   {
     "word": "undertake",
     "sublist": 4,
     "relatedForms": ["undertaken", "undertakes", "undertaking", "undertook"],
-    "persianMeaning": "بر عهده گرفتن"
+    "persianMeaning": "بر عهده گرفتن",
+    "pronunciationIpa": "/ˈʌndɚˌteɪk/",
+    "pronunciationFa": "«آن» ـ دِر ـ تِیک"
   },
   {
     "word": "academy",
     "sublist": 5,
     "relatedForms": ["academia", "academic", "academically", "academics", "academies"],
-    "persianMeaning": "آکادمی؛ مؤسسهٔ علمی"
+    "persianMeaning": "آکادمی؛ مؤسسهٔ علمی",
+    "pronunciationIpa": "/əˈkædəmi/",
+    "pronunciationFa": "اَ ـ «کَ» ـ دَ ـ می"
   },
   {
     "word": "adjust",
@@ -2343,7 +2825,9 @@
       "readjustments",
       "readjusts"
     ],
-    "persianMeaning": "تنظیم کردن؛ سازگار کردن"
+    "persianMeaning": "تنظیم کردن؛ سازگار کردن",
+    "pronunciationIpa": "/əˈdʒʌst/",
+    "pronunciationFa": "اَ ـ «جآست»"
   },
   {
     "word": "alter",
@@ -2360,49 +2844,65 @@
       "unalterable",
       "unaltered"
     ],
-    "persianMeaning": "تغییر دادن"
+    "persianMeaning": "تغییر دادن",
+    "pronunciationIpa": "/ˈɔltɚ/",
+    "pronunciationFa": "«آل» ـ تِر"
   },
   {
     "word": "amend",
     "sublist": 5,
     "relatedForms": ["amended", "amending", "amendment", "amendments", "amends"],
-    "persianMeaning": "اصلاح کردن"
+    "persianMeaning": "اصلاح کردن",
+    "pronunciationIpa": "/əˈmɛnd/",
+    "pronunciationFa": "اَ ـ «مِند»"
   },
   {
     "word": "aware",
     "sublist": 5,
     "relatedForms": ["awareness", "unaware"],
-    "persianMeaning": "آگاه"
+    "persianMeaning": "آگاه",
+    "pronunciationIpa": "/əˈwɛɹ/",
+    "pronunciationFa": "اَ ـ «وِر»"
   },
   {
     "word": "capacity",
     "sublist": 5,
     "relatedForms": ["capacities", "incapacitate", "incapacitated"],
-    "persianMeaning": "ظرفیت؛ توانایی"
+    "persianMeaning": "ظرفیت؛ توانایی",
+    "pronunciationIpa": "/kəˈpæsəti/ · /kəˈpæsɪti/",
+    "pronunciationFa": "کَ ـ «پَ» ـ سَ ـ تی / کَ ـ «پَ» ـ سِ ـ تی"
   },
   {
     "word": "challenge",
     "sublist": 5,
     "relatedForms": ["challenged", "challenger", "challengers", "challenges", "challenging"],
-    "persianMeaning": "چالش"
+    "persianMeaning": "چالش",
+    "pronunciationIpa": "/ˈtʃæləndʒ/",
+    "pronunciationFa": "«چَ» ـ لَنج"
   },
   {
     "word": "clause",
     "sublist": 5,
     "relatedForms": ["clauses"],
-    "persianMeaning": "بندِ قرارداد؛ جمله‌واره"
+    "persianMeaning": "بندِ قرارداد؛ جمله‌واره",
+    "pronunciationIpa": "/ˈklɔz/",
+    "pronunciationFa": "«کلاز»"
   },
   {
     "word": "compound",
     "sublist": 5,
     "relatedForms": ["compounded", "compounding", "compounds"],
-    "persianMeaning": "ترکیب؛ مرکب"
+    "persianMeaning": "ترکیب؛ مرکب",
+    "pronunciationIpa": "/ˈkɑmpaʊnd/ · /kəmˈpaʊnd/",
+    "pronunciationFa": "«کام» ـ پاوند / کَم ـ «پاوند»"
   },
   {
     "word": "conflict",
     "sublist": 5,
     "relatedForms": ["conflicted", "conflicting", "conflicts"],
-    "persianMeaning": "تعارض؛ درگیری"
+    "persianMeaning": "تعارض؛ درگیری",
+    "pronunciationIpa": "/ˈkɑnflɪkt/ · /kənˈflɪkt/",
+    "pronunciationFa": "«کان» ـ فلِکت / کَن ـ «فلِکت»"
   },
   {
     "word": "consult",
@@ -2418,25 +2918,33 @@
       "consulting",
       "consults"
     ],
-    "persianMeaning": "مشورت کردن"
+    "persianMeaning": "مشورت کردن",
+    "pronunciationIpa": "/kənˈsʌlt/",
+    "pronunciationFa": "کَن ـ «سآلت»"
   },
   {
     "word": "contact",
     "sublist": 5,
     "relatedForms": ["contactable", "contacted", "contacting", "contacts"],
-    "persianMeaning": "تماس"
+    "persianMeaning": "تماس",
+    "pronunciationIpa": "/ˈkɑnˌtækt/",
+    "pronunciationFa": "«کان» ـ تَکت"
   },
   {
     "word": "decline",
     "sublist": 5,
     "relatedForms": ["declined", "declines", "declining"],
-    "persianMeaning": "کاهش؛ رد کردن"
+    "persianMeaning": "کاهش؛ رد کردن",
+    "pronunciationIpa": "/dɪˈklaɪn/",
+    "pronunciationFa": "دِ ـ «کلاین»"
   },
   {
     "word": "discrete",
     "sublist": 5,
     "relatedForms": ["discretely", "discretion", "discretionary", "indiscrete", "indiscretion"],
-    "persianMeaning": "جدا؛ گسسته"
+    "persianMeaning": "جدا؛ گسسته",
+    "pronunciationIpa": "/dɪˈskɹit/",
+    "pronunciationFa": "دِ ـ «سکریت»"
   },
   {
     "word": "draft",
@@ -2450,37 +2958,49 @@
       "redrafting",
       "redrafts"
     ],
-    "persianMeaning": "پیش‌نویس"
+    "persianMeaning": "پیش‌نویس",
+    "pronunciationIpa": "/ˈdɹæft/",
+    "pronunciationFa": "«درَفت»"
   },
   {
     "word": "enable",
     "sublist": 5,
     "relatedForms": ["enabled", "enables", "enabling"],
-    "persianMeaning": "ممکن ساختن"
+    "persianMeaning": "ممکن ساختن",
+    "pronunciationIpa": "/ɛˈneɪbəl/ · /ɪˈneɪbəl/",
+    "pronunciationFa": "اِ ـ «نِی» ـ بَل / اِ ـ «نِی» ـ بَل"
   },
   {
     "word": "energy",
     "sublist": 5,
     "relatedForms": ["energetic", "energetically", "energies"],
-    "persianMeaning": "انرژی"
+    "persianMeaning": "انرژی",
+    "pronunciationIpa": "/ˈɛnɚdʒi/",
+    "pronunciationFa": "«اِ» ـ نِر ـ جی"
   },
   {
     "word": "enforce",
     "sublist": 5,
     "relatedForms": ["enforced", "enforcement", "enforces", "enforcing"],
-    "persianMeaning": "اجرا کردنِ قانون"
+    "persianMeaning": "اجرا کردنِ قانون",
+    "pronunciationIpa": "/ɛnˈfɔɹs/",
+    "pronunciationFa": "اِن ـ «فارس»"
   },
   {
     "word": "entity",
     "sublist": 5,
     "relatedForms": ["entities"],
-    "persianMeaning": "موجودیت"
+    "persianMeaning": "موجودیت",
+    "pronunciationIpa": "/ˈɛntəti/ · /ˈɛntɪti/",
+    "pronunciationFa": "«اِن» ـ تَ ـ تی / «اِن» ـ تِ ـ تی"
   },
   {
     "word": "equivalent",
     "sublist": 5,
     "relatedForms": ["equivalence"],
-    "persianMeaning": "معادل"
+    "persianMeaning": "معادل",
+    "pronunciationIpa": "/ɪˈkwɪvələnt/",
+    "pronunciationFa": "اِ ـ «کوِ» ـ وَ ـ لَنت"
   },
   {
     "word": "evolve",
@@ -2494,19 +3014,25 @@
       "evolves",
       "evolving"
     ],
-    "persianMeaning": "تکامل یافتن"
+    "persianMeaning": "تکامل یافتن",
+    "pronunciationIpa": "/ɪˈvɑlv/ · /iˈvɑlv/",
+    "pronunciationFa": "اِ ـ «والو» / ای ـ «والو»"
   },
   {
     "word": "expand",
     "sublist": 5,
     "relatedForms": ["expanded", "expanding", "expands", "expansion", "expansionism", "expansive"],
-    "persianMeaning": "گسترش دادن"
+    "persianMeaning": "گسترش دادن",
+    "pronunciationIpa": "/ɪkˈspænd/",
+    "pronunciationFa": "اِک ـ «سپَند»"
   },
   {
     "word": "expose",
     "sublist": 5,
     "relatedForms": ["exposed", "exposes", "exposing", "exposure", "exposures"],
-    "persianMeaning": "آشکار کردن؛ در معرض گذاشتن"
+    "persianMeaning": "آشکار کردن؛ در معرض گذاشتن",
+    "pronunciationIpa": "/ɪkˈspoʊz/",
+    "pronunciationFa": "اِک ـ «سپُوز»"
   },
   {
     "word": "external",
@@ -2525,7 +3051,9 @@
       "externalizing",
       "externally"
     ],
-    "persianMeaning": "خارجی"
+    "persianMeaning": "خارجی",
+    "pronunciationIpa": "/ɪkˈstɝnəl/",
+    "pronunciationFa": "اِک ـ «ستِر» ـ نَل"
   },
   {
     "word": "facilitate",
@@ -2540,31 +3068,41 @@
       "facilities",
       "facility"
     ],
-    "persianMeaning": "تسهیل کردن"
+    "persianMeaning": "تسهیل کردن",
+    "pronunciationIpa": "/fəˈsɪləˌteɪt/",
+    "pronunciationFa": "فَ ـ «سِ» ـ لَ ـ تِیت"
   },
   {
     "word": "fundamental",
     "sublist": 5,
     "relatedForms": ["fundamentally"],
-    "persianMeaning": "بنیادی"
+    "persianMeaning": "بنیادی",
+    "pronunciationIpa": "/ˌfʌndəˈmɛntəl/ · /ˌfʌndəˈmɛnəl/",
+    "pronunciationFa": "فآن ـ دَ ـ «مِن» ـ تَل / فآن ـ دَ ـ «مِ» ـ نَل"
   },
   {
     "word": "generate",
     "sublist": 5,
     "relatedForms": ["generated", "generates", "generating"],
-    "persianMeaning": "تولید کردن"
+    "persianMeaning": "تولید کردن",
+    "pronunciationIpa": "/ˈdʒɛnɚˌeɪt/",
+    "pronunciationFa": "«جِ» ـ نِر ـ اِیت"
   },
   {
     "word": "generation",
     "sublist": 5,
     "relatedForms": ["generations"],
-    "persianMeaning": "نسل؛ تولید"
+    "persianMeaning": "نسل؛ تولید",
+    "pronunciationIpa": "/ˌdʒɛnɚˈeɪʃən/",
+    "pronunciationFa": "جِ ـ نِر ـ «اِی» ـ شَن"
   },
   {
     "word": "image",
     "sublist": 5,
     "relatedForms": ["imagery", "images"],
-    "persianMeaning": "تصویر"
+    "persianMeaning": "تصویر",
+    "pronunciationIpa": "/ˈɪmədʒ/ · /ˈɪmɪdʒ/",
+    "pronunciationFa": "«اِ» ـ مَج / «اِ» ـ مِج"
   },
   {
     "word": "liberal",
@@ -2591,37 +3129,49 @@
       "liberator",
       "liberators"
     ],
-    "persianMeaning": "آزاداندیش؛ لیبرال"
+    "persianMeaning": "آزاداندیش؛ لیبرال",
+    "pronunciationIpa": "/ˈlɪˌbɝəl/",
+    "pronunciationFa": "«لِ» ـ بِر ـ اَل"
   },
   {
     "word": "licence",
     "sublist": 5,
     "relatedForms": ["licences", "license", "licensed", "licenses", "licensing", "unlicensed"],
-    "persianMeaning": "مجوز"
+    "persianMeaning": "مجوز",
+    "pronunciationIpa": "/ˈlaɪsəns/",
+    "pronunciationFa": "«لای» ـ سَنس"
   },
   {
     "word": "logic",
     "sublist": 5,
     "relatedForms": ["illogical", "illogically", "logical", "logically", "logician", "logicians"],
-    "persianMeaning": "منطق"
+    "persianMeaning": "منطق",
+    "pronunciationIpa": "/ˈlɑdʒɪk/",
+    "pronunciationFa": "«لا» ـ جِک"
   },
   {
     "word": "margin",
     "sublist": 5,
     "relatedForms": ["marginal", "marginally", "margins"],
-    "persianMeaning": "حاشیه"
+    "persianMeaning": "حاشیه",
+    "pronunciationIpa": "/ˈmɑɹdʒən/",
+    "pronunciationFa": "«مار» ـ جَن"
   },
   {
     "word": "medical",
     "sublist": 5,
     "relatedForms": ["medically"],
-    "persianMeaning": "پزشکی"
+    "persianMeaning": "پزشکی",
+    "pronunciationIpa": "/ˈmɛdəkəl/ · /ˈmɛdɪkəl/",
+    "pronunciationFa": "«مِ» ـ دَ ـ کَل / «مِ» ـ دِ ـ کَل"
   },
   {
     "word": "mental",
     "sublist": 5,
     "relatedForms": ["mentality", "mentally"],
-    "persianMeaning": "ذهنی"
+    "persianMeaning": "ذهنی",
+    "pronunciationIpa": "/ˈmɛntəl/",
+    "pronunciationFa": "«مِن» ـ تَل"
   },
   {
     "word": "modify",
@@ -2634,31 +3184,41 @@
       "modifying",
       "unmodified"
     ],
-    "persianMeaning": "تغییر دادن؛ اصلاح کردن"
+    "persianMeaning": "تغییر دادن؛ اصلاح کردن",
+    "pronunciationIpa": "/ˈmɑdəˌfaɪ/",
+    "pronunciationFa": "«ما» ـ دَ ـ فای"
   },
   {
     "word": "monitor",
     "sublist": 5,
     "relatedForms": ["monitored", "monitoring", "monitors", "unmonitored"],
-    "persianMeaning": "پایش کردن؛ ناظر"
+    "persianMeaning": "پایش کردن؛ ناظر",
+    "pronunciationIpa": "/ˈmɑnətɚ/",
+    "pronunciationFa": "«ما» ـ نَ ـ تِر"
   },
   {
     "word": "network",
     "sublist": 5,
     "relatedForms": ["networked", "networking", "networks"],
-    "persianMeaning": "شبکه"
+    "persianMeaning": "شبکه",
+    "pronunciationIpa": "/ˈnɛˌtwɝk/",
+    "pronunciationFa": "«نِ» ـ توِرک"
   },
   {
     "word": "notion",
     "sublist": 5,
     "relatedForms": ["notions"],
-    "persianMeaning": "تصور؛ مفهوم"
+    "persianMeaning": "تصور؛ مفهوم",
+    "pronunciationIpa": "/ˈnoʊʃən/",
+    "pronunciationFa": "«نُو» ـ شَن"
   },
   {
     "word": "objective",
     "sublist": 5,
     "relatedForms": ["objectively", "objectivity"],
-    "persianMeaning": "هدف؛ عینی"
+    "persianMeaning": "هدف؛ عینی",
+    "pronunciationIpa": "/əbˈdʒɛktɪv/",
+    "pronunciationFa": "اَب ـ «جِک» ـ تِو"
   },
   {
     "word": "orient",
@@ -2675,55 +3235,73 @@
       "reorient",
       "reorientation"
     ],
-    "persianMeaning": "جهت دادن"
+    "persianMeaning": "جهت دادن",
+    "pronunciationIpa": "/ˈɔɹiˌɛnt/",
+    "pronunciationFa": "«آ» ـ ری ـ اِنت"
   },
   {
     "word": "perspective",
     "sublist": 5,
     "relatedForms": ["perspectives"],
-    "persianMeaning": "دیدگاه"
+    "persianMeaning": "دیدگاه",
+    "pronunciationIpa": "/pɚˈspɛktɪv/",
+    "pronunciationFa": "پِر ـ «سپِک» ـ تِو"
   },
   {
     "word": "precise",
     "sublist": 5,
     "relatedForms": ["imprecise", "precisely", "precision"],
-    "persianMeaning": "دقیق"
+    "persianMeaning": "دقیق",
+    "pronunciationIpa": "/pɹɪˈsaɪs/ · /pɹiˈsaɪs/",
+    "pronunciationFa": "پرِ ـ «سایس» / پری ـ «سایس»"
   },
   {
     "word": "prime",
     "sublist": 5,
     "relatedForms": ["primacy"],
-    "persianMeaning": "اصلی؛ نخست"
+    "persianMeaning": "اصلی؛ نخست",
+    "pronunciationIpa": "/ˈpɹaɪm/",
+    "pronunciationFa": "«پرایم»"
   },
   {
     "word": "psychology",
     "sublist": 5,
     "relatedForms": ["psychological", "psychologically", "psychologist", "psychologists"],
-    "persianMeaning": "روان‌شناسی"
+    "persianMeaning": "روان‌شناسی",
+    "pronunciationIpa": "/saɪˈkɑlədʒi/",
+    "pronunciationFa": "سای ـ «کا» ـ لَ ـ جی"
   },
   {
     "word": "pursue",
     "sublist": 5,
     "relatedForms": ["pursued", "pursues", "pursuing", "pursuit", "pursuits"],
-    "persianMeaning": "دنبال کردن"
+    "persianMeaning": "دنبال کردن",
+    "pronunciationIpa": "/pɚˈsu/",
+    "pronunciationFa": "پِر ـ «سو»"
   },
   {
     "word": "ratio",
     "sublist": 5,
     "relatedForms": ["ratios"],
-    "persianMeaning": "نسبت"
+    "persianMeaning": "نسبت",
+    "pronunciationIpa": "/ˈɹeɪʃiˌoʊ/",
+    "pronunciationFa": "«رِی» ـ شی ـ اُو"
   },
   {
     "word": "reject",
     "sublist": 5,
     "relatedForms": ["rejected", "rejecting", "rejection", "rejections", "rejects"],
-    "persianMeaning": "رد کردن"
+    "persianMeaning": "رد کردن",
+    "pronunciationIpa": "/ɹɪˈdʒɛkt/ · /ˈɹidʒɛkt/",
+    "pronunciationFa": "رِ ـ «جِکت» / «ری» ـ جِکت"
   },
   {
     "word": "revenue",
     "sublist": 5,
     "relatedForms": ["revenues"],
-    "persianMeaning": "درآمد"
+    "persianMeaning": "درآمد",
+    "pronunciationIpa": "/ˈɹɛvəˌnu/ · /ˈɹɛvəˌnju/",
+    "pronunciationFa": "«رِ» ـ وَ ـ نو / «رِ» ـ وَ ـ نیو"
   },
   {
     "word": "stable",
@@ -2743,7 +3321,9 @@
       "stabilizing",
       "unstable"
     ],
-    "persianMeaning": "پایدار"
+    "persianMeaning": "پایدار",
+    "pronunciationIpa": "/ˈsteɪbəl/",
+    "pronunciationFa": "«ستِی» ـ بَل"
   },
   {
     "word": "style",
@@ -2762,13 +3342,17 @@
       "stylizes",
       "stylizing"
     ],
-    "persianMeaning": "سبک"
+    "persianMeaning": "سبک",
+    "pronunciationIpa": "/ˈstaɪl/",
+    "pronunciationFa": "«ستایل»"
   },
   {
     "word": "substitute",
     "sublist": 5,
     "relatedForms": ["substituted", "substitutes", "substituting", "substitution"],
-    "persianMeaning": "جایگزین کردن"
+    "persianMeaning": "جایگزین کردن",
+    "pronunciationIpa": "/ˈsʌbstəˌtut/",
+    "pronunciationFa": "«سآب» ـ ستَ ـ توت"
   },
   {
     "word": "sustain",
@@ -2782,7 +3366,9 @@
       "sustenance",
       "unsustainable"
     ],
-    "persianMeaning": "حفظ کردن؛ تداوم بخشیدن"
+    "persianMeaning": "حفظ کردن؛ تداوم بخشیدن",
+    "pronunciationIpa": "/səˈsteɪn/",
+    "pronunciationFa": "سَ ـ «ستِین»"
   },
   {
     "word": "symbol",
@@ -2801,13 +3387,17 @@
       "symbolizing",
       "symbols"
     ],
-    "persianMeaning": "نماد"
+    "persianMeaning": "نماد",
+    "pronunciationIpa": "/ˈsɪmbəl/",
+    "pronunciationFa": "«سِم» ـ بَل"
   },
   {
     "word": "target",
     "sublist": 5,
     "relatedForms": ["targeted", "targeting", "targets"],
-    "persianMeaning": "هدف"
+    "persianMeaning": "هدف",
+    "pronunciationIpa": "/ˈtɑɹɡət/ · /ˈtɝɡət/",
+    "pronunciationFa": "«تار» ـ گَت / «تِر» ـ گَت"
   },
   {
     "word": "transit",
@@ -2821,43 +3411,57 @@
       "transitory",
       "transits"
     ],
-    "persianMeaning": "عبور؛ حمل‌ونقل"
+    "persianMeaning": "عبور؛ حمل‌ونقل",
+    "pronunciationIpa": "/ˈtɹænzɪt/",
+    "pronunciationFa": "«ترَن» ـ زِت"
   },
   {
     "word": "trend",
     "sublist": 5,
     "relatedForms": ["trends"],
-    "persianMeaning": "روند"
+    "persianMeaning": "روند",
+    "pronunciationIpa": "/ˈtɹɛnd/",
+    "pronunciationFa": "«ترِند»"
   },
   {
     "word": "version",
     "sublist": 5,
     "relatedForms": ["versions"],
-    "persianMeaning": "نسخه"
+    "persianMeaning": "نسخه",
+    "pronunciationIpa": "/ˈvɝʒən/",
+    "pronunciationFa": "«وِر» ـ ژَن"
   },
   {
     "word": "welfare",
     "sublist": 5,
     "relatedForms": [],
-    "persianMeaning": "رفاه"
+    "persianMeaning": "رفاه",
+    "pronunciationIpa": "/ˈwɛlˌfɛɹ/",
+    "pronunciationFa": "«وِل» ـ فِر"
   },
   {
     "word": "whereas",
     "sublist": 5,
     "relatedForms": [],
-    "persianMeaning": "در حالی که"
+    "persianMeaning": "در حالی که",
+    "pronunciationIpa": "/wɛˈɹæz/ · /hwɛˈɹæz/",
+    "pronunciationFa": "وِ ـ «رَز» / هوِ ـ «رَز»"
   },
   {
     "word": "abstract",
     "sublist": 6,
     "relatedForms": ["abstraction", "abstractions", "abstractly", "abstracts"],
-    "persianMeaning": "انتزاعی؛ چکیده"
+    "persianMeaning": "انتزاعی؛ چکیده",
+    "pronunciationIpa": "/æbˈstɹækt/ · /ˈæbˌstɹækt/",
+    "pronunciationFa": "اَب ـ «سترَکت» / «اَب» ـ سترَکت"
   },
   {
     "word": "accurate",
     "sublist": 6,
     "relatedForms": ["accuracy", "accurately", "inaccuracies", "inaccuracy", "inaccurate"],
-    "persianMeaning": "دقیق"
+    "persianMeaning": "دقیق",
+    "pronunciationIpa": "/ˈækjɚət/",
+    "pronunciationFa": "«اَ» ـ کیِر ـ اَت"
   },
   {
     "word": "acknowledge",
@@ -2869,19 +3473,25 @@
       "acknowledges",
       "acknowledging"
     ],
-    "persianMeaning": "تصدیق کردن؛ قدردانی کردن"
+    "persianMeaning": "تصدیق کردن؛ قدردانی کردن",
+    "pronunciationIpa": "/ækˈnɑlɪdʒ/",
+    "pronunciationFa": "اَک ـ «نا» ـ لِج"
   },
   {
     "word": "aggregate",
     "sublist": 6,
     "relatedForms": ["aggregated", "aggregates", "aggregating", "aggregation"],
-    "persianMeaning": "مجموع؛ تجمیع کردن"
+    "persianMeaning": "مجموع؛ تجمیع کردن",
+    "pronunciationIpa": "/ˈæɡɹəɡət/ · /ˈæɡɹəɡɪt/ · /ˈæɡɹəɡeɪt/",
+    "pronunciationFa": "«اَ» ـ گرَ ـ گَت / «اَ» ـ گرَ ـ گِت / «اَ» ـ گرَ ـ گِیت"
   },
   {
     "word": "allocate",
     "sublist": 6,
     "relatedForms": ["allocated", "allocates", "allocating", "allocation", "allocations"],
-    "persianMeaning": "تخصیص دادن"
+    "persianMeaning": "تخصیص دادن",
+    "pronunciationIpa": "/ˈæləˌkeɪt/",
+    "pronunciationFa": "«اَ» ـ لَ ـ کِیت"
   },
   {
     "word": "assign",
@@ -2898,7 +3508,9 @@
       "reassigns",
       "unassigned"
     ],
-    "persianMeaning": "واگذار کردن"
+    "persianMeaning": "واگذار کردن",
+    "pronunciationIpa": "/əˈsaɪn/",
+    "pronunciationFa": "اَ ـ «ساین»"
   },
   {
     "word": "attach",
@@ -2911,37 +3523,49 @@
       "attachments",
       "unattached"
     ],
-    "persianMeaning": "پیوست کردن"
+    "persianMeaning": "پیوست کردن",
+    "pronunciationIpa": "/əˈtætʃ/",
+    "pronunciationFa": "اَ ـ «تَچ»"
   },
   {
     "word": "author",
     "sublist": 6,
     "relatedForms": ["authored", "authoring", "authors", "authorship"],
-    "persianMeaning": "نویسنده"
+    "persianMeaning": "نویسنده",
+    "pronunciationIpa": "/ˈɔθɚ/",
+    "pronunciationFa": "«آ» ـ ثِر"
   },
   {
     "word": "bond",
     "sublist": 6,
     "relatedForms": ["bonded", "bonding", "bonds"],
-    "persianMeaning": "پیوند؛ اوراق قرضه"
+    "persianMeaning": "پیوند؛ اوراق قرضه",
+    "pronunciationIpa": "/ˈbɑnd/",
+    "pronunciationFa": "«باند»"
   },
   {
     "word": "brief",
     "sublist": 6,
     "relatedForms": ["brevity", "briefed", "briefing", "briefly", "briefs"],
-    "persianMeaning": "مختصر"
+    "persianMeaning": "مختصر",
+    "pronunciationIpa": "/ˈbɹif/",
+    "pronunciationFa": "«بریف»"
   },
   {
     "word": "capable",
     "sublist": 6,
     "relatedForms": ["capabilities", "capability", "incapable"],
-    "persianMeaning": "توانا"
+    "persianMeaning": "توانا",
+    "pronunciationIpa": "/ˈkeɪpəbəl/",
+    "pronunciationFa": "«کِی» ـ پَ ـ بَل"
   },
   {
     "word": "cite",
     "sublist": 6,
     "relatedForms": ["citation", "citations", "cited", "cites", "citing"],
-    "persianMeaning": "استناد کردن"
+    "persianMeaning": "استناد کردن",
+    "pronunciationIpa": "/ˈsaɪt/",
+    "pronunciationFa": "«سایت»"
   },
   {
     "word": "cooperate",
@@ -2960,19 +3584,25 @@
       "cooperative",
       "cooperatively"
     ],
-    "persianMeaning": "همکاری کردن"
+    "persianMeaning": "همکاری کردن",
+    "pronunciationIpa": "/koʊˈɑpɚˌeɪt/ · /ˈkwɑpɚˌeɪt/",
+    "pronunciationFa": "کُو ـ «آ» ـ پِر ـ اِیت / «کوا» ـ پِر ـ اِیت"
   },
   {
     "word": "discriminate",
     "sublist": 6,
     "relatedForms": ["discriminated", "discriminates", "discriminating", "discrimination"],
-    "persianMeaning": "تمایز قائل شدن؛ تبعیض کردن"
+    "persianMeaning": "تمایز قائل شدن؛ تبعیض کردن",
+    "pronunciationIpa": "/dɪˈskɹɪməˌneɪt/",
+    "pronunciationFa": "دِ ـ «سکرِ» ـ مَ ـ نِیت"
   },
   {
     "word": "display",
     "sublist": 6,
     "relatedForms": ["displayed", "displaying", "displays"],
-    "persianMeaning": "نمایش دادن"
+    "persianMeaning": "نمایش دادن",
+    "pronunciationIpa": "/dɪˈspleɪ/",
+    "pronunciationFa": "دِ ـ «سپلِی»"
   },
   {
     "word": "diverse",
@@ -2986,13 +3616,17 @@
       "diversifying",
       "diversity"
     ],
-    "persianMeaning": "متنوع"
+    "persianMeaning": "متنوع",
+    "pronunciationIpa": "/daɪˈvɝs/ · /dɪˈvɝs/",
+    "pronunciationFa": "دای ـ «وِرس» / دِ ـ «وِرس»"
   },
   {
     "word": "domain",
     "sublist": 6,
     "relatedForms": ["domains"],
-    "persianMeaning": "حوزه؛ دامنه"
+    "persianMeaning": "حوزه؛ دامنه",
+    "pronunciationIpa": "/doʊˈmeɪn/",
+    "pronunciationFa": "دُو ـ «مِین»"
   },
   {
     "word": "edit",
@@ -3008,103 +3642,137 @@
       "editors",
       "edits"
     ],
-    "persianMeaning": "ویرایش کردن"
+    "persianMeaning": "ویرایش کردن",
+    "pronunciationIpa": "/ˈɛdət/",
+    "pronunciationFa": "«اِ» ـ دَت"
   },
   {
     "word": "enhance",
     "sublist": 6,
     "relatedForms": ["enhanced", "enhancement", "enhances", "enhancing"],
-    "persianMeaning": "بهبود دادن"
+    "persianMeaning": "بهبود دادن",
+    "pronunciationIpa": "/ɛnˈhæns/",
+    "pronunciationFa": "اِن ـ «هَنس»"
   },
   {
     "word": "estate",
     "sublist": 6,
     "relatedForms": ["estates"],
-    "persianMeaning": "ملک؛ دارایی"
+    "persianMeaning": "ملک؛ دارایی",
+    "pronunciationIpa": "/ɪˈsteɪt/",
+    "pronunciationFa": "اِ ـ «ستِیت»"
   },
   {
     "word": "exceed",
     "sublist": 6,
     "relatedForms": ["exceeded", "exceeding", "exceeds"],
-    "persianMeaning": "فراتر رفتن"
+    "persianMeaning": "فراتر رفتن",
+    "pronunciationIpa": "/ɪkˈsid/",
+    "pronunciationFa": "اِک ـ «سید»"
   },
   {
     "word": "expert",
     "sublist": 6,
     "relatedForms": ["expertise", "expertly", "experts"],
-    "persianMeaning": "متخصص"
+    "persianMeaning": "متخصص",
+    "pronunciationIpa": "/ˈɛkspɚt/",
+    "pronunciationFa": "«اِک» ـ سپِرت"
   },
   {
     "word": "explicit",
     "sublist": 6,
     "relatedForms": ["explicitly"],
-    "persianMeaning": "صریح"
+    "persianMeaning": "صریح",
+    "pronunciationIpa": "/ɪkˈsplɪsət/",
+    "pronunciationFa": "اِک ـ «سپلِ» ـ سَت"
   },
   {
     "word": "federal",
     "sublist": 6,
     "relatedForms": ["federation", "federations"],
-    "persianMeaning": "فدرال"
+    "persianMeaning": "فدرال",
+    "pronunciationIpa": "/ˈfɛdɚəl/ · /ˈfɛdɹəl/",
+    "pronunciationFa": "«فِ» ـ دِر ـ اَل / «فِ» ـ درَل"
   },
   {
     "word": "fee",
     "sublist": 6,
     "relatedForms": ["fees"],
-    "persianMeaning": "هزینه؛ حق‌الزحمه"
+    "persianMeaning": "هزینه؛ حق‌الزحمه",
+    "pronunciationIpa": "/ˈfi/",
+    "pronunciationFa": "«فی»"
   },
   {
     "word": "flexible",
     "sublist": 6,
     "relatedForms": ["flexibility", "inflexibility", "inflexible"],
-    "persianMeaning": "انعطاف‌پذیر"
+    "persianMeaning": "انعطاف‌پذیر",
+    "pronunciationIpa": "/ˈflɛksəbəl/",
+    "pronunciationFa": "«فلِک» ـ سَ ـ بَل"
   },
   {
     "word": "furthermore",
     "sublist": 6,
     "relatedForms": [],
-    "persianMeaning": "علاوه بر این"
+    "persianMeaning": "علاوه بر این",
+    "pronunciationIpa": "/ˈfɝðɚˌmɔɹ/",
+    "pronunciationFa": "«فِر» ـ ذِر ـ مار"
   },
   {
     "word": "gender",
     "sublist": 6,
     "relatedForms": ["genders"],
-    "persianMeaning": "جنسیت"
+    "persianMeaning": "جنسیت",
+    "pronunciationIpa": "/ˈdʒɛndɚ/",
+    "pronunciationFa": "«جِن» ـ دِر"
   },
   {
     "word": "ignorant",
     "sublist": 6,
     "relatedForms": ["ignorance", "ignore", "ignored", "ignores", "ignoring"],
-    "persianMeaning": "ناآگاه"
+    "persianMeaning": "ناآگاه",
+    "pronunciationIpa": "/ˈɪɡnɚənt/",
+    "pronunciationFa": "«اِگ» ـ نِر ـ اَنت"
   },
   {
     "word": "incentive",
     "sublist": 6,
     "relatedForms": ["incentives"],
-    "persianMeaning": "مشوق"
+    "persianMeaning": "مشوق",
+    "pronunciationIpa": "/ˌɪnˈsɛntɪv/ · /ˌɪnˈsɛnɪv/",
+    "pronunciationFa": "اِن ـ «سِن» ـ تِو / اِن ـ «سِ» ـ نِو"
   },
   {
     "word": "incidence",
     "sublist": 6,
     "relatedForms": ["incident", "incidentally", "incidents"],
-    "persianMeaning": "میزان وقوع"
+    "persianMeaning": "میزان وقوع",
+    "pronunciationIpa": "/ˈɪnsədəns/ · /ˈɪnsɪdəns/",
+    "pronunciationFa": "«اِن» ـ سَ ـ دَنس / «اِن» ـ سِ ـ دَنس"
   },
   {
     "word": "incorporate",
     "sublist": 6,
     "relatedForms": ["incorporated", "incorporates", "incorporating", "incorporation"],
-    "persianMeaning": "ادغام کردن"
+    "persianMeaning": "ادغام کردن",
+    "pronunciationIpa": "/ˌɪnˈkɔɹpɚˌeɪt/",
+    "pronunciationFa": "اِن ـ «کار» ـ پِر ـ اِیت"
   },
   {
     "word": "index",
     "sublist": 6,
     "relatedForms": ["indexed", "indexes", "indexing"],
-    "persianMeaning": "شاخص؛ نمایه"
+    "persianMeaning": "شاخص؛ نمایه",
+    "pronunciationIpa": "/ˈɪndɛks/",
+    "pronunciationFa": "«اِن» ـ دِکس"
   },
   {
     "word": "inhibit",
     "sublist": 6,
     "relatedForms": ["inhibited", "inhibiting", "inhibition", "inhibitions", "inhibits"],
-    "persianMeaning": "بازداشتن؛ مهار کردن"
+    "persianMeaning": "بازداشتن؛ مهار کردن",
+    "pronunciationIpa": "/ˌɪnˈhɪbət/",
+    "pronunciationFa": "اِن ـ «هِ» ـ بَت"
   },
   {
     "word": "initiate",
@@ -3120,13 +3788,17 @@
       "initiator",
       "initiators"
     ],
-    "persianMeaning": "آغاز کردن"
+    "persianMeaning": "آغاز کردن",
+    "pronunciationIpa": "/ˌɪˈnɪʃiˌeɪt/",
+    "pronunciationFa": "اِ ـ «نِ» ـ شی ـ اِیت"
   },
   {
     "word": "input",
     "sublist": 6,
     "relatedForms": ["inputs"],
-    "persianMeaning": "ورودی"
+    "persianMeaning": "ورودی",
+    "pronunciationIpa": "/ˈɪnˌpʊt/",
+    "pronunciationFa": "«اِن» ـ پُت"
   },
   {
     "word": "instruct",
@@ -3141,25 +3813,33 @@
       "instructors",
       "instructs"
     ],
-    "persianMeaning": "آموزش دادن؛ دستور دادن"
+    "persianMeaning": "آموزش دادن؛ دستور دادن",
+    "pronunciationIpa": "/ˌɪnˈstɹʌkt/",
+    "pronunciationFa": "اِن ـ «سترآکت»"
   },
   {
     "word": "intelligent",
     "sublist": 6,
     "relatedForms": ["intelligence", "intelligently", "unintelligent"],
-    "persianMeaning": "باهوش"
+    "persianMeaning": "باهوش",
+    "pronunciationIpa": "/ˌɪnˈtɛlədʒənt/",
+    "pronunciationFa": "اِن ـ «تِ» ـ لَ ـ جَنت"
   },
   {
     "word": "interval",
     "sublist": 6,
     "relatedForms": ["intervals"],
-    "persianMeaning": "فاصله؛ بازه"
+    "persianMeaning": "فاصله؛ بازه",
+    "pronunciationIpa": "/ˈɪntɚvəl/",
+    "pronunciationFa": "«اِن» ـ تِر ـ وَل"
   },
   {
     "word": "lecture",
     "sublist": 6,
     "relatedForms": ["lectured", "lecturer", "lecturers", "lectures", "lecturing"],
-    "persianMeaning": "سخنرانی"
+    "persianMeaning": "سخنرانی",
+    "pronunciationIpa": "/ˈlɛktʃɚ/",
+    "pronunciationFa": "«لِک» ـ چِر"
   },
   {
     "word": "migrate",
@@ -3174,19 +3854,25 @@
       "migrations",
       "migratory"
     ],
-    "persianMeaning": "مهاجرت کردن"
+    "persianMeaning": "مهاجرت کردن",
+    "pronunciationIpa": "/ˈmaɪˌɡɹeɪt/",
+    "pronunciationFa": "«مای» ـ گرِیت"
   },
   {
     "word": "minimum",
     "sublist": 6,
     "relatedForms": [],
-    "persianMeaning": "حداقل"
+    "persianMeaning": "حداقل",
+    "pronunciationIpa": "/ˈmɪnəməm/",
+    "pronunciationFa": "«مِ» ـ نَ ـ مَم"
   },
   {
     "word": "ministry",
     "sublist": 6,
     "relatedForms": ["ministered", "ministerial", "ministering", "ministries"],
-    "persianMeaning": "وزارتخانه"
+    "persianMeaning": "وزارتخانه",
+    "pronunciationIpa": "/ˈmɪnəstɹi/ · /ˈmɪnɪstɹi/",
+    "pronunciationFa": "«مِ» ـ نَ ـ ستری / «مِ» ـ نِ ـ ستری"
   },
   {
     "word": "motive",
@@ -3201,7 +3887,9 @@
       "motives",
       "unmotivated"
     ],
-    "persianMeaning": "انگیزه"
+    "persianMeaning": "انگیزه",
+    "pronunciationIpa": "/ˈmoʊtɪv/",
+    "pronunciationFa": "«مُو» ـ تِو"
   },
   {
     "word": "neutral",
@@ -3219,19 +3907,25 @@
       "neutralizes",
       "neutralizing"
     ],
-    "persianMeaning": "بی‌طرف؛ خنثی"
+    "persianMeaning": "بی‌طرف؛ خنثی",
+    "pronunciationIpa": "/ˈnutɹəl/",
+    "pronunciationFa": "«نو» ـ ترَل"
   },
   {
     "word": "nevertheless",
     "sublist": 6,
     "relatedForms": [],
-    "persianMeaning": "با این حال"
+    "persianMeaning": "با این حال",
+    "pronunciationIpa": "/ˌnɛvɚðəˈlɛs/",
+    "pronunciationFa": "نِ ـ وِر ـ ذَ ـ «لِس»"
   },
   {
     "word": "overseas",
     "sublist": 6,
     "relatedForms": [],
-    "persianMeaning": "خارج از کشور"
+    "persianMeaning": "خارج از کشور",
+    "pronunciationIpa": "/ˈoʊvɚˈsiz/",
+    "pronunciationFa": "«اُو» ـ وِر ـ «سیز»"
   },
   {
     "word": "precede",
@@ -3244,7 +3938,9 @@
       "preceding",
       "unprecedented"
     ],
-    "persianMeaning": "پیش از چیزی آمدن"
+    "persianMeaning": "پیش از چیزی آمدن",
+    "pronunciationIpa": "/pɹɪˈsid/",
+    "pronunciationFa": "پرِ ـ «سید»"
   },
   {
     "word": "presume",
@@ -3258,7 +3954,9 @@
       "presumptions",
       "presumptuous"
     ],
-    "persianMeaning": "فرض کردن"
+    "persianMeaning": "فرض کردن",
+    "pronunciationIpa": "/pɹɪˈzum/",
+    "pronunciationFa": "پرِ ـ «زوم»"
   },
   {
     "word": "rational",
@@ -3280,25 +3978,33 @@
       "rationalizes",
       "rationally"
     ],
-    "persianMeaning": "عقلانی"
+    "persianMeaning": "عقلانی",
+    "pronunciationIpa": "/ˈɹæʃənəl/ · /ˈɹæʃnəl/",
+    "pronunciationFa": "«رَ» ـ شَ ـ نَل / «رَش» ـ نَل"
   },
   {
     "word": "recover",
     "sublist": 6,
     "relatedForms": ["recoverable", "recovered", "recovering", "recovers", "recovery"],
-    "persianMeaning": "بازیابی کردن؛ بهبود یافتن"
+    "persianMeaning": "بازیابی کردن؛ بهبود یافتن",
+    "pronunciationIpa": "/ɹɪˈkʌvɚ/",
+    "pronunciationFa": "رِ ـ «کآ» ـ وِر"
   },
   {
     "word": "reveal",
     "sublist": 6,
     "relatedForms": ["revealed", "revealing", "reveals", "revelation", "revelations"],
-    "persianMeaning": "آشکار کردن"
+    "persianMeaning": "آشکار کردن",
+    "pronunciationIpa": "/ɹɪˈvil/ · /ɹiˈvil/",
+    "pronunciationFa": "رِ ـ «ویل» / ری ـ «ویل»"
   },
   {
     "word": "scope",
     "sublist": 6,
     "relatedForms": [],
-    "persianMeaning": "دامنه؛ محدوده"
+    "persianMeaning": "دامنه؛ محدوده",
+    "pronunciationIpa": "/ˈskoʊp/",
+    "pronunciationFa": "«سکُوپ»"
   },
   {
     "word": "subsidy",
@@ -3315,19 +4021,25 @@
       "subsidizes",
       "subsidizing"
     ],
-    "persianMeaning": "یارانه"
+    "persianMeaning": "یارانه",
+    "pronunciationIpa": "/ˈsʌbsɪdi/",
+    "pronunciationFa": "«سآب» ـ سِ ـ دی"
   },
   {
     "word": "tape",
     "sublist": 6,
     "relatedForms": ["taped", "tapes", "taping"],
-    "persianMeaning": "نوار"
+    "persianMeaning": "نوار",
+    "pronunciationIpa": "/ˈteɪp/",
+    "pronunciationFa": "«تِیپ»"
   },
   {
     "word": "trace",
     "sublist": 6,
     "relatedForms": ["traceable", "traced", "traces", "tracing"],
-    "persianMeaning": "رد؛ ردیابی کردن"
+    "persianMeaning": "رد؛ ردیابی کردن",
+    "pronunciationIpa": "/ˈtɹeɪs/",
+    "pronunciationFa": "«ترِیس»"
   },
   {
     "word": "transform",
@@ -3339,7 +4051,9 @@
       "transforming",
       "transforms"
     ],
-    "persianMeaning": "دگرگون کردن"
+    "persianMeaning": "دگرگون کردن",
+    "pronunciationIpa": "/tɹænsˈfɔɹm/ · /ˈtɹænsfɔɹm/",
+    "pronunciationFa": "ترَنس ـ «فارم» / «ترَنس» ـ فارم"
   },
   {
     "word": "transport",
@@ -3352,13 +4066,17 @@
       "transporting",
       "transports"
     ],
-    "persianMeaning": "حمل‌ونقل؛ جابه‌جا کردن"
+    "persianMeaning": "حمل‌ونقل؛ جابه‌جا کردن",
+    "pronunciationIpa": "/tɹænˈspɔɹt/ · /ˈtɹænspɔɹt/",
+    "pronunciationFa": "ترَن ـ «سپارت» / «ترَن» ـ سپارت"
   },
   {
     "word": "underlie",
     "sublist": 6,
     "relatedForms": ["underlay", "underlies", "underlying"],
-    "persianMeaning": "زیربنای چیزی بودن"
+    "persianMeaning": "زیربنای چیزی بودن",
+    "pronunciationIpa": "/ˌʌndɚˈlaɪ/",
+    "pronunciationFa": "آن ـ دِر ـ «لای»"
   },
   {
     "word": "utilise",
@@ -3378,7 +4096,9 @@
       "utilizes",
       "utilizing"
     ],
-    "persianMeaning": "استفاده کردن"
+    "persianMeaning": "استفاده کردن",
+    "pronunciationIpa": "/ˈjutəˌlaɪz/",
+    "pronunciationFa": "«یو» ـ تَ ـ لایز"
   },
   {
     "word": "adapt",
@@ -3393,67 +4113,89 @@
       "adaptive",
       "adapts"
     ],
-    "persianMeaning": "سازگار کردن"
+    "persianMeaning": "سازگار کردن",
+    "pronunciationIpa": "/əˈdæpt/",
+    "pronunciationFa": "اَ ـ «دَپت»"
   },
   {
     "word": "adult",
     "sublist": 7,
     "relatedForms": ["adulthood", "adults"],
-    "persianMeaning": "بزرگسال"
+    "persianMeaning": "بزرگسال",
+    "pronunciationIpa": "/əˈdʌlt/ · /ˈædəlt/",
+    "pronunciationFa": "اَ ـ «دآلت» / «اَ» ـ دَلت"
   },
   {
     "word": "advocate",
     "sublist": 7,
     "relatedForms": ["advocacy", "advocated", "advocates", "advocating"],
-    "persianMeaning": "حمایت کردن؛ حامی"
+    "persianMeaning": "حمایت کردن؛ حامی",
+    "pronunciationIpa": "/ˈædvəkət/ · /ˈædvəˌkeɪt/",
+    "pronunciationFa": "«اَد» ـ وَ ـ کَت / «اَد» ـ وَ ـ کِیت"
   },
   {
     "word": "aid",
     "sublist": 7,
     "relatedForms": ["aided", "aiding", "aids", "unaided"],
-    "persianMeaning": "کمک"
+    "persianMeaning": "کمک",
+    "pronunciationIpa": "/ˈeɪd/",
+    "pronunciationFa": "«اِید»"
   },
   {
     "word": "channel",
     "sublist": 7,
     "relatedForms": ["channelled", "channelling", "channels"],
-    "persianMeaning": "کانال؛ مسیر"
+    "persianMeaning": "کانال؛ مسیر",
+    "pronunciationIpa": "/ˈtʃænəl/",
+    "pronunciationFa": "«چَ» ـ نَل"
   },
   {
     "word": "chemical",
     "sublist": 7,
     "relatedForms": ["chemically", "chemicals"],
-    "persianMeaning": "مادهٔ شیمیایی؛ شیمیایی"
+    "persianMeaning": "مادهٔ شیمیایی؛ شیمیایی",
+    "pronunciationIpa": "/ˈkɛməkəl/ · /ˈkɛmɪkəl/",
+    "pronunciationFa": "«کِ» ـ مَ ـ کَل / «کِ» ـ مِ ـ کَل"
   },
   {
     "word": "classic",
     "sublist": 7,
     "relatedForms": ["classical", "classics"],
-    "persianMeaning": "کلاسیک؛ اثر برجسته"
+    "persianMeaning": "کلاسیک؛ اثر برجسته",
+    "pronunciationIpa": "/ˈklæsɪk/",
+    "pronunciationFa": "«کلَ» ـ سِک"
   },
   {
     "word": "comprehensive",
     "sublist": 7,
     "relatedForms": ["comprehensively"],
-    "persianMeaning": "جامع"
+    "persianMeaning": "جامع",
+    "pronunciationIpa": "/ˌkɑmpɹiˈhɛnsɪv/",
+    "pronunciationFa": "کام ـ پری ـ «هِن» ـ سِو"
   },
   {
     "word": "comprise",
     "sublist": 7,
     "relatedForms": ["comprised", "comprises", "comprising"],
-    "persianMeaning": "شامل بودن"
+    "persianMeaning": "شامل بودن",
+    "pronunciationIpa": "/kəmˈpɹaɪz/",
+    "pronunciationFa": "کَم ـ «پرایز»"
   },
   {
     "word": "confirm",
     "sublist": 7,
     "relatedForms": ["confirmation", "confirmed", "confirming", "confirms"],
-    "persianMeaning": "تأیید کردن"
+    "persianMeaning": "تأیید کردن",
+    "pronunciationIpa": "/kənˈfɝm/",
+    "pronunciationFa": "کَن ـ «فِرم»"
   },
   {
     "word": "contrary",
     "sublist": 7,
     "relatedForms": ["contrarily"],
-    "persianMeaning": "مخالف؛ برعکس"
+    "persianMeaning": "مخالف؛ برعکس",
+    "pronunciationIpa": "/ˈkɑntɹɛɹi/ · /kənˈtɹɛɹi/",
+    "pronunciationFa": "«کان» ـ ترِ ـ ری / کَن ـ «ترِ» ـ ری"
   },
   {
     "word": "convert",
@@ -3466,133 +4208,177 @@
       "converting",
       "converts"
     ],
-    "persianMeaning": "تبدیل کردن"
+    "persianMeaning": "تبدیل کردن",
+    "pronunciationIpa": "/ˈkɑnvɚt/ · /kənˈvɝt/",
+    "pronunciationFa": "«کان» ـ وِرت / کَن ـ «وِرت»"
   },
   {
     "word": "couple",
     "sublist": 7,
     "relatedForms": ["coupled", "couples", "coupling"],
-    "persianMeaning": "زوج؛ جفت"
+    "persianMeaning": "زوج؛ جفت",
+    "pronunciationIpa": "/ˈkʌpəl/",
+    "pronunciationFa": "«کآ» ـ پَل"
   },
   {
     "word": "decade",
     "sublist": 7,
     "relatedForms": ["decades"],
-    "persianMeaning": "دهه"
+    "persianMeaning": "دهه",
+    "pronunciationIpa": "/dɛˈkeɪd/ · /ˈdɛkeɪd/",
+    "pronunciationFa": "دِ ـ «کِید» / «دِ» ـ کِید"
   },
   {
     "word": "definite",
     "sublist": 7,
     "relatedForms": ["definitely", "definitive", "indefinite", "indefinitely"],
-    "persianMeaning": "قطعی؛ مشخص"
+    "persianMeaning": "قطعی؛ مشخص",
+    "pronunciationIpa": "/ˈdɛfənət/",
+    "pronunciationFa": "«دِ» ـ فَ ـ نَت"
   },
   {
     "word": "deny",
     "sublist": 7,
     "relatedForms": ["deniable", "denial", "denials", "denied", "denies", "denying", "undeniable"],
-    "persianMeaning": "انکار کردن"
+    "persianMeaning": "انکار کردن",
+    "pronunciationIpa": "/dɪˈnaɪ/",
+    "pronunciationFa": "دِ ـ «نای»"
   },
   {
     "word": "differentiate",
     "sublist": 7,
     "relatedForms": ["differentiated", "differentiates", "differentiating", "differentiation"],
-    "persianMeaning": "تمایز قائل شدن"
+    "persianMeaning": "تمایز قائل شدن",
+    "pronunciationIpa": "/ˌdɪfɚˈɛnʃiˌeɪt/ · /ˌdɪfɚˈɛntʃiˌeɪt/",
+    "pronunciationFa": "دِ ـ فِر ـ «اِن» ـ شی ـ اِیت / دِ ـ فِر ـ «اِن» ـ چی ـ اِیت"
   },
   {
     "word": "dispose",
     "sublist": 7,
     "relatedForms": ["disposable", "disposal", "disposed", "disposes", "disposing"],
-    "persianMeaning": "دور انداختن؛ ترتیب دادن"
+    "persianMeaning": "دور انداختن؛ ترتیب دادن",
+    "pronunciationIpa": "/dɪˈspoʊz/",
+    "pronunciationFa": "دِ ـ «سپُوز»"
   },
   {
     "word": "dynamic",
     "sublist": 7,
     "relatedForms": ["dynamically", "dynamics"],
-    "persianMeaning": "پویا"
+    "persianMeaning": "پویا",
+    "pronunciationIpa": "/daɪˈnæmɪk/",
+    "pronunciationFa": "دای ـ «نَ» ـ مِک"
   },
   {
     "word": "eliminate",
     "sublist": 7,
     "relatedForms": ["eliminated", "eliminates", "eliminating", "elimination"],
-    "persianMeaning": "حذف کردن"
+    "persianMeaning": "حذف کردن",
+    "pronunciationIpa": "/ɪˈlɪməˌneɪt/",
+    "pronunciationFa": "اِ ـ «لِ» ـ مَ ـ نِیت"
   },
   {
     "word": "empirical",
     "sublist": 7,
     "relatedForms": ["empirically", "empiricism"],
-    "persianMeaning": "تجربی"
+    "persianMeaning": "تجربی",
+    "pronunciationIpa": "/ˌɛmˈpɪɹɪkəl/",
+    "pronunciationFa": "اِم ـ «پِ» ـ رِ ـ کَل"
   },
   {
     "word": "equip",
     "sublist": 7,
     "relatedForms": ["equipment", "equipped", "equipping", "equips"],
-    "persianMeaning": "مجهز کردن"
+    "persianMeaning": "مجهز کردن",
+    "pronunciationIpa": "/ɪˈkwɪp/",
+    "pronunciationFa": "اِ ـ «کوِپ»"
   },
   {
     "word": "extract",
     "sublist": 7,
     "relatedForms": ["extracted", "extracting", "extraction", "extracts"],
-    "persianMeaning": "استخراج کردن؛ گزیده"
+    "persianMeaning": "استخراج کردن؛ گزیده",
+    "pronunciationIpa": "/ˈɛkˌstɹækt/ · /ɪkˈstɹækt/",
+    "pronunciationFa": "«اِک» ـ سترَکت / اِک ـ «سترَکت»"
   },
   {
     "word": "file",
     "sublist": 7,
     "relatedForms": ["filed", "files", "filing"],
-    "persianMeaning": "پرونده"
+    "persianMeaning": "پرونده",
+    "pronunciationIpa": "/ˈfaɪl/",
+    "pronunciationFa": "«فایل»"
   },
   {
     "word": "finite",
     "sublist": 7,
     "relatedForms": ["infinite", "infinitely"],
-    "persianMeaning": "محدود؛ متناهی"
+    "persianMeaning": "محدود؛ متناهی",
+    "pronunciationIpa": "/ˈfaɪˌnaɪt/",
+    "pronunciationFa": "«فای» ـ نایت"
   },
   {
     "word": "foundation",
     "sublist": 7,
     "relatedForms": ["foundations"],
-    "persianMeaning": "بنیاد؛ پایه"
+    "persianMeaning": "بنیاد؛ پایه",
+    "pronunciationIpa": "/faʊnˈdeɪʃən/",
+    "pronunciationFa": "فاون ـ «دِی» ـ شَن"
   },
   {
     "word": "globe",
     "sublist": 7,
     "relatedForms": ["global", "globalisation", "globalization", "globally"],
-    "persianMeaning": "کرهٔ زمین"
+    "persianMeaning": "کرهٔ زمین",
+    "pronunciationIpa": "/ˈɡloʊb/",
+    "pronunciationFa": "«گلُوب»"
   },
   {
     "word": "grade",
     "sublist": 7,
     "relatedForms": ["graded", "grades", "grading"],
-    "persianMeaning": "نمره؛ درجه"
+    "persianMeaning": "نمره؛ درجه",
+    "pronunciationIpa": "/ˈɡɹeɪd/",
+    "pronunciationFa": "«گرِید»"
   },
   {
     "word": "guarantee",
     "sublist": 7,
     "relatedForms": ["guaranteed", "guaranteeing", "guarantees"],
-    "persianMeaning": "تضمین کردن"
+    "persianMeaning": "تضمین کردن",
+    "pronunciationIpa": "/ˌɡɛɹənˈti/",
+    "pronunciationFa": "گِ ـ رَن ـ «تی»"
   },
   {
     "word": "hierarchy",
     "sublist": 7,
     "relatedForms": ["hierarchical", "hierarchies"],
-    "persianMeaning": "سلسله‌مراتب"
+    "persianMeaning": "سلسله‌مراتب",
+    "pronunciationIpa": "/ˈhaɪɚˌɑɹki/ · /ˈhaɪˌɹɑɹki/",
+    "pronunciationFa": "«های» ـ اِر ـ آر ـ کی / «های» ـ رار ـ کی"
   },
   {
     "word": "identical",
     "sublist": 7,
     "relatedForms": ["identically"],
-    "persianMeaning": "یکسان"
+    "persianMeaning": "یکسان",
+    "pronunciationIpa": "/aɪˈdɛntɪkəl/",
+    "pronunciationFa": "آی ـ «دِن» ـ تِ ـ کَل"
   },
   {
     "word": "ideology",
     "sublist": 7,
     "relatedForms": ["ideological", "ideologically", "ideologies"],
-    "persianMeaning": "ایدئولوژی"
+    "persianMeaning": "ایدئولوژی",
+    "pronunciationIpa": "/ˌaɪdiˈɑlədʒi/",
+    "pronunciationFa": "آی ـ دی ـ «آ» ـ لَ ـ جی"
   },
   {
     "word": "infer",
     "sublist": 7,
     "relatedForms": ["inference", "inferences", "inferred", "inferring", "infers"],
-    "persianMeaning": "استنباط کردن"
+    "persianMeaning": "استنباط کردن",
+    "pronunciationIpa": "/ˌɪnˈfɝ/",
+    "pronunciationFa": "اِن ـ «فِر»"
   },
   {
     "word": "innovate",
@@ -3607,49 +4393,65 @@
       "innovator",
       "innovators"
     ],
-    "persianMeaning": "نوآوری کردن"
+    "persianMeaning": "نوآوری کردن",
+    "pronunciationIpa": "/ˈɪnəˌveɪt/ · /ˈɪnoʊˌveɪt/",
+    "pronunciationFa": "«اِ» ـ نَ ـ وِیت / «اِ» ـ نُو ـ وِیت"
   },
   {
     "word": "insert",
     "sublist": 7,
     "relatedForms": ["inserted", "inserting", "insertion", "inserts"],
-    "persianMeaning": "وارد کردن"
+    "persianMeaning": "وارد کردن",
+    "pronunciationIpa": "/ˌɪnˈsɝt/ · /ˈɪnˌsɝt/",
+    "pronunciationFa": "اِن ـ «سِرت» / «اِن» ـ سِرت"
   },
   {
     "word": "intervene",
     "sublist": 7,
     "relatedForms": ["intervened", "intervenes", "intervening", "intervention", "interventions"],
-    "persianMeaning": "مداخله کردن"
+    "persianMeaning": "مداخله کردن",
+    "pronunciationIpa": "/ˌɪntɚˈvin/",
+    "pronunciationFa": "اِن ـ تِر ـ «وین»"
   },
   {
     "word": "isolate",
     "sublist": 7,
     "relatedForms": ["isolated", "isolates", "isolating", "isolation", "isolationism"],
-    "persianMeaning": "جدا کردن"
+    "persianMeaning": "جدا کردن",
+    "pronunciationIpa": "/ˈaɪsəˌleɪt/",
+    "pronunciationFa": "«آی» ـ سَ ـ لِیت"
   },
   {
     "word": "media",
     "sublist": 7,
     "relatedForms": [],
-    "persianMeaning": "رسانه‌ها"
+    "persianMeaning": "رسانه‌ها",
+    "pronunciationIpa": "/ˈmidiə/",
+    "pronunciationFa": "«می» ـ دی ـ اَ"
   },
   {
     "word": "mode",
     "sublist": 7,
     "relatedForms": ["modes"],
-    "persianMeaning": "حالت؛ شیوه"
+    "persianMeaning": "حالت؛ شیوه",
+    "pronunciationIpa": "/ˈmoʊd/",
+    "pronunciationFa": "«مُود»"
   },
   {
     "word": "paradigm",
     "sublist": 7,
     "relatedForms": ["paradigms"],
-    "persianMeaning": "الگو؛ پارادایم"
+    "persianMeaning": "الگو؛ پارادایم",
+    "pronunciationIpa": "/ˈpɛɹəˌdaɪm/",
+    "pronunciationFa": "«پِ» ـ رَ ـ دایم"
   },
   {
     "word": "phenomenon",
     "sublist": 7,
     "relatedForms": ["phenomena", "phenomenal"],
-    "persianMeaning": "پدیده"
+    "persianMeaning": "پدیده",
+    "pronunciationIpa": "/fəˈnɑməˌnɑn/",
+    "pronunciationFa": "فَ ـ «نا» ـ مَ ـ نان"
   },
   {
     "word": "priority",
@@ -3667,7 +4469,9 @@
       "prioritizes",
       "prioritizing"
     ],
-    "persianMeaning": "اولویت"
+    "persianMeaning": "اولویت",
+    "pronunciationIpa": "/pɹaɪˈɔɹəti/",
+    "pronunciationFa": "پرای ـ «آ» ـ رَ ـ تی"
   },
   {
     "word": "prohibit",
@@ -3680,25 +4484,33 @@
       "prohibitive",
       "prohibits"
     ],
-    "persianMeaning": "ممنوع کردن"
+    "persianMeaning": "ممنوع کردن",
+    "pronunciationIpa": "/pɹoʊˈhɪbət/",
+    "pronunciationFa": "پرُو ـ «هِ» ـ بَت"
   },
   {
     "word": "publication",
     "sublist": 7,
     "relatedForms": ["publications"],
-    "persianMeaning": "انتشار؛ نشریه"
+    "persianMeaning": "انتشار؛ نشریه",
+    "pronunciationIpa": "/ˌpʌblɪˈkeɪʃən/",
+    "pronunciationFa": "پآ ـ بلِ ـ «کِی» ـ شَن"
   },
   {
     "word": "quote",
     "sublist": 7,
     "relatedForms": ["quotation", "quotations", "quoted", "quotes", "quoting"],
-    "persianMeaning": "نقل‌قول کردن"
+    "persianMeaning": "نقل‌قول کردن",
+    "pronunciationIpa": "/ˈkwoʊt/",
+    "pronunciationFa": "«کوُوت»"
   },
   {
     "word": "release",
     "sublist": 7,
     "relatedForms": ["released", "releases", "releasing"],
-    "persianMeaning": "آزاد کردن؛ انتشار"
+    "persianMeaning": "آزاد کردن؛ انتشار",
+    "pronunciationIpa": "/ɹiˈlis/",
+    "pronunciationFa": "ری ـ «لیس»"
   },
   {
     "word": "reverse",
@@ -3712,91 +4524,121 @@
       "reversible",
       "reversing"
     ],
-    "persianMeaning": "معکوس؛ برعکس کردن"
+    "persianMeaning": "معکوس؛ برعکس کردن",
+    "pronunciationIpa": "/ɹɪˈvɝs/ · /ɹiˈvɝs/",
+    "pronunciationFa": "رِ ـ «وِرس» / ری ـ «وِرس»"
   },
   {
     "word": "simulate",
     "sublist": 7,
     "relatedForms": ["simulated", "simulates", "simulating", "simulation"],
-    "persianMeaning": "شبیه‌سازی کردن"
+    "persianMeaning": "شبیه‌سازی کردن",
+    "pronunciationIpa": "/ˈsɪmjələt/ · /ˈsɪmjəˌleɪt/",
+    "pronunciationFa": "«سِ» ـ میَ ـ لَت / «سِ» ـ میَ ـ لِیت"
   },
   {
     "word": "sole",
     "sublist": 7,
     "relatedForms": ["solely"],
-    "persianMeaning": "تنها؛ یگانه"
+    "persianMeaning": "تنها؛ یگانه",
+    "pronunciationIpa": "/ˈsoʊl/",
+    "pronunciationFa": "«سُول»"
   },
   {
     "word": "somewhat",
     "sublist": 7,
     "relatedForms": [],
-    "persianMeaning": "تا حدی"
+    "persianMeaning": "تا حدی",
+    "pronunciationIpa": "/ˈsʌmˈwʌt/ · /ˈsʌmhˈwʌt/",
+    "pronunciationFa": "«سآم» ـ «وآت» / «سآمه» ـ «وآت»"
   },
   {
     "word": "submit",
     "sublist": 7,
     "relatedForms": ["submission", "submissions", "submits", "submitted", "submitting"],
-    "persianMeaning": "ارائه کردن"
+    "persianMeaning": "ارائه کردن",
+    "pronunciationIpa": "/səbˈmɪt/",
+    "pronunciationFa": "سَب ـ «مِت»"
   },
   {
     "word": "successor",
     "sublist": 7,
     "relatedForms": ["succession", "successions", "successive", "successively", "successors"],
-    "persianMeaning": "جانشین"
+    "persianMeaning": "جانشین",
+    "pronunciationIpa": "/səkˈsɛsɚ/",
+    "pronunciationFa": "سَک ـ «سِ» ـ سِر"
   },
   {
     "word": "survive",
     "sublist": 7,
     "relatedForms": ["survival", "survived", "survives", "surviving", "survivor", "survivors"],
-    "persianMeaning": "زنده ماندن"
+    "persianMeaning": "زنده ماندن",
+    "pronunciationIpa": "/sɚˈvaɪv/",
+    "pronunciationFa": "سِر ـ «وایو»"
   },
   {
     "word": "thesis",
     "sublist": 7,
     "relatedForms": ["theses"],
-    "persianMeaning": "پایان‌نامه؛ گزارهٔ اصلی"
+    "persianMeaning": "پایان‌نامه؛ گزارهٔ اصلی",
+    "pronunciationIpa": "/ˈθisəs/",
+    "pronunciationFa": "«ثی» ـ سَس"
   },
   {
     "word": "topic",
     "sublist": 7,
     "relatedForms": ["topical", "topics"],
-    "persianMeaning": "موضوع"
+    "persianMeaning": "موضوع",
+    "pronunciationIpa": "/ˈtɑpɪk/",
+    "pronunciationFa": "«تا» ـ پِک"
   },
   {
     "word": "transmit",
     "sublist": 7,
     "relatedForms": ["transmission", "transmissions", "transmits", "transmitted", "transmitting"],
-    "persianMeaning": "انتقال دادن"
+    "persianMeaning": "انتقال دادن",
+    "pronunciationIpa": "/tɹænzˈmɪt/",
+    "pronunciationFa": "ترَنز ـ «مِت»"
   },
   {
     "word": "ultimate",
     "sublist": 7,
     "relatedForms": ["ultimately"],
-    "persianMeaning": "نهایی"
+    "persianMeaning": "نهایی",
+    "pronunciationIpa": "/ˈʌltəmət/",
+    "pronunciationFa": "«آل» ـ تَ ـ مَت"
   },
   {
     "word": "unique",
     "sublist": 7,
     "relatedForms": ["uniquely", "uniqueness"],
-    "persianMeaning": "منحصربه‌فرد"
+    "persianMeaning": "منحصربه‌فرد",
+    "pronunciationIpa": "/juˈnik/",
+    "pronunciationFa": "یو ـ «نیک»"
   },
   {
     "word": "visible",
     "sublist": 7,
     "relatedForms": ["invisibility", "invisible", "visibility", "visibly"],
-    "persianMeaning": "قابل مشاهده"
+    "persianMeaning": "قابل مشاهده",
+    "pronunciationIpa": "/ˈvɪzəbəl/",
+    "pronunciationFa": "«وِ» ـ زَ ـ بَل"
   },
   {
     "word": "voluntary",
     "sublist": 7,
     "relatedForms": ["voluntarily", "volunteer", "volunteered", "volunteering", "volunteers"],
-    "persianMeaning": "داوطلبانه"
+    "persianMeaning": "داوطلبانه",
+    "pronunciationIpa": "/ˈvɑləntɛɹi/",
+    "pronunciationFa": "«وا» ـ لَن ـ تِ ـ ری"
   },
   {
     "word": "abandon",
     "sublist": 8,
     "relatedForms": ["abandoned", "abandoning", "abandonment", "abandons"],
-    "persianMeaning": "رها کردن"
+    "persianMeaning": "رها کردن",
+    "pronunciationIpa": "/əˈbændən/",
+    "pronunciationFa": "اَ ـ «بَن» ـ دَن"
   },
   {
     "word": "accompany",
@@ -3808,25 +4650,33 @@
       "accompanying",
       "unaccompanied"
     ],
-    "persianMeaning": "همراهی کردن"
+    "persianMeaning": "همراهی کردن",
+    "pronunciationIpa": "/əˈkʌmpəni/",
+    "pronunciationFa": "اَ ـ «کآم» ـ پَ ـ نی"
   },
   {
     "word": "accumulate",
     "sublist": 8,
     "relatedForms": ["accumulated", "accumulates", "accumulating", "accumulation"],
-    "persianMeaning": "انباشت کردن"
+    "persianMeaning": "انباشت کردن",
+    "pronunciationIpa": "/əˈkjumjəˌleɪt/",
+    "pronunciationFa": "اَ ـ «کیو» ـ میَ ـ لِیت"
   },
   {
     "word": "ambiguous",
     "sublist": 8,
     "relatedForms": ["ambiguities", "ambiguity", "unambiguous", "unambiguously"],
-    "persianMeaning": "مبهم"
+    "persianMeaning": "مبهم",
+    "pronunciationIpa": "/æmˈbɪɡjuəs/",
+    "pronunciationFa": "اَم ـ «بِ» ـ گیو ـ اَس"
   },
   {
     "word": "append",
     "sublist": 8,
     "relatedForms": ["appended", "appendices", "appending", "appendix", "appendixes", "appends"],
-    "persianMeaning": "افزودن؛ پیوست کردن"
+    "persianMeaning": "افزودن؛ پیوست کردن",
+    "pronunciationIpa": "/əˈpɛnd/",
+    "pronunciationFa": "اَ ـ «پِند»"
   },
   {
     "word": "appreciate",
@@ -3840,13 +4690,17 @@
       "appreciation",
       "unappreciated"
     ],
-    "persianMeaning": "قدردانی کردن؛ درک کردن"
+    "persianMeaning": "قدردانی کردن؛ درک کردن",
+    "pronunciationIpa": "/əˈpɹiʃiˌeɪt/",
+    "pronunciationFa": "اَ ـ «پری» ـ شی ـ اِیت"
   },
   {
     "word": "arbitrary",
     "sublist": 8,
     "relatedForms": ["arbitrarily", "arbitrariness"],
-    "persianMeaning": "دل‌بخواهی؛ خودسرانه"
+    "persianMeaning": "دل‌بخواهی؛ خودسرانه",
+    "pronunciationIpa": "/ˈɑɹbəˌtɹɛɹi/ · /ˈɑɹbɪˌtɹɛɹi/",
+    "pronunciationFa": "«آر» ـ بَ ـ ترِ ـ ری / «آر» ـ بِ ـ ترِ ـ ری"
   },
   {
     "word": "automate",
@@ -3859,37 +4713,49 @@
       "automating",
       "automation"
     ],
-    "persianMeaning": "خودکار کردن"
+    "persianMeaning": "خودکار کردن",
+    "pronunciationIpa": "/ˈɔtəˌmeɪt/",
+    "pronunciationFa": "«آ» ـ تَ ـ مِیت"
   },
   {
     "word": "bias",
     "sublist": 8,
     "relatedForms": ["biased", "biases", "biasing", "unbiased"],
-    "persianMeaning": "سوگیری"
+    "persianMeaning": "سوگیری",
+    "pronunciationIpa": "/ˈbaɪəs/",
+    "pronunciationFa": "«بای» ـ اَس"
   },
   {
     "word": "chart",
     "sublist": 8,
     "relatedForms": ["charted", "charting", "charts", "uncharted"],
-    "persianMeaning": "نمودار"
+    "persianMeaning": "نمودار",
+    "pronunciationIpa": "/ˈtʃɑɹt/",
+    "pronunciationFa": "«چارت»"
   },
   {
     "word": "clarify",
     "sublist": 8,
     "relatedForms": ["clarification", "clarified", "clarifies", "clarifying", "clarity"],
-    "persianMeaning": "روشن کردن"
+    "persianMeaning": "روشن کردن",
+    "pronunciationIpa": "/ˈklɛɹəˌfaɪ/",
+    "pronunciationFa": "«کلِ» ـ رَ ـ فای"
   },
   {
     "word": "commodity",
     "sublist": 8,
     "relatedForms": ["commodities"],
-    "persianMeaning": "کالا"
+    "persianMeaning": "کالا",
+    "pronunciationIpa": "/kəˈmɑdəti/",
+    "pronunciationFa": "کَ ـ «ما» ـ دَ ـ تی"
   },
   {
     "word": "complement",
     "sublist": 8,
     "relatedForms": ["complementary", "complemented", "complementing", "complements"],
-    "persianMeaning": "مکمل؛ تکمیل کردن"
+    "persianMeaning": "مکمل؛ تکمیل کردن",
+    "pronunciationIpa": "/ˈkɑmpləmənt/",
+    "pronunciationFa": "«کام» ـ پلَ ـ مَنت"
   },
   {
     "word": "conform",
@@ -3912,13 +4778,17 @@
       "nonconformists",
       "nonconformity"
     ],
-    "persianMeaning": "مطابقت داشتن"
+    "persianMeaning": "مطابقت داشتن",
+    "pronunciationIpa": "/kənˈfɔɹm/",
+    "pronunciationFa": "کَن ـ «فارم»"
   },
   {
     "word": "contemporary",
     "sublist": 8,
     "relatedForms": ["contemporaries"],
-    "persianMeaning": "معاصر"
+    "persianMeaning": "معاصر",
+    "pronunciationIpa": "/kənˈtɛmpɚˌɛɹi/",
+    "pronunciationFa": "کَن ـ «تِم» ـ پِر ـ اِ ـ ری"
   },
   {
     "word": "contradict",
@@ -3931,25 +4801,33 @@
       "contradictory",
       "contradicts"
     ],
-    "persianMeaning": "تناقض داشتن"
+    "persianMeaning": "تناقض داشتن",
+    "pronunciationIpa": "/ˌkɑntɹəˈdɪkt/",
+    "pronunciationFa": "کان ـ ترَ ـ «دِکت»"
   },
   {
     "word": "crucial",
     "sublist": 8,
     "relatedForms": ["crucially"],
-    "persianMeaning": "بسیار مهم؛ حیاتی"
+    "persianMeaning": "بسیار مهم؛ حیاتی",
+    "pronunciationIpa": "/ˈkɹuʃəl/",
+    "pronunciationFa": "«کرو» ـ شَل"
   },
   {
     "word": "currency",
     "sublist": 8,
     "relatedForms": ["currencies"],
-    "persianMeaning": "پول رایج؛ ارز"
+    "persianMeaning": "پول رایج؛ ارز",
+    "pronunciationIpa": "/ˈkɝənsi/",
+    "pronunciationFa": "«کِر» ـ اَن ـ سی"
   },
   {
     "word": "denote",
     "sublist": 8,
     "relatedForms": ["denotation", "denotations", "denoted", "denotes", "denoting"],
-    "persianMeaning": "دلالت داشتن"
+    "persianMeaning": "دلالت داشتن",
+    "pronunciationIpa": "/dɪˈnoʊt/",
+    "pronunciationFa": "دِ ـ «نُوت»"
   },
   {
     "word": "detect",
@@ -3965,19 +4843,25 @@
       "detectors",
       "detects"
     ],
-    "persianMeaning": "تشخیص دادن"
+    "persianMeaning": "تشخیص دادن",
+    "pronunciationIpa": "/dɪˈtɛkt/",
+    "pronunciationFa": "دِ ـ «تِکت»"
   },
   {
     "word": "deviate",
     "sublist": 8,
     "relatedForms": ["deviated", "deviates", "deviating", "deviation", "deviations"],
-    "persianMeaning": "منحرف شدن"
+    "persianMeaning": "منحرف شدن",
+    "pronunciationIpa": "/ˈdiviˌeɪt/",
+    "pronunciationFa": "«دی» ـ وی ـ اِیت"
   },
   {
     "word": "displace",
     "sublist": 8,
     "relatedForms": ["displaced", "displacement", "displaces", "displacing"],
-    "persianMeaning": "جابه‌جا کردن"
+    "persianMeaning": "جابه‌جا کردن",
+    "pronunciationIpa": "/dɪˈspleɪs/",
+    "pronunciationFa": "دِ ـ «سپلِیس»"
   },
   {
     "word": "drama",
@@ -4001,67 +4885,89 @@
       "dramatizes",
       "dramatizing"
     ],
-    "persianMeaning": "نمایش؛ درام"
+    "persianMeaning": "نمایش؛ درام",
+    "pronunciationIpa": "/ˈdɹɑmə/",
+    "pronunciationFa": "«درا» ـ مَ"
   },
   {
     "word": "eventual",
     "sublist": 8,
     "relatedForms": ["eventuality", "eventually"],
-    "persianMeaning": "نهایی؛ سرانجامی"
+    "persianMeaning": "نهایی؛ سرانجامی",
+    "pronunciationIpa": "/əˈvɛntʃuəl/ · /iˈvɛntʃuəl/",
+    "pronunciationFa": "اَ ـ «وِن» ـ چو ـ اَل / ای ـ «وِن» ـ چو ـ اَل"
   },
   {
     "word": "exhibit",
     "sublist": 8,
     "relatedForms": ["exhibited", "exhibiting", "exhibition", "exhibitions", "exhibits"],
-    "persianMeaning": "نمایش دادن"
+    "persianMeaning": "نمایش دادن",
+    "pronunciationIpa": "/ɪɡˈzɪbɪt/",
+    "pronunciationFa": "اِگ ـ «زِ» ـ بِت"
   },
   {
     "word": "exploit",
     "sublist": 8,
     "relatedForms": ["exploitation", "exploited", "exploiting", "exploits"],
-    "persianMeaning": "بهره‌برداری کردن؛ سوءاستفاده کردن"
+    "persianMeaning": "بهره‌برداری کردن؛ سوءاستفاده کردن",
+    "pronunciationIpa": "/ˈɛkˌsplɔɪt/ · /ˌɛkˈsplɔɪt/",
+    "pronunciationFa": "«اِک» ـ سپلُیت / اِک ـ «سپلُیت»"
   },
   {
     "word": "fluctuate",
     "sublist": 8,
     "relatedForms": ["fluctuated", "fluctuates", "fluctuating", "fluctuation", "fluctuations"],
-    "persianMeaning": "نوسان داشتن"
+    "persianMeaning": "نوسان داشتن",
+    "pronunciationIpa": "/ˈflʌktʃəˌweɪt/",
+    "pronunciationFa": "«فلآک» ـ چَ ـ وِیت"
   },
   {
     "word": "guideline",
     "sublist": 8,
     "relatedForms": ["guidelines"],
-    "persianMeaning": "دستورالعمل"
+    "persianMeaning": "دستورالعمل",
+    "pronunciationIpa": "/ˈɡaɪdˌlaɪn/",
+    "pronunciationFa": "«گاید» ـ لاین"
   },
   {
     "word": "highlight",
     "sublist": 8,
     "relatedForms": ["highlighted", "highlighting", "highlights"],
-    "persianMeaning": "برجسته کردن"
+    "persianMeaning": "برجسته کردن",
+    "pronunciationIpa": "/ˈhaɪˌlaɪt/",
+    "pronunciationFa": "«های» ـ لایت"
   },
   {
     "word": "implicit",
     "sublist": 8,
     "relatedForms": ["implicitly"],
-    "persianMeaning": "ضمنی"
+    "persianMeaning": "ضمنی",
+    "pronunciationIpa": "/ˌɪmˈplɪsət/",
+    "pronunciationFa": "اِم ـ «پلِ» ـ سَت"
   },
   {
     "word": "induce",
     "sublist": 8,
     "relatedForms": ["induced", "induces", "inducing", "induction"],
-    "persianMeaning": "ایجاد کردن؛ ترغیب کردن"
+    "persianMeaning": "ایجاد کردن؛ ترغیب کردن",
+    "pronunciationIpa": "/ˌɪnˈdus/",
+    "pronunciationFa": "اِن ـ «دوس»"
   },
   {
     "word": "inevitable",
     "sublist": 8,
     "relatedForms": ["inevitability", "inevitably"],
-    "persianMeaning": "اجتناب‌ناپذیر"
+    "persianMeaning": "اجتناب‌ناپذیر",
+    "pronunciationIpa": "/ˌɪˈnɛvətəbəl/",
+    "pronunciationFa": "اِ ـ «نِ» ـ وَ ـ تَ ـ بَل"
   },
   {
     "word": "infrastructure",
     "sublist": 8,
     "relatedForms": ["infrastructures"],
-    "persianMeaning": "زیرساخت"
+    "persianMeaning": "زیرساخت",
+    "pronunciationIpa": "/ˌɪnfɹəˈstɹʌktʃɚ/",
+    "pronunciationFa": "اِن ـ فرَ ـ «سترآک» ـ چِر"
   },
   {
     "word": "inspect",
@@ -4075,7 +4981,9 @@
       "inspectors",
       "inspects"
     ],
-    "persianMeaning": "بازرسی کردن"
+    "persianMeaning": "بازرسی کردن",
+    "pronunciationIpa": "/ˌɪnˈspɛkt/",
+    "pronunciationFa": "اِن ـ «سپِکت»"
   },
   {
     "word": "intense",
@@ -4093,7 +5001,9 @@
       "intensive",
       "intensively"
     ],
-    "persianMeaning": "شدید"
+    "persianMeaning": "شدید",
+    "pronunciationIpa": "/ˌɪnˈtɛns/",
+    "pronunciationFa": "اِن ـ «تِنس»"
   },
   {
     "word": "manipulate",
@@ -4106,7 +5016,9 @@
       "manipulations",
       "manipulative"
     ],
-    "persianMeaning": "دست‌کاری کردن"
+    "persianMeaning": "دست‌کاری کردن",
+    "pronunciationIpa": "/məˈnɪpjəˌleɪt/",
+    "pronunciationFa": "مَ ـ «نِ» ـ پیَ ـ لِیت"
   },
   {
     "word": "minimise",
@@ -4120,37 +5032,49 @@
       "minimizes",
       "minimizing"
     ],
-    "persianMeaning": "به حداقل رساندن"
+    "persianMeaning": "به حداقل رساندن",
+    "pronunciationIpa": "/ˈmɪnəˌmaɪz/",
+    "pronunciationFa": "«مِ» ـ نَ ـ مایز"
   },
   {
     "word": "nuclear",
     "sublist": 8,
     "relatedForms": [],
-    "persianMeaning": "هسته‌ای"
+    "persianMeaning": "هسته‌ای",
+    "pronunciationIpa": "/ˈnukliɚ/",
+    "pronunciationFa": "«نو» ـ کلی ـ اِر"
   },
   {
     "word": "offset",
     "sublist": 8,
     "relatedForms": ["offsets", "offsetting"],
-    "persianMeaning": "جبران کردن؛ خنثی کردن"
+    "persianMeaning": "جبران کردن؛ خنثی کردن",
+    "pronunciationIpa": "/ɔfˈsɛt/ · /ˈɔfˌsɛt/",
+    "pronunciationFa": "آف ـ «سِت» / «آف» ـ سِت"
   },
   {
     "word": "paragraph",
     "sublist": 8,
     "relatedForms": ["paragraphing", "paragraphs"],
-    "persianMeaning": "بند؛ پاراگراف"
+    "persianMeaning": "بند؛ پاراگراف",
+    "pronunciationIpa": "/ˈpæɹəˌɡɹæf/ · /ˈpɛɹəˌɡɹæf/",
+    "pronunciationFa": "«پَ» ـ رَ ـ گرَف / «پِ» ـ رَ ـ گرَف"
   },
   {
     "word": "plus",
     "sublist": 8,
     "relatedForms": ["pluses"],
-    "persianMeaning": "به‌علاوه"
+    "persianMeaning": "به‌علاوه",
+    "pronunciationIpa": "/ˈplʌs/",
+    "pronunciationFa": "«پلآس»"
   },
   {
     "word": "practitioner",
     "sublist": 8,
     "relatedForms": ["practitioners"],
-    "persianMeaning": "فرد شاغل در حرفه"
+    "persianMeaning": "فرد شاغل در حرفه",
+    "pronunciationIpa": "/pɹækˈtɪʃənɚ/ · /pɹækˈtɪʃnɚ/",
+    "pronunciationFa": "پرَک ـ «تِ» ـ شَ ـ نِر / پرَک ـ «تِش» ـ نِر"
   },
   {
     "word": "predominant",
@@ -4163,43 +5087,57 @@
       "predominates",
       "predominating"
     ],
-    "persianMeaning": "غالب"
+    "persianMeaning": "غالب",
+    "pronunciationIpa": "/pɹɪˈdɑmənənt/",
+    "pronunciationFa": "پرِ ـ «دا» ـ مَ ـ نَنت"
   },
   {
     "word": "prospect",
     "sublist": 8,
     "relatedForms": ["prospective", "prospects"],
-    "persianMeaning": "چشم‌انداز؛ احتمال"
+    "persianMeaning": "چشم‌انداز؛ احتمال",
+    "pronunciationIpa": "/ˈpɹɑspɛkt/",
+    "pronunciationFa": "«پرا» ـ سپِکت"
   },
   {
     "word": "radical",
     "sublist": 8,
     "relatedForms": ["radically", "radicals"],
-    "persianMeaning": "بنیادی؛ رادیکال"
+    "persianMeaning": "بنیادی؛ رادیکال",
+    "pronunciationIpa": "/ˈɹædəkəl/ · /ˈɹædɪkəl/",
+    "pronunciationFa": "«رَ» ـ دَ ـ کَل / «رَ» ـ دِ ـ کَل"
   },
   {
     "word": "random",
     "sublist": 8,
     "relatedForms": ["randomly", "randomness"],
-    "persianMeaning": "تصادفی"
+    "persianMeaning": "تصادفی",
+    "pronunciationIpa": "/ˈɹændəm/",
+    "pronunciationFa": "«رَن» ـ دَم"
   },
   {
     "word": "reinforce",
     "sublist": 8,
     "relatedForms": ["reinforced", "reinforcement", "reinforcements", "reinforces", "reinforcing"],
-    "persianMeaning": "تقویت کردن"
+    "persianMeaning": "تقویت کردن",
+    "pronunciationIpa": "/ˌɹiɪnˈfɔɹs/",
+    "pronunciationFa": "ری ـ اِن ـ «فارس»"
   },
   {
     "word": "restore",
     "sublist": 8,
     "relatedForms": ["restoration", "restored", "restores", "restoring"],
-    "persianMeaning": "بازگرداندن"
+    "persianMeaning": "بازگرداندن",
+    "pronunciationIpa": "/ɹɪˈstɔɹ/",
+    "pronunciationFa": "رِ ـ «ستار»"
   },
   {
     "word": "revise",
     "sublist": 8,
     "relatedForms": ["revised", "revises", "revising", "revision", "revisions"],
-    "persianMeaning": "بازنگری کردن"
+    "persianMeaning": "بازنگری کردن",
+    "pronunciationIpa": "/ɹɪˈvaɪz/ · /ɹiˈvaɪz/",
+    "pronunciationFa": "رِ ـ «وایز» / ری ـ «وایز»"
   },
   {
     "word": "schedule",
@@ -4214,13 +5152,17 @@
       "scheduling",
       "unscheduled"
     ],
-    "persianMeaning": "برنامه؛ زمان‌بندی کردن"
+    "persianMeaning": "برنامه؛ زمان‌بندی کردن",
+    "pronunciationIpa": "/ˈskɛdʒʊl/ · /ˈskɛdʒul/",
+    "pronunciationFa": "«سکِ» ـ جُل / «سکِ» ـ جول"
   },
   {
     "word": "tense",
     "sublist": 8,
     "relatedForms": ["tensely", "tenser", "tensest", "tension", "tensions"],
-    "persianMeaning": "پرتنش؛ زمانِ فعل"
+    "persianMeaning": "پرتنش؛ زمانِ فعل",
+    "pronunciationIpa": "/ˈtɛns/",
+    "pronunciationFa": "«تِنس»"
   },
   {
     "word": "terminate",
@@ -4234,43 +5176,57 @@
       "termination",
       "terminations"
     ],
-    "persianMeaning": "پایان دادن"
+    "persianMeaning": "پایان دادن",
+    "pronunciationIpa": "/ˈtɝməˌneɪt/",
+    "pronunciationFa": "«تِر» ـ مَ ـ نِیت"
   },
   {
     "word": "theme",
     "sublist": 8,
     "relatedForms": ["thematic", "thematically", "themes"],
-    "persianMeaning": "موضوع؛ مضمون"
+    "persianMeaning": "موضوع؛ مضمون",
+    "pronunciationIpa": "/ˈθim/",
+    "pronunciationFa": "«ثیم»"
   },
   {
     "word": "thereby",
     "sublist": 8,
     "relatedForms": [],
-    "persianMeaning": "بدین وسیله"
+    "persianMeaning": "بدین وسیله",
+    "pronunciationIpa": "/ˈðɛɹˈbaɪ/",
+    "pronunciationFa": "«ذِر» ـ «بای»"
   },
   {
     "word": "uniform",
     "sublist": 8,
     "relatedForms": ["uniformity", "uniformly"],
-    "persianMeaning": "یکنواخت؛ لباس متحدالشکل"
+    "persianMeaning": "یکنواخت؛ لباس متحدالشکل",
+    "pronunciationIpa": "/ˈjunəˌfɔɹm/",
+    "pronunciationFa": "«یو» ـ نَ ـ فارم"
   },
   {
     "word": "vehicle",
     "sublist": 8,
     "relatedForms": ["vehicles"],
-    "persianMeaning": "وسیلهٔ نقلیه"
+    "persianMeaning": "وسیلهٔ نقلیه",
+    "pronunciationIpa": "/ˈvihɪkəl/ · /ˈviɪkəl/",
+    "pronunciationFa": "«وی» ـ هِ ـ کَل / «وی» ـ اِ ـ کَل"
   },
   {
     "word": "via",
     "sublist": 8,
     "relatedForms": [],
-    "persianMeaning": "از طریق"
+    "persianMeaning": "از طریق",
+    "pronunciationIpa": "/ˈvaɪə/ · /ˈviə/",
+    "pronunciationFa": "«وای» ـ اَ / «وی» ـ اَ"
   },
   {
     "word": "virtual",
     "sublist": 8,
     "relatedForms": ["virtually"],
-    "persianMeaning": "مجازی"
+    "persianMeaning": "مجازی",
+    "pronunciationIpa": "/ˈvɝtʃuəl/",
+    "pronunciationFa": "«وِر» ـ چو ـ اَل"
   },
   {
     "word": "visual",
@@ -4286,37 +5242,49 @@
       "visualizing",
       "visually"
     ],
-    "persianMeaning": "دیداری"
+    "persianMeaning": "دیداری",
+    "pronunciationIpa": "/ˈvɪʒəwəl/",
+    "pronunciationFa": "«وِ» ـ ژَ ـ وَل"
   },
   {
     "word": "widespread",
     "sublist": 8,
     "relatedForms": [],
-    "persianMeaning": "گسترده"
+    "persianMeaning": "گسترده",
+    "pronunciationIpa": "/ˈwaɪdˈspɹɛd/",
+    "pronunciationFa": "«واید» ـ «سپرِد»"
   },
   {
     "word": "accommodate",
     "sublist": 9,
     "relatedForms": ["accommodated", "accommodates", "accommodating", "accommodation"],
-    "persianMeaning": "جا دادن؛ سازگار کردن"
+    "persianMeaning": "جا دادن؛ سازگار کردن",
+    "pronunciationIpa": "/əˈkɑməˌdeɪt/",
+    "pronunciationFa": "اَ ـ «کا» ـ مَ ـ دِیت"
   },
   {
     "word": "analogy",
     "sublist": 9,
     "relatedForms": ["analogies", "analogous"],
-    "persianMeaning": "قیاس؛ تشابه"
+    "persianMeaning": "قیاس؛ تشابه",
+    "pronunciationIpa": "/əˈnælədʒi/",
+    "pronunciationFa": "اَ ـ «نَ» ـ لَ ـ جی"
   },
   {
     "word": "anticipate",
     "sublist": 9,
     "relatedForms": ["anticipated", "anticipates", "anticipating", "anticipation", "unanticipated"],
-    "persianMeaning": "پیش‌بینی کردن؛ انتظار داشتن"
+    "persianMeaning": "پیش‌بینی کردن؛ انتظار داشتن",
+    "pronunciationIpa": "/ænˈtɪsəˌpeɪt/",
+    "pronunciationFa": "اَن ـ «تِ» ـ سَ ـ پِیت"
   },
   {
     "word": "assure",
     "sublist": 9,
     "relatedForms": ["assurance", "assurances", "assured", "assuredly", "assures", "assuring"],
-    "persianMeaning": "اطمینان دادن"
+    "persianMeaning": "اطمینان دادن",
+    "pronunciationIpa": "/əˈʃʊɹ/",
+    "pronunciationFa": "اَ ـ «شُر»"
   },
   {
     "word": "attain",
@@ -4330,31 +5298,41 @@
       "attains",
       "unattainable"
     ],
-    "persianMeaning": "دست یافتن"
+    "persianMeaning": "دست یافتن",
+    "pronunciationIpa": "/əˈteɪn/",
+    "pronunciationFa": "اَ ـ «تِین»"
   },
   {
     "word": "behalf",
     "sublist": 9,
     "relatedForms": [],
-    "persianMeaning": "از طرفِ؛ به نمایندگی از"
+    "persianMeaning": "از طرفِ؛ به نمایندگی از",
+    "pronunciationIpa": "/bɪˈhæf/",
+    "pronunciationFa": "بِ ـ «هَف»"
   },
   {
     "word": "bulk",
     "sublist": 9,
     "relatedForms": ["bulky"],
-    "persianMeaning": "حجم عمده"
+    "persianMeaning": "حجم عمده",
+    "pronunciationIpa": "/ˈbʌlk/",
+    "pronunciationFa": "«بآلک»"
   },
   {
     "word": "cease",
     "sublist": 9,
     "relatedForms": ["ceased", "ceaseless", "ceases", "ceasing"],
-    "persianMeaning": "متوقف شدن"
+    "persianMeaning": "متوقف شدن",
+    "pronunciationIpa": "/ˈsis/",
+    "pronunciationFa": "«سیس»"
   },
   {
     "word": "coherent",
     "sublist": 9,
     "relatedForms": ["coherence", "coherently", "incoherent", "incoherently"],
-    "persianMeaning": "منسجم"
+    "persianMeaning": "منسجم",
+    "pronunciationIpa": "/koʊˈhɪɹənt/",
+    "pronunciationFa": "کُو ـ «هِ» ـ رَنت"
   },
   {
     "word": "coincide",
@@ -4368,7 +5346,9 @@
       "coincides",
       "coinciding"
     ],
-    "persianMeaning": "هم‌زمان شدن؛ منطبق بودن"
+    "persianMeaning": "هم‌زمان شدن؛ منطبق بودن",
+    "pronunciationIpa": "/ˌkoʊɪnˈsaɪd/",
+    "pronunciationFa": "کُو ـ اِن ـ «ساید»"
   },
   {
     "word": "commence",
@@ -4382,121 +5362,161 @@
       "recommences",
       "recommencing"
     ],
-    "persianMeaning": "آغاز کردن"
+    "persianMeaning": "آغاز کردن",
+    "pronunciationIpa": "/kəˈmɛns/",
+    "pronunciationFa": "کَ ـ «مِنس»"
   },
   {
     "word": "compatible",
     "sublist": 9,
     "relatedForms": ["compatibility", "incompatibility", "incompatible"],
-    "persianMeaning": "سازگار"
+    "persianMeaning": "سازگار",
+    "pronunciationIpa": "/kəmˈpætəbəl/",
+    "pronunciationFa": "کَم ـ «پَ» ـ تَ ـ بَل"
   },
   {
     "word": "concurrent",
     "sublist": 9,
     "relatedForms": ["concurrently"],
-    "persianMeaning": "هم‌زمان"
+    "persianMeaning": "هم‌زمان",
+    "pronunciationIpa": "/kənˈkɝənt/",
+    "pronunciationFa": "کَن ـ «کِر» ـ اَنت"
   },
   {
     "word": "confine",
     "sublist": 9,
     "relatedForms": ["confined", "confines", "confining", "unconfined"],
-    "persianMeaning": "محدود کردن"
+    "persianMeaning": "محدود کردن",
+    "pronunciationIpa": "/kənˈfaɪn/",
+    "pronunciationFa": "کَن ـ «فاین»"
   },
   {
     "word": "controversy",
     "sublist": 9,
     "relatedForms": ["controversial", "controversially", "controversies", "uncontroversial"],
-    "persianMeaning": "اختلاف‌نظر؛ مناقشه"
+    "persianMeaning": "اختلاف‌نظر؛ مناقشه",
+    "pronunciationIpa": "/ˈkɑntɹəˌvɝsi/",
+    "pronunciationFa": "«کان» ـ ترَ ـ وِر ـ سی"
   },
   {
     "word": "converse",
     "sublist": 9,
     "relatedForms": ["conversely"],
-    "persianMeaning": "گفت‌وگو کردن؛ عکسِ گزاره"
+    "persianMeaning": "گفت‌وگو کردن؛ عکسِ گزاره",
+    "pronunciationIpa": "/ˈkɑnvɚs/ · /kənˈvɝs/",
+    "pronunciationFa": "«کان» ـ وِرس / کَن ـ «وِرس»"
   },
   {
     "word": "device",
     "sublist": 9,
     "relatedForms": ["devices"],
-    "persianMeaning": "وسیله؛ دستگاه"
+    "persianMeaning": "وسیله؛ دستگاه",
+    "pronunciationIpa": "/dɪˈvaɪs/",
+    "pronunciationFa": "دِ ـ «وایس»"
   },
   {
     "word": "devote",
     "sublist": 9,
     "relatedForms": ["devoted", "devotedly", "devotes", "devoting", "devotion", "devotions"],
-    "persianMeaning": "اختصاص دادن"
+    "persianMeaning": "اختصاص دادن",
+    "pronunciationIpa": "/dɪˈvoʊt/",
+    "pronunciationFa": "دِ ـ «وُوت»"
   },
   {
     "word": "diminish",
     "sublist": 9,
     "relatedForms": ["diminished", "diminishes", "diminishing", "diminution", "undiminished"],
-    "persianMeaning": "کاهش یافتن"
+    "persianMeaning": "کاهش یافتن",
+    "pronunciationIpa": "/dɪˈmɪnɪʃ/",
+    "pronunciationFa": "دِ ـ «مِ» ـ نِش"
   },
   {
     "word": "distort",
     "sublist": 9,
     "relatedForms": ["distorted", "distorting", "distortion", "distortions", "distorts"],
-    "persianMeaning": "تحریف کردن"
+    "persianMeaning": "تحریف کردن",
+    "pronunciationIpa": "/dɪˈstɔɹt/",
+    "pronunciationFa": "دِ ـ «ستارت»"
   },
   {
     "word": "duration",
     "sublist": 9,
     "relatedForms": [],
-    "persianMeaning": "مدت"
+    "persianMeaning": "مدت",
+    "pronunciationIpa": "/ˈdʊˈɹeɪʃən/",
+    "pronunciationFa": "«دُ» ـ «رِی» ـ شَن"
   },
   {
     "word": "erode",
     "sublist": 9,
     "relatedForms": ["eroded", "erodes", "eroding", "erosion"],
-    "persianMeaning": "فرسایش دادن"
+    "persianMeaning": "فرسایش دادن",
+    "pronunciationIpa": "/ɪˈɹoʊd/ · /ˈiɹoʊd/",
+    "pronunciationFa": "اِ ـ «رُود» / «ای» ـ رُود"
   },
   {
     "word": "ethic",
     "sublist": 9,
     "relatedForms": ["ethical", "ethically", "ethics", "unethical"],
-    "persianMeaning": "اصل اخلاقی"
+    "persianMeaning": "اصل اخلاقی",
+    "pronunciationIpa": "/ˈɛθɪk/",
+    "pronunciationFa": "«اِ» ـ ثِک"
   },
   {
     "word": "format",
     "sublist": 9,
     "relatedForms": ["formats", "formatted", "formatting"],
-    "persianMeaning": "قالب"
+    "persianMeaning": "قالب",
+    "pronunciationIpa": "/ˈfɔɹˌmæt/",
+    "pronunciationFa": "«فار» ـ مَت"
   },
   {
     "word": "found",
     "sublist": 9,
     "relatedForms": ["founded", "founder", "founders", "founding", "unfounded"],
-    "persianMeaning": "تأسیس کردن"
+    "persianMeaning": "تأسیس کردن",
+    "pronunciationIpa": "/ˈfaʊnd/",
+    "pronunciationFa": "«فاوند»"
   },
   {
     "word": "inherent",
     "sublist": 9,
     "relatedForms": ["inherently"],
-    "persianMeaning": "ذاتی"
+    "persianMeaning": "ذاتی",
+    "pronunciationIpa": "/ɪnˈhɪɹənt/ · /ɪnˈhɛɹənt/",
+    "pronunciationFa": "اِن ـ «هِ» ـ رَنت / اِن ـ «هِ» ـ رَنت"
   },
   {
     "word": "insight",
     "sublist": 9,
     "relatedForms": ["insightful", "insights"],
-    "persianMeaning": "بینش"
+    "persianMeaning": "بینش",
+    "pronunciationIpa": "/ˈɪnˌsaɪt/",
+    "pronunciationFa": "«اِن» ـ سایت"
   },
   {
     "word": "integral",
     "sublist": 9,
     "relatedForms": [],
-    "persianMeaning": "جدایی‌ناپذیر؛ کامل"
+    "persianMeaning": "جدایی‌ناپذیر؛ کامل",
+    "pronunciationIpa": "/ˈɪntəɡɹəl/ · /ˈɪnəɡɹəl/",
+    "pronunciationFa": "«اِن» ـ تَ ـ گرَل / «اِ» ـ نَ ـ گرَل"
   },
   {
     "word": "intermediate",
     "sublist": 9,
     "relatedForms": [],
-    "persianMeaning": "میانی"
+    "persianMeaning": "میانی",
+    "pronunciationIpa": "/ˌɪntɚˈmidiɪt/ · /ˌɪnɚˈmidiɪt/",
+    "pronunciationFa": "اِن ـ تِر ـ «می» ـ دی ـ اِت / اِ ـ نِر ـ «می» ـ دی ـ اِت"
   },
   {
     "word": "manual",
     "sublist": 9,
     "relatedForms": ["manually", "manuals"],
-    "persianMeaning": "دستی؛ راهنما"
+    "persianMeaning": "دستی؛ راهنما",
+    "pronunciationIpa": "/ˈmænjuəl/",
+    "pronunciationFa": "«مَ» ـ نیو ـ اَل"
   },
   {
     "word": "mature",
@@ -4511,25 +5531,33 @@
       "maturing",
       "maturity"
     ],
-    "persianMeaning": "بالغ؛ رشد کردن"
+    "persianMeaning": "بالغ؛ رشد کردن",
+    "pronunciationIpa": "/məˈtʃʊɹ/ · /məˈtjʊɹ/",
+    "pronunciationFa": "مَ ـ «چُر» / مَ ـ «تیُر»"
   },
   {
     "word": "mediate",
     "sublist": 9,
     "relatedForms": ["mediated", "mediates", "mediating", "mediation"],
-    "persianMeaning": "میانجیگری کردن"
+    "persianMeaning": "میانجیگری کردن",
+    "pronunciationIpa": "/ˈmidiˌeɪt/",
+    "pronunciationFa": "«می» ـ دی ـ اِیت"
   },
   {
     "word": "medium",
     "sublist": 9,
     "relatedForms": [],
-    "persianMeaning": "رسانه؛ متوسط"
+    "persianMeaning": "رسانه؛ متوسط",
+    "pronunciationIpa": "/ˈmidiəm/",
+    "pronunciationFa": "«می» ـ دی ـ اَم"
   },
   {
     "word": "military",
     "sublist": 9,
     "relatedForms": [],
-    "persianMeaning": "نظامی"
+    "persianMeaning": "نظامی",
+    "pronunciationIpa": "/ˈmɪləˌtɛɹi/ · /ˈmɪlɪˌtɛɹi/",
+    "pronunciationFa": "«مِ» ـ لَ ـ تِ ـ ری / «مِ» ـ لِ ـ تِ ـ ری"
   },
   {
     "word": "minimal",
@@ -4550,67 +5578,89 @@
       "minimalizing",
       "minimally"
     ],
-    "persianMeaning": "بسیار کم؛ حداقلی"
+    "persianMeaning": "بسیار کم؛ حداقلی",
+    "pronunciationIpa": "/ˈmɪnəməl/",
+    "pronunciationFa": "«مِ» ـ نَ ـ مَل"
   },
   {
     "word": "mutual",
     "sublist": 9,
     "relatedForms": ["mutually"],
-    "persianMeaning": "متقابل"
+    "persianMeaning": "متقابل",
+    "pronunciationIpa": "/ˈmjutʃuəl/",
+    "pronunciationFa": "«میو» ـ چو ـ اَل"
   },
   {
     "word": "norm",
     "sublist": 9,
     "relatedForms": ["norms"],
-    "persianMeaning": "هنجار"
+    "persianMeaning": "هنجار",
+    "pronunciationIpa": "/ˈnɔɹm/",
+    "pronunciationFa": "«نارم»"
   },
   {
     "word": "overlap",
     "sublist": 9,
     "relatedForms": ["overlapped", "overlapping", "overlaps"],
-    "persianMeaning": "هم‌پوشانی"
+    "persianMeaning": "هم‌پوشانی",
+    "pronunciationIpa": "/ˈoʊvɚˌlæp/",
+    "pronunciationFa": "«اُو» ـ وِر ـ لَپ"
   },
   {
     "word": "passive",
     "sublist": 9,
     "relatedForms": ["passively", "passivity"],
-    "persianMeaning": "منفعل"
+    "persianMeaning": "منفعل",
+    "pronunciationIpa": "/ˈpæsɪv/",
+    "pronunciationFa": "«پَ» ـ سِو"
   },
   {
     "word": "portion",
     "sublist": 9,
     "relatedForms": ["portions"],
-    "persianMeaning": "بخش؛ سهم"
+    "persianMeaning": "بخش؛ سهم",
+    "pronunciationIpa": "/ˈpɔɹʃən/",
+    "pronunciationFa": "«پار» ـ شَن"
   },
   {
     "word": "preliminary",
     "sublist": 9,
     "relatedForms": ["preliminaries"],
-    "persianMeaning": "مقدماتی"
+    "persianMeaning": "مقدماتی",
+    "pronunciationIpa": "/pɹɪˈlɪməˌnɛɹi/ · /pɹiˈlɪməˌnɛɹi/",
+    "pronunciationFa": "پرِ ـ «لِ» ـ مَ ـ نِ ـ ری / پری ـ «لِ» ـ مَ ـ نِ ـ ری"
   },
   {
     "word": "protocol",
     "sublist": 9,
     "relatedForms": ["protocols"],
-    "persianMeaning": "پروتکل؛ شیوه‌نامه"
+    "persianMeaning": "پروتکل؛ شیوه‌نامه",
+    "pronunciationIpa": "/ˈpɹoʊtəˌkɑl/ · /ˈpɹoʊtəˌkɔl/",
+    "pronunciationFa": "«پرُو» ـ تَ ـ کال / «پرُو» ـ تَ ـ کال"
   },
   {
     "word": "qualitative",
     "sublist": 9,
     "relatedForms": ["qualitatively"],
-    "persianMeaning": "کیفی"
+    "persianMeaning": "کیفی",
+    "pronunciationIpa": "/ˈkwɑləˌteɪtɪv/",
+    "pronunciationFa": "«کوا» ـ لَ ـ تِی ـ تِو"
   },
   {
     "word": "refine",
     "sublist": 9,
     "relatedForms": ["refined", "refinement", "refinements", "refines", "refining"],
-    "persianMeaning": "پالایش کردن؛ بهبود دادن"
+    "persianMeaning": "پالایش کردن؛ بهبود دادن",
+    "pronunciationIpa": "/ɹəˈfaɪn/ · /ɹɪˈfaɪn/",
+    "pronunciationFa": "رَ ـ «فاین» / رِ ـ «فاین»"
   },
   {
     "word": "relax",
     "sublist": 9,
     "relatedForms": ["relaxation", "relaxed", "relaxes", "relaxing"],
-    "persianMeaning": "آرام شدن؛ کاهش دادن"
+    "persianMeaning": "آرام شدن؛ کاهش دادن",
+    "pronunciationIpa": "/ɹɪˈlæks/ · /ɹiˈlæks/",
+    "pronunciationFa": "رِ ـ «لَکس» / ری ـ «لَکس»"
   },
   {
     "word": "restrain",
@@ -4623,7 +5673,9 @@
       "restraints",
       "unrestrained"
     ],
-    "persianMeaning": "مهار کردن"
+    "persianMeaning": "مهار کردن",
+    "pronunciationIpa": "/ɹiˈstɹeɪn/",
+    "pronunciationFa": "ری ـ «سترِین»"
   },
   {
     "word": "revolution",
@@ -4643,121 +5695,161 @@
       "revolutionizing",
       "revolutions"
     ],
-    "persianMeaning": "انقلاب"
+    "persianMeaning": "انقلاب",
+    "pronunciationIpa": "/ˌɹɛvəˈluʃən/",
+    "pronunciationFa": "رِ ـ وَ ـ «لو» ـ شَن"
   },
   {
     "word": "rigid",
     "sublist": 9,
     "relatedForms": ["rigidities", "rigidity", "rigidly"],
-    "persianMeaning": "سخت؛ انعطاف‌ناپذیر"
+    "persianMeaning": "سخت؛ انعطاف‌ناپذیر",
+    "pronunciationIpa": "/ˈɹɪdʒəd/ · /ˈɹɪdʒɪd/",
+    "pronunciationFa": "«رِ» ـ جَد / «رِ» ـ جِد"
   },
   {
     "word": "route",
     "sublist": 9,
     "relatedForms": ["routed", "routes", "routing"],
-    "persianMeaning": "مسیر"
+    "persianMeaning": "مسیر",
+    "pronunciationIpa": "/ˈɹut/ · /ˈɹaʊt/",
+    "pronunciationFa": "«روت» / «راوت»"
   },
   {
     "word": "scenario",
     "sublist": 9,
     "relatedForms": ["scenarios"],
-    "persianMeaning": "سناریو"
+    "persianMeaning": "سناریو",
+    "pronunciationIpa": "/sɪˈnɛɹioʊ/",
+    "pronunciationFa": "سِ ـ «نِ» ـ ری ـ اُو"
   },
   {
     "word": "sphere",
     "sublist": 9,
     "relatedForms": ["spheres", "spherical", "spherically"],
-    "persianMeaning": "کره؛ حوزه"
+    "persianMeaning": "کره؛ حوزه",
+    "pronunciationIpa": "/ˈsfɪɹ/",
+    "pronunciationFa": "«سفِر»"
   },
   {
     "word": "subordinate",
     "sublist": 9,
     "relatedForms": ["subordinates", "subordination"],
-    "persianMeaning": "زیردست؛ تابع"
+    "persianMeaning": "زیردست؛ تابع",
+    "pronunciationIpa": "/səˈbɔɹdəˌneɪt/ · /səˈbɔɹdənət/",
+    "pronunciationFa": "سَ ـ «بار» ـ دَ ـ نِیت / سَ ـ «بار» ـ دَ ـ نَت"
   },
   {
     "word": "supplement",
     "sublist": 9,
     "relatedForms": ["supplementary", "supplemented", "supplementing", "supplements"],
-    "persianMeaning": "مکمل"
+    "persianMeaning": "مکمل",
+    "pronunciationIpa": "/ˈsʌpləmənt/ · /ˌsʌpləˈmɛnt/",
+    "pronunciationFa": "«سآ» ـ پلَ ـ مَنت / سآ ـ پلَ ـ «مِنت»"
   },
   {
     "word": "suspend",
     "sublist": 9,
     "relatedForms": ["suspended", "suspending", "suspends", "suspension"],
-    "persianMeaning": "تعلیق کردن"
+    "persianMeaning": "تعلیق کردن",
+    "pronunciationIpa": "/səˈspɛnd/",
+    "pronunciationFa": "سَ ـ «سپِند»"
   },
   {
     "word": "team",
     "sublist": 9,
     "relatedForms": ["teamed", "teaming", "teams"],
-    "persianMeaning": "گروه؛ تیم"
+    "persianMeaning": "گروه؛ تیم",
+    "pronunciationIpa": "/ˈtim/",
+    "pronunciationFa": "«تیم»"
   },
   {
     "word": "temporary",
     "sublist": 9,
     "relatedForms": ["temporarily"],
-    "persianMeaning": "موقت"
+    "persianMeaning": "موقت",
+    "pronunciationIpa": "/ˈtɛmpɚˌɛɹi/",
+    "pronunciationFa": "«تِم» ـ پِر ـ اِ ـ ری"
   },
   {
     "word": "trigger",
     "sublist": 9,
     "relatedForms": ["triggered", "triggering", "triggers"],
-    "persianMeaning": "محرک؛ فعال کردن"
+    "persianMeaning": "محرک؛ فعال کردن",
+    "pronunciationIpa": "/ˈtɹɪɡɚ/",
+    "pronunciationFa": "«ترِ» ـ گِر"
   },
   {
     "word": "unify",
     "sublist": 9,
     "relatedForms": ["unification", "unified", "unifies", "unifying"],
-    "persianMeaning": "یکپارچه کردن"
+    "persianMeaning": "یکپارچه کردن",
+    "pronunciationIpa": "/ˈjunəˌfaɪ/",
+    "pronunciationFa": "«یو» ـ نَ ـ فای"
   },
   {
     "word": "violate",
     "sublist": 9,
     "relatedForms": ["violated", "violates", "violating", "violation", "violations"],
-    "persianMeaning": "نقض کردن"
+    "persianMeaning": "نقض کردن",
+    "pronunciationIpa": "/ˈvaɪəleɪt/",
+    "pronunciationFa": "«وای» ـ اَ ـ لِیت"
   },
   {
     "word": "vision",
     "sublist": 9,
     "relatedForms": ["visions"],
-    "persianMeaning": "بینایی؛ چشم‌انداز"
+    "persianMeaning": "بینایی؛ چشم‌انداز",
+    "pronunciationIpa": "/ˈvɪʒən/",
+    "pronunciationFa": "«وِ» ـ ژَن"
   },
   {
     "word": "adjacent",
     "sublist": 10,
     "relatedForms": [],
-    "persianMeaning": "مجاور"
+    "persianMeaning": "مجاور",
+    "pronunciationIpa": "/əˈdʒeɪsənt/",
+    "pronunciationFa": "اَ ـ «جِی» ـ سَنت"
   },
   {
     "word": "albeit",
     "sublist": 10,
     "relatedForms": [],
-    "persianMeaning": "اگرچه"
+    "persianMeaning": "اگرچه",
+    "pronunciationIpa": "/ɔlˈbiɪt/",
+    "pronunciationFa": "آل ـ «بی» ـ اِت"
   },
   {
     "word": "assemble",
     "sublist": 10,
     "relatedForms": ["assembled", "assembles", "assemblies", "assembling", "assembly"],
-    "persianMeaning": "گردآوری کردن؛ مونتاژ کردن"
+    "persianMeaning": "گردآوری کردن؛ مونتاژ کردن",
+    "pronunciationIpa": "/əˈsɛmbəl/",
+    "pronunciationFa": "اَ ـ «سِم» ـ بَل"
   },
   {
     "word": "collapse",
     "sublist": 10,
     "relatedForms": ["collapsed", "collapses", "collapsible", "collapsing"],
-    "persianMeaning": "فروپاشیدن"
+    "persianMeaning": "فروپاشیدن",
+    "pronunciationIpa": "/kəˈlæps/",
+    "pronunciationFa": "کَ ـ «لَپس»"
   },
   {
     "word": "colleague",
     "sublist": 10,
     "relatedForms": ["colleagues"],
-    "persianMeaning": "همکار"
+    "persianMeaning": "همکار",
+    "pronunciationIpa": "/ˈkɑliɡ/",
+    "pronunciationFa": "«کا» ـ لیگ"
   },
   {
     "word": "compile",
     "sublist": 10,
     "relatedForms": ["compilation", "compilations", "compiled", "compiles", "compiling"],
-    "persianMeaning": "گردآوری و تدوین کردن"
+    "persianMeaning": "گردآوری و تدوین کردن",
+    "pronunciationIpa": "/kəmˈpaɪl/",
+    "pronunciationFa": "کَم ـ «پایل»"
   },
   {
     "word": "conceive",
@@ -4771,103 +5863,137 @@
       "inconceivable",
       "inconceivably"
     ],
-    "persianMeaning": "تصور کردن"
+    "persianMeaning": "تصور کردن",
+    "pronunciationIpa": "/kənˈsiv/",
+    "pronunciationFa": "کَن ـ «سیو»"
   },
   {
     "word": "convince",
     "sublist": 10,
     "relatedForms": ["convinced", "convinces", "convincing", "convincingly", "unconvinced"],
-    "persianMeaning": "متقاعد کردن"
+    "persianMeaning": "متقاعد کردن",
+    "pronunciationIpa": "/kənˈvɪns/",
+    "pronunciationFa": "کَن ـ «وِنس»"
   },
   {
     "word": "depress",
     "sublist": 10,
     "relatedForms": ["depressed", "depresses", "depressing", "depression"],
-    "persianMeaning": "افسرده کردن؛ کاهش دادن"
+    "persianMeaning": "افسرده کردن؛ کاهش دادن",
+    "pronunciationIpa": "/dɪˈpɹɛs/",
+    "pronunciationFa": "دِ ـ «پرِس»"
   },
   {
     "word": "encounter",
     "sublist": 10,
     "relatedForms": ["encountered", "encountering", "encounters"],
-    "persianMeaning": "مواجه شدن"
+    "persianMeaning": "مواجه شدن",
+    "pronunciationIpa": "/ɪnˈkaʊntɚ/ · /ɪnˈkaʊnɚ/",
+    "pronunciationFa": "اِن ـ «کاون» ـ تِر / اِن ـ «کاو» ـ نِر"
   },
   {
     "word": "enormous",
     "sublist": 10,
     "relatedForms": ["enormity", "enormously"],
-    "persianMeaning": "بسیار بزرگ"
+    "persianMeaning": "بسیار بزرگ",
+    "pronunciationIpa": "/ɪˈnɔɹməs/ · /ɪˈnɔɹmɪs/ · /iˈnɔɹməs/ · /iˈnɔɹmɪs/",
+    "pronunciationFa": "اِ ـ «نار» ـ مَس / اِ ـ «نار» ـ مِس / ای ـ «نار» ـ مَس / ای ـ «نار» ـ مِس"
   },
   {
     "word": "forthcoming",
     "sublist": 10,
     "relatedForms": [],
-    "persianMeaning": "پیشِ رو"
+    "persianMeaning": "پیشِ رو",
+    "pronunciationIpa": "/ˈfɔɹθˈkʌmɪŋ/",
+    "pronunciationFa": "«فارث» ـ «کآ» ـ مِنگ"
   },
   {
     "word": "incline",
     "sublist": 10,
     "relatedForms": ["inclination", "inclinations", "inclined", "inclines", "inclining"],
-    "persianMeaning": "تمایل داشتن"
+    "persianMeaning": "تمایل داشتن",
+    "pronunciationIpa": "/ˌɪnˈklaɪn/ · /ˈɪnklaɪn/",
+    "pronunciationFa": "اِن ـ «کلاین» / «اِن» ـ کلاین"
   },
   {
     "word": "integrity",
     "sublist": 10,
     "relatedForms": [],
-    "persianMeaning": "درستی؛ یکپارچگی"
+    "persianMeaning": "درستی؛ یکپارچگی",
+    "pronunciationIpa": "/ˌɪnˈtɛɡɹəti/ · /ɪnˈtɛɡɹɪti/",
+    "pronunciationFa": "اِن ـ «تِ» ـ گرَ ـ تی / اِن ـ «تِ» ـ گرِ ـ تی"
   },
   {
     "word": "intrinsic",
     "sublist": 10,
     "relatedForms": ["intrinsically"],
-    "persianMeaning": "ذاتی"
+    "persianMeaning": "ذاتی",
+    "pronunciationIpa": "/ˌɪnˈtɹɪnsɪk/",
+    "pronunciationFa": "اِن ـ «ترِن» ـ سِک"
   },
   {
     "word": "invoke",
     "sublist": 10,
     "relatedForms": ["invoked", "invokes", "invoking"],
-    "persianMeaning": "فراخواندن؛ استناد کردن"
+    "persianMeaning": "فراخواندن؛ استناد کردن",
+    "pronunciationIpa": "/ˌɪnˈvoʊk/",
+    "pronunciationFa": "اِن ـ «وُوک»"
   },
   {
     "word": "levy",
     "sublist": 10,
     "relatedForms": ["levies"],
-    "persianMeaning": "وضع کردنِ مالیات؛ عوارض"
+    "persianMeaning": "وضع کردنِ مالیات؛ عوارض",
+    "pronunciationIpa": "/ˈlɛvi/ · /ˈlivi/",
+    "pronunciationFa": "«لِ» ـ وی / «لی» ـ وی"
   },
   {
     "word": "likewise",
     "sublist": 10,
     "relatedForms": [],
-    "persianMeaning": "به همین ترتیب"
+    "persianMeaning": "به همین ترتیب",
+    "pronunciationIpa": "/ˈlaɪˌkwaɪz/",
+    "pronunciationFa": "«لای» ـ کوایز"
   },
   {
     "word": "nonetheless",
     "sublist": 10,
     "relatedForms": [],
-    "persianMeaning": "با این حال"
+    "persianMeaning": "با این حال",
+    "pronunciationIpa": "/ˌnʌnðəˈlɛs/",
+    "pronunciationFa": "نآن ـ ذَ ـ «لِس»"
   },
   {
     "word": "notwithstanding",
     "sublist": 10,
     "relatedForms": [],
-    "persianMeaning": "با وجودِ"
+    "persianMeaning": "با وجودِ",
+    "pronunciationIpa": "/ˌnɑtwɪθˈstændɪŋ/",
+    "pronunciationFa": "نا ـ توِث ـ «ستَن» ـ دِنگ"
   },
   {
     "word": "odd",
     "sublist": 10,
     "relatedForms": ["odds"],
-    "persianMeaning": "عجیب؛ فرد"
+    "persianMeaning": "عجیب؛ فرد",
+    "pronunciationIpa": "/ˈɑd/",
+    "pronunciationFa": "«آد»"
   },
   {
     "word": "ongoing",
     "sublist": 10,
     "relatedForms": [],
-    "persianMeaning": "در حال انجام"
+    "persianMeaning": "در حال انجام",
+    "pronunciationIpa": "/ˈɑnˌɡoʊɪŋ/ · /ˈɔnˌɡoʊɪŋ/",
+    "pronunciationFa": "«آن» ـ گُو ـ اِنگ / «آن» ـ گُو ـ اِنگ"
   },
   {
     "word": "panel",
     "sublist": 10,
     "relatedForms": ["panelled", "panelling", "panels"],
-    "persianMeaning": "هیئت؛ صفحه"
+    "persianMeaning": "هیئت؛ صفحه",
+    "pronunciationIpa": "/ˈpænəl/",
+    "pronunciationFa": "«پَ» ـ نَل"
   },
   {
     "word": "persist",
@@ -4880,42 +6006,56 @@
       "persisting",
       "persists"
     ],
-    "persianMeaning": "ادامه دادن؛ اصرار ورزیدن"
+    "persianMeaning": "ادامه دادن؛ اصرار ورزیدن",
+    "pronunciationIpa": "/pɚˈsɪst/",
+    "pronunciationFa": "پِر ـ «سِست»"
   },
   {
     "word": "pose",
     "sublist": 10,
     "relatedForms": ["posed", "poses", "posing"],
-    "persianMeaning": "مطرح کردن؛ ژست گرفتن"
+    "persianMeaning": "مطرح کردن؛ ژست گرفتن",
+    "pronunciationIpa": "/ˈpoʊz/",
+    "pronunciationFa": "«پُوز»"
   },
   {
     "word": "reluctance",
     "sublist": 10,
     "relatedForms": ["reluctant", "reluctantly"],
-    "persianMeaning": "بی‌میلی"
+    "persianMeaning": "بی‌میلی",
+    "pronunciationIpa": "/ɹɪˈlʌktəns/ · /ɹiˈlʌktəns/",
+    "pronunciationFa": "رِ ـ «لآک» ـ تَنس / ری ـ «لآک» ـ تَنس"
   },
   {
     "word": "so-called",
     "sublist": 10,
     "relatedForms": [],
-    "persianMeaning": "اصطلاحاً؛ به‌اصطلاح"
+    "persianMeaning": "اصطلاحاً؛ به‌اصطلاح",
+    "pronunciationIpa": "/ˈsoʊˈkɔld/",
+    "pronunciationFa": "«سُو» ـ «کالد»"
   },
   {
     "word": "straightforward",
     "sublist": 10,
     "relatedForms": [],
-    "persianMeaning": "سرراست"
+    "persianMeaning": "سرراست",
+    "pronunciationIpa": "/ˈstɹeɪtˈfɔɹwɚd/",
+    "pronunciationFa": "«سترِیت» ـ «فار» ـ وِرد"
   },
   {
     "word": "undergo",
     "sublist": 10,
     "relatedForms": ["undergoes", "undergoing", "undergone", "underwent"],
-    "persianMeaning": "تجربه کردن؛ متحمل شدن"
+    "persianMeaning": "تجربه کردن؛ متحمل شدن",
+    "pronunciationIpa": "/ˌʌndɚˈɡoʊ/",
+    "pronunciationFa": "آن ـ دِر ـ «گُو»"
   },
   {
     "word": "whereby",
     "sublist": 10,
     "relatedForms": [],
-    "persianMeaning": "که به موجب آن"
+    "persianMeaning": "که به موجب آن",
+    "pronunciationIpa": "/wɛɹˈbaɪ/ · /hwɛɹˈbaɪ/",
+    "pronunciationFa": "وِر ـ «بای» / هوِر ـ «بای»"
   }
 ]
