@@ -1,5 +1,5 @@
 import 'server-only';
-import { and, eq, or, sql } from 'drizzle-orm';
+import { and, asc, eq, or, sql } from 'drizzle-orm';
 import { notFound } from 'next/navigation';
 import { db } from '@/db';
 import { courses, vocabularyWords, vocabularyProgress } from '@/db/schema';
@@ -40,9 +40,11 @@ export async function vocabularyStats(courseId: string, userId: string) {
   return stats;
 }
 
-export async function vocabularyDueSummary(userId: string) {
-  const [summary] = await db
+export async function vocabularyPracticeCourses(userId: string) {
+  return db
     .select({
+      courseId: courses.id,
+      title: courses.title,
       learn: sql<number>`count(*) filter (where coalesce(${vocabularyProgress.totalReviews}, 0) = 0)::int`,
       review: sql<number>`count(*) filter (where ${vocabularyProgress.totalReviews} > 0)::int`,
     })
@@ -63,6 +65,18 @@ export async function vocabularyDueSummary(userId: string) {
         sql`coalesce(${vocabularyProgress.successfulReviews}, 0) < ${vocabularyTargetSql}`,
         sql`(${vocabularyProgress.dueAt} is null or ${vocabularyProgress.dueAt} <= now())`,
       ),
-    );
-  return summary;
+    )
+    .groupBy(courses.id, courses.title)
+    .orderBy(asc(courses.title), asc(courses.id));
+}
+
+export async function vocabularyDueSummary(userId: string) {
+  const available = await vocabularyPracticeCourses(userId);
+  return available.reduce(
+    (summary, course) => ({
+      learn: summary.learn + course.learn,
+      review: summary.review + course.review,
+    }),
+    { learn: 0, review: 0 },
+  );
 }

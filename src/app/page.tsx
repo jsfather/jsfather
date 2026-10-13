@@ -1,20 +1,33 @@
 import { UniversityName } from '@/components/brand';
 import Link from 'next/link';
-import { BookOpen, CalendarDays, GraduationCap, ShieldCheck, Award, Code2 } from 'lucide-react';
+import { ArrowRight, GraduationCap, ShieldCheck, Code2 } from 'lucide-react';
 import { Brand, ThemeToggle } from '@/components/navigation';
 import { googleLogin } from '@/actions';
+import { auth } from '@/lib/auth';
 import { Badge, Progress } from '@/components/ui';
-export default function Landing() {
+export default async function Landing() {
+  const session = await auth();
+  const signedIn = Boolean(session?.user?.id);
+  const primaryAction = signedIn ? (
+    <Link href="/dashboard" className="button primary">
+      Continue learning <ArrowRight size={17} />
+    </Link>
+  ) : (
+    <form action={googleLogin}>
+      <button className="button primary">
+        <span className="google-mark">G</span>Continue with Google
+      </button>
+    </form>
+  );
   return (
     <div className="landing">
       <header className="landing-header">
         <Brand />
         <nav>
-          <a href="#how-it-works">How it works</a>
           <Link href="/practice">Explore exams</Link>
           <ThemeToggle />
-          <Link className="button secondary" href="/dashboard">
-            My university
+          <Link className="button secondary" href={signedIn ? '/dashboard' : '/login'}>
+            {signedIn ? 'My university' : 'Log in'}
           </Link>
         </nav>
       </header>
@@ -33,13 +46,12 @@ export default function Landing() {
               Learn like you’re enrolled in one. Turn your ambitions into courses, your time into a
               timetable, and your effort into progress.
             </p>
-            <form action={googleLogin}>
-              <button className="button primary">
-                <span className="google-mark">G</span>Continue with Google
-              </button>
-            </form>
+            {primaryAction}
             <div className="hero-foot">
-              <ShieldCheck size={13} /> Your learning. Your pace. Private by default.
+              <ShieldCheck size={13} />
+              {signedIn
+                ? 'Your courses, vocabulary, and next steps are waiting.'
+                : 'One Google account. Your own campus. Private by default.'}
             </div>
           </div>
           <div className="hero-visual" aria-label="Example of a personal learning schedule">
@@ -89,47 +101,12 @@ export default function Landing() {
             </div>
           </div>
         </section>
-        <section className="landing-features" id="how-it-works">
-          <div className="eyebrow">STRUCTURE MAKES THE DIFFERENCE</div>
-          <h2>
-            Less “I should learn that.”
-            <br />
-            More showing up for class.
-          </h2>
-          <div className="feature-grid">
-            {[
-              {
-                icon: BookOpen,
-                title: 'Write your own syllabus',
-                text: 'Create courses for anything you want to learn. Set your level, choose a schedule, and break big goals into focused sessions.',
-              },
-              {
-                icon: CalendarDays,
-                title: 'Make time for the work',
-                text: 'See today’s classes and your weekly timetable. Study, capture notes, and complete each session as you go.',
-              },
-              {
-                icon: Award,
-                title: 'Know how far you’ve come',
-                text: 'Test your knowledge with exams, track your progress, and earn a personal certificate for every exam you pass.',
-              },
-            ].map(({ icon: Icon, title, text }) => (
-              <article className="feature-card" key={title}>
-                <Icon size={26} />
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </article>
-            ))}
-          </div>
-        </section>
         <section className="landing-final">
-          <div className="eyebrow">YOUR NEXT CHAPTER STARTS HERE</div>
-          <h2>Give your learning a place to grow.</h2>
-          <form action={googleLogin}>
-            <button className="button primary">
-              <span className="google-mark">G</span>Continue with Google
-            </button>
-          </form>
+          <div className="eyebrow">
+            {signedIn ? 'KEEP YOUR MOMENTUM' : 'YOUR NEXT CHAPTER STARTS HERE'}
+          </div>
+          <h2>{signedIn ? 'Your next step is waiting.' : 'Give your learning a place to grow.'}</h2>
+          {primaryAction}
         </section>
       </main>
       <footer className="landing-footer">

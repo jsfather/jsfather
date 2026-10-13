@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { vocabularyDueSummary } from '@/lib/vocabulary-data';
+import { vocabularyPracticeCourses } from '@/lib/vocabulary-data';
 import { vocabularyReminderBody } from '@/lib/reminders';
 import { requireUser } from '@/lib/auth';
 import { courseSummaries, universityStats, upcomingSessions, sessionsBetween } from '@/lib/data';
@@ -26,14 +26,13 @@ export default async function Dashboard() {
     format(addDays(parseISO(day), 1), 'yyyy-MM-dd') + 'T00:00:00',
     user.timezone,
   );
-  const [stats, current, today, upcoming] = await Promise.all([
+  const [stats, current, today, upcoming, practiceCourses] = await Promise.all([
     universityStats(user.id),
     courseSummaries(user.id, 1, false, true),
     sessionsBetween(user.id, start, end),
     upcomingSessions(user.id, 5),
+    vocabularyPracticeCourses(user.id),
   ]);
-  const due = await vocabularyDueSummary(user.id);
-  const reminder = vocabularyReminderBody(due.learn, due.review);
   const firstName = user.name?.split(' ')[0] ?? user.username;
   return (
     <>
@@ -48,17 +47,31 @@ export default async function Dashboard() {
           </Link>
         }
       />
-      {reminder && (
+      {practiceCourses.length > 0 && (
         <section className="panel vocabulary-reminder">
-          <h2>Today’s vocabulary</h2>
-          <p>{reminder}</p>
-          <div className="actions-row">
-            <Link href="/courses" className="button primary">
-              Practice vocabulary
-            </Link>
+          <div className="section-header">
+            <h2>Today’s vocabulary</h2>
             <Link href="/settings" className="text-link">
               Set up reminders
             </Link>
+          </div>
+          <p className="muted">A few words today. A stronger vocabulary tomorrow.</p>
+          <div className="vocabulary-practice-list">
+            {practiceCourses.map((course) => (
+              <article className="vocabulary-practice-item" key={course.courseId}>
+                <div>
+                  <h3>{course.title}</h3>
+                  <p>{vocabularyReminderBody(course.learn, course.review)}</p>
+                </div>
+                <Link
+                  href={`/courses/${course.courseId}`}
+                  className="button primary"
+                  aria-label={`Practice vocabulary: ${course.title}`}
+                >
+                  Practice vocabulary <ArrowUpRight size={16} />
+                </Link>
+              </article>
+            ))}
           </div>
         </section>
       )}
