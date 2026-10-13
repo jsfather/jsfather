@@ -4,11 +4,11 @@ import { pushSubscriptions } from '@/db/schema';
 import { and, eq } from 'drizzle-orm';
 import { pushSubscriptionSchema } from '@/lib/push-validation';
 import { pushConfigured } from '@/lib/push';
+import { hasSameOrigin } from '@/lib/request-origin';
 
 async function userId(request: Request) {
   // Require same-origin writes in addition to the session cookie.
-  if (request.method !== 'GET' && request.headers.get('origin') !== new URL(request.url).origin)
-    return null;
+  if (request.method !== 'GET' && !hasSameOrigin(request)) return null;
   return (await auth())?.user?.id;
 }
 export async function GET(request: Request) {
