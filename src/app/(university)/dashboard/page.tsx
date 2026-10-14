@@ -100,7 +100,7 @@ export default async function Dashboard() {
             label: 'Time invested',
             value: focusTime(practice.totalSeconds),
             unit: '',
-            note: 'Recorded practice across all courses',
+            note: 'Automatically estimated from learning activity',
             icon: Clock,
           },
           {

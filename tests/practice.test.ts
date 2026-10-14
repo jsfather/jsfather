@@ -1,5 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import {
+  readingEstimate,
+  lessonEstimate,
+  examEstimate,
+  VOCABULARY_REVIEW_SECONDS,
   creditedPracticeSeconds,
   focusTime,
   focusXp,
@@ -8,7 +12,7 @@ import {
 } from '../src/lib/practice';
 import { streakReminder } from '../src/lib/reminders';
 describe('time as XP and daily streaks', () => {
-  it('uses actual seconds with one focus minute equaling one XP', () => {
+  it('converts credited seconds with one focus minute equaling one XP', () => {
     expect(focusTime(65)).toBe('1m 5s');
     expect(focusTime(3661)).toBe('1h 1m');
     expect(focusXp(300)).toBe('5.0');
@@ -90,5 +94,25 @@ describe('time as XP and daily streaks', () => {
     expect(streakReminder(new Date('2026-10-14T17:30:00Z'), 'Asia/Tehran', 270).body).toContain(
       '1 more minute',
     );
+  });
+});
+
+describe('automatic learning estimates', () => {
+  it('awards vocabulary equally for remembered and again outcomes', () => {
+    expect(VOCABULARY_REVIEW_SECONDS).toBe(30);
+    expect(VOCABULARY_REVIEW_SECONDS * 10).toBe(300);
+  });
+  it('credits only pages beyond the furthest already credited position', () => {
+    expect(readingEstimate(4, 0)).toBe(480);
+    expect(readingEstimate(4, 4)).toBe(0);
+    expect(readingEstimate(2, 4)).toBe(0);
+    expect(readingEstimate(6, 4)).toBe(240);
+  });
+  it('uses lesson duration and caps elapsed exam time', () => {
+    expect(lessonEstimate(45)).toBe(2700);
+    const start = new Date('2026-10-14T10:00:00Z');
+    expect(examEstimate(start, new Date('2026-10-14T10:02:30Z'), 30)).toBe(150);
+    expect(examEstimate(start, new Date('2026-10-14T12:00:00Z'), 30)).toBe(1800);
+    expect(examEstimate(start, new Date('2026-10-14T09:59:00Z'), 30)).toBe(0);
   });
 });

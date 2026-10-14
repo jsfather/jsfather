@@ -19,7 +19,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test:e2e": "playwright test",
-    "db:dev": "node --import tsx scripts/dev-db.ts"
+    "db:dev": "node --import tsx scripts/dev-db.ts",
+    "test:automatic-practice-migration": "tsx scripts/test-automatic-practice-migration.ts"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.11.3",

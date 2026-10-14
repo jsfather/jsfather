@@ -222,7 +222,7 @@ export default async function CourseDetail({
       </div>
       <AssessmentControls courseId={course.id}>
         {!!examList.length && (
-          <div style={{ marginTop: 24 }}>
+          <div className="assessment-history">
             <h3>Your assessment history</h3>
             {examList.slice(0, 20).map(({ exam, best, passed }) => (
               <div className="session-row" key={exam.id}>

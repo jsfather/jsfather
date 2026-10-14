@@ -134,6 +134,13 @@
       "when": 1792000574916,
       "tag": "0018_practice_exam_time",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1792004136910,
+      "tag": "0019_automatic_practice",
+      "breakpoints": true
     }
   ]
 }

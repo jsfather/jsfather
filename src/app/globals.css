@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 :root {
+  --space-2: 8px;
+  --space-4: 16px;
+  --space-6: 24px;
   --bg: #0c1015;
   --surface: #12171e;
   --surface-2: #181e26;
@@ -3735,49 +3738,6 @@ textarea {
 .practice-week small {
   font-size: 11px;
 }
-.practice-timer {
-  margin: 0 0 24px;
-}
-.practice-timer-heading {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-.practice-timer-heading > span {
-  margin-left: auto;
-  color: var(--muted);
-  font-size: 12px;
-}
-.practice-timer-values {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-}
-.practice-timer-values > div {
-  display: grid;
-  gap: 4px;
-}
-.practice-timer-values strong {
-  font-size: 20px;
-}
-.practice-timer-values span {
-  color: var(--muted);
-  font-size: 12px;
-}
-.practice-timer-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: 16px;
-}
-.practice-timer-footer .button {
-  flex-shrink: 0;
-}
-.practice-timer-footer .field-hint {
-  margin: 0;
-}
 .practice-history-row {
   display: flex;
   justify-content: space-between;
@@ -3814,18 +3774,273 @@ textarea {
     font-size: 9px;
     overflow-wrap: anywhere;
   }
-  .practice-timer-values {
+}
+
+/* Shared vertical rhythm: layout owns gaps, rather than paragraph defaults. */
+.field-hint + :is(.button, .actions-row, .form-grid, form) {
+  margin-top: var(--space-4);
+}
+.panel > h2 + :is(p, form) {
+  margin-top: var(--space-4);
+}
+.ui-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.ui-stack > *,
+.ui-stack
+  > :is(p, h2, h3, form, .field-hint, .section-header, .actions-row, .alert, .button, .form-grid) {
+  margin-block: 0;
+}
+.ui-stack > .form-grid {
+  gap: var(--space-4) 22px;
+}
+.ui-stack > .form-grid > .field {
+  margin-bottom: 0;
+}
+.ui-stack > :is(.button, .text-link) {
+  align-self: flex-start;
+}
+.panel-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: var(--space-4) 0 0;
+}
+.ui-stack > .panel-actions {
+  margin: 0;
+}
+.ui-stack > .assessment-history {
+  margin-top: var(--space-2);
+}
+.daily-practice .practice-week {
+  margin-bottom: 0;
+}
+.daily-practice-footer {
+  margin-top: var(--space-4);
+}
+.book-course-sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+.book-course-sections > .panel {
+  margin: 0;
+}
+.book-progress-panel > .muted {
+  margin-bottom: var(--space-4);
+}
+.book-bookmark {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-4);
+}
+.book-bookmark > form {
+  margin-top: var(--space-4);
+}
+.book-bookmark-notes {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin-top: 12px;
+}
+
+@media (max-width: 640px) {
+  .daily-practice-stats > div {
+    display: grid;
+    grid-template-rows: 20px minmax(30px, auto) 1fr;
+    align-items: start;
+  }
+  .daily-practice-stats strong {
+    font-size: 18px;
+  }
+}
+
+/* Saved activity estimates and public learning profiles share the spacing scale. */
+.practice-estimate {
+  margin-bottom: var(--space-6);
+}
+.estimate-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-6);
+  color: var(--muted);
+}
+.estimate-metrics > span {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+.estimate-metrics strong {
+  color: var(--text);
+}
+.estimate-metrics svg {
+  color: var(--accent);
+}
+.public-profile-hero {
+  margin-bottom: var(--space-6);
+  background: linear-gradient(125deg, var(--accent-bg), var(--surface) 65%);
+}
+.public-profile-hero .profile-header {
+  margin: 0;
+  align-items: center;
+}
+.public-profile-hero .profile-header .ui-stack {
+  gap: var(--space-2);
+  min-width: 0;
+}
+.public-profile-hero h1,
+.public-profile-hero .profile-bio {
+  overflow-wrap: anywhere;
+}
+.public-profile-hero .profile-links {
+  margin: 0;
+  gap: var(--space-4);
+}
+.public-practice {
+  margin-bottom: var(--space-6);
+  gap: var(--space-6);
+}
+.public-practice .section-header {
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+.public-practice .section-header .ui-stack {
+  gap: var(--space-2);
+}
+.public-focus-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+.public-focus-grid > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  border-radius: 14px;
+  background: var(--surface-2);
+  min-width: 0;
+}
+.public-focus-grid svg {
+  color: var(--accent);
+}
+.public-focus-grid strong {
+  font-size: clamp(22px, 3vw, 32px);
+  letter-spacing: -0.7px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.public-focus-grid strong small {
+  font-size: 14px;
+  font-weight: 400;
+}
+.public-focus-grid > div > small,
+.activity-legend,
+.milestone p {
+  color: var(--muted);
+  font-size: 12px;
+}
+.public-calendar-section,
+.public-milestones {
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border);
+}
+.public-activity-calendar {
+  display: grid;
+  grid-template-columns: repeat(14, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+.activity-cell {
+  min-height: 42px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-2);
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 12px;
+}
+.activity-cell.partial,
+.activity-legend i.partial {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+.activity-cell.qualified,
+.activity-legend i.qualified {
+  background: var(--accent);
+  color: var(--bg);
+}
+.activity-cell.today {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.activity-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+}
+.activity-legend > span,
+.public-milestones h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.activity-legend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+.milestone-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+.milestone {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--muted);
+  min-width: 0;
+}
+.milestone-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--surface-2);
+}
+.milestone.earned {
+  color: var(--text);
+}
+.milestone.earned .milestone-icon {
+  color: var(--accent);
+  background: var(--accent-bg);
+}
+@media (max-width: 700px) {
+  .public-focus-grid,
+  .milestone-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .public-focus-grid > div:last-child {
+    grid-column: 1 / -1;
+  }
+  .public-focus-grid > div {
+    padding: var(--space-4);
+  }
+  .public-activity-calendar {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+}
+@media (max-width: 360px) {
+  .milestone-grid {
     grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  .practice-timer-values > div {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 8px;
-  }
-  .practice-timer-footer {
-    align-items: stretch;
-    flex-direction: column;
   }
 }

@@ -5,6 +5,8 @@ import { redirect, notFound, unstable_rethrow } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { formatInTimeZone } from 'date-fns-tz';
 import { db } from '@/db';
+import { creditPractice } from '@/lib/practice-credit';
+import { VOCABULARY_REVIEW_SECONDS } from '@/lib/practice';
 import {
   courses,
   users,
@@ -57,6 +59,9 @@ function failure(error: unknown): ActionState {
   return { error: 'We could not save this change. Please try again.' };
 }
 function refresh(id: string) {
+  revalidatePath('/activity');
+  revalidatePath('/profile');
+  revalidatePath('/u', 'layout');
   revalidatePath('/courses');
   revalidatePath('/dashboard');
   revalidatePath('/courses/' + id, 'layout');
@@ -433,6 +438,15 @@ export async function submitVocabularyReview(
         .update(vocabularyReviews)
         .set({ remembered, submittedAt: now })
         .where(eq(vocabularyReviews.id, reviewId));
+      await creditPractice(tx, {
+        userId: user.id,
+        courseId,
+        timezone: user.timezone,
+        activity: 'vocabulary',
+        sourceKey: `vocabulary:${reviewId}`,
+        seconds: VOCABULARY_REVIEW_SECONDS,
+        at: now,
+      });
     });
   } catch (e) {
     return failure(e);

@@ -15,7 +15,7 @@ export default async function Activity() {
     <>
       <PageTitle
         title="Your time is your XP"
-        description="A focus minute is 60 seconds of recorded practice. Every focus minute earns 1 XP, across every course type."
+        description="A focus minute is 60 seconds of estimated practice. Every focus minute earns 1 XP, across every course type."
       />
       <DailyPractice summary={summary} timezone={user.timezone} />
       <section className="panel" style={{ marginBottom: 24 }}>
@@ -40,16 +40,16 @@ export default async function Activity() {
           ))}
         {!totals.some((row) => row.seconds > 0) && (
           <p className="muted">
-            Start a practice timer, read a book, review vocabulary, or take an exam to record your
-            first focus minutes.
+            Complete a lesson, save reading progress, rate vocabulary, or submit an exam to earn
+            your first focus minutes.
           </p>
         )}
       </section>
       <section className="panel">
         <h2>Daily time</h2>
         <p className="field-hint">
-          Recorded days in your profile timezone. Days with less than 5 minutes do not extend your
-          streak.
+          Activity is credited to the day it is saved in your profile timezone. Days with less than
+          5 minutes do not extend your streak.
         </p>
         {summary.days
           .slice()
@@ -66,7 +66,9 @@ export default async function Activity() {
             </div>
           ))}
         {!summary.days.length && (
-          <p className="muted">Your practice history starts with your first recorded session.</p>
+          <p className="muted">
+            Your practice history starts with your first saved learning activity.
+          </p>
         )}
       </section>
     </>

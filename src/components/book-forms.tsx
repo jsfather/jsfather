@@ -18,7 +18,7 @@ export function BookCourseForm({ course }: { course?: Course }) {
     {},
   );
   return (
-    <form action={action} className="form-panel">
+    <form action={action} className="form-panel ui-stack">
       <Feedback state={state} />
       <h3>{course ? 'Book settings' : 'Start reading a book'}</h3>
       <label className="field">
@@ -101,7 +101,7 @@ export function BookCourseForm({ course }: { course?: Course }) {
 export function BookProgressForm({ course }: { course: Course }) {
   const [state, action] = useActionState(saveBookProgress.bind(null, course.id), {});
   return (
-    <form action={action}>
+    <form action={action} className="ui-stack">
       <Feedback state={state} />
       <label className="field">
         <span>Last page read</span>
@@ -124,7 +124,7 @@ export function BookProgressForm({ course }: { course: Course }) {
 export function BookNotesForm({ course }: { course: Course }) {
   const [state, action] = useActionState(saveBookNotes.bind(null, course.id), {});
   return (
-    <form action={action}>
+    <form action={action} className="ui-stack">
       <Feedback state={state} />
       <label className="field">
         <span>Reading notes</span>
@@ -153,7 +153,7 @@ export function BookBookmarkForm({
     {},
   );
   return (
-    <form action={action}>
+    <form action={action} className="ui-stack">
       <Feedback state={state} />
       <div className="form-grid">
         <label className="field">
@@ -194,7 +194,7 @@ export function DeleteBookBookmarkForm({
 }) {
   const [state, action] = useActionState(deleteBookBookmark.bind(null, courseId, bookmarkId), {});
   return (
-    <form action={action} style={{ marginTop: 12 }}>
+    <form action={action} className="ui-stack">
       <Feedback state={state} />
       <Submit secondary>Remove bookmark</Submit>
     </form>

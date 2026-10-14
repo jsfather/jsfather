@@ -26,19 +26,19 @@ export function AssessmentControls({
     {},
   );
   return (
-    <section className="panel" style={{ marginTop: 24 }}>
+    <section className="panel ui-stack" style={{ marginTop: 24 }}>
       <h2>Assessment</h2>
-      <p className="muted" style={{ margin: '12px 0 20px' }}>
+      <p className="muted">
         {book
           ? 'Practice with all questions from your book. Both options save your result. Finish reading and pass the final assessment to earn your certificate.'
           : 'Practice with all questions from your sessions. Both options save your result. Pass the final assessment and complete every session to earn your course certificate.'}
       </p>
-      <div className="actions-row">
-        <form action={practiceAction}>
+      <div className="actions-row panel-actions">
+        <form action={practiceAction} className="ui-stack">
           <Feedback state={practiceState} />
           <Submit>Practice</Submit>
         </form>
-        <form action={finalAction}>
+        <form action={finalAction} className="ui-stack">
           <Feedback state={finalState} />
           <Submit>Final assessment</Submit>
         </form>
@@ -63,7 +63,7 @@ export function AssessmentSettings({
   const [settings, setSettings] = useState({ timeLimit, passingScore });
   const [state, action] = useActionState(updateAssessmentSettings.bind(null, id), {});
   return (
-    <section className="panel" style={{ marginTop: 24 }}>
+    <section className="panel ui-stack" style={{ marginTop: 24 }}>
       <h2>Assessment settings</h2>
       <p className="field-hint">
         Suggested time: {suggested.timeLimit} min · Suggested passing score:{' '}
@@ -73,7 +73,7 @@ export function AssessmentSettings({
       {locked ? (
         <p className="muted">Finish the older active attempt before changing settings.</p>
       ) : (
-        <form action={action}>
+        <form action={action} className="ui-stack">
           <p className="field-hint">
             Changes apply to new attempts. Active attempts keep their original timer and passing
             score.
@@ -124,7 +124,7 @@ export function AssessmentSettings({
 export function PublicExamControl({ id, published }: { id: string; published: boolean }) {
   const [state, action] = useActionState(setExamPublic.bind(null, id, !published), {});
   return (
-    <form action={action}>
+    <form action={action} className="ui-stack">
       <Feedback state={state} />
       <Submit>{published ? 'Disable public link' : 'Enable public link'}</Submit>
     </form>
@@ -139,7 +139,7 @@ export function AssignExamClass({
 }) {
   const [state, action] = useActionState(assignExamClass.bind(null, id), {});
   return (
-    <form action={action} className="panel">
+    <form action={action} className="panel ui-stack">
       <h2>Assign existing questions to a class</h2>
       <p className="muted">
         Existing questions and attempts are preserved. Choose the class these questions cover so

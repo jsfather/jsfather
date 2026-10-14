@@ -1,228 +1,201 @@
-import { test, expect, type APIRequestContext } from '@playwright/test';
+import { test, expect, type Request } from '@playwright/test';
 import { config } from 'dotenv';
 import postgres from 'postgres';
 import { randomUUID } from 'node:crypto';
-import { formatInTimeZone, fromZonedTime } from 'date-fns-tz';
+import { formatInTimeZone } from 'date-fns-tz';
 import { previousDay } from '../../src/lib/practice';
 config({ path: '.env.local', quiet: true });
 const db = postgres(process.env.DATABASE_URL!, { max: 3 });
 const owner = randomUUID(),
-  other = randomUUID(),
   token = randomUUID(),
-  otherToken = randomUUID();
-const lesson = randomUUID(),
-  vocab = randomUUID(),
   book = randomUUID(),
-  foreign = randomUUID();
-const examId = randomUUID(),
-  attemptId = randomUUID();
+  lesson = randomUUID(),
+  vocab = randomUUID(),
+  session = randomUUID(),
+  word = randomUUID();
+const username = 'auto-' + owner.slice(0, 8);
 const base = process.env.TEST_BASE_URL ?? 'http://localhost:3100';
 const today = formatInTimeZone(new Date(), 'Asia/Tehran', 'yyyy-MM-dd');
 test.beforeAll(async () => {
-  if (process.env.NODE_ENV === 'production') throw new Error('Use a disposable test database.');
-  await db`insert into users(id,email,username,timezone) values(${owner},${owner + '@example.test'},${'focus-' + owner.slice(0, 8)},'Asia/Tehran'),(${other},${other + '@example.test'},${'other-' + other.slice(0, 8)},'UTC')`;
-  await db`insert into auth_sessions(session_token,user_id,expires) values(${token},${owner},now()+interval '1 hour'),(${otherToken},${other},now()+interval '1 hour')`;
-  for (const [id, kind] of [
-    [lesson, 'standard'],
-    [vocab, 'vocabulary'],
-    [book, 'book'],
-    [foreign, 'standard'],
-  ]) {
-    await db`insert into courses(id,owner_id,kind,title,slug,category,difficulty,total_pages,total_sessions,scheduled_time,duration,timezone,weekdays,start_date)
-      values(${id},${id === foreign ? other : owner},${kind},${'Focus ' + kind},${id},'English','beginner',${kind === 'book' ? 400 : null},0,'00:00',15,'Asia/Tehran','[]',${today})`;
+  if (process.env.NODE_ENV === 'production') throw new Error('Use a disposable database');
+  await db`insert into users(id,email,username,name,bio,public_profile,public_progress,show_courses) values(${owner},${owner + '@example.test'},${username},'Avery · Lifelong learner','A little code, a little language, a chapter every day.',true,true,true)`;
+  await db`insert into auth_sessions(session_token,user_id,expires) values(${token},${owner},now()+interval '1 hour')`;
+  for (const [id, kind, title, shared] of [
+    [book, 'book', 'Designing better systems', true],
+    [lesson, 'standard', 'PRIVATE_LESSON', false],
+    [vocab, 'vocabulary', 'Everyday English', true],
+  ] as const) {
+    await db`insert into courses(id,owner_id,kind,title,slug,category,difficulty,total_pages,total_sessions,scheduled_time,duration,timezone,weekdays,start_date,is_public)
+      values(${id},${owner},${kind},${title},${id},'Backend','beginner',${kind === 'book' ? 400 : null},${kind === 'standard' ? 1 : 0},'00:00',20,'Asia/Tehran','[]',${today},${shared})`;
   }
-  await db`insert into exams(id,course_id,title,time_limit) values(${examId},${lesson},'Focus exam',60)`;
-  await db`insert into exam_attempts(id,exam_id,user_id) values(${attemptId},${examId},${owner})`;
-  await db`insert into practice_days(user_id,day,seconds) values(${owner},${previousDay(today)},300),(${owner},${previousDay(previousDay(today))},300)`;
+  await db`insert into course_sessions(id,course_id,title,session_number,scheduled_date,duration) values(${session},${lesson},'A completed lesson',1,now(),20)`;
+  await db`insert into vocabulary_words(id,course_id,word,explanation,added_on) values(${word},${vocab},'consistency','Showing up each day.',${today})`;
+  let day = today;
+  for (let i = 0; i < 8; i++) {
+    day = previousDay(day);
+    await db`insert into practice_sessions(id,user_id,course_id,source_key,day,activity,seconds,ended_at) values(${randomUUID()},${owner},${book},${randomUUID()},${day},'reading',600,now())`;
+    await db`insert into practice_days(user_id,day,seconds) values(${owner},${day},600)`;
+  }
 });
 test.afterAll(async () => {
-  await db`delete from users where id in (${owner},${other})`;
+  await db`delete from users where id=${owner}`;
   await db.end();
 });
-async function post(api: APIRequestContext, data: object) {
-  return api.post('/api/practice', { data, headers: { origin: base } });
-}
-test('records every course type, enforces the goal, and makes time credits idempotent and bounded', async ({
+test('outcomes earn estimates once, idle pages earn nothing, and private activity stays private', async ({
   page,
   browser,
 }) => {
+  test.setTimeout(180000);
   await page
     .context()
     .addCookies([
       { name: 'authjs.session-token', value: token, url: base, httpOnly: true, sameSite: 'Lax' },
     ]);
-  for (const [courseId, activity] of [
-    [lesson, 'lesson'],
-    [vocab, 'vocabulary'],
-    [book, 'reading'],
-  ]) {
-    const start = await post(page.request, { operation: 'start', courseId, activity });
-    expect(start.status()).toBe(200);
-    const { sessionId } = await start.json();
-    let sequence = 0;
-    for (const seconds of [30, 30, 30, 10]) {
-      await db`update practice_sessions set last_heartbeat_at=now()-interval '31 seconds' where id=${sessionId}`;
-      const body = {
-        operation: 'heartbeat',
-        sessionId,
-        sequence: ++sequence,
-        seconds,
-        finish: sequence === 4,
-      };
-      const responses = await Promise.all([post(page.request, body), post(page.request, body)]);
-      for (const response of responses) expect(response.status()).toBe(200);
-    }
-    const [session] = await db`select seconds from practice_sessions where id=${sessionId}`;
-    expect(session.seconds).toBe(100);
+  const replay = async (req: Request) =>
+    page.request.post(req.url(), {
+      headers: {
+        'next-action': req.headers()['next-action'],
+        'content-type': req.headers()['content-type'],
+        origin: base,
+      },
+      data: req.postDataBuffer()!,
+      maxRedirects: 0,
+    });
+  const total = async () =>
+    Number(
+      (
+        await db`select coalesce(sum(seconds),0)::int as total from practice_sessions where user_id=${owner}`
+      )[0].total,
+    );
+  await page.goto('/courses/' + book);
+  await expect(page.getByRole('region', { name: 'Automatic practice estimates' })).toBeVisible();
+  await expect(
+    page.getByRole('button', { name: /Start reading|Start practice|Pause/ }),
+  ).toHaveCount(0);
+  expect(await total()).toBe(4800);
+  await page.getByLabel('Last page read', { exact: true }).fill('3');
+  let captured = page.waitForRequest((req) => req.method() === 'POST');
+  await page.getByRole('button', { name: 'Save progress', exact: true }).click();
+  const bookSave = await captured;
+  await expect(page.getByText('Reading progress saved.', { exact: true })).toBeVisible();
+  expect(await total()).toBe(5160);
+  await replay(bookSave);
+  for (const position of ['1', '3']) {
+    await page.getByLabel('Last page read', { exact: true }).fill(position);
+    await page.getByRole('button', { name: 'Save progress', exact: true }).click();
+    await expect(page.getByText('Reading progress saved.', { exact: true })).toBeVisible();
+    await expect
+      .poll(async () =>
+        Number((await db`select current_page from courses where id=${book}`)[0].current_page),
+      )
+      .toBe(Number(position));
   }
+  expect(await total()).toBe(5160);
+  await page.goto('/sessions/' + session);
+  captured = page.waitForRequest((req) => req.method() === 'POST');
+  await page.getByRole('button', { name: 'Mark as completed', exact: true }).click();
+  const lessonSave = await captured;
+  await expect(page.getByRole('button', { name: 'Reopen session', exact: true })).toBeVisible();
+  expect(await total()).toBe(6360);
+  await Promise.all([replay(lessonSave), replay(lessonSave)]);
+  await page.getByRole('button', { name: 'Reopen session', exact: true }).click();
+  await page.getByRole('button', { name: 'Mark as completed', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Reopen session', exact: true })).toBeVisible();
+  expect(await total()).toBe(6360);
+  await page.goto('/courses/' + vocab);
+  await page.getByRole('button', { name: 'Practice', exact: true }).click();
+  await page.getByRole('button', { name: 'Reveal answer', exact: true }).click();
+  captured = page.waitForRequest((req) => req.method() === 'POST');
+  await page.getByRole('button', { name: 'Remembered', exact: true }).click();
+  const reviewSave = await captured;
+  await expect(page).not.toHaveURL(/review\/[a-f0-9-]+$/);
+  await Promise.all([replay(reviewSave), replay(reviewSave)]);
+  expect(await total()).toBe(6390);
   const [day] = await db`select seconds from practice_days where user_id=${owner} and day=${today}`;
-  expect(day.seconds).toBe(300);
-  await page.goto('/dashboard');
-  const habit = page.getByRole('region', { name: 'Daily practice and streak' });
-  await expect(habit.getByRole('heading', { name: 'Today’s goal is complete' })).toBeVisible();
-  await expect(habit.getByText('15.0 XP', { exact: true })).toBeVisible();
-  await page.goto('/activity');
-  await expect(page.getByRole('heading', { name: 'Time by course' })).toBeVisible();
-  await expect(page.getByText(today, { exact: true })).toBeVisible();
-  expect(
-    (
-      await post(page.request, { operation: 'start', courseId: foreign, activity: 'lesson' })
-    ).status(),
-  ).toBe(403);
+  expect(day.seconds).toBe(1590);
   expect(
     (
       await page.request.post('/api/practice', {
-        data: { operation: 'start', courseId: lesson, activity: 'lesson' },
-        headers: { origin: 'https://other.example' },
+        data: { operation: 'start', courseId: book, activity: 'reading' },
       })
     ).status(),
-  ).toBe(403);
-  const start = await post(page.request, {
-    operation: 'start',
-    courseId: lesson,
-    activity: 'lesson',
-  });
-  const { sessionId } = await start.json();
-  const otherContext = await browser.newContext({ baseURL: base });
-  await otherContext.addCookies([
-    { name: 'authjs.session-token', value: otherToken, url: base, httpOnly: true, sameSite: 'Lax' },
-  ]);
-  expect(
-    (
-      await post(otherContext.request, {
-        operation: 'heartbeat',
-        sessionId,
-        sequence: 1,
-        seconds: 30,
-      })
-    ).status(),
-  ).toBe(404);
-  await db`update practice_sessions set last_heartbeat_at=now()-interval '5 seconds' where id=${sessionId}`;
-  const clipped = await post(page.request, {
-    operation: 'heartbeat',
-    sessionId,
-    sequence: 1,
-    seconds: 30,
-  });
-  const clippedData = await clipped.json();
-  expect(clippedData.sessionSeconds).toBeGreaterThanOrEqual(4);
-  expect(clippedData.sessionSeconds).toBeLessThanOrEqual(6);
-  expect(
-    (
-      await post(page.request, { operation: 'heartbeat', sessionId, sequence: 2, seconds: 1000 })
-    ).status(),
-  ).toBe(400);
-  const replacement = await post(page.request, {
-    operation: 'start',
-    courseId: book,
-    activity: 'reading',
-  });
-  expect(replacement.status()).toBe(200);
-  expect(
-    (
-      await post(page.request, { operation: 'heartbeat', sessionId, sequence: 2, seconds: 1 })
-    ).status(),
-  ).toBe(409);
-  await otherContext.close();
-  const examStart = await post(page.request, {
-    operation: 'start',
-    courseId: lesson,
-    activity: 'exam',
-    attemptId,
-  });
-  expect(examStart.status()).toBe(200);
-  const examSession = (await examStart.json()).sessionId;
-  await db`update practice_sessions set last_heartbeat_at=now()-interval '31 seconds' where id=${examSession}`;
-  await db`update exam_attempts set submitted_at=now() where id=${attemptId}`;
-  const final = await post(page.request, {
-    operation: 'heartbeat',
-    sessionId: examSession,
-    sequence: 1,
-    seconds: 30,
-    finish: true,
-  });
-  expect(final.status()).toBe(200);
-  expect((await final.json()).sessionSeconds).toBe(30);
-  const boundaryStart = await post(page.request, {
-    operation: 'start',
-    courseId: book,
-    activity: 'reading',
-  });
-  const boundaryId = (await boundaryStart.json()).sessionId;
-  const midnight = fromZonedTime(today + 'T00:00:00', 'Asia/Tehran');
-  await db`update practice_sessions set started_at=${new Date(midnight.getTime() - 30000)}, last_heartbeat_at=${new Date(midnight.getTime() - 20000)} where id=${boundaryId}`;
-  const boundaryBody = {
-    operation: 'heartbeat',
-    sessionId: boundaryId,
-    sequence: 1,
-    seconds: 30,
-    capturedAt: midnight.getTime() + 10000,
-    finish: true,
-  };
-  expect((await post(page.request, boundaryBody)).status()).toBe(200);
-  expect((await post(page.request, boundaryBody)).status()).toBe(200);
-  const [yesterday] =
-    await db`select seconds from practice_days where user_id=${owner} and day=${previousDay(today)}`;
-  expect(yesterday.seconds).toBe(320);
-  await db`delete from courses where id=${vocab}`;
-  const [retained] =
-    await db`select seconds from practice_days where user_id=${owner} and day=${today}`;
-  expect(retained.seconds).toBeGreaterThanOrEqual(334);
+  ).toBe(410);
+  await page.goto('/dashboard');
+  await expect(
+    page.getByRole('heading', { name: 'Today’s goal is complete', exact: true }),
+  ).toBeVisible();
+  await expect(page.getByText('106.5 XP', { exact: true })).toBeVisible();
+  const guest = await browser.newContext();
+  const publicPage = await guest.newPage();
+  for (const width of [1280, 390, 320]) {
+    await publicPage.setViewportSize({ width, height: 1000 });
+    await publicPage.goto('/u/' + username);
+    const shared = publicPage.getByRole('region', { name: 'Shared learning activity' });
+    await expect(shared.getByRole('heading', { name: 'Building a learning habit' })).toBeVisible();
+    await expect(shared.getByText('86.5 XP', { exact: true })).toBeVisible();
+    await expect(publicPage.getByText('PRIVATE_LESSON', { exact: true })).toHaveCount(0);
+    await expect(shared.getByRole('listitem')).toHaveCount(28);
+    expect(
+      await publicPage.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+    ).toBe(true);
+    const bounds = await shared.locator('.public-milestones').boundingBox();
+    const hint = await shared.locator('> .field-hint').boundingBox();
+    expect(hint!.y - (bounds!.y + bounds!.height)).toBeGreaterThanOrEqual(23);
+    await publicPage.screenshot({
+      path: test.info().outputPath('public-profile-' + width + '.png'),
+      fullPage: true,
+    });
+  }
+  await db`update users set public_progress=false where id=${owner}`;
+  await publicPage.reload();
+  await expect(publicPage.getByRole('region', { name: 'Shared learning activity' })).toHaveCount(0);
+  await expect(publicPage.getByText('86.5 XP', { exact: true })).toHaveCount(0);
+  await db`update users set public_progress=true where id=${owner}`;
+  await db`delete from practice_sessions where user_id=${owner} and course_id in (${book},${vocab})`;
+  for (const width of [1280, 390, 320]) {
+    await publicPage.setViewportSize({ width, height: 1000 });
+    await publicPage.reload();
+    const empty = publicPage.getByRole('region', { name: 'Shared learning activity' });
+    await expect(empty.getByText('0.0 XP', { exact: true })).toBeVisible();
+    await expect(empty.locator('.milestone.earned')).toHaveCount(0);
+    await empty.screenshot({ path: test.info().outputPath('public-empty-' + width + '.png') });
+  }
+  await db`update users set public_profile=false where id=${owner}`;
+  const response = await publicPage.goto('/u/' + username);
+  expect(response?.status()).toBe(404);
+  await guest.close();
 });
-test('book timer records focused time and the daily overview fits mobile', async ({ page }) => {
-  test.setTimeout(60000);
+
+test('exam submissions automatically credit capped elapsed time and never count retries', async ({
+  page,
+}) => {
+  const exam = randomUUID(),
+    attempt = randomUUID(),
+    question = randomUUID(),
+    yes = randomUUID();
+  await db`insert into exams(id,course_id,title,time_limit) values(${exam},${lesson},'Estimated exam',2)`;
+  await db`insert into exam_questions(id,exam_id,question,type,"order") values(${question},${exam},'Ready?','multiple_choice',0)`;
+  await db`insert into exam_options(id,question_id,text,is_correct,"order") values(${yes},${question},'Yes',true,0)`;
+  await db`insert into exam_attempts(id,exam_id,user_id,started_at) values(${attempt},${exam},${owner},now()-interval '10 minutes')`;
   await page
     .context()
     .addCookies([
       { name: 'authjs.session-token', value: token, url: base, httpOnly: true, sameSite: 'Lax' },
     ]);
-  await page.goto(`/courses/${book}`);
-  const timer = page.getByRole('region', { name: 'Practice time' });
-  await expect(timer.getByRole('button', { name: 'Start reading', exact: true })).toBeVisible();
-  const [baseline] =
-    await db`select coalesce(sum(seconds),0)::int as seconds from practice_sessions where user_id=${owner} and course_id=${book}`;
-  await page.getByRole('button', { name: 'Start reading', exact: true }).click();
-  await expect
-    .poll(
-      async () =>
-        (
-          await db`select coalesce(sum(seconds),0)::int as seconds from practice_sessions where user_id=${owner} and course_id=${book}`
-        )[0].seconds,
-      { timeout: 25000 },
-    )
-    .toBeGreaterThan(baseline.seconds);
-  await page.getByRole('button', { name: 'Pause timer', exact: true }).click();
-  await expect(timer.getByRole('button', { name: 'Start reading', exact: true })).toBeVisible();
-  for (const width of [320, 390, 1280]) {
-    await page.setViewportSize({ width, height: 900 });
-    await page.goto('/dashboard');
-    await expect(page.getByRole('region', { name: 'Daily practice and streak' })).toBeVisible();
-    expect(
-      await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
-    ).toBe(true);
-    await page.screenshot({
-      path: test.info().outputPath(`streak-${width}.png`),
-      animations: 'disabled',
-    });
-  }
+  const captured = page.waitForRequest((req) => req.method() === 'POST');
+  await page.goto(`/exams/${exam}/take/${attempt}`);
+  const request = await captured;
+  await expect(page).toHaveURL(new RegExp(`/results/${attempt}$`));
+  await page.request.post(request.url(), {
+    headers: {
+      'next-action': request.headers()['next-action'],
+      'content-type': request.headers()['content-type'],
+      origin: base,
+    },
+    data: request.postDataBuffer()!,
+    maxRedirects: 0,
+  });
+  const credits =
+    await db`select seconds from practice_sessions where source_key=${'exam:' + attempt}`;
+  expect(credits.map((c) => c.seconds)).toEqual([120]);
 });

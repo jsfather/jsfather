@@ -1,5 +1,7 @@
 'use server';
 import { db } from '@/db';
+import { creditPractice } from '@/lib/practice-credit';
+import { readingEstimate } from '@/lib/practice';
 import { courses, courseSessions, bookBookmarks } from '@/db/schema';
 import { requireUser } from '@/lib/auth';
 import { slugify } from '@/lib/learning';
@@ -29,7 +31,14 @@ function failure(error: unknown): ActionState {
   return { error: 'Could not save this change. Please try again.' };
 }
 function refresh(id: string) {
-  for (const path of ['/courses', '/dashboard', '/profile', '/certificates', '/courses/' + id])
+  for (const path of [
+    '/activity',
+    '/courses',
+    '/dashboard',
+    '/profile',
+    '/certificates',
+    '/courses/' + id,
+  ])
     revalidatePath(path);
   revalidatePath('/u', 'layout');
 }
@@ -147,8 +156,21 @@ export async function saveBookProgress(
         throw new BookError('Your reading position cannot exceed the book’s page count.');
       await tx
         .update(courses)
-        .set({ ...input, updatedAt: new Date() })
+        .set({
+          ...input,
+          creditedPages: Math.max(course.creditedPages, input.currentPage),
+          updatedAt: new Date(),
+        })
         .where(eq(courses.id, id));
+      if (input.currentPage > course.creditedPages)
+        await creditPractice(tx, {
+          userId: user.id,
+          courseId: id,
+          timezone: user.timezone,
+          activity: 'reading',
+          sourceKey: `book:${id}:${input.currentPage}`,
+          seconds: readingEstimate(input.currentPage, course.creditedPages),
+        });
       await syncBookCompletion(tx, id, input.currentPage === course.totalPages);
     });
     await issueEligibleCertificate(id, user.id);

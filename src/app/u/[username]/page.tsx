@@ -1,3 +1,5 @@
+import { PublicPractice } from '@/components/public-practice';
+import { publicPracticeSummary } from '@/lib/practice-data';
 import { Avatar } from '@/components/avatar';
 import { publicUser, courseSummaries, universityStats, pageNumber } from '@/lib/data';
 import { canSeeProgress, canSeeScores } from '@/lib/learning';
@@ -27,6 +29,7 @@ export default async function PublicProfile({
   const list = user.showCourses ? await courseSummaries(user.id, page, true) : [];
   const stats = canSeeProgress(user) ? await universityStats(user.id, true) : null;
   const scoreVisible = canSeeScores(user);
+  const practice = stats ? await publicPracticeSummary(user.id) : null;
   let earned = 0;
   if (scoreVisible) {
     const [row] = await db
@@ -38,35 +41,42 @@ export default async function PublicProfile({
   }
   return (
     <>
-      <div className="profile-header">
-        <Avatar large name={user.name ?? user.username} image={user.image} />
-        <div>
-          <div className="eyebrow">PERSONAL UNIVERSITY</div>
-          <h1>{user.name ?? user.username}</h1>
-          <p className="muted">
-            @{user.username} · Joined {format(user.createdAt, 'MMMM yyyy')}
-          </p>
+      <section className="panel ui-stack public-profile-hero">
+        <div className="profile-header">
+          <Avatar large name={user.name ?? user.username} image={user.image} />
+          <div className="ui-stack">
+            <div className="eyebrow">THE LEARNING JOURNEY</div>
+            <h1>{user.name ?? user.username}</h1>
+            <p className="muted">
+              @{user.username} · Joined {format(user.createdAt, 'MMMM yyyy')}
+            </p>
+          </div>
         </div>
-      </div>
-      {user.bio && <p className="profile-bio">{user.bio}</p>}
-      <div className="profile-links">
-        {user.location && <span className="muted">{user.location}</span>}
-        {user.website && (
-          <a href={user.website} rel="noopener noreferrer" target="_blank">
-            Website
-          </a>
+        {user.bio && <p className="profile-bio">{user.bio}</p>}
+        {(user.location || user.website || user.githubUrl || user.linkedinUrl) && (
+          <div className="profile-links">
+            {user.location && <span className="muted">{user.location}</span>}
+            {user.website && (
+              <a href={user.website} rel="noopener noreferrer" target="_blank">
+                Website
+              </a>
+            )}
+            {user.githubUrl && (
+              <a href={user.githubUrl} rel="noopener noreferrer" target="_blank">
+                GitHub
+              </a>
+            )}
+            {user.linkedinUrl && (
+              <a href={user.linkedinUrl} rel="noopener noreferrer" target="_blank">
+                LinkedIn
+              </a>
+            )}
+          </div>
         )}
-        {user.githubUrl && (
-          <a href={user.githubUrl} rel="noopener noreferrer" target="_blank">
-            GitHub
-          </a>
-        )}
-        {user.linkedinUrl && (
-          <a href={user.linkedinUrl} rel="noopener noreferrer" target="_blank">
-            LinkedIn
-          </a>
-        )}
-      </div>
+      </section>
+      {practice && stats && (
+        <PublicPractice summary={practice} completedCourses={stats.completedCourses} />
+      )}
       {stats && (
         <>
           <PageTitle title="Learning progress" />

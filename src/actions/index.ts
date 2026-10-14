@@ -2,6 +2,8 @@
 import { assessmentName } from '@/lib/assessment-names';
 import { syncAssessmentNames } from '@/lib/sync-assessment-names';
 import { db } from '@/db';
+import { creditPractice } from '@/lib/practice-credit';
+import { lessonEstimate, examEstimate } from '@/lib/practice';
 import { issueEligibleCertificate } from '@/lib/issue-certificate';
 import {
   courses,
@@ -60,6 +62,7 @@ function failure(error: unknown): ActionState {
 }
 function refresh(courseId?: string) {
   [
+    '/activity',
     '/dashboard',
     '/courses',
     '/calendar',
@@ -278,13 +281,23 @@ export async function createSession(
     const { date, time, ...fields } = input;
     void date;
     void time;
-    const session = await db.transaction((tx) =>
-      addCourseSession(tx, course, {
+    const session = await db.transaction(async (tx) => {
+      const created = await addCourseSession(tx, course, {
         ...fields,
         scheduledDate,
         completedAt: input.status === 'completed' ? new Date() : null,
-      }),
-    );
+      });
+      if (input.status === 'completed')
+        await creditPractice(tx, {
+          userId: user.id,
+          courseId,
+          timezone: user.timezone,
+          activity: 'lesson',
+          sourceKey: `lesson:${created.id}`,
+          seconds: lessonEstimate(input.duration),
+        });
+      return created;
+    });
     id = session.id;
     completed = input.status === 'completed';
   } catch (e) {
@@ -355,6 +368,15 @@ export async function updateSession(
           updatedAt: new Date(),
         })
         .where(eq(courseSessions.id, id));
+      if (input.status === 'completed')
+        await creditPractice(tx, {
+          userId: user.id,
+          courseId: course.id,
+          timezone: user.timezone,
+          activity: 'lesson',
+          sourceKey: `lesson:${id}`,
+          seconds: lessonEstimate(input.duration),
+        });
       await syncAssessmentNames(tx, course.id);
       await syncCourseSessions(tx, course);
     });
@@ -370,17 +392,35 @@ export async function updateSession(
 }
 export async function setSessionStatus(id: string, status: 'completed' | 'skipped' | 'upcoming') {
   const user = await requireUser();
-  const { course, session } = await ownedSession(user.id, id);
+  const { course } = await ownedSession(user.id, id);
   if (course.kind === 'book') return;
   const valid = z.enum(['completed', 'skipped', 'upcoming']).parse(status);
-  await db
-    .update(courseSessions)
-    .set({
-      status: valid,
-      completedAt: valid === 'completed' ? (session.completedAt ?? new Date()) : null,
-      updatedAt: new Date(),
-    })
-    .where(eq(courseSessions.id, id));
+  await db.transaction(async (tx) => {
+    await tx
+      .select({ id: courses.id })
+      .from(courses)
+      .where(eq(courses.id, course.id))
+      .for('update');
+    const [current] = await tx.select().from(courseSessions).where(eq(courseSessions.id, id));
+    if (!current) return;
+    await tx
+      .update(courseSessions)
+      .set({
+        status: valid,
+        completedAt: valid === 'completed' ? (current.completedAt ?? new Date()) : null,
+        updatedAt: new Date(),
+      })
+      .where(eq(courseSessions.id, id));
+    if (valid === 'completed')
+      await creditPractice(tx, {
+        userId: user.id,
+        courseId: course.id,
+        timezone: user.timezone,
+        activity: 'lesson',
+        sourceKey: `lesson:${id}`,
+        seconds: lessonEstimate(current.duration),
+      });
+  });
   refresh(course.id);
   revalidatePath('/sessions/' + id);
   if (valid === 'completed') {
@@ -924,9 +964,23 @@ export async function submitAttempt(
         expired ? {} : answers,
         attempt.snapshot?.passingScore ?? row.exam.passingScore,
       );
+      const submittedAt = new Date();
+      await creditPractice(tx, {
+        userId: user.id,
+        courseId: row.course.id,
+        timezone: user.timezone,
+        activity: 'exam',
+        sourceKey: `exam:${attemptId}`,
+        seconds: examEstimate(
+          attempt.startedAt,
+          submittedAt,
+          attempt.snapshot?.timeLimit ?? row.exam.timeLimit,
+        ),
+        at: submittedAt,
+      });
       await tx
         .update(examAttempts)
-        .set({ ...result, submittedAt: new Date() })
+        .set({ ...result, submittedAt })
         .where(eq(examAttempts.id, attemptId));
       const sessions = await tx
         .select()

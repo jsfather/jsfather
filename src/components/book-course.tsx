@@ -63,8 +63,8 @@ export async function BookCourseDetail({
       />
       <PracticePanel courseId={course.id} activity="reading" />
       <div className="detail-layout">
-        <div>
-          <section className="panel detail-panel">
+        <div className="book-course-sections">
+          <section className="panel detail-panel book-progress-panel">
             {course.description && <p className="detail-description">{course.description}</p>}
             <div className="progress-label">
               <span>Reading progress</span>
@@ -92,33 +92,22 @@ export async function BookCourseDetail({
             )}
             <BookProgressForm course={course} />
           </section>
-          <section className="panel" style={{ marginTop: 24 }}>
+          <section className="panel ui-stack">
             <h2>Reading notes</h2>
             <BookNotesForm course={course} />
           </section>
-          <section className="panel" style={{ marginTop: 24 }}>
+          <section className="panel ui-stack">
             <h2>Bookmarks</h2>
             <p className="muted">Save pages you want to revisit, with private notes.</p>
             <BookBookmarkForm course={course} />
-            {!bookmarks.length && (
-              <p className="muted" style={{ marginTop: 24 }}>
-                No bookmarks on this page yet.
-              </p>
-            )}
+            {!bookmarks.length && <p className="muted">No bookmarks on this page yet.</p>}
             {bookmarks.map((bookmark) => (
-              <details
-                key={bookmark.id}
-                style={{ borderTop: '1px solid var(--border)', marginTop: 24, paddingTop: 16 }}
-              >
+              <details key={bookmark.id} className="book-bookmark">
                 <summary>
                   Page {bookmark.page}
                   {bookmark.label ? ` · ${bookmark.label}` : ''}
                 </summary>
-                {bookmark.notes && (
-                  <p style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere', marginTop: 12 }}>
-                    {bookmark.notes}
-                  </p>
-                )}
+                {bookmark.notes && <p className="book-bookmark-notes">{bookmark.notes}</p>}
                 <BookBookmarkForm course={course} bookmark={bookmark} />
                 <DeleteBookBookmarkForm courseId={course.id} bookmarkId={bookmark.id} />
               </details>
@@ -130,10 +119,10 @@ export async function BookCourseDetail({
             />
           </section>
         </div>
-        <aside>
-          <section className="panel">
+        <aside className="book-course-sections">
+          <section className="panel ui-stack">
             <h2>Book questions</h2>
-            <p className="muted" style={{ margin: '12px 0 20px' }}>
+            <p className="muted">
               Add questions as you read. Your practice and final assessments cover the book’s
               question bank.
             </p>
@@ -143,7 +132,7 @@ export async function BookCourseDetail({
               </Link>
             )}
           </section>
-          <section className="panel" style={{ marginTop: 24 }}>
+          <section className="panel ui-stack">
             <h2>Book details</h2>
             <div className="meta-list">
               <div>
@@ -166,7 +155,7 @@ export async function BookCourseDetail({
       </div>
       <AssessmentControls courseId={course.id} book>
         {!!history.length && (
-          <div style={{ marginTop: 24 }}>
+          <div className="assessment-history">
             <h3>Your assessment history</h3>
             {history.map(({ exam, best }) => (
               <div className="session-row" key={exam.id}>

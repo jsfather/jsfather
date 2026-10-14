@@ -184,7 +184,7 @@ export function PwaSettings({ configured }: { configured: boolean }) {
     }
   }
   return (
-    <section className="panel pwa-settings">
+    <section className="panel pwa-settings ui-stack">
       <h2>Install & practice reminders</h2>
       <p className="muted">
         Add University to your Home Screen from your browser menu. On iPhone or iPad, use Share →

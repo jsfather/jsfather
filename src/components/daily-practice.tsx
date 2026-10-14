@@ -41,12 +41,12 @@ export function DailyPractice({
         <div>
           <Clock size={20} aria-hidden="true" />
           <strong>{focusTime(todaySeconds)}</strong>
-          <span>practiced today</span>
+          <span>estimated today</span>
         </div>
         <div>
           <Sparkles size={20} aria-hidden="true" />
           <strong>{focusXp(totalSeconds)} XP</strong>
-          <span>from {focusTime(totalSeconds)} of focus</span>
+          <span>from {focusTime(totalSeconds)} of estimated focus</span>
         </div>
       </div>
       <div className="progress-label">
@@ -74,20 +74,23 @@ export function DailyPractice({
           );
         })}
       </div>
-      <p className="field-hint">
-        5 focus minutes per day keeps your streak. Every course counts. 1 focus minute = 1 XP. Best
-        streak: {best} {best === 1 ? 'day' : 'days'}. Your day ends at midnight in {timezone}.
-      </p>
-      {!metToday && (
-        <div className="actions-row">
-          <Link href="/courses" className="button primary">
-            Make time to practice
-          </Link>
-          <Link href="/settings" className="text-link">
-            Set up practice reminders
-          </Link>
-        </div>
-      )}
+      <div className="ui-stack daily-practice-footer">
+        <p className="field-hint">
+          5 estimated focus minutes per day keeps your streak. Every course counts. 1 focus minute =
+          1 XP. Best streak: {best} {best === 1 ? 'day' : 'days'}. Your day ends at midnight in{' '}
+          {timezone}.
+        </p>
+        {!metToday && (
+          <div className="actions-row panel-actions">
+            <Link href="/courses" className="button primary">
+              Make time to practice
+            </Link>
+            <Link href="/settings" className="text-link">
+              Set up practice reminders
+            </Link>
+          </div>
+        )}
+      </div>
     </section>
   );
 }

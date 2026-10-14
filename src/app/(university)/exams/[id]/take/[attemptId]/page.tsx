@@ -69,7 +69,7 @@ export default async function TakeExam({
         title={exam.title}
         description="Take your time. Trust what you’ve learned."
       />
-      <PracticePanel courseId={exam.courseId} activity="exam" attemptId={attemptId} automatic />
+      <PracticePanel courseId={exam.courseId} activity="exam" />
       <ExamRunner
         attemptId={attemptId}
         expiresAt={expiresAt}

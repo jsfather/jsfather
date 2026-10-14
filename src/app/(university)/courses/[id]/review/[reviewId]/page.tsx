@@ -47,7 +47,7 @@ export default async function ReviewCard({
         title={course.title}
         description="Try to recall the answer, then reveal it and rate your memory."
       />
-      <PracticePanel courseId={id} activity="vocabulary" automatic />
+      <PracticePanel courseId={id} activity="vocabulary" />
       <VocabularyReviewCard
         key={reviewId}
         courseId={id}

@@ -80,3 +80,19 @@ export function creditedPracticeSeconds(requested: number, previous: Date, end: 
     ),
   );
 }
+
+// Estimates are awarded on saved learning outcomes, never on an open tab.
+export const VOCABULARY_REVIEW_SECONDS = 30;
+export const BOOK_PAGE_SECONDS = 120;
+export function readingEstimate(currentPage: number, creditedPages: number) {
+  return Math.max(0, currentPage - creditedPages) * BOOK_PAGE_SECONDS;
+}
+export function lessonEstimate(duration: number) {
+  return Math.max(0, Math.floor(duration)) * 60;
+}
+export function examEstimate(startedAt: Date, submittedAt: Date, limitMinutes: number) {
+  return Math.max(
+    0,
+    Math.min(Math.floor((submittedAt.getTime() - startedAt.getTime()) / 1000), limitMinutes * 60),
+  );
+}

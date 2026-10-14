@@ -208,15 +208,17 @@ Apply migration `0016_book_reading_courses` with `npm run db:migrate` before run
 
 ## Daily streaks, focus minutes, and XP
 
-Practice for **5 minutes per local day** across any course type to maintain one shared streak. Yesterday's streak remains available until today's midnight; an unqualified missed day breaks the current streak, while the best streak is retained. The dashboard and **Practice history** show today's recorded time, the last seven days, daily history, and time by course. Profile timezone determines day boundaries, including daylight-saving transitions.
+Practice for **5 minutes per local day** across any course type to maintain one shared streak. Yesterday's streak remains available until today's midnight; an unqualified missed day breaks the current streak, while the best streak is retained. The dashboard and **Practice history** show today's estimated time, the last seven days, daily history, and time by course. Profile timezone determines day boundaries, including daylight-saving transitions.
 
-A **focus minute** is 60 recorded seconds and earns **1 XP**. Vocabulary reviews and signed-in exam attempts start a timer automatically. Use **Start reading** for books or **Start practice** for lessons and vocabulary study outside review cards. Manual timers pause when the tab is hidden or unfocused; automatic timers also pause after two minutes without interaction. Scheduled session durations and past activity are not converted into XP: tracking starts with actual timer use.
+A **focus minute** is 60 seconds of estimated learning time and earns **1 XP**. No practice timer is required: each rated vocabulary review earns 30 seconds (including “again”), each newly read book page earns 2 minutes when progress is saved, and completing a standard session credits its saved duration once. Submitted signed-in exams credit elapsed attempt time capped at the exam limit. An open tab alone earns nothing.
 
-Time saves every 15 seconds, with a best-effort final save on pause/navigation. A server-side elapsed-time cap and request sequence prevent idle catch-up and duplicate credit. One active timer per account prevents overlapping tabs/devices from earning time twice. Course deletion preserves accumulated daily time and XP. Small unsaved portions can be lost if the browser closes without delivering its final request. Network failures pause the timer until sync resumes.
+Outcome keys make awards transactional and idempotent. A book’s furthest credited page prevents repeat saves or moving backwards/forwards from farming XP. Completed session estimates remain fixed after their first award, including if the session is reopened or its duration is edited. Estimates are credited on the save date in the learner’s profile timezone. Historical measured time is preserved. Migration `0019_automatic_practice` imports saved outcomes only for course/activity combinations without previous measured time, adds zero-credit keys for those already measured, and initializes book high-water marks. Deleting courses preserves lifetime XP. The former timer API returns 410 so stale tabs cannot award extra measured time.
+
+Public profiles show streak, XP, estimated time, a 28-day activity calendar, and earned milestones only when progress sharing is enabled. These stats include only public courses, and respect the separate exam-score setting.
 
 The existing reminder endpoint sends one additional reminder per device after **9 PM** in the profile timezone when the five-minute goal is incomplete and an active course is available. It skips completed goals, retries transient delivery failures, and removes expired subscriptions. Enable **practice reminders** in Settings. Background delivery requires the Web Push keys and external scheduler described below; the app does not run its own scheduler.
 
-Apply migrations with `npm run db:migrate` before running this version against an existing database (`0017_absurd_liz_osborn` adds the practice ledger; `0018_practice_exam_time` links exam timers to their attempt).
+Apply migrations with `npm run db:migrate` before running this version against an existing database (`0017_absurd_liz_osborn` adds the practice ledger; `0018_practice_exam_time` links exam timers to their attempt; `0019_automatic_practice` migrates automatic estimates).
 
 ## Architecture
 
