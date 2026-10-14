@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { BookCourseForm } from '@/components/book-forms';
 import { VocabularyCourseForm } from '@/components/vocabulary-forms';
 import { requireUser } from '@/lib/auth';
 import { PageTitle } from '@/components/ui';
@@ -10,7 +11,9 @@ export default async function NewCourse({
 }: {
   searchParams: Promise<{ kind?: string }>;
 }) {
-  const vocabulary = (await searchParams).kind === 'vocabulary';
+  const kind = (await searchParams).kind;
+  const vocabulary = kind === 'vocabulary';
+  const book = kind === 'book';
   const user = await requireUser();
   return (
     <>
@@ -20,8 +23,11 @@ export default async function NewCourse({
         description="Decide what to learn. Give it a time and a place."
       />
       <div className="actions-row" style={{ marginBottom: 24 }}>
-        <Link className={`button ${vocabulary ? 'secondary' : 'primary'}`} href="/courses/new">
-          Scheduled course
+        <Link
+          className={`button ${vocabulary || book ? 'secondary' : 'primary'}`}
+          href="/courses/new"
+        >
+          Regular course
         </Link>
         <Link
           className={`button ${vocabulary ? 'primary' : 'secondary'}`}
@@ -29,8 +35,13 @@ export default async function NewCourse({
         >
           Language vocabulary
         </Link>
+        <Link className={`button ${book ? 'primary' : 'secondary'}`} href="/courses/new?kind=book">
+          Reading a book
+        </Link>
       </div>
-      {vocabulary ? (
+      {book ? (
+        <BookCourseForm />
+      ) : vocabulary ? (
         <VocabularyCourseForm timezone={user.timezone} />
       ) : (
         <CourseForm

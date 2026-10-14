@@ -113,7 +113,7 @@ export const courses = pgTable(
     ownerId: text('owner_id')
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
-    kind: text('kind').$type<'standard' | 'vocabulary'>().default('standard').notNull(),
+    kind: text('kind').$type<'standard' | 'vocabulary' | 'book'>().default('standard').notNull(),
     title: text('title').notNull(),
     slug: text('slug').notNull(),
     description: text('description').default('').notNull(),
@@ -121,6 +121,10 @@ export const courses = pgTable(
     difficulty: difficultyEnum('difficulty').notNull(),
     color: text('color').default('teal').notNull(),
     status: courseStatusEnum('status').default('active').notNull(),
+    bookAuthor: text('book_author').default('').notNull(),
+    totalPages: integer('total_pages'),
+    currentPage: integer('current_page').default(0).notNull(),
+    readingNotes: text('reading_notes').default('').notNull(),
     totalSessions: integer('total_sessions').notNull(),
     scheduledTime: text('scheduled_time').notNull(),
     duration: integer('duration').notNull(),
@@ -134,7 +138,11 @@ export const courses = pgTable(
   (t) => [
     uniqueIndex('courses_owner_slug_idx').on(t.ownerId, t.slug),
     index('courses_owner_idx').on(t.ownerId),
-    check('course_kind_valid', sql`${t.kind} in ('standard', 'vocabulary')`),
+    check('course_kind_valid', sql`${t.kind} in ('standard', 'vocabulary', 'book')`),
+    check(
+      'book_pages_valid',
+      sql`${t.currentPage} >= 0 and (${t.kind} <> 'book' or (${t.totalPages} is not null and ${t.totalPages} > 0 and ${t.currentPage} <= ${t.totalPages}))`,
+    ),
     check('course_count_nonnegative', sql`${t.totalSessions}>=0`),
     check('course_duration_positive', sql`${t.duration}>0`),
   ],
@@ -416,7 +424,69 @@ export const pushSubscriptions = pgTable(
     p256dh: text('p256dh').notNull(),
     auth: text('auth').notNull(),
     lastSentDay: text('last_sent_day'),
+    lastStreakDay: text('last_streak_day'),
     ...dates,
   },
   (t) => [index('push_subscriptions_user_idx').on(t.userId)],
+);
+
+export const bookBookmarks = pgTable(
+  'book_bookmarks',
+  {
+    id: id(),
+    courseId: text('course_id')
+      .notNull()
+      .references(() => courses.id, { onDelete: 'cascade' }),
+    page: integer('page').notNull(),
+    label: text('label').default('').notNull(),
+    notes: text('notes').default('').notNull(),
+    ...dates,
+  },
+  (t) => [
+    index('book_bookmarks_course_idx').on(t.courseId, t.page),
+    check('book_bookmark_page_positive', sql`${t.page} > 0`),
+  ],
+);
+export type BookBookmark = typeof bookBookmarks.$inferSelect;
+
+export const practiceSessions = pgTable(
+  'practice_sessions',
+  {
+    id: id(),
+    userId: text('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    courseId: text('course_id').references(() => courses.id, { onDelete: 'set null' }),
+    activity: text('activity').$type<'lesson' | 'reading' | 'vocabulary' | 'exam'>().notNull(),
+    seconds: integer('seconds').default(0).notNull(),
+    lastSequence: integer('last_sequence').default(0).notNull(),
+    startedAt: timestamp('started_at', { withTimezone: true }).defaultNow().notNull(),
+    lastHeartbeatAt: timestamp('last_heartbeat_at', { withTimezone: true }).defaultNow().notNull(),
+    endedAt: timestamp('ended_at', { withTimezone: true }),
+  },
+  (t) => [
+    uniqueIndex('practice_one_active_per_user')
+      .on(t.userId)
+      .where(sql`${t.endedAt} is null`),
+    index('practice_user_course_idx').on(t.userId, t.courseId),
+    check('practice_seconds_valid', sql`${t.seconds} >= 0 and ${t.lastSequence} >= 0`),
+    check(
+      'practice_activity_valid',
+      sql`${t.activity} in ('lesson', 'reading', 'vocabulary', 'exam')`,
+    ),
+  ],
+);
+export const practiceDays = pgTable(
+  'practice_days',
+  {
+    userId: text('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    day: text('day').notNull(),
+    seconds: integer('seconds').default(0).notNull(),
+  },
+  (t) => [
+    primaryKey({ columns: [t.userId, t.day] }),
+    check('practice_day_seconds_valid', sql`${t.seconds} >= 0`),
+  ],
 );

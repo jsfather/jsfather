@@ -2870,15 +2870,67 @@ tbody tr:last-child td {
   margin-top: 16px;
   line-height: 1.6;
 }
-.vocabulary-reveal-form {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 16px;
-  margin-top: 24px;
+.vocabulary-review-page {
+  padding-bottom: calc(148px + env(safe-area-inset-bottom));
 }
-.vocabulary-review-card .actions-row {
-  margin: 16px 0;
+.vocabulary-review-actions {
+  position: fixed;
+  inset: auto 0 0 244px;
+  z-index: 20;
+  padding: 12px max(20px, env(safe-area-inset-right)) calc(16px + env(safe-area-inset-bottom))
+    max(20px, env(safe-area-inset-left));
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: 0 -8px 30px #00000015;
+}
+.vocabulary-review-actions-inner {
+  max-width: 760px;
+  margin: auto;
+}
+.vocabulary-review-action-prompt {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+.vocabulary-rating-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.vocabulary-reveal-form {
+  margin: 0;
+}
+.vocabulary-review-actions .button {
+  width: 100%;
+  height: 52px;
+  min-height: 52px;
+  padding: 12px 8px;
+  gap: 6px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+.vocabulary-review-actions .button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+.vocabulary-review-actions .alert {
+  margin: 0 0 12px;
+}
+@media (max-width: 1200px) {
+  .vocabulary-review-actions {
+    left: 220px;
+  }
+}
+@media (max-width: 760px) {
+  .vocabulary-review-actions {
+    left: 0;
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+  }
+  .vocabulary-rating-form {
+    gap: 10px;
+  }
 }
 .vocabulary-review-card .field-hint {
   margin-top: 16px;

@@ -11,7 +11,9 @@ import { Feedback, Submit } from './forms';
 export function AssessmentControls({
   courseId,
   children,
+  book = false,
 }: {
+  book?: boolean;
   courseId: string;
   children?: React.ReactNode;
 }) {
@@ -27,8 +29,9 @@ export function AssessmentControls({
     <section className="panel" style={{ marginTop: 24 }}>
       <h2>Assessment</h2>
       <p className="muted" style={{ margin: '12px 0 20px' }}>
-        Practice with all questions from your sessions. Both options save your result. Pass the
-        final assessment and complete every session to earn your course certificate.
+        {book
+          ? 'Practice with all questions from your book. Both options save your result. Finish reading and pass the final assessment to earn your certificate.'
+          : 'Practice with all questions from your sessions. Both options save your result. Pass the final assessment and complete every session to earn your course certificate.'}
       </p>
       <div className="actions-row">
         <form action={practiceAction}>

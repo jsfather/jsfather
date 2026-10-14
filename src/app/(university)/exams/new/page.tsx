@@ -28,9 +28,13 @@ export default async function NewExam({
         <PageTitle
           eyebrow={course.title}
           title={'Questions · ' + session.title}
-          description="Build your class question bank with easy, medium, and hard questions."
+          description={
+            course.kind === 'book'
+              ? 'Build your book’s question bank as you read.'
+              : 'Build your class question bank with easy, medium, and hard questions.'
+          }
         />
-        <ExamBuilder courseId={course.id} sessionId={session.id} />
+        <ExamBuilder courseId={course.id} sessionId={session.id} book={course.kind === 'book'} />
       </>
     );
   }
@@ -41,6 +45,7 @@ export default async function NewExam({
       .from(courseSessions)
       .where(eq(courseSessions.courseId, course.id))
       .orderBy(asc(courseSessions.sessionNumber));
+    if (course.kind === 'book' && sessions[0]) redirect('/exams/new?session=' + sessions[0].id);
     return (
       <>
         <PageTitle

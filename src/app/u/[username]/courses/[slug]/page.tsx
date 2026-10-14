@@ -37,9 +37,13 @@ export default async function PublicCoursePage({
       <section className="panel">
         <p className="detail-description">{course.description}</p>
         <p className="muted" style={{ marginBottom: 24 }}>
-          {course.kind === 'vocabulary'
-            ? 'Language vocabulary · practice with your own saved progress'
-            : `${course.totalSessions} scheduled sessions`}
+          {course.kind === 'book'
+            ? `Book · ${course.totalPages} pages${course.bookAuthor ? ` · ${course.bookAuthor}` : ''}`
+            : course.kind === 'vocabulary'
+              ? 'Language vocabulary · practice with your own saved progress'
+              : course.totalSessions
+                ? `${course.totalSessions} scheduled sessions`
+                : 'Self-paced · no schedule'}
         </p>
         {course.kind === 'vocabulary' && course.status === 'active' && (
           <form action={joinPublicVocabularyCourse.bind(null, course.id)}>
@@ -53,7 +57,8 @@ export default async function PublicCoursePage({
           <>
             <div className="progress-label">
               <span>
-                {progress.completed} / {progress.total} sessions completed
+                {progress.completed} / {progress.total}{' '}
+                {course.kind === 'book' ? 'pages read' : 'sessions completed'}
               </span>
               <strong>{progress.percentage}%</strong>
             </div>

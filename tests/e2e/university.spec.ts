@@ -38,6 +38,47 @@ test.afterAll(async () => {
   await db.delete(schema.users).where(eq(schema.users.id, otherId));
   await client.end();
 });
+test('creates a course without a schedule and adds a timetable later', async ({ page }) => {
+  await page
+    .context()
+    .addCookies([
+      { name: 'authjs.session-token', value: token, url: base, httpOnly: true, sameSite: 'Lax' },
+    ]);
+  await page.goto('/courses/new');
+  await page.getByLabel('Course name').fill('Self-paced Backend');
+  await page.getByLabel('Category', { exact: true }).selectOption('Backend');
+  await expect(page.getByLabel('Number of sessions')).toHaveCount(0);
+  await page.getByRole('button', { name: 'Create course', exact: true }).click();
+  await expect(page).toHaveURL(/\/courses\/[0-9a-f-]{36}$/);
+  const id = page.url().split('/').at(-1)!;
+  const [course] = await db.select().from(schema.courses).where(eq(schema.courses.id, id));
+  expect(course.category).toBe('Backend');
+  expect(course.totalSessions).toBe(0);
+  expect(course.endDate).toBeNull();
+  expect(
+    await db.select().from(schema.courseSessions).where(eq(schema.courseSessions.courseId, id)),
+  ).toHaveLength(0);
+  await expect(page.getByText('No schedule yet.', { exact: false })).toBeVisible();
+  await page.goto(`/courses/${id}/edit`);
+  await page.getByLabel('Course name').fill('Self-paced Backend updated');
+  await page.getByRole('button', { name: 'Save course', exact: true }).click();
+  await expect(page.locator('.alert.success')).toContainText('Course updated');
+  await page.getByLabel('Add a schedule', { exact: true }).check();
+  await page.getByLabel('Number of sessions').fill('2');
+  await page.getByRole('button', { name: 'Save course', exact: true }).click();
+  await expect(page.locator('.alert.success')).toContainText('Course updated');
+  await expect
+    .poll(
+      async () =>
+        (
+          await db
+            .select()
+            .from(schema.courseSessions)
+            .where(eq(schema.courseSessions.courseId, id))
+        ).length,
+    )
+    .toBe(2);
+});
 test('complete learning workflow, privacy, and authorization', async ({ page, browser }) => {
   await page
     .context()
@@ -51,7 +92,8 @@ test('complete learning workflow, privacy, and authorization', async ({ page, br
   await page
     .getByLabel('Description', { exact: true })
     .fill('Build a strong understanding of TypeScript.');
-  await page.getByLabel('Category', { exact: true }).fill('Frontend');
+  await page.getByLabel('Category', { exact: true }).selectOption('Frontend');
+  await page.getByLabel('Add a schedule', { exact: true }).check();
   await page.getByLabel('Number of sessions').fill('3');
   await page.getByLabel('Public course').check();
   await page.getByRole('button', { name: 'Create course', exact: true }).click();

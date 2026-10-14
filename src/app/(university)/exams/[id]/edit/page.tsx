@@ -69,8 +69,12 @@ export default async function EditExam({ params }: { params: Promise<{ id: strin
     : [];
   return (
     <>
-      <PageTitle eyebrow={course.title.toUpperCase()} title="Edit class questions" />
+      <PageTitle
+        eyebrow={course.title.toUpperCase()}
+        title={course.kind === 'book' ? 'Edit book questions' : 'Edit class questions'}
+      />
       <ExamBuilder
+        book={course.kind === 'book'}
         courseId={course.id}
         sessionId={exam.sessionId ?? ''}
         sessions={sessions}

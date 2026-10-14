@@ -176,7 +176,8 @@ test('manage the attached exam and add, edit, remove, and restore sessions', asy
     page.getByText('No sessions yet. Add a session to continue your course.'),
   ).toBeVisible();
   await page.getByRole('link', { name: 'Edit course', exact: true }).click();
-  await expect(page.getByLabel('Number of sessions')).toHaveValue('0');
+  await expect(page.getByLabel('Number of sessions')).toHaveCount(0);
+  await expect(page.getByLabel('Add a schedule', { exact: true })).not.toBeChecked();
   await page.getByRole('button', { name: 'Save course', exact: true }).click();
   await expect(page.getByRole('status')).toContainText('Course updated');
   await page.goto(`/courses/${courseId}`);

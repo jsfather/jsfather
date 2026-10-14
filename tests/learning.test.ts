@@ -9,7 +9,13 @@ import {
   ownsResource,
   grade,
 } from '../src/lib/learning';
-import { courseSchema, profileSchema, examSchema, sessionSchema } from '../src/lib/validation';
+import {
+  courseSchema,
+  optionalScheduleCourseSchema,
+  profileSchema,
+  examSchema,
+  sessionSchema,
+} from '../src/lib/validation';
 import { formatInTimeZone } from 'date-fns-tz';
 const schedule = {
   startDate: '2026-10-01',
@@ -142,7 +148,7 @@ describe('Input validation', () => {
       ...schedule,
       title: 'JS',
       description: '',
-      category: 'Web',
+      category: 'Frontend',
       difficulty: 'advanced',
       color: 'teal',
       duration: 60,
@@ -152,6 +158,33 @@ describe('Input validation', () => {
     expect(courseSchema.safeParse({ ...input, timezone: 'Nonsense/Bad' }).success).toBe(false);
     expect(courseSchema.safeParse({ ...input, weekdays: [] }).success).toBe(false);
     expect(courseSchema.safeParse({ ...input, totalSessions: 0 }).success).toBe(false);
+  });
+  it('allows an unscheduled course but validates enabled timetables and category choices', () => {
+    const input = {
+      ...schedule,
+      title: 'Self-paced frontend',
+      description: '',
+      category: 'Frontend',
+      difficulty: 'beginner',
+      color: 'teal',
+      duration: 60,
+      isPublic: false,
+      totalSessions: 0,
+      weekdays: [],
+    };
+    expect(optionalScheduleCourseSchema.parse(input).totalSessions).toBe(0);
+    expect(optionalScheduleCourseSchema.safeParse({ ...input, totalSessions: 3 }).success).toBe(
+      false,
+    );
+    expect(
+      optionalScheduleCourseSchema.safeParse({ ...input, totalSessions: 3, weekdays: [1] }).success,
+    ).toBe(true);
+    for (const category of ['Backend', 'DevOps', 'Artificial Intelligence', 'English', 'German']) {
+      expect(optionalScheduleCourseSchema.safeParse({ ...input, category }).success).toBe(true);
+    }
+    for (const category of ['', 'front', 'Arbitrary category']) {
+      expect(optionalScheduleCourseSchema.safeParse({ ...input, category }).success).toBe(false);
+    }
   });
   it('rejects invalid dates and unsafe profile URLs', () => {
     expect(

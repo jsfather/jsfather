@@ -81,7 +81,7 @@ test('daily vocabulary, collaborator isolation, spaced practice, mastery, edits,
       page.getByRole('heading', { name: 'Language vocabulary course', exact: true }),
     ).toBeVisible();
     await page.getByLabel('Course name', { exact: true }).fill('Everyday English');
-    await page.getByLabel('Language', { exact: true }).fill('English');
+    await page.getByLabel('Language', { exact: true }).selectOption('English');
     await page.getByRole('button', { name: 'Create vocabulary course' }).click();
     await expect(
       page.getByRole('heading', { name: 'Everyday English', exact: true }),
@@ -367,7 +367,9 @@ test('daily vocabulary, collaborator isolation, spaced practice, mastery, edits,
     await expect(page.getByLabel('Number of sessions')).toHaveCount(0);
     await page.goto('/dashboard');
     await expect(
-      page.getByRole('heading', { name: 'English with friends', exact: true }),
+      page
+        .locator('.course-card')
+        .getByRole('heading', { name: 'English with friends', exact: true }),
     ).toBeVisible();
     await page.goto(`/courses/${courseId}/edit`);
     await page.getByRole('button', { name: 'Delete course', exact: true }).click();

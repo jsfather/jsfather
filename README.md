@@ -198,6 +198,14 @@ Add an existing account by its exact username under **Collaborators**. The cours
 
 Apply migration `0010_vocabulary_courses` with `npm run db:migrate` before running this version against an existing database. Existing courses remain scheduled courses.
 
+## Book reading courses
+
+Choose **Create course → Reading a book**, enter its title, optional author, category, and total pages. Update **Last page read** to track pages read and remaining. Book courses have no timetable. Reading notes and bookmarks (page, label, and optional notes) are private, even for public courses.
+
+Use **Manage questions** to add the same question types as regular courses. Practice and final assessments include all book questions and save their results. A certificate requires finishing all pages and passing the final; completing either requirement first is supported. Page counts cannot be reduced below an existing bookmark or reading position.
+
+Apply migration `0016_book_reading_courses` with `npm run db:migrate` before running this version against an existing database.
+
 ## Architecture
 
 - `src/app`: Server Components, route layouts, metadata, and useful API endpoints (Auth.js and health).

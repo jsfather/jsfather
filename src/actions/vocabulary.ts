@@ -121,13 +121,14 @@ export async function editVocabularyCourse(
 ): Promise<ActionState> {
   const user = await requireUser();
   try {
-    const input = vocabularyCourseSchema
-      .extend({
-        status: z.enum(['active', 'archived']),
-        isPublic: z.preprocess((v) => v === 'on', z.boolean()),
-      })
-      .parse(Object.fromEntries(form));
-    await withCourse(user.id, id, true, async (tx) => {
+    await withCourse(user.id, id, true, async (tx, course) => {
+      const input = vocabularyCourseSchema
+        .extend({
+          category: z.union([vocabularyCourseSchema.shape.category, z.literal(course.category)]),
+          status: z.enum(['active', 'archived']),
+          isPublic: z.preprocess((v) => v === 'on', z.boolean()),
+        })
+        .parse(Object.fromEntries(form));
       await tx
         .update(courses)
         .set({ ...input, updatedAt: new Date() })

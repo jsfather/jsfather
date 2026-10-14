@@ -1,3 +1,4 @@
+import { BookCourseForm } from '@/components/book-forms';
 import { VocabularyCourseForm } from '@/components/vocabulary-forms';
 import { requireUser } from '@/lib/auth';
 import { ownedCourse } from '@/lib/data';
@@ -13,7 +14,9 @@ export default async function EditCourse({ params }: { params: Promise<{ id: str
         title="Edit course"
         description="Update your syllabus. Change individual class times from each session page."
       />
-      {course.kind === 'vocabulary' ? (
+      {course.kind === 'book' ? (
+        <BookCourseForm course={course} />
+      ) : course.kind === 'vocabulary' ? (
         <VocabularyCourseForm course={course} timezone={user.timezone} />
       ) : (
         <CourseForm course={course} today={course.startDate} />

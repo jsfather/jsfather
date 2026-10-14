@@ -1,3 +1,4 @@
+import { BookCourseDetail } from '@/components/book-course';
 import { accessibleCourse } from '@/lib/data';
 import { VocabularyCourseDetail } from '@/components/vocabulary-course';
 import Link from 'next/link';
@@ -25,6 +26,8 @@ export default async function CourseDetail({
   const user = await requireUser();
   const course = await accessibleCourse(user.id, (await params).id);
   const page = pageNumber((await searchParams).page);
+  if (course.kind === 'book')
+    return <BookCourseDetail course={course} userId={user.id} page={page} />;
   if (course.kind === 'vocabulary')
     return <VocabularyCourseDetail course={course} user={user} page={page} />;
   const [sessions, counts, examList, next] = await Promise.all([
@@ -144,30 +147,39 @@ export default async function CourseDetail({
                 <span>Current grade</span>
                 <strong>{bestScore === null ? '—' : grade(bestScore)}</strong>
               </div>
-              <div>
-                <span>
-                  <CalendarDays size={13} /> Starts
-                </span>
-                <strong>{course.startDate}</strong>
-              </div>
-              <div>
-                <span>
-                  <Clock size={13} /> Class time
-                </span>
-                <strong>{course.scheduledTime}</strong>
-              </div>
-              <div>
-                <span>Duration</span>
-                <strong>{course.duration} minutes</strong>
-              </div>
-              <div>
-                <span>Class days</span>
-                <strong>
-                  {course.weekdays
-                    .map((d) => ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][d])
-                    .join(', ')}
-                </strong>
-              </div>
+              {course.totalSessions > 0 ? (
+                <>
+                  <div>
+                    <span>
+                      <CalendarDays size={13} /> Starts
+                    </span>
+                    <strong>{course.startDate}</strong>
+                  </div>
+                  <div>
+                    <span>
+                      <Clock size={13} /> Class time
+                    </span>
+                    <strong>{course.scheduledTime}</strong>
+                  </div>
+                  <div>
+                    <span>Duration</span>
+                    <strong>{course.duration} minutes</strong>
+                  </div>
+                  <div>
+                    <span>Class days</span>
+                    <strong>
+                      {course.weekdays
+                        .map((d) => ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][d])
+                        .join(', ')}
+                    </strong>
+                  </div>
+                </>
+              ) : (
+                <p className="muted">
+                  No schedule yet. Add sessions individually or set up a timetable in course
+                  settings.
+                </p>
+              )}
               <div>
                 <span>Timezone</span>
                 <strong>{course.timezone}</strong>

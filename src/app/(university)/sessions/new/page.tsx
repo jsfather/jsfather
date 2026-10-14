@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { requireUser } from '@/lib/auth';
 import { ownedCourse } from '@/lib/data';
 import { PageTitle } from '@/components/ui';
@@ -14,6 +14,7 @@ export default async function NewSession({
   const { course: courseId } = await searchParams;
   if (!courseId) notFound();
   const course = await ownedCourse(user.id, courseId);
+  if (course.kind === 'book') redirect('/courses/' + course.id);
   return (
     <>
       <Link className="text-link" href={'/courses/' + course.id}>

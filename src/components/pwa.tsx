@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { claimInstallPrompt } from '@/lib/install-prompt';
 
 type InstallPrompt = Event & { prompt(): Promise<void>; userChoice: Promise<{ outcome: string }> };
 let registration: Promise<ServiceWorkerRegistration> | undefined;
@@ -26,26 +27,32 @@ export function PwaProvider() {
     const apple =
       /iPhone|iPad|iPod/.test(navigator.userAgent) ||
       (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    let dismissed = false;
-    try {
-      dismissed = sessionStorage.getItem('university-install-dismissed') === 'true';
-    } catch {}
+    let shown = false;
+    const showInstallBanner = () => {
+      if (standalone || shown) return;
+      try {
+        if (!claimInstallPrompt(window.localStorage)) return;
+      } catch {
+        return;
+      }
+      shown = true;
+      setIos(apple);
+      setShow(true);
+    };
     const install = (event: Event) => {
       event.preventDefault();
       setPrompt(event as InstallPrompt);
-      if (!standalone && !dismissed) setShow(true);
+      showInstallBanner();
     };
     const installed = () => {
+      shown = true;
       setShow(false);
       setPrompt(null);
     };
     window.addEventListener('beforeinstallprompt', install);
     window.addEventListener('appinstalled', installed);
     const timer = window.setTimeout(() => {
-      if (apple && !standalone && !dismissed) {
-        setIos(true);
-        setShow(true);
-      }
+      if (apple) showInstallBanner();
     }, 0);
     return () => {
       window.clearTimeout(timer);
@@ -84,9 +91,6 @@ export function PwaProvider() {
           className="button secondary"
           onClick={() => {
             setShow(false);
-            try {
-              sessionStorage.setItem('university-install-dismissed', 'true');
-            } catch {}
           }}
         >
           Maybe later

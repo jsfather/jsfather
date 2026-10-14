@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { Check, SkipForward, RotateCcw } from 'lucide-react';
 import { requireUser } from '@/lib/auth';
 import { ownedSession } from '@/lib/data';
@@ -13,6 +14,7 @@ export const metadata = { title: 'Study session' };
 export default async function SessionDetail({ params }: { params: Promise<{ id: string }> }) {
   const user = await requireUser();
   const { session, course } = await ownedSession(user.id, (await params).id);
+  if (course.kind === 'book') redirect('/courses/' + course.id);
   const [exam] = await db.select().from(exams).where(eq(exams.sessionId, session.id)).limit(1);
   return (
     <>

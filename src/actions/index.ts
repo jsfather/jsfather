@@ -2,6 +2,7 @@
 import { assessmentName } from '@/lib/assessment-names';
 import { syncAssessmentNames } from '@/lib/sync-assessment-names';
 import { db } from '@/db';
+import { issueEligibleCertificate } from '@/lib/issue-certificate';
 import {
   courses,
   courseSessions,
@@ -15,7 +16,7 @@ import {
 import { requireUser, signIn, signOut } from '@/lib/auth';
 import { ownedCourse, ownedSession, ownedExam, accessibleExam } from '@/lib/data';
 import {
-  courseSchema,
+  optionalScheduleCourseSchema,
   sessionSchema,
   profileSchema,
   classBankSchema,
@@ -23,7 +24,7 @@ import {
 } from '@/lib/validation';
 import { generateSchedule, slugify, scoreExam } from '@/lib/learning';
 import { fromZonedTime, formatInTimeZone } from 'date-fns-tz';
-import { and, eq, asc, desc, inArray, sql } from 'drizzle-orm';
+import { and, eq, asc, inArray, sql } from 'drizzle-orm';
 import { redirect, unstable_rethrow } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
@@ -82,16 +83,38 @@ export async function googleLogin() {
 export async function logout() {
   await signOut({ redirectTo: '/' });
 }
+function courseFormInput(
+  form: FormData,
+  defaults: { startDate: string; timezone: string; scheduledTime?: string; duration?: number },
+) {
+  const values = {
+    ...formObject(form),
+    weekdays: form.getAll('weekdays'),
+    isPublic: form.get('isPublic') === 'on',
+  };
+  return form.get('scheduleEnabled') === 'on'
+    ? values
+    : {
+        ...values,
+        totalSessions: 0,
+        startDate: defaults.startDate,
+        timezone: defaults.timezone,
+        scheduledTime: defaults.scheduledTime ?? '18:00',
+        duration: defaults.duration ?? 60,
+        weekdays: [],
+      };
+}
 export async function createCourse(_state: ActionState, form: FormData): Promise<ActionState> {
   const user = await requireUser();
   let id = '';
   try {
-    const input = courseSchema.parse({
-      ...formObject(form),
-      weekdays: form.getAll('weekdays'),
-      isPublic: form.get('isPublic') === 'on',
-    });
-    const dates = generateSchedule(input);
+    const input = optionalScheduleCourseSchema.parse(
+      courseFormInput(form, {
+        startDate: formatInTimeZone(new Date(), user.timezone, 'yyyy-MM-dd'),
+        timezone: user.timezone,
+      }),
+    );
+    const dates = input.totalSessions ? generateSchedule(input) : [];
     id = crypto.randomUUID();
     await db.transaction(async (tx) => {
       await tx.insert(courses).values({
@@ -99,17 +122,20 @@ export async function createCourse(_state: ActionState, form: FormData): Promise
         id,
         ownerId: user.id,
         slug: slugify(input.title) + '-' + id.slice(0, 8),
-        endDate: formatInTimeZone(dates.at(-1)!, input.timezone, 'yyyy-MM-dd'),
+        endDate: dates.length
+          ? formatInTimeZone(dates.at(-1)!, input.timezone, 'yyyy-MM-dd')
+          : null,
       });
-      await tx.insert(courseSessions).values(
-        dates.map((date, i) => ({
-          courseId: id,
-          title: `Session ${i + 1}`,
-          sessionNumber: i + 1,
-          scheduledDate: date,
-          duration: input.duration,
-        })),
-      );
+      if (dates.length)
+        await tx.insert(courseSessions).values(
+          dates.map((date, i) => ({
+            courseId: id,
+            title: `Session ${i + 1}`,
+            sessionNumber: i + 1,
+            scheduledDate: date,
+            duration: input.duration,
+          })),
+        );
     });
   } catch (e) {
     return failure(e);
@@ -125,26 +151,34 @@ export async function editCourse(
   const user = await requireUser();
   const course = await ownedCourse(user.id, id);
   if (course.kind !== 'standard')
-    return { error: 'Use the vocabulary course settings to edit this course.' };
+    return { error: 'Use this course’s dedicated settings to edit it.' };
   try {
-    const input = courseSchema
-      .extend({
+    const input = z
+      .object({
+        ...optionalScheduleCourseSchema.shape,
+        category: z.union([
+          optionalScheduleCourseSchema.shape.category,
+          z.literal(course.category),
+        ]),
         status: z.enum(['active', 'archived']),
         totalSessions: z.coerce.number().int().min(0),
       })
-      .parse({
-        ...formObject(form),
-        weekdays: form.getAll('weekdays'),
-        isPublic: form.get('isPublic') === 'on',
-      });
-    if (input.totalSessions !== course.totalSessions)
+      .refine((input) => input.totalSessions === 0 || input.weekdays.length > 0, {
+        message: 'Select at least one class day for your schedule.',
+        path: ['weekdays'],
+      })
+      .parse(courseFormInput(form, course));
+    if (course.totalSessions > 0 && input.totalSessions !== course.totalSessions)
       return { error: 'Add or remove sessions from the course page to change its total.' };
     const scheduleChanged =
+      input.totalSessions !== course.totalSessions ||
       input.startDate !== course.startDate ||
       input.scheduledTime !== course.scheduledTime ||
       input.duration !== course.duration ||
       input.timezone !== course.timezone ||
       JSON.stringify([...input.weekdays].sort()) !== JSON.stringify([...course.weekdays].sort());
+    if (course.totalSessions === 0 && input.totalSessions > 1000)
+      return { error: 'A timetable can contain at most 1000 sessions.' };
     const dates = scheduleChanged ? (input.totalSessions ? generateSchedule(input) : []) : null;
     const updated = await db.transaction(async (tx) => {
       const [currentCourse] = await tx
@@ -152,7 +186,7 @@ export async function editCourse(
         .from(courses)
         .where(eq(courses.id, id))
         .for('update');
-      if (!currentCourse || currentCourse.totalSessions !== input.totalSessions) return false;
+      if (!currentCourse || currentCourse.totalSessions !== course.totalSessions) return false;
       if (scheduleChanged) {
         const [bank] = await tx
           .select({ id: exams.id })
@@ -228,8 +262,7 @@ export async function createSession(
 ): Promise<ActionState> {
   const user = await requireUser();
   const course = await ownedCourse(user.id, courseId);
-  if (course.kind !== 'standard')
-    return { error: 'Vocabulary courses use daily words instead of sessions.' };
+  if (course.kind !== 'standard') return { error: 'Only regular courses have scheduled sessions.' };
   let id = '';
   let completed = false;
   try {
@@ -272,6 +305,7 @@ export async function deleteSession(
   void _state;
   const user = await requireUser();
   const { course, session } = await ownedSession(user.id, id);
+  if (course.kind === 'book') return { error: 'Manage this book from its reading page.' };
   if (form.get('confirmation') !== session.title)
     return { error: 'Type the session title to confirm deletion.' };
   try {
@@ -292,6 +326,7 @@ export async function updateSession(
 ): Promise<ActionState> {
   const user = await requireUser();
   const { course, session } = await ownedSession(user.id, id);
+  if (course.kind === 'book') return { error: 'Manage this book from its reading page.' };
   try {
     const input = sessionSchema.parse(formObject(form));
     const scheduledDate = fromZonedTime(`${input.date}T${input.time}:00`, course.timezone);
@@ -336,6 +371,7 @@ export async function updateSession(
 export async function setSessionStatus(id: string, status: 'completed' | 'skipped' | 'upcoming') {
   const user = await requireUser();
   const { course, session } = await ownedSession(user.id, id);
+  if (course.kind === 'book') return;
   const valid = z.enum(['completed', 'skipped', 'upcoming']).parse(status);
   await db
     .update(courseSessions)
@@ -507,7 +543,7 @@ export async function saveExam(
   revalidatePath('/sessions/' + sessionId);
   if (previousSessionId && previousSessionId !== sessionId)
     revalidatePath('/sessions/' + previousSessionId);
-  redirect('/exams/' + id);
+  redirect(course.kind === 'book' ? '/courses/' + courseId : '/exams/' + id);
 }
 export async function deleteExam(
   examId: string,
@@ -742,7 +778,7 @@ async function buildCourseAssessment(
   mode: 'practice' | 'final',
 ): Promise<{ id?: string; error?: string }> {
   const course = await ownedCourse(userId, courseId);
-  if (course.kind !== 'standard')
+  if (course.kind === 'vocabulary')
     return { error: 'Vocabulary courses use word reviews instead of exams.' };
   const id = crypto.randomUUID();
   try {
@@ -769,7 +805,9 @@ async function buildCourseAssessment(
         .filter((q) => q.sessionId !== null)
         .map((q) => ({ ...q.question, sessionId: q.sessionId! }));
       if (!candidates.length)
-        return 'Add at least one question to any class before generating an assessment.';
+        return course.kind === 'book'
+          ? 'Add at least one book question before generating an assessment.'
+          : 'Add at least one question to any class before generating an assessment.';
       const selected = candidates;
       const defaults = assessmentDefaults(selected);
       await tx.insert(exams).values({
@@ -827,54 +865,6 @@ async function buildCourseAssessment(
   }
   refresh(courseId);
   return { id };
-}
-async function issueEligibleCertificate(courseId: string, userId: string) {
-  await db.transaction(async (tx) => {
-    const [course] = await tx
-      .select()
-      .from(courses)
-      .where(and(eq(courses.id, courseId), eq(courses.ownerId, userId)))
-      .for('update');
-    if (!course) return;
-    const sessions = await tx
-      .select({ status: courseSessions.status })
-      .from(courseSessions)
-      .where(eq(courseSessions.courseId, courseId))
-      .for('share');
-    if (!sessions.length || sessions.some((session) => session.status !== 'completed')) return;
-    const [attempt] = await tx
-      .select({ id: examAttempts.id, percentage: examAttempts.percentage })
-      .from(examAttempts)
-      .innerJoin(exams, eq(examAttempts.examId, exams.id))
-      .where(
-        and(
-          eq(exams.courseId, courseId),
-          eq(exams.isFinal, true),
-          eq(examAttempts.userId, userId),
-          eq(examAttempts.passed, true),
-          sql`coalesce((${examAttempts.snapshot}->>'practiceOnly')::boolean, false) = false`,
-        ),
-      )
-      .orderBy(desc(examAttempts.submittedAt))
-      .limit(1);
-    if (!attempt || attempt.percentage === null) return;
-    const [user] = await tx
-      .select({ name: users.name, username: users.username })
-      .from(users)
-      .where(eq(users.id, userId));
-    await tx
-      .insert(certificates)
-      .values({
-        attemptId: attempt.id,
-        userId,
-        courseId,
-        recipientName: user.name ?? user.username,
-        courseTitle: course.title,
-        percentage: attempt.percentage,
-      })
-      .onConflictDoNothing();
-  });
-  refresh(courseId);
 }
 export async function submitAttempt(
   attemptId: string,

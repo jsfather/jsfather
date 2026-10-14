@@ -1,5 +1,7 @@
 'use client';
-import { useActionState } from 'react';
+import { useActionState, useEffect, useRef } from 'react';
+import { Check, RotateCcw, Eye } from 'lucide-react';
+import { CourseCategorySelect } from './course-category-select';
 import {
   leaveVocabularyCourse,
   createVocabularyCourse,
@@ -53,13 +55,7 @@ export function VocabularyCourseForm({ course, timezone }: { course?: Course; ti
       <div className="form-grid">
         <label className="field">
           <span>Language</span>
-          <input
-            name="category"
-            required
-            maxLength={80}
-            defaultValue={course?.category}
-            placeholder="e.g. English"
-          />
+          <CourseCategorySelect value={course?.category} languagesOnly />
         </label>
         <label className="field">
           <span>Language level</span>
@@ -279,67 +275,91 @@ export function VocabularyReviewCard({
   );
   const [state, action] = useActionState(submitVocabularyReview.bind(null, courseId, reviewId), {});
   const showAnswer = revealed || Boolean(revealState.success);
+  const ratingForm = useRef<HTMLFormElement>(null);
+  useEffect(() => {
+    if (showAnswer)
+      ratingForm.current
+        ?.querySelector<HTMLButtonElement>('button')
+        ?.focus({ preventScroll: true });
+  }, [showAnswer]);
   return (
-    <section className="panel vocabulary-review-card">
-      <p className="eyebrow">{direction === 'word' ? 'RECALL THE MEANING' : 'RECALL THE WORD'}</p>
-      <h2 dir="auto" className="vocabulary-prompt">
-        {direction === 'word' ? word.word : word.explanation}
-      </h2>
-      <p className="muted">
-        {word.difficulty} · {successfulReviews} / {reviewTargets[word.difficulty]} successful
-        reviews
-      </p>
-      <Feedback state={state} />
-      {showAnswer ? (
-        <>
-          <div className="vocabulary-answer">
-            <h3 dir="auto">{direction === 'word' ? word.explanation : word.word}</h3>
-            {word.persianMeaning && word.persianMeaning !== word.explanation && (
-              <p dir="rtl" lang="fa">
-                {word.persianMeaning}
-              </p>
-            )}
-            <WordPronunciation
-              word={word.word}
-              ipa={word.pronunciationIpa}
-              persian={word.pronunciationFa}
-            />
-            <PronunciationHelp />
-            {word.relatedForms.length > 0 && (
-              <section className="vocabulary-related-answer">
-                <h4>Related word forms · واژه‌های مرتبط</h4>
-                <div className="vocabulary-related-forms">
-                  {word.relatedForms.map((form) => (
-                    <span key={form} lang="en" dir="ltr">
-                      {form}
-                    </span>
-                  ))}
-                </div>
-              </section>
-            )}
-            {word.example && <p dir="auto">{word.example}</p>}
-          </div>
-          <p className="muted">Did you recall the answer before revealing it?</p>
-          <form action={action} className="actions-row">
-            <Submit secondary name="rating" value="again">
-              Review again
-            </Submit>
-            <Submit name="rating" value="remembered">
-              Remembered
-            </Submit>
-          </form>
-          <p className="field-hint">
-            Remembered adds one successful review. Review again keeps your progress and brings this
-            word back in ten minutes.
+    <>
+      <section className="panel vocabulary-review-card">
+        <p className="eyebrow">{direction === 'word' ? 'RECALL THE MEANING' : 'RECALL THE WORD'}</p>
+        <h2 dir="auto" className="vocabulary-prompt">
+          {direction === 'word' ? word.word : word.explanation}
+        </h2>
+        <p className="muted">
+          {word.difficulty} · {successfulReviews} / {reviewTargets[word.difficulty]} successful
+          reviews
+        </p>
+        {!showAnswer && (
+          <p className="field-hint">Take a moment to recall the answer before revealing it.</p>
+        )}
+        {showAnswer && (
+          <>
+            <div className="vocabulary-answer">
+              <h3 dir="auto">{direction === 'word' ? word.explanation : word.word}</h3>
+              {word.persianMeaning && word.persianMeaning !== word.explanation && (
+                <p dir="rtl" lang="fa">
+                  {word.persianMeaning}
+                </p>
+              )}
+              <WordPronunciation
+                word={word.word}
+                ipa={word.pronunciationIpa}
+                persian={word.pronunciationFa}
+              />
+              <PronunciationHelp />
+              {word.relatedForms.length > 0 && (
+                <section className="vocabulary-related-answer">
+                  <h4>Related word forms · واژه‌های مرتبط</h4>
+                  <div className="vocabulary-related-forms">
+                    {word.relatedForms.map((form) => (
+                      <span key={form} lang="en" dir="ltr">
+                        {form}
+                      </span>
+                    ))}
+                  </div>
+                </section>
+              )}
+              {word.example && <p dir="auto">{word.example}</p>}
+            </div>
+            <p className="field-hint">
+              Remembered adds one successful review. Review again keeps your progress and brings
+              this word back in ten minutes.
+            </p>
+          </>
+        )}
+      </section>
+      <aside className="vocabulary-review-actions" aria-label="Vocabulary review actions">
+        <div className="vocabulary-review-actions-inner">
+          <Feedback state={showAnswer ? state : revealState} />
+          <p className="vocabulary-review-action-prompt">
+            {showAnswer ? 'Did you recall the answer?' : 'Ready to check your answer?'}
           </p>
-        </>
-      ) : (
-        <form action={revealAction} className="vocabulary-reveal-form">
-          <Feedback state={revealState} />
-          <Submit>Reveal answer</Submit>
-        </form>
-      )}
-    </section>
+          {showAnswer ? (
+            <form ref={ratingForm} action={action} className="vocabulary-rating-form">
+              <Submit secondary name="rating" value="again">
+                <RotateCcw size={18} aria-hidden="true" />
+                Review again
+              </Submit>
+              <Submit name="rating" value="remembered">
+                <Check size={18} aria-hidden="true" />
+                Remembered
+              </Submit>
+            </form>
+          ) : (
+            <form action={revealAction} className="vocabulary-reveal-form">
+              <Submit>
+                <Eye size={18} aria-hidden="true" />
+                Reveal answer
+              </Submit>
+            </form>
+          )}
+        </div>
+      </aside>
+    </>
   );
 }
 

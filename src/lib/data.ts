@@ -80,10 +80,12 @@ export async function courseSummaries(
   return db
     .select({
       course: courses,
-      total: sql<number>`case when ${courses.kind} = 'vocabulary' then
+      total: sql<number>`case when ${courses.kind} = 'book' then ${courses.totalPages}
+        when ${courses.kind} = 'vocabulary' then
         (select count(*)::int from vocabulary_words w where w.course_id = courses.id)
         else count(${courseSessions.id})::int end`,
-      completed: sql<number>`case when ${courses.kind} = 'vocabulary' then
+      completed: sql<number>`case when ${courses.kind} = 'book' then ${courses.currentPage}
+        when ${courses.kind} = 'vocabulary' then
         (select count(*)::int from vocabulary_words w join vocabulary_progress p on p.word_id = w.id and p.user_id = ${userId}
         where w.course_id = courses.id and p.successful_reviews >= case w.difficulty when 'easy' then 5 when 'hard' then 15 else 10 end)
         else count(${courseSessions.id}) filter (where ${courseSessions.status}='completed')::int end`,
@@ -95,7 +97,7 @@ export async function courseSummaries(
         when exists (select 1 from exams e where e.course_id=${courses.id} and e.is_final=true) then 'Final ready'
         when exists (select 1 from exams e where e.course_id=${courses.id}) then 'Exam draft'
         else 'No exam yet' end`,
-      nextDate: sql<Date | null>`min(${courseSessions.scheduledDate}) filter (where ${courseSessions.status} in ('upcoming','in_progress') and ${courseSessions.scheduledDate} >= now())`,
+      nextDate: sql<Date | null>`min(${courseSessions.scheduledDate}) filter (where ${courses.kind} = 'standard' and ${courseSessions.status} in ('upcoming','in_progress') and ${courseSessions.scheduledDate} >= now())`,
     })
     .from(courses)
     .leftJoin(courseSessions, eq(courseSessions.courseId, courses.id))
@@ -130,11 +132,12 @@ export async function universityStats(userId: string, onlyPublic = false) {
       })
       .from(courseSessions)
       .innerJoin(courses, eq(courseSessions.courseId, courses.id))
-      .where(scope),
+      .where(and(scope, eq(courses.kind, 'standard'))),
     db
       .select({
         total: sql<number>`count(*)::int`,
-        completed: sql<number>`count(*) filter (where case when courses.kind = 'vocabulary' then
+        completed: sql<number>`count(*) filter (where case when courses.kind = 'book' then courses.current_page = courses.total_pages
+          when courses.kind = 'vocabulary' then
           exists (select 1 from vocabulary_words w where w.course_id = courses.id) and
           not exists (select 1 from vocabulary_words w left join vocabulary_progress p on p.word_id = w.id and p.user_id = ${userId}
             where w.course_id = courses.id and coalesce(p.successful_reviews, 0) < case w.difficulty when 'easy' then 5 when 'hard' then 15 else 10 end)
@@ -180,6 +183,7 @@ export async function upcomingSessions(userId: string, limit = 5) {
       and(
         eq(courses.ownerId, userId),
         eq(courses.status, 'active'),
+        eq(courses.kind, 'standard'),
         inArray(courseSessions.status, ['upcoming', 'in_progress']),
       ),
     )
@@ -194,6 +198,7 @@ export async function sessionsBetween(userId: string, start: Date, end: Date) {
     .where(
       and(
         eq(courses.ownerId, userId),
+        eq(courses.kind, 'standard'),
         gte(courseSessions.scheduledDate, start),
         lt(courseSessions.scheduledDate, end),
       ),
@@ -234,6 +239,13 @@ export async function publicCourse(username: string, slug: string) {
   let p: null | { total: number; completed: number; percentage: number } = null;
   let bestScore: number | null = null;
   let certificateId: string | null = null;
+  if (course.kind === 'book' && canSeeProgress(user)) {
+    p = {
+      total: course.totalPages!,
+      completed: course.currentPage,
+      percentage: Math.round((course.currentPage / course.totalPages!) * 100),
+    };
+  }
   if (course.kind === 'standard' && canSeeProgress(user)) {
     const [counts] = await db
       .select({
@@ -279,6 +291,8 @@ export async function publicCourse(username: string, slug: string) {
       difficulty: course.difficulty,
       color: course.color,
       totalSessions: course.totalSessions,
+      totalPages: course.totalPages,
+      bookAuthor: course.bookAuthor,
     },
     progress: p,
     bestScore,

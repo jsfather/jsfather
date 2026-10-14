@@ -69,7 +69,9 @@ export function ExamBuilder({
   sessions,
   examId = null,
   initial,
+  book = false,
 }: {
+  book?: boolean;
   courseId: string;
   sessionId: string;
   sessions?: { id: string; title: string }[];
@@ -101,7 +103,7 @@ export function ExamBuilder({
     <form action={action} className="form-panel">
       <input type="hidden" name="exam" value={JSON.stringify(bank)} />
       <Feedback state={state} />
-      {sessions && (
+      {sessions && !book && (
         <label className="field">
           <span>Class</span>
           <select
@@ -119,7 +121,7 @@ export function ExamBuilder({
         </label>
       )}
       <div className="section-header">
-        <h2>Class questions</h2>
+        <h2>{book ? 'Book questions' : 'Class questions'}</h2>
         <span className="muted">
           {bank.questions.length} questions · {bank.questions.reduce((sum, q) => sum + q.points, 0)}{' '}
           points

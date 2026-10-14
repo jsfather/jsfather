@@ -40,7 +40,7 @@ export default async function ReviewCard({
   if (!row) notFound();
   if (row.review.submittedAt || course.status === 'archived') redirect(`/courses/${id}/review`);
   return (
-    <>
+    <div className="vocabulary-review-page">
       <PageTitle
         eyebrow="VOCABULARY PRACTICE"
         title={course.title}
@@ -58,6 +58,6 @@ export default async function ReviewCard({
       <Link className="text-link" href={`/courses/${id}`} style={{ marginTop: 24 }}>
         Back to course
       </Link>
-    </>
+    </div>
   );
 }

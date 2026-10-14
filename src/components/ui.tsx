@@ -111,7 +111,12 @@ export function CourseCard({
         <>
           <div className="progress-label">
             <span>
-              {completed} of {total} {course.kind === 'vocabulary' ? 'words mastered' : 'sessions'}
+              {completed} of {total}{' '}
+              {course.kind === 'vocabulary'
+                ? 'words mastered'
+                : course.kind === 'book'
+                  ? 'pages read'
+                  : 'sessions'}
             </span>
             <strong>{percentage}%</strong>
           </div>
