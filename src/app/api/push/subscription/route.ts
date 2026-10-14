@@ -36,7 +36,7 @@ export async function POST(request: Request) {
     .values({ userId: id, endpoint, ...keys })
     .onConflictDoUpdate({
       target: pushSubscriptions.endpoint,
-      set: { userId: id, ...keys, lastSentDay: null, updatedAt: new Date() },
+      set: { userId: id, ...keys, lastSentDay: null, lastStreakDay: null, updatedAt: new Date() },
     });
   return new Response(null, { status: 204 });
 }

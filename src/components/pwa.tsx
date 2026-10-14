@@ -175,7 +175,7 @@ export function PwaSettings({ configured }: { configured: boolean }) {
         });
         if (!saved.ok) throw new Error('Could not save reminders. Try again.');
         setEnabled(true);
-        setMessage('Daily vocabulary reminders enabled on this device.');
+        setMessage('Practice reminders enabled on this device.');
       }
     } catch (error) {
       setMessage(error instanceof Error ? error.message : 'Could not update reminders. Try again.');
@@ -185,14 +185,15 @@ export function PwaSettings({ configured }: { configured: boolean }) {
   }
   return (
     <section className="panel pwa-settings">
-      <h2>Install & vocabulary reminders</h2>
+      <h2>Install & practice reminders</h2>
       <p className="muted">
         Add University to your Home Screen from your browser menu. On iPhone or iPad, use Share →
         Add to Home Screen, then open the installed app.
       </p>
       <p className="muted">
-        Get one daily reminder after 9:00 AM in your profile’s timezone when you have new words to
-        learn or reviews due. Reminders work even when the app is closed.
+        Get a vocabulary reminder after 9:00 AM when words are due, and a daily-goal reminder after
+        9:00 PM if you have not reached 5 practice minutes. Times use your profile timezone.
+        Reminders work even when the app is closed.
       </p>
       <button
         className="button secondary"
@@ -203,7 +204,7 @@ export function PwaSettings({ configured }: { configured: boolean }) {
           ? 'Saving…'
           : enabled
             ? 'Disable reminders on this device'
-            : 'Enable vocabulary reminders'}
+            : 'Enable practice reminders'}
       </button>
       {ready && !supported && (
         <p className="muted">

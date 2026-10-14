@@ -1,3 +1,4 @@
+import { PracticePanel } from '@/components/practice-panel';
 import Link from 'next/link';
 import { db } from '@/db';
 import { bookBookmarks, courseSessions, exams, examAttempts, type Course } from '@/db/schema';
@@ -60,6 +61,7 @@ export async function BookCourseDetail({
           </Link>
         }
       />
+      <PracticePanel courseId={course.id} activity="reading" />
       <div className="detail-layout">
         <div>
           <section className="panel detail-panel">

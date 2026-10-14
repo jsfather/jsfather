@@ -1,3 +1,5 @@
+import { DailyPractice } from '@/components/daily-practice';
+import { practiceSummary } from '@/lib/practice-data';
 import { Avatar } from '@/components/avatar';
 import Link from 'next/link';
 import { Pencil, Globe, Lock, MapPin } from 'lucide-react';
@@ -7,6 +9,7 @@ import { format } from 'date-fns';
 export const metadata = { title: 'My profile' };
 export default async function Profile() {
   const user = await requireUser();
+  const practice = await practiceSummary(user.id, user.timezone);
   return (
     <>
       <PageTitle
@@ -19,6 +22,7 @@ export default async function Profile() {
           </Link>
         }
       />
+      <DailyPractice summary={practice} timezone={user.timezone} />
       <section className="panel">
         <div className="profile-header">
           <Avatar large name={user.name ?? user.username} image={user.image} />

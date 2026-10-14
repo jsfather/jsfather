@@ -206,6 +206,18 @@ Use **Manage questions** to add the same question types as regular courses. Prac
 
 Apply migration `0016_book_reading_courses` with `npm run db:migrate` before running this version against an existing database.
 
+## Daily streaks, focus minutes, and XP
+
+Practice for **5 minutes per local day** across any course type to maintain one shared streak. Yesterday's streak remains available until today's midnight; an unqualified missed day breaks the current streak, while the best streak is retained. The dashboard and **Practice history** show today's recorded time, the last seven days, daily history, and time by course. Profile timezone determines day boundaries, including daylight-saving transitions.
+
+A **focus minute** is 60 recorded seconds and earns **1 XP**. Vocabulary reviews and signed-in exam attempts start a timer automatically. Use **Start reading** for books or **Start practice** for lessons and vocabulary study outside review cards. Manual timers pause when the tab is hidden or unfocused; automatic timers also pause after two minutes without interaction. Scheduled session durations and past activity are not converted into XP: tracking starts with actual timer use.
+
+Time saves every 15 seconds, with a best-effort final save on pause/navigation. A server-side elapsed-time cap and request sequence prevent idle catch-up and duplicate credit. One active timer per account prevents overlapping tabs/devices from earning time twice. Course deletion preserves accumulated daily time and XP. Small unsaved portions can be lost if the browser closes without delivering its final request. Network failures pause the timer until sync resumes.
+
+The existing reminder endpoint sends one additional reminder per device after **9 PM** in the profile timezone when the five-minute goal is incomplete and an active course is available. It skips completed goals, retries transient delivery failures, and removes expired subscriptions. Enable **practice reminders** in Settings. Background delivery requires the Web Push keys and external scheduler described below; the app does not run its own scheduler.
+
+Apply migrations with `npm run db:migrate` before running this version against an existing database (`0017_absurd_liz_osborn` adds the practice ledger; `0018_practice_exam_time` links exam timers to their attempt).
+
 ## Architecture
 
 - `src/app`: Server Components, route layouts, metadata, and useful API endpoints (Auth.js and health).
@@ -221,7 +233,7 @@ Apply migration `0016_book_reading_courses` with `npm run db:migrate` before run
 
 Every private read and mutation checks the current session and resource ownership or vocabulary membership on the server. Private resources are unavailable to other users. Vocabulary collaborators can read and review their shared courses; only the owner can manage words, settings, or collaborators. Public profiles require `publicProfile`; public courses require `showCourses` and individual `isPublic`; progress requires `publicProgress`; exam scores and public certificates additionally require `showExamScores`. Public statistics cover only public courses. Session descriptions/notes, schedules, email, OAuth tokens, and exam answer keys are never part of public views. The take-exam component receives only question text, point values, and answer options, without correctness/explanations. Private routes are dynamic and not indexed by search engines.
 
-The MVP intentionally omits social feeds, subscriptions, reminders, attachments, advanced question types, and official academic certification. Those can be added without weakening the existing ownership boundary.
+The app currently omits social feeds, paid subscriptions, attachments, and official academic certification. Those can be added without weakening the existing ownership boundary.
 
 Assessment names include the full course name: `Course final assessment`, `Course practice assessment`, and `Course Session practice assessment`. Course and session renames update their assessment names. Migration `0011_assessment_names` updates existing exams without changing questions or attempts.
 
@@ -241,7 +253,7 @@ pages and API responses are never cached for offline use.
 Vocabulary due counts appear on the dashboard. Users can enable or disable Web
 Push in Settings for each device. On iOS/iPadOS 16.4+, launch the installed Home
 Screen app before enabling notifications. Permission is only requested when the
-user presses Enable vocabulary reminders.
+user presses Enable practice reminders.
 
 To enable background reminders:
 
@@ -264,6 +276,11 @@ words. Unreviewed words are “to learn”; previously reviewed words are “to 
 Empty queues send nothing. Expired subscriptions are removed; transient delivery
 failures can be retried. Phone settings and push-service availability affect
 actual delivery. A scheduler outage delays reminders until the next eligible run.
+
+The same endpoint also checks the five-minute practice goal after 21:00 in the
+profile timezone. It independently claims one streak reminder per device/day and
+sends it only when the goal is incomplete and an active course is available.
+Notifications expire by the user's midnight. No additional scheduler is needed.
 
 ### Academic vocabulary and public enrollment
 

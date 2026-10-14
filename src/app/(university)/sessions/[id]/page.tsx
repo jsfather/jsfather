@@ -1,3 +1,4 @@
+import { PracticePanel } from '@/components/practice-panel';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { Check, SkipForward, RotateCcw } from 'lucide-react';
@@ -34,6 +35,7 @@ export default async function SessionDetail({ params }: { params: Promise<{ id: 
           </Badge>
         }
       />
+      <PracticePanel courseId={course.id} activity="lesson" />
       <div className="actions-row">
         {session.status !== 'completed' && (
           <form action={setSessionStatus.bind(null, session.id, 'completed')}>

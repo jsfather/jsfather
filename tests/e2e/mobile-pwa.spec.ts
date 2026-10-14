@@ -118,7 +118,7 @@ test('manifest, service worker, offline fallback, and authenticated push endpoin
     { name: 'authjs.session-token', value: token, url: base, httpOnly: true, sameSite: 'Lax' },
   ]);
   await page.goto('/settings');
-  await expect(page.getByRole('heading', { name: 'Install & vocabulary reminders' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Install & practice reminders' })).toBeVisible();
   const configuration = await page.request.get('/api/push/config');
   if (
     process.env.VAPID_PUBLIC_KEY &&

@@ -1,3 +1,4 @@
+import { PracticePanel } from '@/components/practice-panel';
 import { requireUser } from '@/lib/auth';
 import { accessibleExam } from '@/lib/data';
 import { db } from '@/db';
@@ -68,6 +69,7 @@ export default async function TakeExam({
         title={exam.title}
         description="Take your time. Trust what you’ve learned."
       />
+      <PracticePanel courseId={exam.courseId} activity="exam" attemptId={attemptId} automatic />
       <ExamRunner
         attemptId={attemptId}
         expiresAt={expiresAt}

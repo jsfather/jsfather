@@ -33,25 +33,30 @@ self.addEventListener('push', (event) => {
     payload = event.data?.json() || {};
   } catch {}
   event.waitUntil(
-    self.registration.showNotification('Time for your vocabulary', {
-      body: typeof payload.body === 'string' ? payload.body : 'Your vocabulary practice is ready.',
-      icon: '/icons/icon-192.png',
-      badge: '/icons/icon-192.png',
-      tag: 'vocabulary-daily',
-      data: { url: '/courses' },
-    }),
+    self.registration.showNotification(
+      typeof payload.title === 'string' ? payload.title : 'Time for your vocabulary',
+      {
+        body:
+          typeof payload.body === 'string' ? payload.body : 'Your vocabulary practice is ready.',
+        icon: '/icons/icon-192.png',
+        badge: '/icons/icon-192.png',
+        tag: payload.tag === 'practice-streak' ? 'practice-streak' : 'vocabulary-daily',
+        data: { url: payload.url === '/dashboard' ? '/dashboard' : '/courses' },
+      },
+    ),
   );
 });
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
+  const url = event.notification.data?.url === '/dashboard' ? '/dashboard' : '/courses';
   event.waitUntil(
     self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(async (clients) => {
       const client = clients.find((client) => new URL(client.url).origin === self.location.origin);
       if (client) {
-        await client.navigate('/courses');
+        await client.navigate(url);
         return client.focus();
       }
-      return self.clients.openWindow('/courses');
+      return self.clients.openWindow(url);
     }),
   );
 });

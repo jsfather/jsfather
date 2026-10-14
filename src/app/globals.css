@@ -3676,3 +3676,156 @@ textarea {
 .vocabulary-suggestion .word-pronunciation-actions button {
   min-height: 40px;
 }
+
+.daily-practice {
+  margin-bottom: 24px;
+}
+.daily-practice .eyebrow {
+  margin-bottom: 6px;
+}
+.daily-practice-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin: 24px 0;
+}
+.daily-practice-stats > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.daily-practice-stats svg {
+  color: var(--accent);
+}
+.daily-practice-stats strong {
+  font-size: clamp(20px, 3vw, 30px);
+}
+.daily-practice-stats span {
+  flex-basis: 100%;
+  color: var(--muted);
+  font-size: 12px;
+}
+.practice-week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+  margin: 24px 0 16px;
+}
+.practice-week > div {
+  display: grid;
+  gap: 6px;
+  padding: 12px 4px;
+  text-align: center;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.practice-week .complete {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+.practice-week .today {
+  border-color: var(--accent);
+}
+.practice-week strong {
+  font-size: 22px;
+}
+.practice-week small {
+  font-size: 11px;
+}
+.practice-timer {
+  margin: 0 0 24px;
+}
+.practice-timer-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.practice-timer-heading > span {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 12px;
+}
+.practice-timer-values {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.practice-timer-values > div {
+  display: grid;
+  gap: 4px;
+}
+.practice-timer-values strong {
+  font-size: 20px;
+}
+.practice-timer-values span {
+  color: var(--muted);
+  font-size: 12px;
+}
+.practice-timer-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+}
+.practice-timer-footer .button {
+  flex-shrink: 0;
+}
+.practice-timer-footer .field-hint {
+  margin: 0;
+}
+.practice-history-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+.practice-history-row:last-child {
+  border-bottom: 0;
+}
+.course-focus-time {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 12px;
+}
+@media (max-width: 640px) {
+  .daily-practice-stats {
+    gap: 12px;
+  }
+  .daily-practice .section-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .practice-week {
+    gap: 4px;
+  }
+  .practice-week > div {
+    font-size: 10px;
+    padding: 10px 2px;
+  }
+  .practice-week small {
+    font-size: 9px;
+    overflow-wrap: anywhere;
+  }
+  .practice-timer-values {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .practice-timer-values > div {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .practice-timer-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

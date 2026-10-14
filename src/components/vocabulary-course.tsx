@@ -1,3 +1,4 @@
+import { PracticePanel } from '@/components/practice-panel';
 import Link from 'next/link';
 import { and, asc, desc, eq, sql } from 'drizzle-orm';
 import { formatInTimeZone } from 'date-fns-tz';
@@ -125,6 +126,7 @@ export async function VocabularyCourseDetail({
           )
         }
       />
+      <PracticePanel courseId={course.id} activity="vocabulary" />
       <div className="stats-grid vocabulary-stats">
         {[
           { label: 'Words', value: stats.total },

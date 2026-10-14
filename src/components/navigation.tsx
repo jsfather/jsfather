@@ -16,6 +16,7 @@ import {
   X,
   LogOut,
   PanelLeftClose,
+  Flame,
 } from 'lucide-react';
 import { Brand, UniversityName } from './brand';
 import { Avatar } from './avatar';
@@ -23,6 +24,7 @@ import { logout } from '@/actions';
 const nav = [
   { href: '/dashboard', name: 'Overview', icon: LayoutDashboard },
   { href: '/courses', name: 'My courses', icon: BookOpen },
+  { href: '/activity', name: 'Practice history', icon: Flame },
   { href: '/calendar', name: 'Timetable', icon: CalendarDays },
   { href: '/certificates', name: 'Certificates', icon: Award },
 ];

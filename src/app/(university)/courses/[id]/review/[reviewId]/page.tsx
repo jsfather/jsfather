@@ -1,3 +1,4 @@
+import { PracticePanel } from '@/components/practice-panel';
 import Link from 'next/link';
 import { and, eq } from 'drizzle-orm';
 import { notFound, redirect } from 'next/navigation';
@@ -46,6 +47,7 @@ export default async function ReviewCard({
         title={course.title}
         description="Try to recall the answer, then reveal it and rate your memory."
       />
+      <PracticePanel courseId={id} activity="vocabulary" automatic />
       <VocabularyReviewCard
         key={reviewId}
         courseId={id}

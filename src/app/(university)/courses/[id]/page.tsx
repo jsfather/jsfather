@@ -1,3 +1,4 @@
+import { PracticePanel } from '@/components/practice-panel';
 import { BookCourseDetail } from '@/components/book-course';
 import { accessibleCourse } from '@/lib/data';
 import { VocabularyCourseDetail } from '@/components/vocabulary-course';
@@ -84,6 +85,7 @@ export default async function CourseDetail({
           </Link>
         }
       />
+      <PracticePanel courseId={course.id} activity="lesson" />
       <div className="detail-layout">
         <div>
           <section className="panel detail-panel">

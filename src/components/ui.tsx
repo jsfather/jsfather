@@ -1,3 +1,4 @@
+import { focusTime, focusXp } from '@/lib/practice';
 import Link from 'next/link';
 import { BookOpen, ArrowUpRight, CalendarDays, Plus, Check } from 'lucide-react';
 import type { ReactNode } from 'react';
@@ -78,6 +79,7 @@ export function CourseCard({
   showProgress = true,
   timezone,
   examStatus,
+  practiceSeconds,
 }: {
   course:
     | Course
@@ -92,6 +94,7 @@ export function CourseCard({
   showProgress?: boolean;
   timezone?: string;
   examStatus?: string;
+  practiceSeconds?: number;
 }) {
   const percentage = total ? Math.round((completed / total) * 100) : 0;
   return (
@@ -122,6 +125,11 @@ export function CourseCard({
           </div>
           <Progress value={percentage} color={course.color} />
         </>
+      )}
+      {!!practiceSeconds && (
+        <p className="course-focus-time">
+          {focusTime(practiceSeconds)} practiced · {focusXp(practiceSeconds)} XP
+        </p>
       )}
       <div className="course-bottom">
         <span>{examStatus || course.difficulty}</span>

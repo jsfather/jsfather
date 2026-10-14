@@ -1,3 +1,6 @@
+import { DailyPractice } from '@/components/daily-practice';
+import { practiceSummary } from '@/lib/practice-data';
+import { focusTime } from '@/lib/practice';
 import Link from 'next/link';
 import { vocabularyPracticeCourses } from '@/lib/vocabulary-data';
 import { vocabularyReminderBody } from '@/lib/reminders';
@@ -26,12 +29,13 @@ export default async function Dashboard() {
     format(addDays(parseISO(day), 1), 'yyyy-MM-dd') + 'T00:00:00',
     user.timezone,
   );
-  const [stats, current, today, upcoming, practiceCourses] = await Promise.all([
+  const [stats, current, today, upcoming, practiceCourses, practice] = await Promise.all([
     universityStats(user.id),
     courseSummaries(user.id, 1, false, true),
     sessionsBetween(user.id, start, end),
     upcomingSessions(user.id, 5),
     vocabularyPracticeCourses(user.id),
+    practiceSummary(user.id, user.timezone, now),
   ]);
   const firstName = user.name?.split(' ')[0] ?? user.username;
   return (
@@ -47,6 +51,7 @@ export default async function Dashboard() {
           </Link>
         }
       />
+      <DailyPractice summary={practice} timezone={user.timezone} />
       {practiceCourses.length > 0 && (
         <section className="panel vocabulary-reminder">
           <div className="section-header">
@@ -93,9 +98,9 @@ export default async function Dashboard() {
           },
           {
             label: 'Time invested',
-            value: Math.round((stats.minutes / 60) * 10) / 10,
-            unit: 'hours',
-            note: 'Built one class at a time',
+            value: focusTime(practice.totalSeconds),
+            unit: '',
+            note: 'Recorded practice across all courses',
             icon: Clock,
           },
           {

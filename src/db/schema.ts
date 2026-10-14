@@ -457,6 +457,7 @@ export const practiceSessions = pgTable(
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
     courseId: text('course_id').references(() => courses.id, { onDelete: 'set null' }),
+    attemptId: text('attempt_id').references(() => examAttempts.id, { onDelete: 'set null' }),
     activity: text('activity').$type<'lesson' | 'reading' | 'vocabulary' | 'exam'>().notNull(),
     seconds: integer('seconds').default(0).notNull(),
     lastSequence: integer('last_sequence').default(0).notNull(),

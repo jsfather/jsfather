@@ -97,6 +97,9 @@ export async function courseSummaries(
         when exists (select 1 from exams e where e.course_id=${courses.id} and e.is_final=true) then 'Final ready'
         when exists (select 1 from exams e where e.course_id=${courses.id}) then 'Exam draft'
         else 'No exam yet' end`,
+      practiceSeconds: onlyPublic
+        ? sql<number>`0`
+        : sql<number>`(select coalesce(sum(p.seconds),0)::int from practice_sessions p where p.user_id = ${userId} and p.course_id = ${courses.id})`,
       nextDate: sql<Date | null>`min(${courseSessions.scheduledDate}) filter (where ${courses.kind} = 'standard' and ${courseSessions.status} in ('upcoming','in_progress') and ${courseSessions.scheduledDate} >= now())`,
     })
     .from(courses)
