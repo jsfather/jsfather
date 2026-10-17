@@ -173,13 +173,28 @@ export const courseSessions = pgTable(
 );
 // Session status and notes are the normalized progress record for this single-owner LMS.
 // No second table duplicates completion percentages or completion flags.
+// Direct category questions have a bank separate from generated exam snapshots.
+export const categoryBanks = pgTable(
+  'category_banks',
+  {
+    id: id(),
+    ownerId: text('owner_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    category: text('category').notNull(),
+    ...dates,
+  },
+  (t) => [uniqueIndex('category_banks_owner_category_idx').on(t.ownerId, t.category)],
+);
+
 export const exams = pgTable(
   'exams',
   {
     id: id(),
-    courseId: text('course_id')
-      .notNull()
-      .references(() => courses.id, { onDelete: 'cascade' }),
+    categoryBankId: text('category_bank_id').references(() => categoryBanks.id, {
+      onDelete: 'cascade',
+    }),
+    courseId: text('course_id').references(() => courses.id, { onDelete: 'cascade' }),
     sessionId: text('session_id').references(() => courseSessions.id, { onDelete: 'cascade' }),
     isFinal: boolean('is_final').default(false).notNull(),
     isPractice: boolean('is_practice').default(false).notNull(),
@@ -195,6 +210,13 @@ export const exams = pgTable(
   },
   (t) => [
     index('exams_course_idx').on(t.courseId),
+    uniqueIndex('exams_category_bank_unique')
+      .on(t.categoryBankId)
+      .where(sql`not ${t.isFinal} and not ${t.isPractice}`),
+    check(
+      'exam_scope_valid',
+      sql`(${t.courseId} is not null and ${t.categoryBankId} is null) or (${t.courseId} is null and ${t.categoryBankId} is not null and ${t.sessionId} is null )`,
+    ),
     uniqueIndex('exams_session_unique').on(t.sessionId),
     check(
       'course_practice_scope',
@@ -289,15 +311,22 @@ export const certificates = pgTable(
     userId: text('user_id')
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
-    courseId: text('course_id')
-      .notNull()
-      .references(() => courses.id, { onDelete: 'cascade' }),
+    categoryBankId: text('category_bank_id').references(() => categoryBanks.id, {
+      onDelete: 'cascade',
+    }),
+    courseId: text('course_id').references(() => courses.id, { onDelete: 'cascade' }),
     recipientName: text('recipient_name').notNull(),
     courseTitle: text('course_title').notNull(),
     percentage: doublePrecision('percentage').notNull(),
     issuedAt: timestamp('issued_at', { withTimezone: true }).defaultNow().notNull(),
   },
-  (t) => [index('certificates_user_idx').on(t.userId)],
+  (t) => [
+    index('certificates_user_idx').on(t.userId),
+    check(
+      'certificate_scope_valid',
+      sql`(${t.courseId} is not null) <> (${t.categoryBankId} is not null)`,
+    ),
+  ],
 );
 export type User = typeof users.$inferSelect;
 export type Course = typeof courses.$inferSelect;

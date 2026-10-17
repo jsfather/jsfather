@@ -14,9 +14,16 @@ import {
   examOptions,
   examAttempts,
   certificates,
+  categoryBanks,
 } from '@/db/schema';
 import { requireUser, signIn, signOut } from '@/lib/auth';
-import { ownedCourse, ownedSession, ownedExam, accessibleExam } from '@/lib/data';
+import {
+  ownedCourse,
+  ownedSession,
+  ownedExam,
+  accessibleExam,
+  ownedCategoryBank,
+} from '@/lib/data';
 import {
   optionalScheduleCourseSchema,
   sessionSchema,
@@ -60,13 +67,14 @@ function failure(error: unknown): ActionState {
   );
   return { error: 'We could not save this change. Please try again.' };
 }
-function refresh(courseId?: string) {
+function refresh(courseId?: string | null) {
   [
     '/activity',
     '/dashboard',
     '/courses',
     '/calendar',
     '/exams',
+    '/categories',
     '/certificates',
     '/profile',
     '/practice',
@@ -454,21 +462,31 @@ export async function updateProfile(_state: ActionState, form: FormData): Promis
   return { success: 'Profile and privacy settings saved.' };
 }
 export async function saveExam(
-  courseId: string,
+  courseId: string | null,
   examId: string | null,
   sessionId: string,
   _state: ActionState,
   form: FormData,
+  categoryBankId: string | null = null,
 ): Promise<ActionState> {
   const user = await requireUser();
-  if (!sessionId) return { error: 'Choose a class for these questions.' };
-  const { session, course } = await ownedSession(user.id, sessionId);
-  if (session.courseId !== courseId) return { error: 'Choose a class in this course.' };
+  const categoryBank = categoryBankId ? await ownedCategoryBank(user.id, categoryBankId) : null;
+  if (!categoryBank && !sessionId) return { error: 'Choose a class for these questions.' };
+  const scope = categoryBank ? null : await ownedSession(user.id, sessionId);
+  const course = scope?.course;
+  const session = scope?.session;
+  if (!categoryBank && session?.courseId !== courseId)
+    return { error: 'Choose a class in this course.' };
   let previousSessionId: string | null = null;
   if (examId) {
     const { exam } = await ownedExam(user.id, examId);
     previousSessionId = exam.sessionId;
-    if (exam.courseId !== courseId || exam.isFinal || exam.isPractice)
+    if (
+      exam.courseId !== courseId ||
+      exam.categoryBankId !== categoryBankId ||
+      exam.isFinal ||
+      exam.isPractice
+    )
       return { error: 'Generated assessments cannot be edited.' };
   }
   const id = examId ?? crypto.randomUUID();
@@ -476,7 +494,9 @@ export async function saveExam(
     const input = classBankSchema.parse(JSON.parse(String(form.get('exam'))));
     const defaults = assessmentDefaults(input.questions);
     const settings = {
-      title: assessmentName(course.title, 'practice', session.title),
+      title: categoryBank
+        ? categoryBank.category + ' · Category questions'
+        : assessmentName(course!.title, 'practice', session!.title),
       description: '',
       passingScore: input.passingScore ?? defaults.passingScore,
       timeLimit: input.timeLimit ?? defaults.timeLimit,
@@ -484,26 +504,46 @@ export async function saveExam(
       autoPassingScore: input.passingScore === null,
     };
     const result = await db.transaction(async (tx) => {
-      // Use current names under the same lock order as course and session edits.
-      const [currentCourse] = await tx
-        .select()
-        .from(courses)
-        .where(eq(courses.id, courseId))
-        .for('update');
-      const [currentSession] = await tx
-        .select()
-        .from(courseSessions)
-        .where(eq(courseSessions.id, sessionId))
-        .for('update');
-      if (!currentCourse || !currentSession) return 'This course or session no longer exists.';
-      settings.title = assessmentName(currentCourse.title, 'practice', currentSession.title);
-      const [existing] = await tx
-        .select({ id: exams.id })
-        .from(exams)
-        .where(eq(exams.sessionId, sessionId))
-        .limit(1);
-      if (existing && existing.id !== examId)
-        return 'This session already has an exam. Open its question bank to add more questions.';
+      if (categoryBank) {
+        const [currentCategory] = await tx
+          .select()
+          .from(categoryBanks)
+          .where(and(eq(categoryBanks.id, categoryBank.id), eq(categoryBanks.ownerId, user.id)))
+          .for('update');
+        if (!currentCategory) return 'This category no longer exists.';
+        const [existing] = await tx
+          .select({ id: exams.id })
+          .from(exams)
+          .where(
+            and(
+              eq(exams.categoryBankId, categoryBank.id),
+              eq(exams.isFinal, false),
+              eq(exams.isPractice, false),
+            ),
+          );
+        if (existing && existing.id !== examId)
+          return 'This category already has questions. Open its question bank to edit them.';
+      } else {
+        const [currentCourse] = await tx
+          .select()
+          .from(courses)
+          .where(eq(courses.id, courseId!))
+          .for('update');
+        const [currentSession] = await tx
+          .select()
+          .from(courseSessions)
+          .where(eq(courseSessions.id, sessionId))
+          .for('update');
+        if (!currentCourse || !currentSession) return 'This course or session no longer exists.';
+        settings.title = assessmentName(currentCourse.title, 'practice', currentSession.title);
+        const [existing] = await tx
+          .select({ id: exams.id })
+          .from(exams)
+          .where(eq(exams.sessionId, sessionId))
+          .limit(1);
+        if (existing && existing.id !== examId)
+          return 'This session already has an exam. Open its question bank to add more questions.';
+      }
       if (examId) {
         await tx.execute(sql`select id from exams where id=${examId} for update`);
         const [attempt] = await tx
@@ -523,7 +563,7 @@ export async function saveExam(
           .update(exams)
           .set({
             title: settings.title,
-            sessionId,
+            sessionId: sessionId || null,
             description: settings.description,
             passingScore: settings.passingScore,
             timeLimit: settings.timeLimit,
@@ -539,7 +579,8 @@ export async function saveExam(
         await tx.insert(exams).values({
           id,
           courseId,
-          sessionId,
+          sessionId: sessionId || null,
+          categoryBankId,
           ...settings,
           published: input.published,
           isPublic: input.published,
@@ -580,10 +621,11 @@ export async function saveExam(
   }
   refresh(courseId);
   revalidatePath('/exams/' + id);
-  revalidatePath('/sessions/' + sessionId);
+  if (sessionId) revalidatePath('/sessions/' + sessionId);
+  if (categoryBankId) revalidatePath('/categories/' + categoryBankId);
   if (previousSessionId && previousSessionId !== sessionId)
     revalidatePath('/sessions/' + previousSessionId);
-  redirect(course.kind === 'book' ? '/courses/' + courseId : '/exams/' + id);
+  redirect(course?.kind === 'book' ? '/courses/' + courseId : '/exams/' + id);
 }
 export async function deleteExam(
   examId: string,
@@ -606,15 +648,20 @@ export async function deleteExam(
   if (exam.sessionId) revalidatePath('/sessions/' + exam.sessionId);
   if (form.get('returnToSession') === 'on' && exam.sessionId)
     redirect('/sessions/' + exam.sessionId);
+  if (exam.categoryBankId) {
+    revalidatePath('/categories/' + exam.categoryBankId);
+    redirect('/categories/' + exam.categoryBankId);
+  }
   redirect('/courses/' + exam.courseId);
 }
 export async function startAttempt(examId: string, practiceOnly = false) {
   const requestedPractice = z.boolean().parse(practiceOnly);
   const user = await requireUser();
-  const { course } = await accessibleExam(user.id, examId);
+  const { course, categoryBank } = await accessibleExam(user.id, examId);
+  const ownerId = course?.ownerId ?? categoryBank?.ownerId;
   const id = await db.transaction(async (tx) => {
     const [exam] = await tx.select().from(exams).where(eq(exams.id, examId)).for('update');
-    if (!exam || (course.ownerId !== user.id && !exam.isPublic))
+    if (!exam || (ownerId !== user.id && !exam.isPublic))
       throw new Error('This exam is no longer available for practice.');
     const [active] = await tx
       .select()
@@ -649,7 +696,11 @@ export async function startAttempt(examId: string, practiceOnly = false) {
         examId,
         userId: user.id,
         snapshot: {
-          practiceOnly: requestedPractice || exam.isPractice || course.ownerId !== user.id,
+          practiceOnly:
+            requestedPractice ||
+            exam.isPractice ||
+            (!!exam.categoryBankId && !exam.isFinal) ||
+            ownerId !== user.id,
           timeLimit: exam.timeLimit,
           passingScore: exam.passingScore,
           questions: questions.map((q) => ({
@@ -706,7 +757,7 @@ export async function updateAssessmentSettings(
 ): Promise<ActionState> {
   void _state;
   const user = await requireUser();
-  await ownedExam(user.id, examId);
+  const { exam } = await ownedExam(user.id, examId);
   try {
     const input = z
       .object({
@@ -741,6 +792,7 @@ export async function updateAssessmentSettings(
   } catch (error) {
     return failure(error);
   }
+  if (exam.categoryBankId) revalidatePath('/categories/' + exam.categoryBankId);
   revalidatePath('/exams/' + examId);
   revalidatePath('/practice/' + examId);
   return { success: 'Assessment settings saved.' };
@@ -913,6 +965,7 @@ export async function submitAttempt(
 ): Promise<ActionState> {
   const user = await requireUser();
   let examId = '';
+  let categoryBankId: string | null = null;
   try {
     const answers = answersSchema.parse(JSON.parse(String(form.get('answers'))));
     await db.transaction(async (tx) => {
@@ -925,17 +978,20 @@ export async function submitAttempt(
       examId = attempt.examId;
       if (attempt.submittedAt) return;
       const [row] = await tx
-        .select({ exam: exams, course: courses })
+        .select({ exam: exams, course: courses, categoryBank: categoryBanks })
         .from(exams)
-        .innerJoin(courses, eq(exams.courseId, courses.id))
+        .leftJoin(courses, eq(exams.courseId, courses.id))
+        .leftJoin(categoryBanks, eq(exams.categoryBankId, categoryBanks.id))
         .where(eq(exams.id, attempt.examId));
       if (!row) throw new Error('Exam not found.');
+      categoryBankId = row.exam.categoryBankId;
       // Serialize certificate eligibility with completion-triggered issuance.
-      await tx
-        .select({ id: courses.id })
-        .from(courses)
-        .where(eq(courses.id, row.course.id))
-        .for('update');
+      if (row.course)
+        await tx
+          .select({ id: courses.id })
+          .from(courses)
+          .where(eq(courses.id, row.course.id))
+          .for('update');
       const questions = await tx
         .select()
         .from(examQuestions)
@@ -967,7 +1023,7 @@ export async function submitAttempt(
       const submittedAt = new Date();
       await creditPractice(tx, {
         userId: user.id,
-        courseId: row.course.id,
+        courseId: row.exam.courseId,
         timezone: user.timezone,
         activity: 'exam',
         sourceKey: `exam:${attemptId}`,
@@ -982,27 +1038,30 @@ export async function submitAttempt(
         .update(examAttempts)
         .set({ ...result, submittedAt })
         .where(eq(examAttempts.id, attemptId));
-      const sessions = await tx
-        .select()
-        .from(courseSessions)
-        .where(eq(courseSessions.courseId, row.course.id))
-        .for('share');
+      const sessions = row.course
+        ? await tx
+            .select()
+            .from(courseSessions)
+            .where(eq(courseSessions.courseId, row.course.id))
+            .for('share')
+        : [];
       if (
         result.passed &&
         row.exam.isFinal &&
         !attempt.snapshot?.practiceOnly &&
-        row.course.ownerId === user.id &&
-        sessions.length > 0 &&
-        sessions.every((s) => s.status === 'completed')
+        (row.course?.ownerId ?? row.categoryBank?.ownerId) === user.id &&
+        (row.categoryBank ||
+          (sessions.length > 0 && sessions.every((s) => s.status === 'completed')))
       )
         await tx
           .insert(certificates)
           .values({
             attemptId,
             userId: user.id,
-            courseId: row.course.id,
+            courseId: row.exam.courseId,
+            categoryBankId: row.exam.categoryBankId,
             recipientName: user.name ?? user.username,
-            courseTitle: row.course.title,
+            courseTitle: row.categoryBank?.category ?? row.course!.title,
             percentage: result.percentage,
           })
           .onConflictDoNothing();
@@ -1011,6 +1070,7 @@ export async function submitAttempt(
     return failure(e);
   }
   refresh();
+  if (categoryBankId) revalidatePath('/categories/' + categoryBankId);
   revalidatePath('/exams/' + examId);
   redirect('/exams/' + examId + '/results/' + attemptId);
 }

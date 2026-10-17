@@ -41,7 +41,7 @@ export default async function Certificates({
                 </p>
                 <Badge color="teal">Passed · {c.percentage}%</Badge>
                 <div className="course-bottom">
-                  <span>Certificate of achievement</span>
+                  <span>{c.categoryBankId ? 'Category certificate' : 'Course certificate'}</span>
                   <span>View certificate</span>
                 </div>
               </Link>
@@ -52,7 +52,7 @@ export default async function Certificates({
       ) : (
         <Empty
           title="Your first achievement is ahead."
-          description="Pass a final assessment and complete every session to earn your course certificate."
+          description="Pass a category assessment to earn a category certificate, or complete a course and pass its final assessment for a course certificate."
           href="/courses"
           label="View courses"
         />

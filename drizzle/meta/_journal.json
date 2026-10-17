@@ -141,6 +141,20 @@
       "when": 1792004136910,
       "tag": "0019_automatic_practice",
       "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1792224781582,
+      "tag": "0020_topic_assessments",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1792226806097,
+      "tag": "0021_category_question_pools",
+      "breakpoints": true
     }
   ]
 }

@@ -3,6 +3,7 @@ import { useState, useActionState } from 'react';
 import { Plus, ArrowUp, ArrowDown, Save } from 'lucide-react';
 import { ConfirmationDialog } from './confirmation-dialog';
 import { saveExam } from '@/actions';
+import { saveCategoryQuestions } from '@/actions/categories';
 import { Feedback, Submit } from './forms';
 import {
   assessmentDefaults,
@@ -64,16 +65,18 @@ const types: { value: QuestionType; label: string; help: string }[] = [
   },
 ];
 export function ExamBuilder({
-  courseId,
-  sessionId,
+  courseId = '',
+  sessionId = '',
+  categoryBankId,
   sessions,
   examId = null,
   initial,
   book = false,
 }: {
   book?: boolean;
-  courseId: string;
-  sessionId: string;
+  courseId?: string;
+  sessionId?: string;
+  categoryBankId?: string;
   sessions?: { id: string; title: string }[];
   examId?: string | null;
   initial?: ClassBankInput;
@@ -83,7 +86,9 @@ export function ExamBuilder({
     initial ?? { passingScore: null, timeLimit: null, published: false, questions: [blank()] },
   );
   const [state, action] = useActionState(
-    saveExam.bind(null, courseId, examId, selectedSession),
+    categoryBankId
+      ? saveCategoryQuestions.bind(null, categoryBankId, examId)
+      : saveExam.bind(null, courseId, examId, selectedSession),
     {},
   );
   const defaults = assessmentDefaults(bank.questions);
@@ -121,7 +126,7 @@ export function ExamBuilder({
         </label>
       )}
       <div className="section-header">
-        <h2>{book ? 'Book questions' : 'Class questions'}</h2>
+        <h2>{categoryBankId ? 'Category questions' : book ? 'Book questions' : 'Class questions'}</h2>
         <span className="muted">
           {bank.questions.length} questions · {bank.questions.reduce((sum, q) => sum + q.points, 0)}{' '}
           points

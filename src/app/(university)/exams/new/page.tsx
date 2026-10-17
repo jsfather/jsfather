@@ -1,20 +1,44 @@
 import Link from 'next/link';
 import { requireUser } from '@/lib/auth';
-import { ownedCourse, ownedSession, pageNumber } from '@/lib/data';
+import { ownedCourse, ownedSession, ownedCategoryBank, pageNumber } from '@/lib/data';
 import { db } from '@/db';
 import { courses, courseSessions, exams } from '@/db/schema';
-import { eq, desc, asc } from 'drizzle-orm';
+import { eq, desc, asc, and } from 'drizzle-orm';
 import { PageTitle, Empty, Pagination } from '@/components/ui';
 import { ExamBuilder } from '@/components/exam-builder';
 import { redirect } from 'next/navigation';
-export const metadata = { title: 'Add class questions' };
+export const metadata = { title: 'Add questions' };
 export default async function NewExam({
   searchParams,
 }: {
-  searchParams: Promise<{ course?: string; session?: string; page?: string }>;
+  searchParams: Promise<{ course?: string; session?: string; category?: string; page?: string }>;
 }) {
   const user = await requireUser();
   const query = await searchParams;
+  if (query.category) {
+    const categoryBank = await ownedCategoryBank(user.id, query.category);
+    const [existing] = await db
+      .select({ id: exams.id })
+      .from(exams)
+      .where(
+        and(
+          eq(exams.categoryBankId, categoryBank.id),
+          eq(exams.isFinal, false),
+          eq(exams.isPractice, false),
+        ),
+      );
+    if (existing) redirect('/exams/' + existing.id + '/edit');
+    return (
+      <>
+        <PageTitle
+          eyebrow={categoryBank.category}
+          title="Add category questions"
+          description="Add questions directly to this category. Category exams also include questions from its courses."
+        />
+        <ExamBuilder categoryBankId={categoryBank.id} />
+      </>
+    );
+  }
   if (query.session) {
     const { session, course } = await ownedSession(user.id, query.session);
     const [existing] = await db

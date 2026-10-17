@@ -14,18 +14,22 @@ export default async function ExploreExams({
   searchParams: Promise<{ page?: string; scope?: string }>;
 }) {
   const query = await searchParams;
-  const scope = query.scope === 'course' || query.scope === 'session' ? query.scope : 'all';
+  const scope =
+    query.scope === 'course' || query.scope === 'session' || query.scope === 'category'
+      ? query.scope
+      : 'all';
   const page = pageNumber(query.page);
   const list = await db
     .select({
       id: exams.id,
       title: exams.title,
       sessionId: exams.sessionId,
+      categoryBankId: exams.categoryBankId,
       isFinal: exams.isFinal,
       isPractice: exams.isPractice,
       timeLimit: exams.timeLimit,
       passingScore: exams.passingScore,
-      questionCount: sql<number>`(select count(*)::int from ${examQuestions} where ${examQuestions.examId} = ${exams.id})`,
+      questionCount: sql<number>`(select count(*)::int from ${examQuestions} where exam_questions.exam_id = exams.id)`,
     })
     .from(exams)
     .where(
@@ -33,10 +37,12 @@ export default async function ExploreExams({
         eq(exams.isPublic, true),
         sql`exists (select 1 from ${examQuestions} where ${examQuestions.examId} = ${exams.id})`,
         scope === 'course'
-          ? sql`${exams.sessionId} is null`
-          : scope === 'session'
-            ? sql`${exams.sessionId} is not null`
-            : undefined,
+          ? sql`${exams.courseId} is not null and ${exams.sessionId} is null`
+          : scope === 'category'
+            ? sql`${exams.categoryBankId} is not null`
+            : scope === 'session'
+              ? sql`${exams.sessionId} is not null`
+              : undefined,
       ),
     )
     .orderBy(desc(exams.createdAt), desc(exams.id))
@@ -69,6 +75,7 @@ export default async function ExploreExams({
           ['all', 'All exams'],
           ['course', 'Course exams'],
           ['session', 'Session exams'],
+          ['category', 'Category exams'],
         ].map(([value, label]) => (
           <Link
             key={value}

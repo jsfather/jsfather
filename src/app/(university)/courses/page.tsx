@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { CategoryForm } from '@/components/category-form';
 import { Plus } from 'lucide-react';
 import { requireUser } from '@/lib/auth';
 import { courseSummaries, pageNumber } from '@/lib/data';
@@ -25,23 +26,26 @@ export default async function Courses({
           </Link>
         }
       />
-      {list.length ? (
-        <>
-          <div className="course-grid full">
-            {list.map((row) => (
-              <CourseCard key={row.course.id} {...row} timezone={user.timezone} />
-            ))}
-          </div>
-          <Pagination page={page} hasMore={list.length === 12} base="/courses" />
-        </>
-      ) : (
-        <Empty
-          title={page > 1 ? 'No more courses.' : 'A blank syllabus. Endless possibilities.'}
-          description="Create a course around a skill you want to develop. Choose the sessions and schedule that fit your life."
-          href={page > 1 ? '/courses' : '/courses/new'}
-          label={page > 1 ? 'Back to courses' : 'Create your first course'}
-        />
-      )}
+      <div className="ui-stack section-stack">
+        <CategoryForm />
+        {list.length ? (
+          <>
+            <div className="course-grid full">
+              {list.map((row) => (
+                <CourseCard key={row.course.id} {...row} timezone={user.timezone} />
+              ))}
+            </div>
+            <Pagination page={page} hasMore={list.length === 12} base="/courses" />
+          </>
+        ) : (
+          <Empty
+            title={page > 1 ? 'No more courses.' : 'A blank syllabus. Endless possibilities.'}
+            description="Create a course around a skill you want to develop. Choose the sessions and schedule that fit your life."
+            href={page > 1 ? '/courses' : '/courses/new'}
+            label={page > 1 ? 'Back to courses' : 'Create your first course'}
+          />
+        )}
+      </div>
     </>
   );
 }

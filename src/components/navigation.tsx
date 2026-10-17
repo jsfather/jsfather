@@ -238,6 +238,7 @@ export function Breadcrumb() {
         courses: 'My courses',
         calendar: 'Timetable',
         exams: 'Exams',
+        categories: 'Category questions & exams',
         certificates: 'Certificates',
         settings: 'Settings',
         profile: 'My profile',

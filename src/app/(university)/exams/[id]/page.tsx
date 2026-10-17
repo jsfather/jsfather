@@ -25,8 +25,8 @@ export default async function ExamDetail({
   searchParams: Promise<{ page?: string }>;
 }) {
   const user = await requireUser();
-  const { exam, course } = await accessibleExam(user.id, (await params).id, true);
-  const owner = course.ownerId === user.id;
+  const { exam, course, categoryBank } = await accessibleExam(user.id, (await params).id, true);
+  const owner = (course?.ownerId ?? categoryBank?.ownerId) === user.id;
   const generated = exam.isFinal || exam.isPractice;
   const page = pageNumber((await searchParams).page);
   const [attempts, questions, lock] = await Promise.all([
@@ -66,7 +66,7 @@ export default async function ExamDetail({
     .from(examQuestions)
     .where(eq(examQuestions.examId, exam.id));
   const sessions =
-    owner && !generated && !exam.sessionId
+    owner && course && !generated && !exam.sessionId
       ? await db
           .select({ id: courseSessions.id, title: courseSessions.title })
           .from(courseSessions)
@@ -79,15 +79,21 @@ export default async function ExamDetail({
       : [];
   return (
     <>
-      {owner && !generated && !exam.sessionId && (
+      {owner && course && !generated && !exam.sessionId && (
         <AssignExamClass id={exam.id} sessions={sessions} />
       )}
       <Link
         className="text-link"
-        href={owner ? '/courses/' + course.id : '/practice'}
+        href={
+          owner
+            ? categoryBank
+              ? '/categories/' + categoryBank.id
+              : '/courses/' + course!.id
+            : '/practice'
+        }
         style={{ marginBottom: 22 }}
       >
-        {owner ? course.title : 'Explore exams'}
+        {owner ? (categoryBank?.category ?? course!.title) : 'Explore exams'}
       </Link>
       <PageTitle
         eyebrow={assessmentLabel(exam).toUpperCase()}
@@ -142,9 +148,11 @@ export default async function ExamDetail({
           <ClipboardList size={24} style={{ color: 'var(--accent)', marginBottom: 17 }} />
           <h3>A checkpoint, not a finish line.</h3>
           <p className="muted" style={{ fontSize: 13, lineHeight: 1.8, marginTop: 12 }}>
-            {exam.isFinal && owner
-              ? 'Take this assessment anytime. Your certificate requires both a passing score and completion of every class in the course.'
-              : 'Practice this exam and keep a record of your result. Public practice does not award the course owner’s certificate.'}
+            {categoryBank && owner && exam.isFinal
+              ? 'Pass this assessment to earn your category certificate. Course completion is not required.'
+              : exam.isFinal && owner
+                ? 'Take this assessment anytime. Your certificate requires both a passing score and completion of every class in the course.'
+                : 'Practice this exam and keep a record of your result. Public practice does not award the owner’s certificate.'}
           </p>
           <div className="meta-list">
             <div>

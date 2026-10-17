@@ -3788,6 +3788,9 @@ textarea {
   flex-direction: column;
   gap: var(--space-4);
 }
+.ui-stack.section-stack {
+  gap: var(--space-6);
+}
 .ui-stack > *,
 .ui-stack
   > :is(p, h2, h3, form, .field-hint, .section-header, .actions-row, .alert, .button, .form-grid) {

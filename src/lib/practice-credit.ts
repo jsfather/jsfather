@@ -11,7 +11,7 @@ export async function creditPractice(
   tx: Tx,
   input: {
     userId: string;
-    courseId: string;
+    courseId: string | null;
     timezone: string;
     sourceKey: string;
     activity: PracticeActivity;

@@ -16,7 +16,7 @@ export default async function ExamResults({
 }) {
   const user = await requireUser();
   const { id, attemptId } = await params;
-  const { exam, course } = await accessibleExam(user.id, id, true);
+  const { exam, course, categoryBank } = await accessibleExam(user.id, id, true);
   const [attempt] = await db
     .select()
     .from(examAttempts)
@@ -33,6 +33,7 @@ export default async function ExamResults({
     .select({ id: certificates.id })
     .from(certificates)
     .where(and(eq(certificates.attemptId, attemptId), eq(certificates.userId, user.id)));
+  const owner = (course?.ownerId ?? categoryBank?.ownerId) === user.id;
   const correct = attempt.review?.filter((r) => r.isCorrect).length ?? 0;
   const elapsed = Math.round((attempt.submittedAt.getTime() - attempt.startedAt.getTime()) / 1000);
   return (
@@ -43,9 +44,15 @@ export default async function ExamResults({
         action={
           <Link
             className="button secondary"
-            href={course.ownerId === user.id ? '/courses/' + course.id : '/practice'}
+            href={
+              owner
+                ? categoryBank
+                  ? '/categories/' + categoryBank.id
+                  : '/courses/' + course!.id
+                : '/practice'
+            }
           >
-            {course.ownerId === user.id ? 'Back to course' : 'Explore exams'}
+            {owner ? (categoryBank ? 'Back to category' : 'Back to course') : 'Explore exams'}
           </Link>
         }
       />

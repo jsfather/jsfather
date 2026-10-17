@@ -63,7 +63,7 @@ export default async function PublicExam({ params }: { params: Promise<{ id: str
         title={exam.title}
         description={
           session?.user?.id
-            ? 'Practice this exam and save your result to your account. Public practice does not award a course certificate.'
+            ? 'Practice this exam and save your result to your account. Public practice does not award a certificate.'
             : 'Practice as a guest without saving, or sign in to keep your result.'
         }
       />

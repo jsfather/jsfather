@@ -6,10 +6,10 @@ import { examQuestions, examOptions, examAttempts, courseSessions, exams } from 
 import { eq, asc, inArray, and, sql } from 'drizzle-orm';
 import { PageTitle } from '@/components/ui';
 import { ExamBuilder } from '@/components/exam-builder';
-export const metadata = { title: 'Edit class questions' };
+export const metadata = { title: 'Edit questions' };
 export default async function EditExam({ params }: { params: Promise<{ id: string }> }) {
   const user = await requireUser();
-  const { exam, course } = await ownedExam(user.id, (await params).id);
+  const { exam, course, categoryBank } = await ownedExam(user.id, (await params).id);
   if (exam.isFinal || exam.isPractice)
     return (
       <PageTitle
@@ -17,16 +17,18 @@ export default async function EditExam({ params }: { params: Promise<{ id: strin
         description="Edit a session exam, then start another practice or final assessment from the course."
       />
     );
-  const sessions = await db
-    .select({ id: courseSessions.id, title: courseSessions.title })
-    .from(courseSessions)
-    .where(
-      and(
-        eq(courseSessions.courseId, course.id),
-        sql`not exists (select 1 from ${exams} where ${exams.sessionId} = ${courseSessions.id} and ${exams.id} <> ${exam.id})`,
-      ),
-    )
-    .orderBy(asc(courseSessions.sessionNumber));
+  const sessions = course
+    ? await db
+        .select({ id: courseSessions.id, title: courseSessions.title })
+        .from(courseSessions)
+        .where(
+          and(
+            eq(courseSessions.courseId, course.id),
+            sql`not exists (select 1 from ${exams} where ${exams.sessionId} = ${courseSessions.id} and ${exams.id} <> ${exam.id})`,
+          ),
+        )
+        .orderBy(asc(courseSessions.sessionNumber))
+    : undefined;
   const [attempt] = await db
     .select({ id: examAttempts.id })
     .from(examAttempts)
@@ -70,12 +72,19 @@ export default async function EditExam({ params }: { params: Promise<{ id: strin
   return (
     <>
       <PageTitle
-        eyebrow={course.title.toUpperCase()}
-        title={course.kind === 'book' ? 'Edit book questions' : 'Edit class questions'}
+        eyebrow={(categoryBank?.category ?? course!.title).toUpperCase()}
+        title={
+          categoryBank
+            ? 'Edit category questions'
+            : course?.kind === 'book'
+              ? 'Edit book questions'
+              : 'Edit class questions'
+        }
       />
       <ExamBuilder
-        book={course.kind === 'book'}
-        courseId={course.id}
+        book={course?.kind === 'book'}
+        courseId={course?.id}
+        categoryBankId={categoryBank?.id}
         sessionId={exam.sessionId ?? ''}
         sessions={sessions}
         examId={exam.id}

@@ -7,6 +7,7 @@ export function Certificate({
 }: {
   certificate: {
     id: string;
+    categoryBankId?: string | null;
     recipientName: string;
     courseTitle: string;
     percentage: number;
@@ -29,7 +30,11 @@ export function Certificate({
       <h1>Certificate of Achievement</h1>
       <p>This certifies that</p>
       <h2>{certificate.recipientName}</h2>
-      <p>has successfully passed the assessment for</p>
+      <p>
+        {certificate.categoryBankId
+          ? 'has successfully passed the category assessment for'
+          : 'has successfully passed the assessment for'}
+      </p>
       <h3>{certificate.courseTitle}</h3>
       <div className="certificate-score">
         <div>

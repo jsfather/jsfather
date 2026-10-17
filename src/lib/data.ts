@@ -1,7 +1,15 @@
 import 'server-only';
 import { and, or, asc, desc, eq, sql, inArray, gte, lt } from 'drizzle-orm';
 import { db } from '@/db';
-import { courses, courseSessions, exams, examAttempts, certificates, users } from '@/db/schema';
+import {
+  courses,
+  courseSessions,
+  exams,
+  examAttempts,
+  certificates,
+  users,
+  categoryBanks,
+} from '@/db/schema';
 import { notFound } from 'next/navigation';
 import { canSeeCourse, canSeeProgress, canSeeScores } from './learning';
 // Count the attached question bank, excluding generated course assessment copies.
@@ -41,26 +49,32 @@ export async function ownedSession(userId: string, id: string) {
   if (!row) notFound();
   return row;
 }
+export async function ownedCategoryBank(userId: string, id: string) {
+  const [categoryBank] = await db
+    .select()
+    .from(categoryBanks)
+    .where(and(eq(categoryBanks.id, id), eq(categoryBanks.ownerId, userId)));
+  if (!categoryBank) notFound();
+  return categoryBank;
+}
 export async function ownedExam(userId: string, id: string) {
-  const [row] = await db
-    .select({ exam: exams, course: courses })
-    .from(exams)
-    .innerJoin(courses, eq(exams.courseId, courses.id))
-    .where(and(eq(exams.id, id), eq(courses.ownerId, userId)));
-  if (!row) notFound();
+  const row = await accessibleExam(userId, id);
+  if ((row.course?.ownerId ?? row.categoryBank?.ownerId) !== userId) notFound();
   return row;
 }
 // Saved attempts remain readable by their learner if an exam is later made private.
 export async function accessibleExam(userId: string, id: string, allowPreviousAttempt = false) {
   const [row] = await db
-    .select({ exam: exams, course: courses })
+    .select({ exam: exams, course: courses, categoryBank: categoryBanks })
     .from(exams)
-    .innerJoin(courses, eq(exams.courseId, courses.id))
+    .leftJoin(courses, eq(exams.courseId, courses.id))
+    .leftJoin(categoryBanks, eq(exams.categoryBankId, categoryBanks.id))
     .where(
       and(
         eq(exams.id, id),
         or(
           eq(courses.ownerId, userId),
+          eq(categoryBanks.ownerId, userId),
           eq(exams.isPublic, true),
           allowPreviousAttempt
             ? sql`exists (select 1 from ${examAttempts} where ${examAttempts.examId} = ${exams.id} and ${examAttempts.userId} = ${userId})`
@@ -68,7 +82,7 @@ export async function accessibleExam(userId: string, id: string, allowPreviousAt
         ),
       ),
     );
-  if (!row) notFound();
+  if (!row || (!row.course && !row.categoryBank)) notFound();
   return row;
 }
 export async function courseSummaries(
