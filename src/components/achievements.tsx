@@ -1,3 +1,5 @@
+import { AchievementArt, achievementPalettes } from './achievement-art';
+import type { CSSProperties } from 'react';
 import {
   Trophy,
   Check,
@@ -37,11 +39,15 @@ function BadgeGrid({ list }: { list: Achievement[] }) {
                   key={a.id}
                   className={`achievement-card ui-stack ${a.earned ? 'earned' : ''}`}
                   data-achievement={a.id}
+                  style={
+                    {
+                      '--badge-color': achievementPalettes[a.id]?.color,
+                      '--badge-light': achievementPalettes[a.id]?.light,
+                    } as CSSProperties
+                  }
                 >
                   <div className="achievement-title">
-                    <span className="achievement-icon">
-                      <Icon size={20} aria-hidden="true" />
-                    </span>
+                    <AchievementArt id={a.id} earned={a.earned} />
                     <h4>{a.title}</h4>
                   </div>
                   <p className="field-hint">{a.description}</p>

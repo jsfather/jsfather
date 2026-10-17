@@ -97,6 +97,13 @@ for (const width of [1280, 320, 390])
     await expect(
       achievements.getByRole('progressbar', { name: 'First steps progress', exact: true }),
     ).toBeVisible();
+    const illustrations = achievements.locator('svg[data-illustration]');
+    await expect(illustrations).toHaveCount(22);
+    const designs = await illustrations
+      .locator('.achievement-character')
+      .evaluateAll((items) => items.map((item) => item.innerHTML));
+    expect(new Set(designs).size).toBe(22);
+    await expect(achievements.locator('.achievement-art.is-locked')).toHaveCount(22);
     await shot(page, 'owner-explore-empty');
     const guestContext = await browser.newContext(),
       guest = await guestContext.newPage();
@@ -154,7 +161,16 @@ for (const width of [1280, 320, 390])
     await expect(
       achievements.locator('[data-achievement="perfect-exam"] .achievement-status'),
     ).toHaveText('Earned');
+    await expect(
+      achievements.locator('[data-achievement="category-certified"] .achievement-art.is-earned'),
+    ).toBeVisible();
     await shot(page, 'owner-earned');
+    await page.getByRole('button', { name: 'Switch to light mode', exact: true }).click();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+    await shot(page, 'owner-earned-light');
+    await page.getByRole('button', { name: 'Switch to dark mode', exact: true }).click();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+
     await achievements.locator('summary').click();
     await expect(achievements.locator('[data-achievement="five-courses"]')).toContainText(
       '2 / 5 courses',
