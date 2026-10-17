@@ -1,3 +1,4 @@
+import { AchievementDetails } from './achievement-details';
 import { AchievementArt, achievementPalettes } from './achievement-art';
 import type { CSSProperties } from 'react';
 import {
@@ -65,12 +66,43 @@ function BadgeGrid({ list }: { list: Achievement[] }) {
                       <Progress value={a.percentage} label={a.title + ' progress'} />
                     </div>
                   )}
+                  <AchievementDetails achievement={a} />
                 </li>
               ))}
             </ul>
           </section>
         );
       })}
+    </div>
+  );
+}
+function PublicGallery({ list }: { list: Achievement[] }) {
+  function tiles(items: Achievement[]) {
+    return (
+      <ul className="public-achievement-grid">
+        {items.map((a) => (
+          <li key={a.id} data-achievement={a.id}>
+            <AchievementDetails achievement={a} compact publicView>
+              <AchievementArt id={a.id} earned />
+              <span>{a.title}</span>
+            </AchievementDetails>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+  return (
+    <div className="public-achievement-gallery ui-stack">
+      {tiles(list.slice(0, 6))}
+      {list.length > 6 && (
+        <details className="achievement-more">
+          <summary>
+            <span className="when-closed">View {list.length - 6} more achievements</span>
+            <span className="when-open">Show fewer achievements</span>
+          </summary>
+          {tiles(list.slice(6))}
+        </details>
+      )}
     </div>
   );
 }
@@ -94,11 +126,15 @@ export function Achievements({
       </div>
       <p className="field-hint">
         {publicView
-          ? 'Earned through shared learning activity. Exam achievements follow score visibility settings.'
+          ? 'Milestones from shared learning. Select a badge to see how it was earned.'
           : 'Milestones from your saved learning progress. Public visitors see achievements from shared activity only.'}
       </p>
       {earned.length ? (
-        <BadgeGrid list={earned} />
+        publicView ? (
+          <PublicGallery list={earned} />
+        ) : (
+          <BadgeGrid list={earned} />
+        )
       ) : (
         <p className="muted">
           {publicView

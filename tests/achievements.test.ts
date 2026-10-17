@@ -1,3 +1,4 @@
+import { achievementDetails, achievementRequirementProgress } from '../src/lib/achievement-details';
 import { expect, it } from 'vitest';
 import { achievementsFor, emptyAchievementStats } from '../src/lib/achievements';
 it('starts with no earned achievements and meaningful targets', () => {
@@ -48,4 +49,19 @@ it('requires actual completions and mastery thresholds, with incomplete progress
   expect(list.find((a) => a.id === 'first-book')?.earned).toBe(true);
   expect(list.find((a) => a.id === 'three-books')).toMatchObject({ earned: false, progress: 2 });
   expect(list.find((a) => a.id === 'five-exams')?.earned).toBe(false);
+});
+
+it('provides specific earning and counting details for every badge', () => {
+  for (const achievement of achievementsFor(emptyAchievementStats)) {
+    const detail = achievementDetails[achievement.id];
+    expect(detail.meaning.length).toBeGreaterThan(30);
+    expect(detail.requirement.length).toBeGreaterThan(20);
+    expect(detail.counting.length).toBeGreaterThan(40);
+  }
+});
+it('formats singular requirements without implying uncapped public totals', () => {
+  const badge = achievementsFor({ ...emptyAchievementStats, focusSeconds: 1000 }).find(
+    (a) => a.id === 'first-steps',
+  )!;
+  expect(achievementRequirementProgress(badge)).toBe('1 / 1 minute');
 });

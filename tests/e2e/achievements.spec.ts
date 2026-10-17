@@ -105,6 +105,25 @@ for (const width of [1280, 320, 390])
     expect(new Set(designs).size).toBe(22);
     await expect(achievements.locator('.achievement-art.is-locked')).toHaveCount(22);
     await shot(page, 'owner-explore-empty');
+    const lockedTrigger = achievements.getByRole('button', {
+      name: 'View Deep diver achievement',
+      exact: true,
+    });
+    await lockedTrigger.click();
+    const lockedDetail = page.getByRole('dialog', { name: 'Deep diver', exact: true });
+    await expect(lockedDetail).toBeVisible();
+    await expect(lockedDetail.getByText('In progress', { exact: true })).toBeVisible();
+    await expect(lockedDetail).toContainText('600 minutes (10 hours)');
+    await expect(lockedDetail).toContainText('0 / 600 minutes');
+    await page.screenshot({
+      path: test.info().outputPath('owner-locked-detail.png'),
+      fullPage: true,
+      animations: 'disabled',
+    });
+    await page.keyboard.press('Escape');
+    await expect(lockedDetail).toHaveCount(0);
+    await expect(lockedTrigger).toBeFocused();
+
     const guestContext = await browser.newContext(),
       guest = await guestContext.newPage();
     await guest.setViewportSize({ width, height: 1000 });
@@ -181,6 +200,84 @@ for (const width of [1280, 320, 390])
     await shot(page, 'owner-progress');
     await guest.reload();
     const shared = guest.getByRole('region', { name: 'Achievements', exact: true });
+    const initialGrid = shared.locator('.public-achievement-grid').first();
+    await expect(initialGrid.locator('> li')).toHaveCount(6);
+    const initialBounds = (await initialGrid.boundingBox())!;
+    expect(initialBounds.height).toBeLessThanOrEqual(width < 400 ? 280 : 160);
+    const firstBadge = shared.locator('[data-achievement="first-steps"] .achievement-art');
+    expect((await firstBadge.boundingBox())!.width).toBeLessThanOrEqual(72);
+    await shot(guest, 'public-compact');
+    await shared.screenshot({
+      path: test.info().outputPath('public-compact-panel.png'),
+      animations: 'disabled',
+    });
+    const firstTrigger = shared.getByRole('button', {
+      name: 'View First steps achievement',
+      exact: true,
+    });
+    if (width < 400) await guest.setViewportSize({ width, height: 640 });
+    await firstTrigger.click();
+    const detail = guest.getByRole('dialog', { name: 'First steps', exact: true });
+    await expect(detail).toBeVisible();
+    await expect(
+      detail.getByRole('heading', { name: 'How to earn it', exact: true }),
+    ).toBeVisible();
+    await expect(detail).toContainText('1 minute of estimated focus time');
+    await expect(detail).toContainText('Leaving a page open does not add time');
+    await expect(detail).toContainText('1 / 1 minute required');
+    await expect(detail).toContainText('Private activity and hidden exam results are excluded');
+    await gap(
+      detail.locator('section').nth(0).getByRole('heading'),
+      detail.locator('section').nth(0).locator('p'),
+    );
+    const modalBounds = (await detail.boundingBox())!;
+    expect(modalBounds.width).toBeLessThanOrEqual(Math.min(480, width - 32));
+    expect(modalBounds.height).toBeLessThanOrEqual(width < 400 ? 608 : 968);
+    await guest.screenshot({
+      path: test.info().outputPath('public-achievement-detail.png'),
+      animations: 'disabled',
+    });
+    await detail.screenshot({
+      path: test.info().outputPath('public-detail-dialog.png'),
+      animations: 'disabled',
+    });
+    await detail.evaluate((element) => {
+      element.scrollTop = element.scrollHeight;
+    });
+    const detailBottom = (await detail.boundingBox())!,
+      closeBox = (await detail.getByRole('button', { name: 'Close', exact: true }).boundingBox())!;
+    expect(
+      detailBottom.y + detailBottom.height - closeBox.y - closeBox.height,
+    ).toBeGreaterThanOrEqual(15.5);
+    await guest.screenshot({
+      path: test.info().outputPath('public-detail-bottom.png'),
+      animations: 'disabled',
+    });
+
+    await guest.getByRole('button', { name: 'Close achievement details', exact: true }).click();
+    await expect(detail).toHaveCount(0);
+    await expect(firstTrigger).toBeFocused();
+    await firstTrigger.press('Enter');
+    await expect(detail).toBeVisible();
+    await detail.locator('.achievement-art').click();
+    await expect(detail).toBeVisible();
+    await guest.keyboard.press('Escape');
+    await expect(detail).toHaveCount(0);
+    await expect(firstTrigger).toBeFocused();
+    await guest.getByRole('button', { name: 'Switch to light mode', exact: true }).click();
+    await firstTrigger.click();
+    await expect(detail).toBeVisible();
+    await detail.screenshot({
+      path: test.info().outputPath('public-detail-light.png'),
+      animations: 'disabled',
+    });
+    await guest.mouse.click(4, 4);
+    await expect(detail).toHaveCount(0);
+    await expect(firstTrigger).toBeFocused();
+    await guest.getByRole('button', { name: 'Switch to dark mode', exact: true }).click();
+    if (width < 400) await guest.setViewportSize({ width, height: 1000 });
+    await shared.locator('.achievement-more summary').click();
+
     for (const id of [
       'first-steps',
       'week-streak',
@@ -206,18 +303,18 @@ for (const width of [1280, 320, 390])
     ])
       await expect(shared.locator(`[data-achievement="${id}"]`)).toHaveCount(0);
     expect(await guest.content()).not.toContain('PRIVATE_SECRET');
-    await gap(shared.locator('> .field-hint'), shared.locator('> div').last());
-    const card = shared.locator('[data-achievement="first-steps"]');
-    await gap(card.locator('.achievement-title'), card.locator('.field-hint'));
-    await gap(card.locator('.field-hint'), card.locator('.achievement-status'));
+    await gap(shared.locator('> .field-hint'), shared.locator('.public-achievement-gallery'));
     await shot(guest, 'public-earned');
     await db`update exams set is_public=true where id in (${category.id},${directBank})`;
     await guest.reload();
+    await shared.locator('.achievement-more summary').click();
     await expect(shared.locator('[data-achievement="category-certified"]')).toBeVisible();
     await expect(shared.locator('[data-achievement="ten-questions"]')).toBeVisible();
     await db`update users set show_exam_scores=false where id=${owner}`;
     await guest.reload();
     await expect(shared.getByRole('region', { name: 'Assessments', exact: true })).toHaveCount(0);
+    for (const id of ['first-exam', 'course-certified', 'category-certified', 'perfect-exam'])
+      await expect(shared.locator(`[data-achievement="${id}"]`)).toHaveCount(0);
     await expect(shared.locator('[data-achievement="first-class"]')).toBeVisible();
     await shot(guest, 'public-scores-hidden');
     await db`update users set public_progress=false where id=${owner}`;

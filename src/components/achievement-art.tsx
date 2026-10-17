@@ -829,9 +829,17 @@ const frames = {
   flower:
     'M100 18Q117 8 131 27 154 23 160 45 181 51 177 74 193 90 179 108 185 132 163 143 159 168 136 168 120 188 100 178 80 188 64 168 41 168 37 143 15 132 21 108 7 90 23 74 19 51 40 45 46 23 69 27 83 8 100 18Z',
 };
-export function AchievementArt({ id, earned }: { id: string; earned: boolean }) {
+export function AchievementArt({
+  id,
+  earned,
+  instance = 'card',
+}: {
+  id: string;
+  earned: boolean;
+  instance?: string;
+}) {
   const p = achievementPalettes[id] ?? achievementPalettes['first-steps'];
-  const prefix = 'achievement-' + id;
+  const prefix = 'achievement-' + id + '-' + instance;
   return (
     <div
       className={`achievement-art ${earned ? 'is-earned' : 'is-locked'}`}
