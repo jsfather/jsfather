@@ -138,7 +138,7 @@ test('outcomes earn estimates once, idle pages earn nothing, and private activit
     expect(
       await publicPage.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
     ).toBe(true);
-    const bounds = await shared.locator('.public-milestones').boundingBox();
+    const bounds = await shared.locator('.public-calendar-section').boundingBox();
     const hint = await shared.locator('> .field-hint').boundingBox();
     expect(hint!.y - (bounds!.y + bounds!.height)).toBeGreaterThanOrEqual(23);
     await publicPage.screenshot({
@@ -157,7 +157,7 @@ test('outcomes earn estimates once, idle pages earn nothing, and private activit
     await publicPage.reload();
     const empty = publicPage.getByRole('region', { name: 'Shared learning activity' });
     await expect(empty.getByText('0.0 XP', { exact: true })).toBeVisible();
-    await expect(empty.locator('.milestone.earned')).toHaveCount(0);
+    await expect(publicPage.locator('[data-achievement="first-steps"]')).toHaveCount(0);
     await empty.screenshot({ path: test.info().outputPath('public-empty-' + width + '.png') });
   }
   await db`update users set public_profile=false where id=${owner}`;

@@ -7,7 +7,15 @@ import type { Course, CourseSession } from '@/db/schema';
 export function Badge({ children, color = 'neutral' }: { children: ReactNode; color?: string }) {
   return <span className={`badge badge-${color}`}>{children}</span>;
 }
-export function Progress({ value, color = 'teal' }: { value: number; color?: string }) {
+export function Progress({
+  value,
+  color = 'teal',
+  label = 'Learning progress',
+}: {
+  value: number;
+  color?: string;
+  label?: string;
+}) {
   return (
     <div
       className={`progress progress-${color}`}
@@ -15,7 +23,7 @@ export function Progress({ value, color = 'teal' }: { value: number; color?: str
       aria-valuenow={value}
       aria-valuemin={0}
       aria-valuemax={100}
-      aria-label="Learning progress"
+      aria-label={label}
     >
       <div style={{ width: `${value}%` }} />
     </div>

@@ -21,10 +21,14 @@ test.afterAll(async () => {
   await db.end();
 });
 async function gap(before: Locator, after: Locator, minimum = 16, maximum = 24) {
-  const a = (await before.boundingBox())!,
-    b = (await after.boundingBox())!;
-  expect(b.y - (a.y + a.height)).toBeGreaterThanOrEqual(minimum - 0.5);
-  expect(b.y - (a.y + a.height)).toBeLessThanOrEqual(maximum + 0.5);
+  // Read both rectangles in one frame when measuring the resting layout.
+  const spacing = await before.or(after).evaluateAll((elements) => {
+    if (elements.length !== 2) throw new Error('Expected two elements for spacing measurement.');
+    const [a, b] = elements.map((element) => element.getBoundingClientRect());
+    return b.y - a.bottom;
+  });
+  expect(spacing).toBeGreaterThanOrEqual(minimum - 0.5);
+  expect(spacing).toBeLessThanOrEqual(maximum + 0.5);
 }
 for (const width of [320, 390, 1280]) {
   test(`helper text, form headings and panel actions have deliberate spacing at ${width}px`, async ({
@@ -116,6 +120,12 @@ for (const width of [320, 390, 1280]) {
     await progress.getByLabel('Last page read').fill('50');
     await progress.getByRole('button', { name: 'Save progress', exact: true }).click();
     await expect(progress.getByText('Reading progress saved.', { exact: true })).toBeVisible();
+    // The hovered save button lifts by 1px; finish that interaction before measuring resting gaps.
+    await page.mouse.move(0, 0);
+    await expect(progress.getByRole('button', { name: 'Save progress', exact: true })).toHaveCSS(
+      'transform',
+      'none',
+    );
     await gap(progress.locator('.alert'), progress.locator('.field'));
     await gap(
       progress.locator('.field-hint'),

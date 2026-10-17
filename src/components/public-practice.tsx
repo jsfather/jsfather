@@ -1,20 +1,12 @@
-import { Flame, Sparkles, Clock, Trophy, Check } from 'lucide-react';
+import { Flame, Sparkles, Clock, Check } from 'lucide-react';
 import { addDays, format, parseISO } from 'date-fns';
 import { DAILY_GOAL_SECONDS, focusTime, focusXp } from '@/lib/practice';
 import type { publicPracticeSummary } from '@/lib/practice-data';
 export function PublicPractice({
   summary,
-  completedCourses,
 }: {
   summary: Awaited<ReturnType<typeof publicPracticeSummary>>;
-  completedCourses: number;
 }) {
-  const milestones = [
-    { title: 'First steps', detail: 'First focus minute', earned: summary.totalSeconds >= 60 },
-    { title: 'Finding a rhythm', detail: '7-day best streak', earned: summary.best >= 7 },
-    { title: 'An hour wiser', detail: '60 focus minutes', earned: summary.totalSeconds >= 3600 },
-    { title: 'Finisher', detail: 'A course completed', earned: completedCourses > 0 },
-  ];
   const days = new Map(summary.days.map((d) => [d.day, d.seconds]));
   return (
     <section className="panel ui-stack public-practice" aria-label="Shared learning activity">
@@ -95,29 +87,6 @@ export function PublicPractice({
             <i className="qualified" />
             Goal complete
           </span>
-        </div>
-      </div>
-      <div className="ui-stack public-milestones">
-        <h3>
-          <Trophy size={18} aria-hidden="true" />
-          Milestones
-        </h3>
-        <div className="milestone-grid">
-          {milestones.map((m) => (
-            <div key={m.title} className={`milestone ${m.earned ? 'earned' : ''}`}>
-              <span className="milestone-icon">
-                {m.earned ? (
-                  <Check size={18} aria-label="Earned" />
-                ) : (
-                  <Trophy size={18} aria-label="In progress" />
-                )}
-              </span>
-              <div>
-                <strong>{m.title}</strong>
-                <p>{m.detail}</p>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
       <p className="field-hint">

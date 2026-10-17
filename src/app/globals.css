@@ -3940,13 +3940,11 @@ textarea {
   font-weight: 400;
 }
 .public-focus-grid > div > small,
-.activity-legend,
-.milestone p {
+.activity-legend {
   color: var(--muted);
   font-size: 12px;
 }
-.public-calendar-section,
-.public-milestones {
+.public-calendar-section {
   padding-top: var(--space-6);
   border-top: 1px solid var(--border);
 }
@@ -3986,8 +3984,7 @@ textarea {
   flex-wrap: wrap;
   gap: var(--space-2) var(--space-4);
 }
-.activity-legend > span,
-.public-milestones h3 {
+.activity-legend > span {
   display: flex;
   align-items: center;
   gap: var(--space-2);
@@ -3999,37 +3996,9 @@ textarea {
   background: var(--surface-2);
   border: 1px solid var(--border);
 }
-.milestone-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--space-4);
-}
-.milestone {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  color: var(--muted);
-  min-width: 0;
-}
-.milestone-icon {
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  background: var(--surface-2);
-}
-.milestone.earned {
-  color: var(--text);
-}
-.milestone.earned .milestone-icon {
-  color: var(--accent);
-  background: var(--accent-bg);
-}
+
 @media (max-width: 700px) {
-  .public-focus-grid,
-  .milestone-grid {
+  .public-focus-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .public-focus-grid > div:last-child {
@@ -4042,8 +4011,80 @@ textarea {
     grid-template-columns: repeat(7, minmax(0, 1fr));
   }
 }
-@media (max-width: 360px) {
-  .milestone-grid {
-    grid-template-columns: 1fr;
-  }
+
+.achievements-panel > .section-header {
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+.achievements-panel h2,
+.achievement-group h3,
+.achievement-title,
+.achievement-status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: var(--space-4);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.achievement-card {
+  min-width: 0;
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface-2);
+}
+.achievement-title h4 {
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+.achievement-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  color: var(--muted);
+  background: var(--surface);
+  border-radius: 50%;
+}
+.achievement-card.earned {
+  border-color: var(--accent);
+}
+.earned .achievement-icon {
+  color: var(--accent);
+  background: var(--accent-bg);
+}
+.achievement-status {
+  color: var(--accent);
+  font-size: 12px;
+}
+.achievement-card > .achievement-status,
+.achievement-card > .achievement-progress {
+  margin-top: auto;
+}
+.achievement-progress.ui-stack {
+  gap: var(--space-2);
+}
+.achievement-next summary {
+  cursor: pointer;
+  color: var(--accent);
+}
+.achievement-next[open] > div {
+  margin-top: var(--space-4);
+}
+.profile-sections > .panel {
+  margin-block: 0;
+}
+.public-profile-overview {
+  margin-bottom: var(--space-6);
+}
+.achievement-progress .progress {
+  background: var(--surface);
 }
