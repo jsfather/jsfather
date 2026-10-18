@@ -76,13 +76,13 @@ function BadgeGrid({ list }: { list: Achievement[] }) {
     </div>
   );
 }
-function PublicGallery({ list }: { list: Achievement[] }) {
+function AchievementGallery({ list, publicView }: { list: Achievement[]; publicView: boolean }) {
   function tiles(items: Achievement[]) {
     return (
       <ul className="public-achievement-grid">
         {items.map((a) => (
           <li key={a.id} data-achievement={a.id}>
-            <AchievementDetails achievement={a} compact publicView>
+            <AchievementDetails achievement={a} compact publicView={publicView}>
               <AchievementArt id={a.id} earned />
               <span>{a.title}</span>
             </AchievementDetails>
@@ -127,14 +127,10 @@ export function Achievements({
       <p className="field-hint">
         {publicView
           ? 'Milestones from shared learning. Select a badge to see how it was earned.'
-          : 'Milestones from your saved learning progress. Public visitors see achievements from shared activity only.'}
+          : 'Milestones from your saved learning progress. Select a badge to see how it was earned. Public visitors see achievements from shared activity only.'}
       </p>
       {earned.length ? (
-        publicView ? (
-          <PublicGallery list={earned} />
-        ) : (
-          <BadgeGrid list={earned} />
-        )
+        <AchievementGallery list={earned} publicView={publicView} />
       ) : (
         <p className="muted">
           {publicView

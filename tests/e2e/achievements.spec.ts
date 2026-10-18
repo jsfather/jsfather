@@ -168,21 +168,51 @@ for (const width of [1280, 320, 390])
       await db`insert into practice_sessions(id,user_id,course_id,day,activity,seconds,ended_at) values(${randomUUID()},${owner},${sharedCourse},${day},'lesson',300,now())`;
     }
     await page.reload();
-    await expect(
-      achievements.locator('[data-achievement="category-certified"] .achievement-status'),
-    ).toHaveText('Earned');
-    await expect(
-      achievements.locator('[data-achievement="fifty-words"] .achievement-status'),
-    ).toHaveText('Earned');
-    await expect(
-      achievements.locator('[data-achievement="fifty-questions"] .achievement-status'),
-    ).toHaveText('Earned');
-    await expect(
-      achievements.locator('[data-achievement="perfect-exam"] .achievement-status'),
-    ).toHaveText('Earned');
-    await expect(
-      achievements.locator('[data-achievement="category-certified"] .achievement-art.is-earned'),
-    ).toBeVisible();
+    const ownerGrid = achievements.locator('.public-achievement-grid').first();
+    await expect(ownerGrid.locator('> li')).toHaveCount(6);
+    expect((await ownerGrid.boundingBox())!.height).toBeLessThanOrEqual(width < 400 ? 280 : 160);
+    expect(
+      (await ownerGrid.locator('.achievement-art').first().boundingBox())!.width,
+    ).toBeLessThanOrEqual(72);
+    await gap(
+      achievements.locator('> .field-hint'),
+      achievements.locator('.public-achievement-gallery'),
+    );
+    await gap(
+      achievements.locator('.public-achievement-gallery'),
+      achievements.locator('.achievement-next'),
+    );
+    await shot(page, 'owner-compact');
+    await achievements.screenshot({
+      path: test.info().outputPath('owner-compact-panel.png'),
+      animations: 'disabled',
+    });
+    await achievements.locator('.achievement-more summary').click();
+    await gap(
+      achievements.locator('.achievement-more summary'),
+      achievements.locator('.achievement-more > .public-achievement-grid'),
+    );
+    for (const id of ['category-certified', 'fifty-words', 'fifty-questions', 'perfect-exam'])
+      await expect(
+        achievements.locator(`[data-achievement="${id}"] .achievement-art.is-earned`),
+      ).toBeVisible();
+    const ownerTrigger = achievements.getByRole('button', {
+      name: 'View Category certified achievement',
+      exact: true,
+    });
+    await ownerTrigger.click();
+    const ownerDetail = page.getByRole('dialog', { name: 'Category certified', exact: true });
+    await expect(ownerDetail.getByText('Earned', { exact: true })).toBeVisible();
+    await expect(ownerDetail).toContainText('Progress is calculated from saved learning records.');
+    await expect(ownerDetail).not.toContainText('This badge is supported by shared activity only.');
+    await gap(
+      ownerDetail.locator('section').first().getByRole('heading'),
+      ownerDetail.locator('section').first().locator('p'),
+    );
+    await shot(page, 'owner-earned-detail');
+    await page.keyboard.press('Escape');
+    await expect(ownerDetail).toHaveCount(0);
+    await expect(ownerTrigger).toBeFocused();
     await shot(page, 'owner-earned');
     await page.getByRole('button', { name: 'Switch to light mode', exact: true }).click();
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
@@ -190,7 +220,7 @@ for (const width of [1280, 320, 390])
     await page.getByRole('button', { name: 'Switch to dark mode', exact: true }).click();
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
 
-    await achievements.locator('summary').click();
+    await achievements.locator('.achievement-next summary').click();
     await expect(achievements.locator('[data-achievement="five-courses"]')).toContainText(
       '2 / 5 courses',
     );
