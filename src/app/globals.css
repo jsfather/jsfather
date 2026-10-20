@@ -2855,54 +2855,120 @@ tbody tr:last-child td {
 .vocabulary-word-form {
   margin-top: 20px;
 }
-.vocabulary-review-card {
+.app-main:has(.vocabulary-review-page) {
+  min-height: 0;
+}
+.content:has(> .vocabulary-review-page) {
+  padding: 24px;
+}
+.content:has(> .vocabulary-review-page) > .app-footer {
+  display: none;
+}
+.vocabulary-review-page {
+  height: calc(100dvh - 123px);
+  min-height: 460px;
   max-width: 760px;
   margin: auto;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: var(--space-6);
+}
+.vocabulary-review-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+.vocabulary-review-title h1 {
+  font-size: 20px;
+  overflow-wrap: anywhere;
+}
+.vocabulary-review-title .text-link {
+  flex-shrink: 0;
+  font-size: 13px;
+}
+.vocabulary-mode .panel-actions {
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+.vocabulary-mode .field {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+.vocabulary-mode select {
+  width: 100%;
+  min-width: 0;
+}
+.vocabulary-mode .alert {
+  padding: 8px 12px;
+  font-size: 12px;
+}
+.vocabulary-review-card {
+  min-height: 0;
+  margin: 0;
+  padding: 24px;
+  overflow: hidden;
+}
+.vocabulary-question {
+  min-height: 0;
+  flex-shrink: 1;
+  overflow: auto;
+  gap: var(--space-2);
+}
+.vocabulary-question:has(+ .vocabulary-answer) {
+  max-height: 40%;
+}
+.vocabulary-question > *,
+.vocabulary-answer > * {
+  flex-shrink: 0;
 }
 .vocabulary-prompt {
   font-size: clamp(1.5rem, 4vw, 2.5rem);
-  margin: 24px 0;
+}
+.vocabulary-question .muted {
+  font-size: 12px;
 }
 .vocabulary-answer {
-  margin: 24px 0;
-  padding: 24px;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  padding: 16px;
   background: var(--surface-2);
   border-radius: 12px;
 }
-.vocabulary-answer p {
-  margin-top: 16px;
+.vocabulary-answer h3 {
+  font-size: 21px;
   line-height: 1.6;
 }
-.vocabulary-review-page {
-  padding-bottom: calc(148px + env(safe-area-inset-bottom));
+.vocabulary-answer p {
+  line-height: 1.6;
+}
+.vocabulary-answer-details {
+  white-space: normal;
+  font-size: 13px;
+}
+.vocabulary-answer-details > .ui-stack {
+  margin-top: var(--space-4);
 }
 .vocabulary-review-actions {
-  position: fixed;
-  inset: auto 0 0 244px;
-  z-index: 20;
-  padding: 12px max(20px, env(safe-area-inset-right)) calc(16px + env(safe-area-inset-bottom))
-    max(20px, env(safe-area-inset-left));
-  border-top: 1px solid var(--border);
-  background: var(--surface);
-  box-shadow: 0 -8px 30px #00000015;
-}
-.vocabulary-review-actions-inner {
-  max-width: 760px;
-  margin: auto;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 .vocabulary-review-action-prompt {
-  margin: 0 0 10px;
   color: var(--muted);
   font-size: 13px;
   text-align: center;
 }
-.vocabulary-rating-form {
+.vocabulary-review-actions .panel-actions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: var(--space-2);
 }
-.vocabulary-reveal-form {
-  margin: 0;
+.vocabulary-review-actions .vocabulary-reveal-form {
+  grid-template-columns: 1fr;
 }
 .vocabulary-review-actions .button {
   width: 100%;
@@ -2917,26 +2983,20 @@ tbody tr:last-child td {
   outline: 3px solid var(--accent);
   outline-offset: 3px;
 }
-.vocabulary-review-actions .alert {
-  margin: 0 0 12px;
-}
-@media (max-width: 1200px) {
-  .vocabulary-review-actions {
-    left: 220px;
-  }
-}
 @media (max-width: 760px) {
-  .vocabulary-review-actions {
-    left: 0;
-    padding-left: max(16px, env(safe-area-inset-left));
-    padding-right: max(16px, env(safe-area-inset-right));
+  .content:has(> .vocabulary-review-page) {
+    padding: 16px;
   }
-  .vocabulary-rating-form {
-    gap: 10px;
+  .vocabulary-review-page {
+    height: calc(100dvh - 96px - env(safe-area-inset-top));
+    gap: var(--space-4);
   }
-}
-.vocabulary-review-card .field-hint {
-  margin-top: 16px;
+  .vocabulary-review-card {
+    padding: 16px;
+  }
+  .vocabulary-review-title h1 {
+    font-size: 16px;
+  }
 }
 .vocabulary-member {
   padding-top: 20px;

@@ -11,13 +11,14 @@ import {
   addVocabularyCollaborator,
   removeVocabularyCollaborator,
   revealVocabularyReview,
+  setVocabularyReviewMode,
   submitVocabularyReview,
 } from '@/actions/vocabulary';
 import { ConfirmationDialog } from './confirmation-dialog';
 import { Feedback, Submit } from './forms';
 import type { Course, VocabularyWord } from '@/db/schema';
 import { WordPronunciation, PronunciationHelp } from './word-pronunciation';
-import { reviewTargets } from '@/lib/vocabulary';
+import { type VocabularyMode, reviewTargets } from '@/lib/vocabulary';
 
 export function VocabularyCourseForm({ course, timezone }: { course?: Course; timezone: string }) {
   const [state, action] = useActionState(
@@ -254,6 +255,37 @@ export function RemoveVocabularyCollaboratorForm({
     />
   );
 }
+export function VocabularyReviewMode({
+  courseId,
+  reviewId,
+  mode,
+}: {
+  courseId: string;
+  reviewId: string;
+  mode: VocabularyMode;
+}) {
+  const [state, action] = useActionState(
+    setVocabularyReviewMode.bind(null, courseId, reviewId),
+    {},
+  );
+  return (
+    <div className="ui-stack vocabulary-mode">
+      <form action={action} className="panel-actions">
+        <label className="field">
+          <span>Practice mode</span>
+          <select name="mode" defaultValue={mode} key={mode}>
+            <option value="word">Word → meaning</option>
+            <option value="meaning">Meaning → word</option>
+            <option value="mixed">Mixed</option>
+          </select>
+        </label>
+        <Submit secondary>Apply</Submit>
+      </form>
+      <Feedback state={state} />
+    </div>
+  );
+}
+
 export function VocabularyReviewCard({
   courseId,
   reviewId,
@@ -284,62 +316,82 @@ export function VocabularyReviewCard({
   }, [showAnswer]);
   return (
     <>
-      <section className="panel vocabulary-review-card">
-        <p className="eyebrow">{direction === 'word' ? 'RECALL THE MEANING' : 'RECALL THE WORD'}</p>
-        <h2 dir="auto" className="vocabulary-prompt">
-          {direction === 'word' ? word.word : word.explanation}
-        </h2>
-        <p className="muted">
-          {word.difficulty} · {successfulReviews} / {reviewTargets[word.difficulty]} successful
-          reviews
-        </p>
+      <section className="panel ui-stack vocabulary-review-card" aria-label="Recall card">
+        <div
+          className="ui-stack vocabulary-question"
+          tabIndex={0}
+          role="region"
+          aria-label="Question"
+        >
+          <p className="eyebrow">
+            {direction === 'word' ? 'RECALL THE MEANING' : 'RECALL THE WORD'}
+          </p>
+          <h2 dir="auto" className="vocabulary-prompt">
+            {direction === 'word' ? word.word : word.persianMeaning || word.explanation}
+          </h2>
+          <p className="muted">
+            {word.difficulty} · {successfulReviews} / {reviewTargets[word.difficulty]} successful
+            reviews
+          </p>
+        </div>
         {!showAnswer && (
           <p className="field-hint">Take a moment to recall the answer before revealing it.</p>
         )}
         {showAnswer && (
           <>
-            <div className="vocabulary-answer">
-              <h3 dir="auto">{direction === 'word' ? word.explanation : word.word}</h3>
+            <div
+              className="ui-stack vocabulary-answer"
+              tabIndex={0}
+              role="region"
+              aria-label="Answer"
+            >
+              <h3 dir="auto">
+                {direction === 'word' ? word.persianMeaning || word.explanation : word.word}
+              </h3>
               {word.persianMeaning && word.persianMeaning !== word.explanation && (
-                <p dir="rtl" lang="fa">
-                  {word.persianMeaning}
-                </p>
+                <details className="vocabulary-answer-details">
+                  <summary>Explanation</summary>
+                  <div className="ui-stack">
+                    <p dir="auto">{word.explanation}</p>
+                  </div>
+                </details>
               )}
               <WordPronunciation
                 word={word.word}
                 ipa={word.pronunciationIpa}
                 persian={word.pronunciationFa}
               />
-              <PronunciationHelp />
-              {word.relatedForms.length > 0 && (
-                <section className="vocabulary-related-answer">
-                  <h4>Related word forms · واژه‌های مرتبط</h4>
-                  <div className="vocabulary-related-forms">
-                    {word.relatedForms.map((form) => (
-                      <span key={form} lang="en" dir="ltr">
-                        {form}
-                      </span>
-                    ))}
-                  </div>
-                </section>
-              )}
-              {word.example && <p dir="auto">{word.example}</p>}
+              <details className="vocabulary-answer-details">
+                <summary>Examples &amp; pronunciation guide</summary>
+                <div className="ui-stack">
+                  <PronunciationHelp />
+                  {word.relatedForms.length > 0 && (
+                    <section className="vocabulary-related-answer">
+                      <h4>Related word forms · واژه‌های مرتبط</h4>
+                      <div className="vocabulary-related-forms">
+                        {word.relatedForms.map((form) => (
+                          <span key={form} lang="en" dir="ltr">
+                            {form}
+                          </span>
+                        ))}
+                      </div>
+                    </section>
+                  )}
+                  {word.example && <p dir="auto">{word.example}</p>}
+                </div>
+              </details>
             </div>
-            <p className="field-hint">
-              Remembered adds one successful review. Review again keeps your progress and brings
-              this word back in ten minutes.
-            </p>
           </>
         )}
       </section>
       <aside className="vocabulary-review-actions" aria-label="Vocabulary review actions">
-        <div className="vocabulary-review-actions-inner">
+        <div className="ui-stack vocabulary-review-actions-inner">
           <Feedback state={showAnswer ? state : revealState} />
           <p className="vocabulary-review-action-prompt">
             {showAnswer ? 'Did you recall the answer?' : 'Ready to check your answer?'}
           </p>
           {showAnswer ? (
-            <form ref={ratingForm} action={action} className="vocabulary-rating-form">
+            <form ref={ratingForm} action={action} className="panel-actions vocabulary-rating-form">
               <Submit secondary name="rating" value="again">
                 <RotateCcw size={18} aria-hidden="true" />
                 Review again
@@ -350,7 +402,7 @@ export function VocabularyReviewCard({
               </Submit>
             </form>
           ) : (
-            <form action={revealAction} className="vocabulary-reveal-form">
+            <form action={revealAction} className="panel-actions vocabulary-reveal-form">
               <Submit>
                 <Eye size={18} aria-hidden="true" />
                 Reveal answer

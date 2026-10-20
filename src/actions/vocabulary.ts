@@ -2,6 +2,7 @@
 import { and, eq, sql } from 'drizzle-orm';
 import { z } from 'zod';
 import { redirect, notFound, unstable_rethrow } from 'next/navigation';
+import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 import { formatInTimeZone } from 'date-fns-tz';
 import { db } from '@/db';
@@ -18,7 +19,12 @@ import {
 import { requireUser } from '@/lib/auth';
 import { slugify } from '@/lib/learning';
 import { courseSchema, localDate } from '@/lib/validation';
-import { nextVocabularyReview, reviewTargets } from '@/lib/vocabulary';
+import {
+  nextVocabularyReview,
+  reviewTargets,
+  vocabularyMode,
+  vocabularyDirection,
+} from '@/lib/vocabulary';
 import { vocabularyTargetSql } from '@/lib/vocabulary-data';
 import type { ActionState } from '@/actions';
 
@@ -297,6 +303,7 @@ export async function removeVocabularyCollaborator(
 }
 export async function startVocabularyReview(courseId: string) {
   const user = await requireUser();
+  const mode = vocabularyMode((await cookies()).get(`vocabulary-mode-${user.id}`)?.value);
   const id = await withCourse(user.id, courseId, false, async (tx, course) => {
     if (course.status === 'archived') return null;
     const [pending] = await tx
@@ -309,7 +316,15 @@ export async function startVocabularyReview(courseId: string) {
           sql`${vocabularyReviews.submittedAt} is null`,
         ),
       );
-    if (pending) return pending.id;
+    if (pending) {
+      if (!pending.revealedAt && mode !== 'mixed' && pending.direction !== mode) {
+        await tx
+          .update(vocabularyReviews)
+          .set({ direction: mode })
+          .where(eq(vocabularyReviews.id, pending.id));
+      }
+      return pending.id;
+    }
     const [word] = await tx
       .select({ word: vocabularyWords })
       .from(vocabularyWords)
@@ -343,12 +358,50 @@ export async function startVocabularyReview(courseId: string) {
           example: word.word.example,
           difficulty: word.word.difficulty,
         },
-        direction: Math.random() < 0.5 ? 'word' : 'meaning',
+        direction: vocabularyDirection(mode),
       })
       .returning({ id: vocabularyReviews.id });
     return review.id;
   });
   redirect('/courses/' + courseId + '/review' + (id ? '/' + id : ''));
+}
+export async function setVocabularyReviewMode(
+  courseId: string,
+  reviewId: string,
+  _state: ActionState,
+  form: FormData,
+): Promise<ActionState> {
+  const user = await requireUser();
+  try {
+    const mode = z.enum(['word', 'meaning', 'mixed']).parse(form.get('mode'));
+    await withCourse(user.id, courseId, false, async (tx, course) => {
+      if (course.status === 'archived') throw new VocabularyError('This course is archived.');
+      const [review] = await tx
+        .update(vocabularyReviews)
+        .set({ direction: vocabularyDirection(mode), revealedAt: null })
+        .where(
+          and(
+            eq(vocabularyReviews.id, reviewId),
+            eq(vocabularyReviews.courseId, courseId),
+            eq(vocabularyReviews.userId, user.id),
+            sql`${vocabularyReviews.submittedAt} is null`,
+          ),
+        )
+        .returning({ id: vocabularyReviews.id });
+      if (!review) throw new VocabularyError('This card is no longer active.');
+    });
+    (await cookies()).set(`vocabulary-mode-${user.id}`, mode, {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+      path: '/',
+      maxAge: 60 * 60 * 24 * 365,
+    });
+  } catch (e) {
+    return failure(e);
+  }
+  revalidatePath(`/courses/${courseId}/review/${reviewId}`);
+  return { success: 'Practice mode saved on this browser.' };
 }
 export async function revealVocabularyReview(
   courseId: string,
@@ -379,6 +432,7 @@ export async function revealVocabularyReview(
   } catch (e) {
     return failure(e);
   }
+  revalidatePath(`/courses/${courseId}/review/${reviewId}`);
   return { success: 'Answer revealed.' };
 }
 export async function submitVocabularyReview(

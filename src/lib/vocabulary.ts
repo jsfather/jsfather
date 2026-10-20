@@ -14,3 +14,11 @@ export function nextVocabularyReview(
   const days = Math.min(30, baseDays * 2 ** Math.min(6, Math.max(0, successfulReviews - 1)));
   return new Date(now.getTime() + days * 86400000);
 }
+
+export type VocabularyMode = 'word' | 'meaning' | 'mixed';
+export function vocabularyMode(value?: string): VocabularyMode {
+  return value === 'meaning' || value === 'mixed' ? value : 'word';
+}
+export function vocabularyDirection(mode: VocabularyMode): 'word' | 'meaning' {
+  return mode === 'mixed' ? (Math.random() < 0.5 ? 'word' : 'meaning') : mode;
+}

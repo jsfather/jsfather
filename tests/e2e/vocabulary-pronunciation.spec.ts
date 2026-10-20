@@ -86,11 +86,15 @@ test('pronunciation appears on daily words and only after a recall answer is rev
     expect(spoken.every((v) => v.lang === 'en-US')).toBe(true);
     expect(spoken[1].rate).toBeLessThan(spoken[0].rate);
     await page.goto(`/courses/${courseId}/review/${reviewId}`);
+    await expect(page.getByRole('combobox', { name: 'Practice mode', exact: true })).toHaveValue(
+      'meaning',
+    );
     await expect(page.locator('.word-pronunciation')).toHaveCount(0);
     await expect(page.locator('.vocabulary-related-forms')).toHaveCount(0);
     await page.getByRole('button', { name: 'Reveal answer' }).click();
     await expect(page.getByText(entry.pronunciationIpa, { exact: true })).toBeVisible();
     await expect(page.getByText(entry.pronunciationFa, { exact: true })).toBeVisible();
+    await page.getByText('Examples & pronunciation guide', { exact: true }).click();
     expect(await page.locator('.vocabulary-related-forms > span').allTextContents()).toEqual(
       entry.relatedForms,
     );
@@ -102,6 +106,7 @@ test('pronunciation appears on daily words and only after a recall answer is rev
       fullPage: true,
     });
     await page.reload();
+    await page.getByText('Examples & pronunciation guide', { exact: true }).click();
     await expect(page.locator('.vocabulary-related-forms')).toBeVisible();
     await expect(page.getByRole('button', { name: 'Reveal answer' })).toHaveCount(0);
   } finally {

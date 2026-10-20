@@ -48,12 +48,22 @@ test('review controls stay reachable and stable across answer lengths and scroll
     await page.setViewportSize(viewport);
     let shortPosition: { x: number; y: number; width: number; height: number } | null = null;
     for (const reviewId of [shortReview, longReview]) {
+      await db`update vocabulary_reviews set revealed_at=null where id=${reviewId}`;
       await page.goto(
         `/courses/${reviewId === longReview ? longCourseId : courseId}/review/${reviewId}`,
       );
       const reveal = page.getByRole('button', { name: 'Reveal answer', exact: true });
       const revealPosition = (await reveal.count()) ? await reveal.boundingBox() : null;
-      if (await reveal.count()) await reveal.click();
+      if (await reveal.count()) {
+        await page.screenshot({
+          path: test
+            .info()
+            .outputPath(
+              `question-${viewport.width}-${reviewId === longReview ? 'long' : 'short'}.png`,
+            ),
+        });
+        await reveal.click();
+      }
       const again = page.getByRole('button', { name: 'Review again', exact: true });
       const remembered = page.getByRole('button', { name: 'Remembered', exact: true });
       await expect(again).toBeFocused();
@@ -78,13 +88,87 @@ test('review controls stay reachable and stable across answer lengths and scroll
       expect(
         await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
       ).toBe(true);
-      if (reviewId === longReview)
-        await page.screenshot({
-          path: test.info().outputPath(`review-${viewport.width}.png`),
-          animations: 'disabled',
-        });
+      const card = (await page
+        .getByRole('region', { name: 'Recall card', exact: true })
+        .boundingBox())!;
+      const answer = (await page
+        .getByRole('region', { name: 'Answer', exact: true })
+        .boundingBox())!;
+      expect(card.y).toBeGreaterThan(0);
+      expect(answer.height).toBeGreaterThan(80);
+      expect(answer.y + answer.height).toBeLessThanOrEqual(dock.y - 16);
+      expect(await page.evaluate(() => window.scrollY)).toBe(0);
+      const prompt = (await page.locator('.vocabulary-review-action-prompt').boundingBox())!;
+      expect(position.y - prompt.y - prompt.height).toBeGreaterThanOrEqual(16);
+      await page.screenshot({
+        path: test
+          .info()
+          .outputPath(`review-${viewport.width}-${reviewId === longReview ? 'long' : 'short'}.png`),
+        animations: 'disabled',
+      });
       await page.keyboard.press('Tab');
       await expect(remembered).toBeFocused();
     }
   }
+});
+
+test('practice modes persist across ratings and reloads and prioritize the Persian meaning', async ({
+  page,
+}) => {
+  await page
+    .context()
+    .addCookies([
+      { name: 'authjs.session-token', value: owner, url: base, httpOnly: true, sameSite: 'Lax' },
+    ]);
+  await db`update vocabulary_words set persian_meaning='یادآوری' where course_id=${courseId}`;
+  const secondWord = randomUUID();
+  await db`insert into vocabulary_words(id,course_id,word,explanation,persian_meaning,added_on)
+    values(${secondWord},${courseId},'Learn','To gain knowledge','یاد گرفتن','2026-10-14')`;
+  await page.goto(`/courses/${courseId}/review/${shortReview}`);
+  const mode = page.getByRole('combobox', { name: 'Practice mode', exact: true });
+  await expect(mode).toHaveValue('word');
+  async function apply(value: string) {
+    await mode.selectOption(value);
+    await page.getByRole('button', { name: 'Apply', exact: true }).click();
+    await expect(page.getByRole('status')).toContainText('Practice mode saved');
+    await expect(page.getByRole('button', { name: 'Reveal answer', exact: true })).toBeVisible();
+  }
+  await apply('meaning');
+  await expect(page.locator('.vocabulary-prompt')).toHaveText('یادآوری');
+  await page.getByRole('button', { name: 'Reveal answer', exact: true }).click();
+  await expect(
+    page.getByRole('region', { name: 'Answer', exact: true }).getByRole('heading'),
+  ).toHaveText('Recall');
+  await page.reload();
+  await expect(mode).toHaveValue('meaning');
+  await page.getByRole('button', { name: 'Remembered', exact: true }).click();
+  await expect(page).not.toHaveURL(new RegExp(shortReview));
+  await expect(mode).toHaveValue('meaning');
+  await expect(page.locator('.vocabulary-prompt')).toHaveText('یاد گرفتن');
+  await apply('word');
+  await expect(page.locator('.vocabulary-prompt')).toHaveText('Learn');
+  await page.getByRole('button', { name: 'Reveal answer', exact: true }).click();
+  await expect(
+    page.getByRole('region', { name: 'Answer', exact: true }).getByRole('heading'),
+  ).toHaveText('یاد گرفتن');
+  for (const width of [320, 390, 1280]) {
+    await page.setViewportSize({ width, height: width === 320 ? 700 : 900 });
+    const answer = page.getByRole('region', { name: 'Answer', exact: true });
+    const primaryAnswer = (await answer.getByRole('heading').boundingBox())!;
+    const answerBox = (await answer.boundingBox())!;
+    expect(primaryAnswer.y + primaryAnswer.height).toBeLessThanOrEqual(
+      answerBox.y + answerBox.height,
+    );
+    expect(
+      await page.evaluate(() => document.documentElement.scrollHeight <= window.innerHeight),
+    ).toBe(true);
+    await page.screenshot({ path: test.info().outputPath(`persian-answer-${width}.png`) });
+  }
+  await apply('mixed');
+  await page.reload();
+  await expect(mode).toHaveValue('mixed');
+  await page.getByRole('button', { name: 'Reveal answer', exact: true }).click();
+  await page.getByRole('button', { name: 'Review again', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'You’re caught up', exact: true })).toBeVisible();
+  await page.screenshot({ path: test.info().outputPath('caught-up.png'), fullPage: true });
 });

@@ -1,4 +1,3 @@
-import { PracticePanel } from '@/components/practice-panel';
 import Link from 'next/link';
 import { and, eq } from 'drizzle-orm';
 import { notFound, redirect } from 'next/navigation';
@@ -6,8 +5,9 @@ import { requireUser } from '@/lib/auth';
 import { accessibleVocabularyCourse } from '@/lib/vocabulary-data';
 import { db } from '@/db';
 import { vocabularyReviews, vocabularyWords, vocabularyProgress } from '@/db/schema';
-import { PageTitle } from '@/components/ui';
-import { VocabularyReviewCard } from '@/components/vocabulary-forms';
+import { cookies } from 'next/headers';
+import { vocabularyMode } from '@/lib/vocabulary';
+import { VocabularyReviewCard, VocabularyReviewMode } from '@/components/vocabulary-forms';
 export const metadata = { title: 'Review a word' };
 export default async function ReviewCard({
   params,
@@ -40,16 +40,22 @@ export default async function ReviewCard({
     );
   if (!row) notFound();
   if (row.review.submittedAt || course.status === 'archived') redirect(`/courses/${id}/review`);
+  const mode = vocabularyMode(
+    (await cookies()).get(`vocabulary-mode-${user.id}`)?.value ?? row.review.direction,
+  );
   return (
     <div className="vocabulary-review-page">
-      <PageTitle
-        eyebrow="VOCABULARY PRACTICE"
-        title={course.title}
-        description="Try to recall the answer, then reveal it and rate your memory."
-      />
-      <PracticePanel courseId={id} activity="vocabulary" />
+      <header className="ui-stack vocabulary-review-header">
+        <div className="vocabulary-review-title">
+          <h1>{course.title}</h1>
+          <Link className="text-link" href={`/courses/${id}`}>
+            Back to course
+          </Link>
+        </div>
+        <VocabularyReviewMode key={reviewId} courseId={id} reviewId={reviewId} mode={mode} />
+      </header>
       <VocabularyReviewCard
-        key={reviewId}
+        key={`${reviewId}-${row.review.direction}-${row.review.revealedAt?.toISOString() ?? 'hidden'}`}
         courseId={id}
         reviewId={reviewId}
         word={row.word}
@@ -57,9 +63,6 @@ export default async function ReviewCard({
         revealed={Boolean(row.review.revealedAt)}
         successfulReviews={row.progress?.successfulReviews ?? 0}
       />
-      <Link className="text-link" href={`/courses/${id}`} style={{ marginTop: 24 }}>
-        Back to course
-      </Link>
     </div>
   );
 }
