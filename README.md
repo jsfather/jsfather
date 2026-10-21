@@ -399,3 +399,23 @@ import is safe to retry and never overwrites an existing imported file. Original
 text is preserved without inventing missing study content. Session/course deletion
 also removes its Markdown files; note deletion requires confirmation. Timetable
 rebuilds are blocked while the course has saved Markdown notes.
+
+### Per-word vocabulary history
+
+Word-library entries and recall cards show your personal **Shown in practice**,
+**Successful**, and **Failed** counts from saved review records. Shown includes a
+pending unanswered card; revealing or reloading that same card does not add
+another showing. Daily suggestions and library views are not counted as practice
+cards. Successes and failures are historical outcomes, separate from current
+mastery progress, so a progress reset does not erase the recorded history.
+
+### Study notes workspace
+
+Study notes lead the session page, before practice, recall reviews, and settings.
+Use **Open notes workspace** from a session to read its notes together, or open
+**Study notes** in the navigation for your collection across all regular courses.
+Search note text and code, filter by course/session/topic, and read up to 12 full
+notes per page. Filters remain in the URL. On larger screens a contents panel
+jumps between the notes on the current page. Notes can be edited, downloaded, and
+deleted from the workspace using the same private Markdown files as session pages.
+Legacy single-field notes are imported when encountered in the collection.

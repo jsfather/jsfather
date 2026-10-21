@@ -70,6 +70,7 @@ export async function saveNote(
       );
     });
     revalidatePath('/sessions/' + sessionId);
+    revalidatePath('/notes');
     return { success: existingPath ? 'Note updated.' : 'Markdown note added.', version };
   } catch (error) {
     return failure(error);
@@ -106,6 +107,7 @@ export async function deleteNote(
       );
     });
     revalidatePath('/sessions/' + sessionId);
+    revalidatePath('/notes');
     return { success: 'Note deleted.' };
   } catch (error) {
     return failure(error);

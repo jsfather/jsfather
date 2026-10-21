@@ -2,7 +2,7 @@ import 'server-only';
 import { and, asc, eq, or, sql } from 'drizzle-orm';
 import { notFound } from 'next/navigation';
 import { db } from '@/db';
-import { courses, vocabularyWords, vocabularyProgress } from '@/db/schema';
+import { courses, vocabularyWords, vocabularyProgress, vocabularyReviews } from '@/db/schema';
 
 export const vocabularyTargetSql = sql<number>`case vocabulary_words.difficulty when 'easy' then 5 when 'hard' then 15 else 10 end`;
 export async function accessibleVocabularyCourse(userId: string, courseId: string) {
@@ -79,4 +79,26 @@ export async function vocabularyDueSummary(userId: string) {
     }),
     { learn: 0, review: 0 },
   );
+}
+
+// Count historical outcomes separately from mastery progress, which can reset when a word changes.
+// A pending review is one showing; revealing or reloading the same card adds no row.
+export function vocabularyWordReviewCounts(userId: string, courseId: string) {
+  return db
+    .select({
+      wordId: vocabularyReviews.wordId,
+      shown: sql<number>`count(*)::int`.as('shown'),
+      successful:
+        sql<number>`count(*) filter (where ${vocabularyReviews.submittedAt} is not null and ${vocabularyReviews.remembered} = true)::int`.as(
+          'successful',
+        ),
+      failed:
+        sql<number>`count(*) filter (where ${vocabularyReviews.submittedAt} is not null and ${vocabularyReviews.remembered} = false)::int`.as(
+          'failed',
+        ),
+    })
+    .from(vocabularyReviews)
+    .where(and(eq(vocabularyReviews.userId, userId), eq(vocabularyReviews.courseId, courseId)))
+    .groupBy(vocabularyReviews.wordId)
+    .as('word_review_counts');
 }

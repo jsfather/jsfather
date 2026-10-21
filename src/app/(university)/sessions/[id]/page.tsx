@@ -1,6 +1,5 @@
 import { SessionNotes } from '@/components/session-notes';
 import { sessionNotes } from '@/lib/session-notes';
-import { StudyMarkdown } from '@/components/study-markdown';
 import { SessionReviewForm } from '@/components/lesson-learning-forms';
 import { PracticePanel } from '@/components/practice-panel';
 import Link from 'next/link';
@@ -42,8 +41,8 @@ export default async function SessionDetail({ params }: { params: Promise<{ id: 
     confident: 'Can explain independently',
   };
   return (
-    <>
-      <Link className="text-link" href={'/courses/' + course.id} style={{ marginBottom: 22 }}>
+    <div className="ui-stack section-stack session-page">
+      <Link className="text-link" href={'/courses/' + course.id}>
         {course.title}
       </Link>
       <PageTitle
@@ -59,34 +58,35 @@ export default async function SessionDetail({ params }: { params: Promise<{ id: 
           </Badge>
         }
       />
-      <PracticePanel courseId={course.id} activity="lesson" />
-      <div className="actions-row">
-        {session.status !== 'completed' && (
-          <form action={setSessionStatus.bind(null, session.id, 'completed')}>
-            <button className="button primary">
-              <Check size={17} />
-              Mark as completed
-            </button>
-          </form>
-        )}
-        {session.status !== 'skipped' && (
-          <form action={setSessionStatus.bind(null, session.id, 'skipped')}>
-            <button className="button secondary">
-              <SkipForward size={16} />
-              Skip session
-            </button>
-          </form>
-        )}
-        {['completed', 'skipped'].includes(session.status) && (
-          <form action={setSessionStatus.bind(null, session.id, 'upcoming')}>
-            <button className="button secondary">
-              <RotateCcw size={15} />
-              Reopen session
-            </button>
-          </form>
-        )}
-      </div>
-      <div className="ui-stack section-stack lesson-sections">
+      <div className="ui-stack section-stack session-page-sections">
+        <SessionNotes sessionId={session.id} notes={notes} />
+        <PracticePanel courseId={course.id} activity="lesson" />
+        <div className="actions-row">
+          {session.status !== 'completed' && (
+            <form action={setSessionStatus.bind(null, session.id, 'completed')}>
+              <button className="button primary">
+                <Check size={17} />
+                Mark as completed
+              </button>
+            </form>
+          )}
+          {session.status !== 'skipped' && (
+            <form action={setSessionStatus.bind(null, session.id, 'skipped')}>
+              <button className="button secondary">
+                <SkipForward size={16} />
+                Skip session
+              </button>
+            </form>
+          )}
+          {['completed', 'skipped'].includes(session.status) && (
+            <form action={setSessionStatus.bind(null, session.id, 'upcoming')}>
+              <button className="button secondary">
+                <RotateCcw size={15} />
+                Reopen session
+              </button>
+            </form>
+          )}
+        </div>
         {chapter && (
           <Link className="text-link" href={`/courses/${course.id}?chapter=${chapter.id}`}>
             Chapter: {chapter.title}
@@ -95,22 +95,12 @@ export default async function SessionDetail({ params }: { params: Promise<{ id: 
         <section className="panel ui-stack" aria-label="Review this lesson">
           <h2>Review this lesson</h2>
           <p className="muted">
-            Before reading your notes, recall what you learned from this video.
+            Recall the key ideas in your own words, then compare with your study notes above.
           </p>
           <SessionReviewForm sessionId={session.id} />
           <details className="lesson-reveal">
-            <summary>Reveal study notes &amp; previous reviews</summary>
+            <summary>Previous reviews</summary>
             <div className="ui-stack">
-              <h3>Study notes</h3>
-              {!notes.length && (
-                <p className="muted">No study notes yet. Add a Markdown note below.</p>
-              )}
-              {notes.map((note) => (
-                <article className="ui-stack recalled-note" key={note.path}>
-                  <p className="note-file-path">{note.path}</p>
-                  <StudyMarkdown>{note.body}</StudyMarkdown>
-                </article>
-              ))}
               <h3>Review history</h3>
               {!reviews.length && (
                 <p className="muted">No reviews yet. Save your first recall above.</p>
@@ -136,45 +126,44 @@ export default async function SessionDetail({ params }: { params: Promise<{ id: 
             </div>
           </details>
         </section>
-        <SessionNotes sessionId={session.id} notes={notes} />
         <SessionForm session={session} course={course} chapters={chapters} />
+        <section className="panel ui-stack lesson-assessment">
+          <h2>Assessment</h2>
+          {exam ? (
+            <>
+              <p className="muted">
+                Practice with all questions from this session. Your result is saved.
+              </p>
+              <div className="panel-actions">
+                <form action={startAttempt.bind(null, exam.id, true)}>
+                  <Submit>Practice</Submit>
+                </form>
+              </div>
+              <Link className="text-link" href={'/exams/' + exam.id + '/edit'}>
+                Add or edit practice questions
+              </Link>
+              <h3>{exam.title}</h3>
+              <p className="muted">
+                {exam.timeLimit} minutes · Pass at {exam.passingScore}%
+              </p>
+              <Link className="text-link" href={'/exams/' + exam.id}>
+                Results, sharing &amp; edit exam
+              </Link>
+            </>
+          ) : (
+            <>
+              <p className="muted">No exam attached to this session.</p>
+              <Link className="button primary" href={'/exams/new?session=' + session.id}>
+                Add exam
+              </Link>
+            </>
+          )}
+        </section>
+        <div className="destructive-actions">
+          {exam && <DeleteExamForm exam={exam} returnToSession />}
+          <DeleteSessionForm session={session} />
+        </div>
       </div>
-      <section className="panel ui-stack lesson-assessment">
-        <h2>Assessment</h2>
-        {exam ? (
-          <>
-            <p className="muted">
-              Practice with all questions from this session. Your result is saved.
-            </p>
-            <div className="panel-actions">
-              <form action={startAttempt.bind(null, exam.id, true)}>
-                <Submit>Practice</Submit>
-              </form>
-            </div>
-            <Link className="text-link" href={'/exams/' + exam.id + '/edit'}>
-              Add or edit practice questions
-            </Link>
-            <h3>{exam.title}</h3>
-            <p className="muted">
-              {exam.timeLimit} minutes · Pass at {exam.passingScore}%
-            </p>
-            <Link className="text-link" href={'/exams/' + exam.id}>
-              Results, sharing &amp; edit exam
-            </Link>
-          </>
-        ) : (
-          <>
-            <p className="muted">No exam attached to this session.</p>
-            <Link className="button primary" href={'/exams/new?session=' + session.id}>
-              Add exam
-            </Link>
-          </>
-        )}
-      </section>
-      <div className="destructive-actions">
-        {exam && <DeleteExamForm exam={exam} returnToSession />}
-        <DeleteSessionForm session={session} />
-      </div>
-    </>
+    </div>
   );
 }

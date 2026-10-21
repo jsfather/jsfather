@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import { useState, useEffect, useSyncExternalStore, useRef } from 'react';
 import {
   LayoutDashboard,
+  NotebookPen,
   BookOpen,
   CalendarDays,
   Award,
@@ -24,6 +25,7 @@ import { logout } from '@/actions';
 const nav = [
   { href: '/dashboard', name: 'Overview', icon: LayoutDashboard },
   { href: '/courses', name: 'My courses', icon: BookOpen },
+  { href: '/notes', name: 'Study notes', icon: NotebookPen },
   { href: '/activity', name: 'Practice history', icon: Flame },
   { href: '/calendar', name: 'Timetable', icon: CalendarDays },
   { href: '/certificates', name: 'Certificates', icon: Award },
@@ -243,6 +245,7 @@ export function Breadcrumb() {
         settings: 'Settings',
         profile: 'My profile',
         sessions: 'Session details',
+        notes: 'Study notes',
       } as Record<string, string>
     )[section] ?? 'University';
   return (

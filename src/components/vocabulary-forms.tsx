@@ -1,4 +1,5 @@
 'use client';
+import { VocabularyReviewCounts, type WordReviewCounts } from './vocabulary-review-counts';
 import { useActionState, useEffect, useRef } from 'react';
 import { Check, RotateCcw, Eye } from 'lucide-react';
 import { CourseCategorySelect } from './course-category-select';
@@ -293,6 +294,7 @@ export function VocabularyReviewCard({
   direction,
   revealed,
   successfulReviews,
+  reviewCounts,
 }: {
   courseId: string;
   reviewId: string;
@@ -300,6 +302,7 @@ export function VocabularyReviewCard({
   direction: 'word' | 'meaning';
   revealed: boolean;
   successfulReviews: number;
+  reviewCounts: WordReviewCounts;
 }) {
   const [revealState, revealAction] = useActionState(
     revealVocabularyReview.bind(null, courseId, reviewId),
@@ -330,10 +333,11 @@ export function VocabularyReviewCard({
             {direction === 'word' ? word.word : word.persianMeaning || word.explanation}
           </h2>
           <p className="muted">
-            {word.difficulty} · {successfulReviews} / {reviewTargets[word.difficulty]} successful
-            reviews
+            {word.difficulty} · Mastery: {successfulReviews} / {reviewTargets[word.difficulty]}{' '}
+            successful reviews
           </p>
         </div>
+        <VocabularyReviewCounts counts={reviewCounts} />
         {!showAnswer && (
           <p className="field-hint">Take a moment to recall the answer before revealing it.</p>
         )}

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { and, eq } from 'drizzle-orm';
 import { notFound, redirect } from 'next/navigation';
 import { requireUser } from '@/lib/auth';
-import { accessibleVocabularyCourse } from '@/lib/vocabulary-data';
+import { accessibleVocabularyCourse, vocabularyWordReviewCounts } from '@/lib/vocabulary-data';
 import { db } from '@/db';
 import { vocabularyReviews, vocabularyWords, vocabularyProgress } from '@/db/schema';
 import { cookies } from 'next/headers';
@@ -17,8 +17,18 @@ export default async function ReviewCard({
   const user = await requireUser();
   const { id, reviewId } = await params;
   const course = await accessibleVocabularyCourse(user.id, id);
+  const reviewCounts = vocabularyWordReviewCounts(user.id, id);
   const [row] = await db
-    .select({ review: vocabularyReviews, word: vocabularyWords, progress: vocabularyProgress })
+    .select({
+      review: vocabularyReviews,
+      word: vocabularyWords,
+      progress: vocabularyProgress,
+      reviewCounts: {
+        shown: reviewCounts.shown,
+        successful: reviewCounts.successful,
+        failed: reviewCounts.failed,
+      },
+    })
     .from(vocabularyReviews)
     .innerJoin(
       vocabularyWords,
@@ -31,6 +41,7 @@ export default async function ReviewCard({
         eq(vocabularyProgress.userId, user.id),
       ),
     )
+    .leftJoin(reviewCounts, eq(reviewCounts.wordId, vocabularyWords.id))
     .where(
       and(
         eq(vocabularyReviews.id, reviewId),
@@ -62,6 +73,7 @@ export default async function ReviewCard({
         direction={row.review.direction}
         revealed={Boolean(row.review.revealedAt)}
         successfulReviews={row.progress?.successfulReviews ?? 0}
+        reviewCounts={row.reviewCounts}
       />
     </div>
   );

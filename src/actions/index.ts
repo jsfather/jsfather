@@ -75,6 +75,7 @@ function refresh(courseId?: string | null) {
     '/activity',
     '/dashboard',
     '/courses',
+    '/notes',
     '/calendar',
     '/exams',
     '/categories',

@@ -1,3 +1,4 @@
+import { VocabularyReviewCounts } from './vocabulary-review-counts';
 import { PracticePanel } from '@/components/practice-panel';
 import Link from 'next/link';
 import { and, asc, desc, eq, sql } from 'drizzle-orm';
@@ -12,7 +13,7 @@ import {
   type Course,
   type User,
 } from '@/db/schema';
-import { vocabularyStats } from '@/lib/vocabulary-data';
+import { vocabularyStats, vocabularyWordReviewCounts } from '@/lib/vocabulary-data';
 import { WordPronunciation, PronunciationHelp } from './word-pronunciation';
 import { dailyVocabulary } from '@/lib/daily-vocabulary';
 import { reviewTargets } from '@/lib/vocabulary';
@@ -36,10 +37,19 @@ export async function VocabularyCourseDetail({
   page: number;
 }) {
   const owner = course.ownerId === user.id;
+  const reviewCounts = vocabularyWordReviewCounts(user.id, course.id);
   const [stats, words, members, history, suggestionWords, membership] = await Promise.all([
     vocabularyStats(course.id, user.id),
     db
-      .select({ word: vocabularyWords, progress: vocabularyProgress })
+      .select({
+        word: vocabularyWords,
+        progress: vocabularyProgress,
+        reviewCounts: {
+          shown: reviewCounts.shown,
+          successful: reviewCounts.successful,
+          failed: reviewCounts.failed,
+        },
+      })
       .from(vocabularyWords)
       .leftJoin(
         vocabularyProgress,
@@ -48,6 +58,7 @@ export async function VocabularyCourseDetail({
           eq(vocabularyProgress.userId, user.id),
         ),
       )
+      .leftJoin(reviewCounts, eq(reviewCounts.wordId, vocabularyWords.id))
       .where(eq(vocabularyWords.courseId, course.id))
       .orderBy(
         desc(vocabularyWords.addedOn),
@@ -229,6 +240,10 @@ export async function VocabularyCourseDetail({
             Page {page} of {Math.max(1, Math.ceil(stats.total / 24))}
           </span>
         </header>
+        <p className="field-hint vocabulary-history-help">
+          Your history counts practice cards, including unanswered ones. Reloading a card does not
+          count again.
+        </p>
         {owner && (
           <details className="vocabulary-add-word">
             <summary>Add a word</summary>
@@ -257,7 +272,7 @@ export async function VocabularyCourseDetail({
                 </span>
               </header>
               <div className="vocabulary-word-grid">
-                {dailyWords.map(({ word, progress }) => {
+                {dailyWords.map(({ word, progress, reviewCounts }) => {
                   const target = reviewTargets[word.difficulty];
                   const completed = Math.min(progress?.successfulReviews ?? 0, target);
                   const mastered = completed >= target;
@@ -325,7 +340,7 @@ export async function VocabularyCourseDetail({
                                 : `Next: ${formatInTimeZone(progress!.dueAt, user.timezone, 'MMM d, HH:mm')}`}
                           </span>
                           <span>
-                            {completed} / {target} reviews
+                            Mastery: {completed} / {target} successful reviews
                           </span>
                         </div>
                         <Progress
@@ -333,6 +348,7 @@ export async function VocabularyCourseDetail({
                           color={course.color}
                         />
                       </div>
+                      <VocabularyReviewCounts counts={reviewCounts} />
                       {owner && (
                         <details className="vocabulary-word-editor">
                           <summary className="text-link">Edit or delete word</summary>

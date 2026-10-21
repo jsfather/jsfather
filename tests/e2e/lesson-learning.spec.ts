@@ -77,7 +77,7 @@ for (const width of [1280, 320, 390]) {
     await page.goto(`/sessions/${session.id}`);
     const review = page.getByRole('form', { name: 'Session review' });
     await expect(review.getByLabel('Key points I remember')).toBeVisible();
-    const reveal = page.getByText('Reveal study notes & previous reviews', { exact: true });
+    const reveal = page.getByText('Previous reviews', { exact: true });
     await reveal.click();
     await expect(page.getByText('No reviews yet. Save your first recall above.')).toBeVisible();
     await page.screenshot({

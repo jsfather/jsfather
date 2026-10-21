@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+import { BookOpen } from 'lucide-react';
 import { useActionState, useId, useState } from 'react';
 import { saveNote, deleteNote, type NoteState } from '@/actions/session-notes';
 import type { StudyNoteFile } from '@/lib/study-note-files';
@@ -8,7 +10,7 @@ import { Feedback, Submit } from './forms';
 import { StudyMarkdown } from './study-markdown';
 import { ConfirmationDialog } from './confirmation-dialog';
 
-function NoteEditor({ sessionId, note }: { sessionId: string; note?: StudyNoteFile }) {
+export function NoteEditor({ sessionId, note }: { sessionId: string; note?: StudyNoteFile }) {
   const contentLabelId = useId();
   const [body, setBody] = useState(note?.body ?? noteTemplate);
   const [version, setVersion] = useState(note?.version ?? '');
@@ -91,7 +93,7 @@ function NoteEditor({ sessionId, note }: { sessionId: string; note?: StudyNoteFi
   );
 }
 
-function DeleteNote({ sessionId, note }: { sessionId: string; note: StudyNoteFile }) {
+export function DeleteNote({ sessionId, note }: { sessionId: string; note: StudyNoteFile }) {
   return (
     <div className="panel-actions">
       <ConfirmationDialog
@@ -113,10 +115,13 @@ export function SessionNotes({ sessionId, notes }: { sessionId: string; notes: S
       <h2>
         Study notes <span className="muted">({notes.length})</span>
       </h2>
-      <p className="muted">
-        Keep one concept per Markdown file. Notes are private, organized by topic, and saved
-        independently for this session.
-      </p>
+      <p className="muted">Your concepts, examples, and references for this session.</p>
+      <div className="panel-actions">
+        <Link className="button secondary" href={`/notes?session=${encodeURIComponent(sessionId)}`}>
+          <BookOpen size={16} />
+          Open notes workspace
+        </Link>
+      </div>
       {!notes.length && <p className="muted">No notes yet. Add your first Markdown note below.</p>}
       {notes.map((note) => (
         <details className="lesson-reveal session-note" key={note.path}>
