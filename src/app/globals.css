@@ -4328,3 +4328,46 @@ textarea {
     padding: var(--space-4);
   }
 }
+
+/* Course folders and private lesson recall share the panel spacing scale. */
+.course-outline {
+  margin-block: var(--space-6);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--border);
+}
+.chapter-list .panel-actions {
+  margin: 0;
+}
+.chapter-link {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: var(--space-4);
+  overflow-wrap: anywhere;
+}
+.chapter-link[aria-current='page'] {
+  border-color: var(--accent);
+}
+.lesson-sections,
+.lesson-assessment {
+  margin-top: var(--space-6);
+}
+.lesson-reveal > summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.lesson-reveal[open] > summary {
+  margin-bottom: var(--space-4);
+}
+.lesson-review {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-4);
+}
+.lesson-text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

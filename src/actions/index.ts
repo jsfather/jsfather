@@ -15,6 +15,7 @@ import {
   examAttempts,
   certificates,
   categoryBanks,
+  sessionReviews,
 } from '@/db/schema';
 import { requireUser, signIn, signOut } from '@/lib/auth';
 import {
@@ -41,6 +42,7 @@ import { assessmentDefaults } from '@/lib/assessment';
 import { openGuestExam } from '@/lib/guest-exam';
 import {
   addCourseSession,
+  validateChapter,
   removeCourseSession,
   syncCourseSessions,
 } from '@/lib/session-management';
@@ -206,10 +208,23 @@ export async function editCourse(
           .limit(1);
         if (bank) return false;
         const sessions = await tx
-          .select({ status: courseSessions.status, notes: courseSessions.notes })
+          .select({
+            status: courseSessions.status,
+            notes: courseSessions.notes,
+            chapterId: courseSessions.chapterId,
+            hasReviews: sql<boolean>`exists (select 1 from ${sessionReviews} r where r.session_id = ${courseSessions.id})`,
+          })
           .from(courseSessions)
           .where(eq(courseSessions.courseId, id));
-        if (sessions.some((session) => session.status !== 'upcoming' || session.notes))
+        if (
+          sessions.some(
+            (session) =>
+              session.status !== 'upcoming' ||
+              session.notes ||
+              session.chapterId ||
+              session.hasReviews,
+          )
+        )
           return false;
         await tx.delete(courseSessions).where(eq(courseSessions.courseId, id));
       }
@@ -241,7 +256,7 @@ export async function editCourse(
     if (!updated)
       return {
         error:
-          'The course schedule can only be rebuilt before classes begin, notes or class questions are added. Update individual sessions instead.',
+          'The course schedule can only be rebuilt before sessions have progress, notes, questions, chapter assignments or reviews. Update individual sessions instead.',
       };
   } catch (e) {
     return failure(e);
@@ -367,6 +382,7 @@ export async function updateSession(
         .from(courses)
         .where(eq(courses.id, course.id))
         .for('update');
+      await validateChapter(tx, course.id, fields.chapterId);
       await tx
         .update(courseSessions)
         .set({

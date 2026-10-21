@@ -339,3 +339,26 @@ npx tsx scripts/import-academic-word-list.ts --course-id=YOUR_COURSE_ID --pronun
 
 To rebuild the bundled guides from an updated CMUdict file, run
 `python3 scripts/data/build-awl-pronunciations.py /path/to/cmudict.dict`.
+
+### Video course chapters and lesson recall
+
+Regular courses support **Course → Chapter/folder → Session/video**. Existing
+sessions remain ungrouped. On a course, add a chapter, open it, then expand
+**Add videos to this chapter** and paste one video title per line (up to 100).
+Each video becomes an independent session; the default duration is editable and
+its initial schedule is today. Adjust individual schedules and move existing
+sessions using **Chapter / folder** in the session form. Chapter filters retain
+pagination, and chapter cards show completion across all their sessions.
+
+Each session retains private study notes and its existing practice question bank.
+**Review this lesson** records key points recalled from memory, open questions,
+and understanding. Reveal notes and the latest 20 reviews after recalling;
+previous reviews stay saved. Confidence is a self-assessment, independent of
+completion and exam scores. Use **Add or edit practice questions** on a session
+with an assessment, or **Add exam** to create its question bank.
+
+Apply migration `0022_nifty_sleepwalker` before running this version. It adds
+chapters, optional chapter assignments, and review history without rewriting
+existing sessions or notes. The database rejects assignments to another course's
+chapter. Schedule rebuilds are blocked once a session has a chapter or review,
+to preserve the course outline and learning history.

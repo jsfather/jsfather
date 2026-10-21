@@ -51,11 +51,16 @@ export const optionalScheduleCourseSchema = courseSchema
   });
 
 export const sessionSchema = z.object({
+  chapterId: z
+    .string()
+    .max(100)
+    .optional()
+    .transform((value) => value || null),
   title,
   description: z.string().max(5000),
   date: localDate,
   time: localTime,
-  duration: z.coerce.number().int().min(5).max(480),
+  duration: z.coerce.number().int().min(1).max(480),
   notes: z.string().max(20000),
   status: z.enum(['upcoming', 'in_progress', 'completed', 'skipped']),
 });

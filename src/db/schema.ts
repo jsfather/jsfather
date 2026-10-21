@@ -1,6 +1,7 @@
 import { sql } from 'drizzle-orm';
 import {
   pgTable,
+  foreignKey,
   text,
   timestamp,
   boolean,
@@ -148,6 +149,25 @@ export const courses = pgTable(
     check('course_duration_positive', sql`${t.duration}>0`),
   ],
 );
+// Chapters group video lessons without turning folders into scheduled sessions.
+export const courseChapters = pgTable(
+  'course_chapters',
+  {
+    id: id(),
+    courseId: text('course_id')
+      .notNull()
+      .references(() => courses.id, { onDelete: 'cascade' }),
+    title: text('title').notNull(),
+    position: integer('position').notNull(),
+    ...dates,
+  },
+  (t) => [
+    uniqueIndex('chapter_course_id_unique').on(t.courseId, t.id),
+    index('chapter_course_position_idx').on(t.courseId, t.position),
+  ],
+);
+export type CourseChapter = typeof courseChapters.$inferSelect;
+
 export const courseSessions = pgTable(
   'course_sessions',
   {
@@ -155,6 +175,7 @@ export const courseSessions = pgTable(
     courseId: text('course_id')
       .notNull()
       .references(() => courses.id, { onDelete: 'cascade' }),
+    chapterId: text('chapter_id'),
     title: text('title').notNull(),
     description: text('description').default('').notNull(),
     sessionNumber: integer('session_number').notNull(),
@@ -169,8 +190,35 @@ export const courseSessions = pgTable(
     uniqueIndex('session_number_idx').on(t.courseId, t.sessionNumber),
     index('session_schedule_idx').on(t.scheduledDate),
     index('session_course_idx').on(t.courseId),
+    foreignKey({
+      columns: [t.courseId, t.chapterId],
+      foreignColumns: [courseChapters.courseId, courseChapters.id],
+      name: 'session_chapter_same_course',
+    }),
   ],
 );
+export const sessionReviews = pgTable(
+  'session_reviews',
+  {
+    id: id(),
+    sessionId: text('session_id')
+      .notNull()
+      .references(() => courseSessions.id, { onDelete: 'cascade' }),
+    keyPoints: text('key_points').notNull(),
+    questions: text('questions').default('').notNull(),
+    confidence: text('confidence').$type<'revisit' | 'developing' | 'confident'>().notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (t) => [
+    index('session_review_history_idx').on(t.sessionId, t.createdAt),
+    check(
+      'session_review_confidence_valid',
+      sql`${t.confidence} in ('revisit', 'developing', 'confident')`,
+    ),
+  ],
+);
+export type SessionReview = typeof sessionReviews.$inferSelect;
+
 // Session status and notes are the normalized progress record for this single-owner LMS.
 // No second table duplicates completion percentages or completion flags.
 // Direct category questions have a bank separate from generated exam snapshots.

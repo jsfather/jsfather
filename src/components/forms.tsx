@@ -14,7 +14,7 @@ import {
   deleteSession,
   type ActionState,
 } from '@/actions';
-import type { Course, CourseSession, User, Exam } from '@/db/schema';
+import type { Course, CourseSession, CourseChapter, User, Exam } from '@/db/schema';
 import { formatInTimeZone } from 'date-fns-tz';
 import { ConfirmationDialog } from './confirmation-dialog';
 import { Plus, Save, Lock, Globe } from 'lucide-react';
@@ -307,14 +307,24 @@ export function DeleteExamForm({
     </ConfirmationDialog>
   );
 }
-export function SessionForm({ session, course }: { session?: CourseSession; course: Course }) {
+export function SessionForm({
+  session,
+  course,
+  chapters = [],
+  chapterId,
+}: {
+  session?: CourseSession;
+  course: Course;
+  chapters?: CourseChapter[];
+  chapterId?: string;
+}) {
   const timezone = course.timezone;
   const [state, action] = useActionState(
     session ? updateSession.bind(null, session.id) : createSession.bind(null, course.id),
     {},
   );
   return (
-    <form action={action} className="form-panel">
+    <form action={action} className="form-panel ui-stack">
       <Feedback state={state} />
       <Field label="Session title">
         <input
@@ -324,6 +334,16 @@ export function SessionForm({ session, course }: { session?: CourseSession; cour
           maxLength={160}
           defaultValue={session?.title ?? ''}
         />
+      </Field>
+      <Field label="Chapter / folder">
+        <select name="chapterId" defaultValue={session?.chapterId ?? chapterId ?? ''}>
+          <option value="">Ungrouped sessions</option>
+          {chapters.map((chapter) => (
+            <option key={chapter.id} value={chapter.id}>
+              {chapter.title}
+            </option>
+          ))}
+        </select>
       </Field>
       <Field label="Description">
         <textarea
@@ -362,7 +382,7 @@ export function SessionForm({ session, course }: { session?: CourseSession; cour
           <input
             name="duration"
             type="number"
-            min={5}
+            min={1}
             max={480}
             required
             defaultValue={session?.duration ?? course.duration}
@@ -389,7 +409,7 @@ export function SessionForm({ session, course }: { session?: CourseSession; cour
           defaultValue={session?.notes ?? ''}
         />
       </Field>
-      <div className="form-footer">
+      <div className="panel-actions">
         <span className="muted">Notes are always private.</span>
         <Submit>
           <Save size={16} />

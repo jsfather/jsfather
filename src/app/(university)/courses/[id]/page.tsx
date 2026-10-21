@@ -1,3 +1,4 @@
+import { ChapterForm, VideoLessonsForm } from '@/components/lesson-learning-forms';
 import { PracticePanel } from '@/components/practice-panel';
 import { BookCourseDetail } from '@/components/book-course';
 import { accessibleCourse } from '@/lib/data';
@@ -8,8 +9,8 @@ import { grade } from '@/lib/learning';
 import { requireUser } from '@/lib/auth';
 import { pageNumber, sessionQuestionCount } from '@/lib/data';
 import { db } from '@/db';
-import { courseSessions, exams, examAttempts } from '@/db/schema';
-import { eq, asc, sql, and, or, desc, getTableColumns } from 'drizzle-orm';
+import { courseSessions, courseChapters, exams, examAttempts } from '@/db/schema';
+import { eq, asc, sql, and, or, desc, getTableColumns, isNull } from 'drizzle-orm';
 import { PageTitle, Progress, SessionRow, Pagination } from '@/components/ui';
 import { formatInTimeZone } from 'date-fns-tz';
 import { AssessmentControls } from '@/components/final-controls';
@@ -22,7 +23,7 @@ export default async function CourseDetail({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ page?: string }>;
+  searchParams: Promise<{ page?: string; chapter?: string }>;
 }) {
   const user = await requireUser();
   const course = await accessibleCourse(user.id, (await params).id);
@@ -31,11 +32,30 @@ export default async function CourseDetail({
     return <BookCourseDetail course={course} userId={user.id} page={page} />;
   if (course.kind === 'vocabulary')
     return <VocabularyCourseDetail course={course} user={user} page={page} />;
+  const chapterFilter = (await searchParams).chapter;
+  const chapters = await db
+    .select({
+      ...getTableColumns(courseChapters),
+      total: sql<number>`(select count(*)::int from course_sessions s where s.chapter_id = course_chapters.id)`,
+      completed: sql<number>`(select count(*)::int from course_sessions s where s.chapter_id = course_chapters.id and s.status = 'completed')`,
+    })
+    .from(courseChapters)
+    .where(eq(courseChapters.courseId, course.id))
+    .orderBy(asc(courseChapters.position));
+  const selectedChapter = chapters.find((chapter) => chapter.id === chapterFilter);
+  const filter = and(
+    eq(courseSessions.courseId, course.id),
+    chapterFilter === 'ungrouped'
+      ? isNull(courseSessions.chapterId)
+      : selectedChapter
+        ? eq(courseSessions.chapterId, selectedChapter.id)
+        : undefined,
+  );
   const [sessions, counts, examList, next] = await Promise.all([
     db
       .select({ ...getTableColumns(courseSessions), questionCount: sessionQuestionCount })
       .from(courseSessions)
-      .where(eq(courseSessions.courseId, course.id))
+      .where(filter)
       .orderBy(asc(courseSessions.sessionNumber))
       .limit(50)
       .offset((page - 1) * 50),
@@ -111,15 +131,80 @@ export default async function CourseDetail({
                 <span>Total sessions</span>
               </div>
             </div>
+            <section className="ui-stack course-outline" aria-label="Course chapters">
+              <h2>Chapters / folders</h2>
+              <p className="muted">
+                Organize folders into chapters and add each video as a session.
+              </p>
+              <nav className="ui-stack chapter-list" aria-label="Choose chapter">
+                <div className="panel-actions">
+                  <Link className="text-link" href={'/courses/' + course.id}>
+                    All sessions
+                  </Link>
+                  <Link className="text-link" href={`/courses/${course.id}?chapter=ungrouped`}>
+                    Ungrouped sessions
+                  </Link>
+                </div>
+                {chapters.map((chapter) => (
+                  <Link
+                    key={chapter.id}
+                    className="chapter-link"
+                    aria-current={chapter.id === selectedChapter?.id ? 'page' : undefined}
+                    href={`/courses/${course.id}?chapter=${chapter.id}`}
+                  >
+                    <strong>
+                      {chapter.position}. {chapter.title}
+                    </strong>
+                    <span className="muted">
+                      {chapter.completed} / {chapter.total} completed
+                    </span>
+                  </Link>
+                ))}
+              </nav>
+              {!chapters.length && (
+                <p className="muted">No chapters yet. Create one for your first folder.</p>
+              )}
+              <details className="lesson-reveal ui-stack">
+                <summary>Add a chapter</summary>
+                <ChapterForm courseId={course.id} />
+              </details>
+              {selectedChapter && (
+                <>
+                  <details className="lesson-reveal ui-stack">
+                    <summary>Edit chapter</summary>
+                    <ChapterForm courseId={course.id} chapter={selectedChapter} />
+                  </details>
+                  <details className="lesson-reveal ui-stack">
+                    <summary>Add videos to this chapter</summary>
+                    <VideoLessonsForm courseId={course.id} chapterId={selectedChapter.id} />
+                  </details>
+                </>
+              )}
+            </section>
             <div className="section-header">
-              <h2>Course sessions</h2>
-              <Link className="button secondary" href={'/sessions/new?course=' + course.id}>
+              <h2>
+                {selectedChapter?.title ??
+                  (chapterFilter === 'ungrouped' ? 'Ungrouped sessions' : 'Course sessions')}
+              </h2>
+              <Link
+                className="button secondary"
+                href={
+                  '/sessions/new?course=' +
+                  course.id +
+                  (selectedChapter ? '&chapter=' + selectedChapter.id : '')
+                }
+              >
                 <Plus size={16} />
                 Add session
               </Link>
             </div>
             {!total && (
               <p className="muted">No sessions yet. Add a session to continue your course.</p>
+            )}
+            {!!total && !sessions.length && (
+              <p className="muted">
+                No sessions in this view. Add a session or choose another chapter.
+              </p>
             )}
             {sessions.map((session) => (
               <SessionRow
@@ -133,7 +218,11 @@ export default async function CourseDetail({
             <Pagination
               page={page}
               hasMore={sessions.length === 50}
-              base={'/courses/' + course.id}
+              base={
+                '/courses/' +
+                course.id +
+                (chapterFilter ? '?chapter=' + encodeURIComponent(chapterFilter) : '')
+              }
             />
           </section>
         </div>
