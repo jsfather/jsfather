@@ -4363,11 +4363,119 @@ textarea {
 .lesson-reveal[open] > summary {
   margin-bottom: var(--space-4);
 }
-.lesson-review {
+.lesson-review,
+.recalled-note {
   border-top: 1px solid var(--border);
   padding-top: var(--space-4);
 }
 .lesson-text {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+}
+
+.note-file-path {
+  display: block;
+  font:
+    12px/1.6 ui-monospace,
+    monospace;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.session-note {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-4);
+}
+.note-source {
+  font:
+    13px/1.7 ui-monospace,
+    monospace;
+  tab-size: 2;
+}
+.study-markdown {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.7;
+}
+.study-markdown > * {
+  margin-block: 0;
+}
+.study-markdown :is(h1, h2, h3, h4) {
+  line-height: 1.4;
+}
+.study-markdown h1 {
+  font-size: 22px;
+}
+.study-markdown :is(h2, h3) {
+  font-size: 17px;
+}
+.study-markdown :is(ul, ol) {
+  padding-inline-start: var(--space-6);
+  list-style: revert;
+}
+.study-markdown li + li {
+  margin-top: var(--space-2);
+}
+.study-markdown li > p {
+  margin-block: var(--space-2);
+}
+.study-markdown a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+.study-markdown pre {
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  overflow-x: auto;
+  max-width: 100%;
+  font:
+    13px/1.7 ui-monospace,
+    monospace;
+}
+.study-markdown code {
+  font-family: ui-monospace, monospace;
+}
+.study-markdown :not(pre) > code {
+  background: var(--surface-2);
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+.study-markdown blockquote {
+  border-inline-start: 3px solid var(--accent);
+  padding-inline-start: var(--space-4);
+  color: var(--muted);
+}
+.study-markdown table {
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+.study-markdown :is(th, td) {
+  border: 1px solid var(--border);
+  padding: var(--space-2);
+}
+.study-markdown .hljs-keyword,
+.study-markdown .hljs-literal {
+  color: #c792ea;
+}
+.study-markdown .hljs-string,
+.study-markdown .hljs-title {
+  color: var(--accent);
+}
+.study-markdown .hljs-number {
+  color: #d98e47;
+}
+.study-markdown .hljs-comment {
+  color: var(--muted);
+}
+:root[data-theme='light'] .study-markdown .hljs-keyword,
+:root[data-theme='light'] .study-markdown .hljs-literal {
+  color: #7540a0;
+}
+:root[data-theme='light'] .study-markdown .hljs-number {
+  color: #975218;
 }

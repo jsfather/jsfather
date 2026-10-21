@@ -16,7 +16,10 @@ services:
       VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY:-}
       VAPID_SUBJECT: ${VAPID_SUBJECT:-}
       CRON_SECRET: ${CRON_SECRET:-}
+      STUDY_NOTES_DIR: /app/study-notes
       NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-https://jsfather.ir}
+    volumes:
+      - study-notes-data:/app/study-notes
     depends_on:
       postgres:
         condition: service_healthy
@@ -38,3 +41,4 @@ services:
       retries: 10
 volumes:
   postgres-data:
+  study-notes-data:

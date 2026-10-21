@@ -61,7 +61,7 @@ export const sessionSchema = z.object({
   date: localDate,
   time: localTime,
   duration: z.coerce.number().int().min(1).max(480),
-  notes: z.string().max(20000),
+  notes: z.string().max(20000).optional(),
   status: z.enum(['upcoming', 'in_progress', 'completed', 'skipped']),
 });
 const url = z.union([

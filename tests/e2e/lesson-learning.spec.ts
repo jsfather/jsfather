@@ -2,7 +2,9 @@ import { test, expect, type Locator } from '@playwright/test';
 import { config } from 'dotenv';
 import postgres from 'postgres';
 import { randomUUID } from 'node:crypto';
+import { StudyNoteFiles } from '../../src/lib/study-note-files';
 config({ path: '.env.local', quiet: true });
+const files = new StudyNoteFiles();
 const db = postgres(process.env.DATABASE_URL!, { max: 2 });
 const userId = randomUUID(),
   token = randomUUID(),
@@ -16,6 +18,7 @@ test.beforeAll(async () => {
     values(${courseId},${userId},'Video learning',${courseId},'Backend','beginner',0,'09:00',30,'UTC','[]','2026-10-01')`;
 });
 test.afterAll(async () => {
+  await files.removeCourse({ userId, courseId });
   await db`delete from users where id=${userId}`;
   await db.end();
 });
@@ -70,6 +73,7 @@ for (const width of [1280, 320, 390]) {
     await outline.screenshot({ path: test.info().outputPath('chapter-panel.png') });
     const [session] =
       await db`select * from course_sessions where course_id=${courseId} and title=${`First video ${width}`}`;
+    await db`update course_sessions set notes='Use small functions with clear inputs.' where id=${session.id}`;
     await page.goto(`/sessions/${session.id}`);
     const review = page.getByRole('form', { name: 'Session review' });
     await expect(review.getByLabel('Key points I remember')).toBeVisible();
@@ -80,11 +84,13 @@ for (const width of [1280, 320, 390]) {
       path: test.info().outputPath('review-empty-revealed.png'),
       fullPage: true,
     });
-    await page
-      .getByRole('textbox', { name: /^Study notes/ })
-      .fill('Use small functions with clear inputs.');
-    await page.getByRole('button', { name: 'Save session', exact: true }).click();
-    await expect(page.getByRole('status')).toContainText('Session saved');
+    await expect(page.getByRole('region', { name: 'Session notes' })).toContainText(
+      'Imported study notes',
+    );
+    expect(
+      (await files.read({ userId, courseId, sessionId: session.id }, 'imported-study-notes.md'))
+        ?.body,
+    ).toContain('Use small functions with clear inputs.');
     await review.getByLabel('Key points I remember').fill('Small functions are easier to explain.');
     await review.getByLabel('Open questions').fill('How should errors cross a boundary?');
     await review.getByLabel('Understanding after this review').selectOption('revisit');
@@ -116,7 +122,7 @@ for (const width of [1280, 320, 390]) {
     );
     expect(formBox.y + formBox.height - actionsBox.y - actionsBox.height).toBeLessThanOrEqual(33);
     const [stored] = await db`select * from course_sessions where id=${session.id}`;
-    expect(stored.notes).toBe('Use small functions with clear inputs.');
+    expect(stored.notes).toBe('');
     expect(stored.status).toBe('upcoming');
     const saved = await db`select * from session_reviews where session_id=${session.id}`;
     expect(saved).toHaveLength(2);

@@ -12,6 +12,27 @@
 - Inspect empty, populated, revealed, and feedback states relevant to the change. Check helper-to-action gaps, heading-to-form gaps, panel bottom padding, wrapping, and fixed controls covering content. Passing typecheck or a no-horizontal-overflow check is not proof that spacing is correct.
 - Preserve or add focused browser geometry assertions for spacing regressions. Run the relevant existing spacing/layout tests after changing these shared rules.
 
+## Programming study notes
+
+When the user supplies a programming concept or code snippet, create or update a study note:
+
+- Save each note as a separate standard Markdown `.md` file with a descriptive,
+  kebab-case filename. Group related notes in topic directories.
+- Search existing notes first and update a relevant note rather than duplicating it.
+- For an application session, use the session-scoped Markdown storage helpers and
+  configured `STUDY_NOTES_DIR` (default `study-notes/`). For a standalone repository
+  note without a session, use `notes/<topic>/<descriptive-filename>.md`.
+- Begin with `# Title` and a concise explanation. Include `### Key Points`,
+  `### Example`, and `### Reference`. Add `### Output` only when useful.
+- Keep essential facts, behavior, and relevant differences concise. Use proper
+  Markdown headings, lists, bold text, and inline code.
+- Fence every code example with its correct language identifier. Put expected
+  output in a separate `text` fence, never mixed into executable examples.
+- Verify direct links to official documentation or reliable primary sources.
+  Never invent documentation URLs or unsupported claims. Omit unnecessary sections.
+- Preserve imported legacy notes verbatim; do not invent examples, outputs, or
+  references to fill gaps in historical content.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know

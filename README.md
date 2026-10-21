@@ -362,3 +362,40 @@ chapters, optional chapter assignments, and review history without rewriting
 existing sessions or notes. The database rejects assignments to another course's
 chapter. Schedule rebuilds are blocked once a session has a chapter or review,
 to preserve the course outline and learning history.
+
+### Multiple Markdown notes per session
+
+Each regular-course session now has a **Study notes** panel supporting multiple
+independent `.md` files. Choose a descriptive kebab-case filename and optional
+nested topic folders, write or paste Markdown, preview it, and save. Each file can
+be edited, downloaded, or deleted separately. Duplicate paths and stale edits
+are rejected so a second browser tab cannot silently overwrite newer work.
+
+Notes use `# Title`, a short explanation, `### Key Points`, `### Example`, and
+`### Reference`. Code fences need a language identifier; optional expected output
+belongs in a separate `text` fence. The starter template contains no fabricated
+source link: supply a verified direct primary-source URL. The app checks the
+structure, not the accuracy or authority of a source. Markdown previews support
+headings, lists, inline code, GFM tables, and highlighted code; raw HTML is ignored.
+
+Markdown files are the source of truth on the server, stored beneath
+`STUDY_NOTES_DIR` (default `./study-notes`). Private account, course, and session
+scope directories use stable hashes, followed by readable topic directories and
+filenames, for example `<account>/<course>/<session>/javascript/closures.md`.
+This directory is excluded from the application repository and Docker build
+context. It can have its own private Git repository or file backups. Stop app
+writers before restoring/editing a storage backup outside the application.
+
+**Persist and back up the files as well as PostgreSQL.** Pause app writers when taking a coordinated backup. `compose.yaml` mounts
+`study-notes-data` at `/app/study-notes`; do not remove this volume on upgrades.
+For a Dokploy Dockerfile deployment, add a persistent volume at `/app/study-notes`
+and set `STUDY_NOTES_DIR=/app/study-notes`. It must be writable by UID/GID 1001.
+Multiple application instances must share this same durable filesystem; an
+instance's ephemeral container filesystem is not sufficient.
+
+On first opening a session, existing single-field notes are copied to
+`imported-study-notes.md` before the old database field is cleared. An interrupted
+import is safe to retry and never overwrites an existing imported file. Original
+text is preserved without inventing missing study content. Session/course deletion
+also removes its Markdown files; note deletion requires confirmation. Timetable
+rebuilds are blocked while the course has saved Markdown notes.

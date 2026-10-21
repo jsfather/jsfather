@@ -164,17 +164,17 @@ export default async function CourseDetail({
               {!chapters.length && (
                 <p className="muted">No chapters yet. Create one for your first folder.</p>
               )}
-              <details className="lesson-reveal ui-stack">
+              <details className="lesson-reveal">
                 <summary>Add a chapter</summary>
                 <ChapterForm courseId={course.id} />
               </details>
               {selectedChapter && (
                 <>
-                  <details className="lesson-reveal ui-stack">
+                  <details className="lesson-reveal">
                     <summary>Edit chapter</summary>
                     <ChapterForm courseId={course.id} chapter={selectedChapter} />
                   </details>
-                  <details className="lesson-reveal ui-stack">
+                  <details className="lesson-reveal">
                     <summary>Add videos to this chapter</summary>
                     <VideoLessonsForm courseId={course.id} chapterId={selectedChapter.id} />
                   </details>

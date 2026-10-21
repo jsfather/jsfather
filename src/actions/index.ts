@@ -1,4 +1,5 @@
 'use server';
+import { studyNoteFiles } from '@/lib/session-notes';
 import { assessmentName } from '@/lib/assessment-names';
 import { syncAssessmentNames } from '@/lib/sync-assessment-names';
 import { db } from '@/db';
@@ -201,6 +202,7 @@ export async function editCourse(
         .for('update');
       if (!currentCourse || currentCourse.totalSessions !== course.totalSessions) return false;
       if (scheduleChanged) {
+        if (await studyNoteFiles.hasCourseNotes({ userId: user.id, courseId: id })) return false;
         const [bank] = await tx
           .select({ id: exams.id })
           .from(exams)
@@ -278,6 +280,9 @@ export async function deleteCourse(
   } catch (e) {
     return failure(e);
   }
+  await studyNoteFiles
+    .removeCourse({ userId: user.id, courseId: id })
+    .catch(() => console.error('Deleted course Markdown cleanup failed.'));
   refresh();
   redirect('/courses');
 }
@@ -349,6 +354,9 @@ export async function deleteSession(
   } catch (e) {
     return failure(e);
   }
+  await studyNoteFiles
+    .removeSession({ userId: user.id, courseId: course.id, sessionId: id })
+    .catch(() => console.error('Deleted session Markdown cleanup failed.'));
   refresh(course.id);
   revalidatePath('/sessions/' + id);
   await issueEligibleCertificate(course.id, user.id);

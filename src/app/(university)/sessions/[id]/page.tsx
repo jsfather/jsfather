@@ -1,3 +1,6 @@
+import { SessionNotes } from '@/components/session-notes';
+import { sessionNotes } from '@/lib/session-notes';
+import { StudyMarkdown } from '@/components/study-markdown';
 import { SessionReviewForm } from '@/components/lesson-learning-forms';
 import { PracticePanel } from '@/components/practice-panel';
 import Link from 'next/link';
@@ -18,7 +21,7 @@ export default async function SessionDetail({ params }: { params: Promise<{ id: 
   const { session, course } = await ownedSession(user.id, (await params).id);
   if (course.kind === 'book') redirect('/courses/' + course.id);
   const [exam] = await db.select().from(exams).where(eq(exams.sessionId, session.id)).limit(1);
-  const [chapters, reviews] = await Promise.all([
+  const [chapters, reviews, notes] = await Promise.all([
     db
       .select()
       .from(courseChapters)
@@ -30,6 +33,7 @@ export default async function SessionDetail({ params }: { params: Promise<{ id: 
       .where(eq(sessionReviews.sessionId, session.id))
       .orderBy(desc(sessionReviews.createdAt))
       .limit(20),
+    sessionNotes({ userId: user.id, courseId: course.id, sessionId: session.id }, session.notes),
   ]);
   const chapter = chapters.find((item) => item.id === session.chapterId);
   const confidenceLabels = {
@@ -94,13 +98,19 @@ export default async function SessionDetail({ params }: { params: Promise<{ id: 
             Before reading your notes, recall what you learned from this video.
           </p>
           <SessionReviewForm sessionId={session.id} />
-          <details className="lesson-reveal ui-stack">
+          <details className="lesson-reveal">
             <summary>Reveal study notes &amp; previous reviews</summary>
             <div className="ui-stack">
               <h3>Study notes</h3>
-              <p className="lesson-text muted">
-                {session.notes || 'No study notes yet. Add them in the session form below.'}
-              </p>
+              {!notes.length && (
+                <p className="muted">No study notes yet. Add a Markdown note below.</p>
+              )}
+              {notes.map((note) => (
+                <article className="ui-stack recalled-note" key={note.path}>
+                  <p className="note-file-path">{note.path}</p>
+                  <StudyMarkdown>{note.body}</StudyMarkdown>
+                </article>
+              ))}
               <h3>Review history</h3>
               {!reviews.length && (
                 <p className="muted">No reviews yet. Save your first recall above.</p>
@@ -126,6 +136,7 @@ export default async function SessionDetail({ params }: { params: Promise<{ id: 
             </div>
           </details>
         </section>
+        <SessionNotes sessionId={session.id} notes={notes} />
         <SessionForm session={session} course={course} chapters={chapters} />
       </div>
       <section className="panel ui-stack lesson-assessment">

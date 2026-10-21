@@ -397,20 +397,8 @@ export function SessionForm({
           </select>
         </Field>
       </div>
-      <Field
-        label="Study notes"
-        hint="Capture what you learned, useful links, and what to revisit."
-      >
-        <textarea
-          name="notes"
-          rows={9}
-          maxLength={20000}
-          placeholder="Today I learned…"
-          defaultValue={session?.notes ?? ''}
-        />
-      </Field>
       <div className="panel-actions">
-        <span className="muted">Notes are always private.</span>
+        <span className="muted">Manage Markdown notes in the Study notes panel.</span>
         <Submit>
           <Save size={16} />
           {session ? 'Save session' : 'Add session'}
