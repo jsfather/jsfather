@@ -1,5 +1,5 @@
 import 'server-only';
-import { and, asc, eq, or, sql } from 'drizzle-orm';
+import { and, asc, eq, ne, or, sql } from 'drizzle-orm';
 import { notFound } from 'next/navigation';
 import { db } from '@/db';
 import { courses, vocabularyWords, vocabularyProgress, vocabularyReviews } from '@/db/schema';
@@ -82,8 +82,12 @@ export async function vocabularyDueSummary(userId: string) {
 }
 
 // Count historical outcomes separately from mastery progress, which can reset when a word changes.
-// A pending review is one showing; revealing or reloading the same card adds no row.
-export function vocabularyWordReviewCounts(userId: string, courseId: string) {
+// Library totals include pending reviews; a recall card excludes its current review.
+export function vocabularyWordReviewCounts(
+  userId: string,
+  courseId: string,
+  currentReviewId?: string,
+) {
   return db
     .select({
       wordId: vocabularyReviews.wordId,
@@ -98,7 +102,13 @@ export function vocabularyWordReviewCounts(userId: string, courseId: string) {
         ),
     })
     .from(vocabularyReviews)
-    .where(and(eq(vocabularyReviews.userId, userId), eq(vocabularyReviews.courseId, courseId)))
+    .where(
+      and(
+        eq(vocabularyReviews.userId, userId),
+        eq(vocabularyReviews.courseId, courseId),
+        currentReviewId ? ne(vocabularyReviews.id, currentReviewId) : undefined,
+      ),
+    )
     .groupBy(vocabularyReviews.wordId)
     .as('word_review_counts');
 }

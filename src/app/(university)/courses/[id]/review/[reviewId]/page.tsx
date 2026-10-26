@@ -17,7 +17,7 @@ export default async function ReviewCard({
   const user = await requireUser();
   const { id, reviewId } = await params;
   const course = await accessibleVocabularyCourse(user.id, id);
-  const reviewCounts = vocabularyWordReviewCounts(user.id, id);
+  const reviewCounts = vocabularyWordReviewCounts(user.id, id, reviewId);
   const [row] = await db
     .select({
       review: vocabularyReviews,

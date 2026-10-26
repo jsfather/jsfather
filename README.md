@@ -403,9 +403,11 @@ rebuilds are blocked while the course has saved Markdown notes.
 ### Per-word vocabulary history
 
 Word-library entries and recall cards show your personal **Shown in practice**,
-**Successful**, and **Failed** counts from saved review records. Shown includes a
-pending unanswered card; revealing or reloading that same card does not add
-another showing. Daily suggestions and library views are not counted as practice
+**Successful**, and **Failed** counts from saved review records. On a recall card,
+Shown counts previous appearances and excludes the current card: the first appearance
+shows 0 and the second shows 1. Library totals include pending unanswered cards.
+Revealing or reloading the same card does not add another showing.
+Daily suggestions and library views are not counted as practice
 cards. Successes and failures are historical outcomes, separate from current
 mastery progress, so a progress reset does not erase the recorded history.
 

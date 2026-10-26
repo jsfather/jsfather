@@ -40,6 +40,31 @@ async function counts(container: Locator, shown: number, successful: number, fai
   const stats = container.getByRole('definition');
   await expect(stats).toHaveText([String(shown), String(successful), String(failed)]);
 }
+test('first and second appearances show only previous practice', async ({ page }) => {
+  await db`delete from vocabulary_reviews where course_id=${courseId} and user_id=${userId}`;
+  const firstId = await review(userId, null);
+  await page
+    .context()
+    .addCookies([
+      { name: 'authjs.session-token', value: token, url: base, httpOnly: true, sameSite: 'Lax' },
+    ]);
+  const card = page.getByRole('region', { name: 'Recall card', exact: true });
+  await page.goto(`/courses/${courseId}/review/${firstId}`);
+  await counts(card, 0, 0, 0);
+  await page.getByRole('button', { name: 'Reveal answer', exact: true }).click();
+  await counts(card, 0, 0, 0);
+  await page.reload();
+  await counts(card, 0, 0, 0);
+
+  await db`update vocabulary_reviews set remembered=true, submitted_at=now() where id=${firstId}`;
+  const secondId = await review(userId, null);
+  await page.goto(`/courses/${courseId}/review/${secondId}`);
+  await counts(card, 1, 1, 0);
+  await page.getByRole('button', { name: 'Reveal answer', exact: true }).click();
+  await counts(card, 1, 1, 0);
+  await page.reload();
+  await counts(card, 1, 1, 0);
+});
 for (const width of [1280, 320, 390]) {
   test(`personal showing and outcome counts at ${width}px`, async ({ page }) => {
     await db`delete from vocabulary_reviews where course_id=${courseId} and user_id=${userId}`;
@@ -76,13 +101,13 @@ for (const width of [1280, 320, 390]) {
     await page.screenshot({ path: test.info().outputPath('library-counts.png') });
     await page.goto(`/courses/${courseId}/review/${pendingId}`);
     const card = page.getByRole('region', { name: 'Recall card', exact: true });
-    await counts(card, 5, 2, 2);
+    await counts(card, 4, 2, 2);
     await page.reload();
-    await counts(card, 5, 2, 2);
+    await counts(card, 4, 2, 2);
     await page.screenshot({ path: test.info().outputPath('hidden-counts.png') });
     await page.getByRole('button', { name: 'Reveal answer', exact: true }).click();
     await expect(page.getByRole('region', { name: 'Answer', exact: true })).toBeVisible();
-    await counts(card, 5, 2, 2);
+    await counts(card, 4, 2, 2);
     const stats = (await card.locator('.vocabulary-review-counts').boundingBox())!,
       dock = (await page
         .getByRole('complementary', { name: 'Vocabulary review actions' })
@@ -91,6 +116,7 @@ for (const width of [1280, 320, 390]) {
     await page.screenshot({ path: test.info().outputPath('revealed-counts.png') });
     await page.getByRole('button', { name: 'Review again', exact: true }).click();
     await expect(page.locator('.vocabulary-prompt')).toHaveText('Unreviewed');
+    await counts(card, 0, 0, 0);
     await page.goto(`/courses/${courseId}`);
     await counts(word, 5, 2, 3);
     await word.evaluate((el) => window.scrollTo(0, el.getBoundingClientRect().top + scrollY - 80));
